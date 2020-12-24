@@ -1,3 +1,2 @@
-# gl16
-
-Projet GL équipe gl16
+# Projet Génie Logiciel, Ensimag.
+@AUTHOR@, @DATE@.
