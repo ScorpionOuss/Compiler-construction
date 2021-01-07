@@ -1,0 +1,8 @@
+// Description:
+//    Programme  avec deux println.
+
+
+{
+        println("Hello");
+        println("Hello2");
+}

@@ -1,0 +1,5 @@
+// Description:
+//    tests de programme incorrect lexicalement (car présence du caractère '\n')
+
+
+"\n"

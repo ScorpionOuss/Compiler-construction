@@ -1,0 +1,7 @@
+// Description:
+//   Chaine vide
+
+
+{
+        println("");
+}
