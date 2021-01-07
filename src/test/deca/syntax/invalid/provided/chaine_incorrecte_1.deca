@@ -1,5 +1,9 @@
 // Description:
 //    tests de programme incorrect lexicalement (car présence du caractère '\n')
-
+//
+// Resultats:
+//    Ligne 9 : Erreur lexicale (et donc syntaxique).
+//    
+//
 
 "\n"
