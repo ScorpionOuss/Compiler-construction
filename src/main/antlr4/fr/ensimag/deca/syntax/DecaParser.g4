@@ -100,7 +100,11 @@ list_inst returns[ListInst tree]
     $tree = new ListInst();
 }
     : (inst {
+<<<<<<< HEAD
              assert($inst.tree != null);
+=======
+            assert($inst.tree != null);
+>>>>>>> c71141284a5060aa3915dc1dd4ea4300716a3285
             if ($tree.isEmpty()) {
                 setLocation($tree, $inst.start);
             }
@@ -126,9 +130,13 @@ inst returns[AbstractInst tree]
         }
     | PRINTX OPARENT list_expr CPARENT SEMI {
             assert($list_expr.tree != null);
+            $tree = new Println(false, $list_expr.tree);
+            setLocation($tree, $PRINTX);
         }
     | PRINTLNX OPARENT list_expr CPARENT SEMI {
             assert($list_expr.tree != null);
+            $tree = new Println(false, $list_expr.tree);
+            setLocation($tree, $PRINTLNX);
         }
     | if_then_else {
             assert($if_then_else.tree != null);
