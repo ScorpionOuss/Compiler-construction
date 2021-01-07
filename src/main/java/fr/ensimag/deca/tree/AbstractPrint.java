@@ -40,7 +40,6 @@ public abstract class AbstractPrint extends AbstractInst {
             ClassDefinition currentClass, Type returnType)
             throws ContextualError {
     	// nothing to do for hello world
-    	// to be completed for other parts
     }
 
     @Override
