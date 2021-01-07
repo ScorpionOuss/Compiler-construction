@@ -10,19 +10,6 @@ options {
 
 @members {
 }
-<<<<<<< HEAD
-PRINTLN : 'println' ;
-OBRACE :'{';
-CBRACE : '}' ;
-OPARENT : '(';
-CPARENT : ')';
-SEMI : ';';
-fragment STRING_CAR: ~('"' | '\\' | '\n') ;
-STRING : '"' (STRING_CAR | '\\"' | '\\\\')*  '"';
-MULTI_LINE_STRING : '"' (STRING_CAR | '\n' | '\\"' | '\\\\')*  '"';
-EOL: '\n' -> skip;
-=======
-
 // Deca lexer rules.
 EOL: '\n' { skip(); };
 
@@ -110,6 +97,3 @@ MULTI_LINE_STRING: '"' (STRING_CAR |EOL|'\\"'|'\\\\')* '"';
 //Include
 FILENAME : (LETTER|DIGIT|'.'|'+'|'-'|'_')+;
 INCLUDE: '#include' ()* '"' FILENAME '"';
-
-
->>>>>>> c71141284a5060aa3915dc1dd4ea4300716a3285

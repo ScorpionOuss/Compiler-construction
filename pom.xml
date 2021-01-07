@@ -180,13 +180,13 @@
                     <execution>
                         <id>basic-lex</id>
                         <configuration>
-                            <executable>./src/test/script/basic-lex.sh</executable>
+                    <executable>./src/test/script/basic-lex.sh</executable>
                             <!-- If we need to pass arguments :
                                  <arguments>
                                  <argument>...</argument>
                                  </arguments>
                             -->
-                        </configuration>
+                     </configuration>
                         <phase>test</phase>
                         <goals>
                             <goal>exec</goal>
@@ -206,7 +206,7 @@
                         <!-- run a unit test by defining our own class with a main
                         function -->
                         <!-- warning: java assertions are not enabled -->
-                        <id>unit-test-symbol</id>
+                         <id>unit-test-symbol</id>
                         <configuration>
                             <mainClass>fr.ensimag.deca.tools.ManualTestSymbol</mainClass>
                             <classpathScope>test</classpathScope>
@@ -256,6 +256,46 @@
                             <goal>exec</goal>
                         </goals>
                     </execution>
+                    <execution>
+                        <id>lex-test</id>
+                        <configuration>
+                            <executable>./src/test/script/lex-test.sh</executable>
+                        </configuration>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                         <id>lex-test</id>
+                         <configuration>
+                             <executable>./src/test/script/lex-test.sh</executable>
+                         </configuration>
+                         <phase>test</phase>
+                         <goals>
+                             <goal>exec</goal>
+                         </goals>
+                     </execution>
+                        <execution>
+                         <id>lex-test</id>
+                         <configuration>
+                             <executable>./src/test/script/lex-test.sh</executable>
+                         </configuration>
+                         <phase>test</phase>
+                         <goals>
+                             <goal>exec</goal>
+                         </goals>
+                     </execution>
+                        <execution>
+                         <id>lex-test</id>
+                         <configuration>
+                             <executable>./src/test/script/lex-test.sh</executable>
+                         </configuration>
+                         <phase>test</phase>
+                         <goals>
+                             <goal>exec</goal>
+                         </goals>
+                     </execution>
                 </executions>
             </plugin>
 

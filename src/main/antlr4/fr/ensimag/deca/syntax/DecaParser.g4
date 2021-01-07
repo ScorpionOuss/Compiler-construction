@@ -100,11 +100,8 @@ list_inst returns[ListInst tree]
     $tree = new ListInst();
 }
     : (inst {
-<<<<<<< HEAD
              assert($inst.tree != null);
-=======
             assert($inst.tree != null);
->>>>>>> c71141284a5060aa3915dc1dd4ea4300716a3285
             if ($tree.isEmpty()) {
                 setLocation($tree, $inst.start);
             }
