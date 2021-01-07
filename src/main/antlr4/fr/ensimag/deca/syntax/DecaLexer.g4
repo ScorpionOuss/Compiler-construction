@@ -10,7 +10,13 @@ options {
 
 @members {
 }
-
-// Deca lexer rules.
-DUMMY_TOKEN: .; // A FAIRE : Règle bidon qui reconnait tous les caractères.
-                // A FAIRE : Il faut la supprimer et la remplacer par les vraies règles.
+PRINTLN : 'println' ;
+OBRACE :'{';
+CBRACE : '}' ;
+OPARENT : '(';
+CPARENT : ')';
+SEMI : ';';
+fragment STRING_CAR: ~('"' | '\\' | '\n') ;
+STRING : '"' (STRING_CAR | '\\"' | '\\\\')*  '"';
+MULTI_LINE_STRING : '"' (STRING_CAR | '\n' | '\\"' | '\\\\')*  '"';
+EOL: '\n' -> skip;
