@@ -117,7 +117,10 @@ public class DecacCompiler {
      */
     private final IMAProgram program = new IMAProgram();
  
-
+    /*
+     * Le nombre de caractères de ".ass"
+     */
+    private final int TAILLE = 5;
     /**
      * Run the compiler (parse source file, generate code)
      *
@@ -125,9 +128,9 @@ public class DecacCompiler {
      */
     public boolean compile() {
         String sourceFile = source.getAbsolutePath();
-        String destFile = null;
-        // A FAIRE: calculer le nom du fichier .ass à partir du nom du
-        // A FAIRE: fichier .deca.
+        //On calcule le nom du fichier .ass à partir du nom du fichier .deca
+        String destFile = sourceFile.substring(0, sourceFile.length() - TAILLE) + ".ass";
+
         PrintStream err = System.err;
         PrintStream out = System.out;
         LOG.debug("Compiling file " + sourceFile + " to assembly file " + destFile);
