@@ -24,6 +24,7 @@ options {
 
 // which packages should be imported?
 @header {
+    import fr.ensimag.deca.tools.SymbolTable;
     import fr.ensimag.deca.tree.*;
     import java.io.PrintStream;
 }
@@ -36,11 +37,11 @@ options {
 }
 
 prog returns[AbstractProgram tree]
-    : list_classes main EOF {
-            assert($list_classes.tree != null);
+    : lc=list_classes main EOF {
+            assert($lc.tree != null);
             assert($main.tree != null);
-            $tree = new Program($list_classes.tree, $main.tree);
-            setLocation($tree, $list_classes.start);
+            $tree = new Program($lc.tree, $main.tree);
+            setLocation($tree, $lc.start);
         }
     ;
 
@@ -48,11 +49,11 @@ main returns[AbstractMain tree]
     : /* epsilon */ {
             $tree = new EmptyMain();
         }
-    | block {
-            assert($block.decls != null);
-            assert($block.insts != null);
-            $tree = new Main($block.decls, $block.insts);
-            setLocation($tree, $block.start);
+    |bl= block {
+            assert($bl.decls != null);
+            assert($bl.insts != null);
+            $tree = new Main($bl.decls, $bl.insts);
+            setLocation($tree, $bl.start);
         }
     ;
 
@@ -77,21 +78,31 @@ decl_var_set[ListDeclVar l]
     ;
 
 list_decl_var[ListDeclVar l, AbstractIdentifier t]
-    : dv1=decl_var[$t] {
-        $l.add($dv1.tree);
-        } (COMMA dv2=decl_var[$t] {
+    : decvar=decl_var[$t] {
+        $l.add($decvar.tree);
+        } (COMMA declvar=decl_var[$t] {
         }
       )*
     ;
 
 decl_var[AbstractIdentifier t] returns[AbstractDeclVar tree]
 @init   {
+        AbstractInitialization init = new NoInitialization();
         }
-    : i=ident {
+    : id=ident {
+            assert($id.tree != null);
+            $tree = new DeclVar($t, $id.tree, new NoInitialization());
+            setLocation($tree, $id.start);
         }
-      (EQUALS e=expr {
+      (eq=EQUALS e=expr {
+            assert($e.tree != null);
+            init = new Initialization($e.tree);
+            $tree = new DeclVar($t, $id.tree, init);
+            setLocation(init, $eq);
+
         }
       )? {
+         setLocation($tree, $id.start);
         }
     ;
 
@@ -117,8 +128,10 @@ inst returns[AbstractInst tree]
     | SEMI {$tree = new NoOperation();
     		setLocation($tree, $SEMI);
         }
-    | PRINT OPARENT list_expr CPARENT SEMI {
+    | pr=PRINT OPARENT list_expr CPARENT SEMI {
             assert($list_expr.tree != null);
+            $tree = new Print(false, $list_expr.tree);
+            setLocation($tree, $pr);
         }
     | PRINTLN OPARENT list_expr CPARENT SEMI {
             assert($list_expr.tree != null);
@@ -141,9 +154,13 @@ inst returns[AbstractInst tree]
     | WHILE OPARENT condition=expr CPARENT OBRACE body=list_inst CBRACE {
             assert($condition.tree != null);
             assert($body.tree != null);
+            $tree = new While($condition.tree, $body.tree);
+            setLocation($tree, $WHILE);
         }
     | RETURN expr SEMI {
             assert($expr.tree != null);
+            $tree = new Return($expr.tree);
+            setLocation($tree, $RETURN);
         }
     ;
 
@@ -372,11 +389,18 @@ primary_expr returns[AbstractExpr tree]
 type returns[AbstractIdentifier tree]
     : ident {
             assert($ident.tree != null);
+            $tree = $ident.tree;
+            setLocation($tree, $ident.start);
         }
     ;
 
 literal returns[AbstractExpr tree]
     : INT {
+           // try{
+             //   $tree = new IntLiteral(Integer.parseInt($INT.getText()));
+           // } catch(NumberFormatException e) {
+             //   throw new DecaRecognitionException("Number too large.", this, _localctx);
+           // }
         }
     | fd=FLOAT {
         }
@@ -385,8 +409,10 @@ literal returns[AbstractExpr tree]
             setLocation($tree, $STRING);
         }
     | TRUE {
+    $tree = new BooleanLiteral(true);
         }
     | FALSE {
+    $tree = new BooleanLiteral(false);
         }
     | THIS {
         }
@@ -396,6 +422,8 @@ literal returns[AbstractExpr tree]
 
 ident returns[AbstractIdentifier tree]
     : IDENT {
+        SymbolTable symboltable = new SymbolTable();
+        $tree = new Identifier(symboltable.create($IDENT.getText()));
         }
     ;
 

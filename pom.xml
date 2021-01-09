@@ -267,9 +267,9 @@
                         </goals>
                     </execution>
                     <execution>
-                         <id>lex-test</id>
+                         <id>synt-test</id>
                          <configuration>
-                             <executable>./src/test/script/lex-test.sh</executable>
+                             <executable>./src/test/script/synt-test.sh</executable>
                          </configuration>
                          <phase>test</phase>
                          <goals>
@@ -277,9 +277,9 @@
                          </goals>
                      </execution>
                         <execution>
-                         <id>lex-test</id>
+                         <id>lex-test-inv</id>
                          <configuration>
-                             <executable>./src/test/script/lex-test.sh</executable>
+                             <executable>./src/test/script/lex-test-inv.sh</executable>
                          </configuration>
                          <phase>test</phase>
                          <goals>
@@ -287,9 +287,9 @@
                          </goals>
                      </execution>
                         <execution>
-                         <id>lex-test</id>
+                         <id>synt-test-inv</id>
                          <configuration>
-                             <executable>./src/test/script/lex-test.sh</executable>
+                             <executable>./src/test/script/synt-test-inv.sh</executable>
                          </configuration>
                          <phase>test</phase>
                          <goals>
