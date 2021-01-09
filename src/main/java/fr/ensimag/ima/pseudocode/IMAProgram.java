@@ -4,6 +4,12 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.LinkedList;
 
+import fr.ensimag.ima.pseudocode.instructions.BOV;
+import fr.ensimag.ima.pseudocode.instructions.ERROR;
+import fr.ensimag.ima.pseudocode.instructions.TSTO;
+import fr.ensimag.ima.pseudocode.instructions.WNL;
+import fr.ensimag.ima.pseudocode.instructions.WSTR;
+
 /**
  * Abstract representation of an IMA program, i.e. set of Lines.
  *
@@ -75,4 +81,32 @@ public class IMAProgram {
     public void addFirst(Instruction i, String comment) {
         addFirst(new Line(null, i, comment));
     }
+
+    private final int  TSTOLocation = 1;
+    
+    /*
+     * add the handler of stack_overflow_error in the assembly code
+     */
+	public void addStackException() {
+		Label stackErrorLabel = new Label("stack_overflow_error");
+		addLabel(stackErrorLabel);
+		
+		addInstruction(new WSTR(new ImmediateString("Error: Stack Overflow")));
+		addInstruction(new WNL());
+		addInstruction(new ERROR());
+	}
+	
+	/*
+	 * add TSTO and BOV instructions in the code
+	 * in order to ensure a correct execution
+	 * regarding stack_overflow_error
+	 */
+	public void addStackVerification(int counterMAx) {
+		// add BOV instruction
+		lines.add(TSTOLocation, new Line(new BOV(new Label("stack_overflow_error"))));
+		
+		//add TSTO instruction
+		
+		lines.add(TSTOLocation, new Line(new TSTO(new ImmediateInteger(counterMAx))));
+	}
 }

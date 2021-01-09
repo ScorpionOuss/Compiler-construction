@@ -232,5 +232,24 @@ public class DecacCompiler {
         parser.setDecacCompiler(this);
         return parser.parseProgramAndManageErrors(err);
     }
+    public static int StackCounterMax = 0;
+
+    /*
+     * Add the stack_over_flow code
+     */
+     public void addStackException() {
+    	 program.addStackException();
+     }
+     
+     /*
+      * Add the TSTO and BOV instructions
+      * for stack_over_flow avoidance
+      * 
+      * @param counterMax the maximum of memory words needed in stack
+      * 
+      */
+     public void addStackVerification() {
+    	 program.addStackVerification(StackCounterMax);
+     }
 
 }
