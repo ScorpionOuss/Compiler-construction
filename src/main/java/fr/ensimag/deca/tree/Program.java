@@ -39,13 +39,16 @@ public class Program extends AbstractProgram {
         main.verifyMain(compiler);
         LOG.debug("verify program: end");
     }
-
+    
+    public static int StackCounterMax = 0;
     @Override
     public void codeGenProgram(DecacCompiler compiler) {
         // A FAIRE: compléter ce squelette très rudimentaire de code
         compiler.addComment("Main program");
         main.codeGenMain(compiler);
         compiler.addInstruction(new HALT());
+        compiler.addStackException();
+        compiler.addStackVerification();
     }
 
     @Override
