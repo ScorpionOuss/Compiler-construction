@@ -1,0 +1,13 @@
+
+# Veuillez saisir le message de validation pour vos modifications. Les lignes
+# commençant par '#' seront ignorées, et un message vide abandonne la validation.
+#
+# Sur la branche master
+# Votre branche est en retard sur 'origin/master' de 2 commits, et peut être mise à jour en avance rapide.
+#   (utilisez "git pull" pour mettre à jour votre branche locale)
+#
+# Modifications qui seront validées :
+#	modifié :         src/main/antlr4/fr/ensimag/deca/syntax/DecaParser.g4
+#	modifié :         src/main/java/fr/ensimag/deca/tree/DeclVar.java
+#	nouveau fichier : src/test/script/stepA_lex.sh
+#

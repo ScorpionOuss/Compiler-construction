@@ -1,0 +1,12 @@
+// Description:
+//    Programme  avec deux println.
+//
+// Resultats:
+//    Hello
+//    Hello2
+
+{
+      if(true){}
+      else if(){}
+      else{}
+}
