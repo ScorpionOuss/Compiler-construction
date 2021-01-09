@@ -276,15 +276,10 @@
                              <goal>exec</goal>
                          </goals>
                      </execution>
-                        <execution>
-<<<<<<< HEAD
+                     <execution>
                          <id>lex-test-inv</id>
                          <configuration>
                              <executable>./src/test/script/lex-test-inv.sh</executable>
-=======
-                         <id>synt-test-inv</id>
-                         <configuration>
-                             <executable>./src/test/script/synt-test-inv.sh</executable>
                          </configuration>
                          <phase>test</phase>
                          <goals>
@@ -301,27 +296,20 @@
                              <goal>exec</goal>
                          </goals>
                      </execution>
-					 <execution>
+                    <execution>
                          <id>context-test-inv</id>
                          <configuration>
                              <executable>./src/test/script/context-test-inv.sh</executable>
->>>>>>> f0c2a6d6e408584bd0e2ec2d976e56527c59f348
                          </configuration>
                          <phase>test</phase>
                          <goals>
                              <goal>exec</goal>
                          </goals>
                      </execution>
-                        <execution>
-<<<<<<< HEAD
+                      <execution>
                          <id>synt-test-inv</id>
                          <configuration>
                              <executable>./src/test/script/synt-test-inv.sh</executable>
-=======
-                         <id>lex-test-inv</id>
-                         <configuration>
-                             <executable>./src/test/script/lex-test-inv.sh</executable>
->>>>>>> f0c2a6d6e408584bd0e2ec2d976e56527c59f348
                          </configuration>
                          <phase>test</phase>
                          <goals>
@@ -550,3 +538,4 @@
     <url>http://ensiwiki.ensimag.fr/index.php/Projet_GL</url>
     <description>Compilateur développé dans le cadre du Projet Génie Logiciel de l'Ensimag.</description>
 </project>
+
