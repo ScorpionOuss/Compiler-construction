@@ -382,7 +382,7 @@ literal returns[AbstractExpr tree]
         }
     | STRING {
              $tree = new StringLiteral($STRING.text);
-            setLocation($tree, $STRING);
+             setLocation($tree, $STRING);
         }
     | TRUE {
         }
