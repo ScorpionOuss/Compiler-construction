@@ -412,11 +412,7 @@ type returns[AbstractIdentifier tree]
 
 literal returns[AbstractExpr tree]
     : INT {
-           // try{
-             //   $tree = new IntLiteral(Integer.parseInt($INT.getText()));
-           // } catch(NumberFormatException e) {
-             //   throw new DecaRecognitionException("Number too large.", this, _localctx);
-           // }
+    $tree = new IntLiteral(Integer.parseInt($INT.getText()));
         }
     | fd=FLOAT {
         }
