@@ -232,7 +232,17 @@ public class DecacCompiler {
         parser.setDecacCompiler(this);
         return parser.parseProgramAndManageErrors(err);
     }
-    public static int StackCounterMax = 0;
+    
+    //the number of stack memory words needed 
+    private int stackCounterMax = 0;
+    
+    /*
+     * sort of setter for stackCounterMax
+     * @param i increment unit
+     */
+    public void incrementStackCounterMax(int i) {
+    	stackCounterMax += i;
+    }
 
     /*
      * Add the stack_over_flow code
@@ -249,7 +259,27 @@ public class DecacCompiler {
       * 
       */
      public void addStackVerification() {
-    	 program.addStackVerification(StackCounterMax);
+    	 program.addStackVerification(stackCounterMax);
+     }
+     
+     //number of global variables declared so far
+     private int numberCurrentVariables = 0;
+     
+     /*
+      * recover and increment
+      */
+     public int recoverAndIncrement() {
+    	 numberCurrentVariables++;
+    	 return numberCurrentVariables;
      }
 
+//     //On suppose pour l'instant qu'on ne dépasse pas 15 registres(15déclarations)
+//     private int pointerRegister = 1;
+//     
+//     public int recoverAndIncrementpR() {
+//    	 numberCurrentVariables++;
+//    	 return numberCurrentVariables;
+//     }
+
+     
 }
