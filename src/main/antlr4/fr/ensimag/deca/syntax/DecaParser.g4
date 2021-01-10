@@ -169,13 +169,12 @@ inst returns[AbstractInst tree]
 
 if_then_else returns[IfThenElse tree]
 @init {
-             $tree = new IfThenElse($condition.tree,$li_if.tree,$li_else.tree);
+             $tree = new IfThenElse($condition.tree, $li_if.tree, $li_else.tree);
 
 }
     : if1=IF OPARENT condition=expr CPARENT OBRACE li_if=list_inst CBRACE {
         assert($expr.tree != null);
         assert($li_if.tree != null);
-        
         setLocation($tree,$if1);
         }
       (ELSE elsif=IF OPARENT elsif_cond=expr CPARENT OBRACE elsif_li=list_inst CBRACE {
@@ -249,6 +248,8 @@ or_expr returns[AbstractExpr tree]
     | e1=or_expr OR e2=and_expr {
             assert($e1.tree != null);
             assert($e2.tree != null);
+            $tree = new Or($e1.tree,$e2.tree);
+            setLocation($tree,$e1.start);
        }
     ;
 
@@ -261,6 +262,8 @@ and_expr returns[AbstractExpr tree]
     |  e1=and_expr AND e2=eq_neq_expr {
             assert($e1.tree != null);                         
             assert($e2.tree != null);
+            $tree = new And($e1.tree, $e2.tree);
+            setLocation($tree,$e1.start);
         }
     ;
 
