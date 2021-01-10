@@ -75,14 +75,14 @@ IDENT : (LETTER|'$'|'_')(LETTER|DIGIT|'$'|'_')*;
 fragment POSITIVE_DIGIT : '1'..'9';
 INT: '0'| POSITIVE_DIGIT+;
 //FLoat literals
- NUM : DIGIT+;
-SIGN: '+'|'-';
-EXP: ('E'|'e') SIGN NUM;
-DEC : NUM '.' NUM ;
-FLOATDEC : (DEC|DEC EXP) ('F'|'f'|);
-DIGITHEX: '0'.. '9'|'A'..'F'|'a'..'f';
-NUMHEX : DIGITHEX+;
-FLOATHEX: ('0x' |'0X') NUMHEX'.' NUMHEX('P'|'p')SIGN NUM('F'|'f'|);
+NUM : DIGIT+;
+fragment SIGN: '+'|'-';
+fragment EXP: ('E'|'e') SIGN NUM;
+fragment DEC : NUM '.' NUM ;
+fragment FLOATDEC : (DEC|DEC EXP) ('F'|'f'|);
+fragment DIGITHEX: '0'.. '9'|'A'..'F'|'a'..'f';
+fragment NUMHEX : DIGITHEX+;
+fragment FLOATHEX: ('0x' |'0X') NUMHEX'.' NUMHEX('P'|'p')SIGN NUM('F'|'f'|);
 FLOAT : FLOATDEC | FLOATHEX;
 
 //Strings
@@ -95,5 +95,5 @@ MULTI_LINE_STRING: '"' (STRING_CAR |EOL|'\\"'|'\\\\')* '"';
 // Ignore spaces, tabs, newlines and whitespaces
 
 //Include
-FILENAME : (LETTER|DIGIT|'.'|'+'|'-'|'_')+;
+fragment FILENAME : (LETTER|DIGIT|'.'|'+'|'-'|'_')+;
 INCLUDE: '#include' ()* '"' FILENAME '"';
