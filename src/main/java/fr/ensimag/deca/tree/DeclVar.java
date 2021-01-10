@@ -64,12 +64,6 @@ public class DeclVar extends AbstractDeclVar {
 
 	@Override
 	protected void codeGenAndLinkDeclVariable(DecacCompiler compiler) {
-		//Increment SP pointer
-		compiler.addInstruction(new ADDSP(1));
-		
-		//Increment stackcounter
-		compiler.incrementStackCounterMax(1);
-		
 		//setOperand Daddr
 		assert(varName.getDefinition() instanceof VariableDefinition);//defensive programming
 		//down cast merde! il faut regarder s'il y a une autre issue.
