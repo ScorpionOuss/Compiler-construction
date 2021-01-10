@@ -1,11 +1,17 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.context.Type;
+import fr.ensimag.deca.context.VariableDefinition;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
+import fr.ensimag.deca.context.ExpDefinition;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.RegisterOffset;
+import fr.ensimag.ima.pseudocode.instructions.ADDSP;
+
 import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
 
@@ -55,4 +61,17 @@ public class DeclVar extends AbstractDeclVar {
         varName.prettyPrint(s, prefix, false);
         initialization.prettyPrint(s, prefix, true);
     }
+
+	@Override
+	protected void codeGenAndLinkDeclVariable(DecacCompiler compiler) {
+		//setOperand Daddr
+		assert(varName.getDefinition() instanceof VariableDefinition);//defensive programming
+		//down cast merde! il faut regarder s'il y a une autre issue.
+		VariableDefinition variableName = (VariableDefinition) varName.getDefinition();
+		
+		variableName.setOperand(new RegisterOffset(compiler.recoverAndIncrement(), Register.GB));
+		
+		//à faire: traiter l'initialisation
+		
+	}
 }

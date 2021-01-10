@@ -1,6 +1,7 @@
 package fr.ensimag.deca.context;
 
 import fr.ensimag.deca.tree.Location;
+import fr.ensimag.ima.pseudocode.DAddr;
 
 /**
  * Definition of an identifier.
@@ -21,7 +22,7 @@ public abstract class Definition {
         res += ", type=" + type;
         return res;
     }
-
+    
     public abstract String getNature();
 
     public Definition(Type type, Location location) {
