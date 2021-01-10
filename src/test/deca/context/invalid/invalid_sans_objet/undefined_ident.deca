@@ -1,0 +1,13 @@
+// Description:
+//    test de programme contextuellement incorrect.
+//
+// Resultats:
+//    Ligne 12 : Erreur de déclaration.
+//    l'identificateur x n'a pas été defini précédemment.
+//
+// Historique:
+//    cree le 09/01/2021
+
+{
+	println(x);
+}
