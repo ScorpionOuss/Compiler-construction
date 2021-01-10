@@ -1,0 +1,13 @@
+// Description:
+//    test de programme contextuellement incorrect.
+//
+// Resultats:
+//    Ligne 12 : Erreur de déclaration.
+//    champ de type void interdit.
+//
+// Historique:
+//    cree le 09/01/2021
+
+{
+	void x;
+}
