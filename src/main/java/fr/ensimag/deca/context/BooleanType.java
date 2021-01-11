@@ -23,8 +23,27 @@ public class BooleanType extends Type {
 
     @Override
     public boolean sameType(Type otherType) {
-        throw new UnsupportedOperationException("not yet implemented");
+    	// implemented
+    	return otherType.isBoolean();
     }
+
+	@Override
+	public boolean assignCompatible(Type otherType) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean subType(Type otherType) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean castCompatible(Type otherType) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
 
 }

@@ -22,8 +22,25 @@ public class FloatType extends Type {
 
     @Override
     public boolean sameType(Type otherType) {
-        throw new UnsupportedOperationException("not yet implemented");
+    	// implemented
+    	return otherType.isFloat();
+    }
+    
+    @Override
+    public boolean assignCompatible(Type otherType) {
+    	return otherType.isInt();
     }
 
+	@Override
+	public boolean subType(Type otherType) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean castCompatible(Type otherType) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
 }

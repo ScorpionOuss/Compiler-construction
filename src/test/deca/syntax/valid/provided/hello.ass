@@ -2,6 +2,7 @@
 	TSTO #0
 	BOV stack_overflow_error
 ; Main program
+	ADDSP #0
 ; Beginning of main instructions:
 	WSTR """Hello"""
 	WNL

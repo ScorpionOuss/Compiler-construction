@@ -20,6 +20,15 @@ public abstract class Type {
      * classes, this means they represent the same class).
      */
     public abstract boolean sameType(Type otherType);
+    
+    /**
+    * True if we can assign to this a value of otherType 
+    */
+    public abstract boolean assignCompatible(Type otherType);
+    
+    public abstract boolean subType(Type otherType);
+    
+    public abstract boolean castCompatible(Type otherType);
 
     private final Symbol name;
 
