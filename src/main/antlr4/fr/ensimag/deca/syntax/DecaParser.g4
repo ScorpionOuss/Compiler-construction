@@ -368,6 +368,8 @@ unary_expr returns[AbstractExpr tree]
         }
     | op=EXCLAM e=unary_expr {
             assert($e.tree != null);
+            $tree = new Not($e.tree);
+            setLocation($tree,$op);
         }
     | select_expr {
             assert($select_expr.tree != null);
@@ -474,48 +476,85 @@ list_classes returns[ListDeclClass tree]
     }
    :
       (c1=class_decl {
+        assert($c1.tree != null);
+        $tree.add($c1.tree);
+        setLocation($tree,$c1.start);
         }
       )*
     ;
 
-class_decl
+class_decl returns[AbstractDeclClass tree]
     : CLASS name=ident superclass=class_extension OBRACE class_body CBRACE {
+            assert($name.tree != null);
+            assert($superclass.tree != null);
+            assert($class_body.listdeclfield != null);
+            assert($class_body.listdeclmethod != null);
+            $tree = new DeclClass($name.tree, $superclass.tree, 
+            $class_body.listdeclfield, $class_body.listdeclmethod);
+            setLocation($tree,$CLASS);
+
         }
     ;
 
 class_extension returns[AbstractIdentifier tree]
     : EXTENDS ident {
+        assert($ident.tree != null);
+        $tree = $ident.tree;
+        setLocation($tree,$EXTENDS);
         }
     | /* epsilon */ {
         }
     ;
 
-class_body
+class_body returns[ListDeclField listdeclfield, ListDeclMethod listdeclmethod]
     : (m=decl_method {
+        assert($m.tree != null);
+        $listdeclmethod.add($m.tree);
+        setLocation($listdeclmethod, $m.start);
         }
-      | decl_field_set
+      | decl_field_set{
+        assert($decl_field_set.tree != null);
+        $listdeclfield.add($decl_field_set.tree);
+        setLocation($listdeclfield, $decl_field_set.start);
+        }
       )*
     ;
 
-decl_field_set
-    : v=visibility t=type list_decl_field
-      SEMI
+decl_field_set returns[AbstractFieldSet tree]
+    : v=visibility t=type ldf=list_decl_field
+      SEMI{
+      assert($v.tree != null);
+      assert($t.tree != null);
+      assert($ldf.tree != null);
+      $tree.add($v.tree);
+      $tree.add($t.tree);
+      $tree.add($ldf.tree);
+      setLocation($tree,$v.start);
+        }
     ;
 
-visibility
+visibility returns[Visibility tree]
     : /* epsilon */ {
+        $tree = Visibility.PUBLIC;
+        
         }
     | PROTECTED {
+        $tree = Visibility.PROTECTED;
+        setLocation($tree,$PROTECTED);
         }
     ;
 
-list_decl_field
+list_decl_field returns [ListDeclField tree]
     : dv1=decl_field
         (COMMA dv2=decl_field
-      )*
+      )*{
+        assert($dv1.tree != null);
+        assert($dv2.tree != null);
+        
+        }
     ;
 
-decl_field
+decl_field returns[DeclField tree]
     : i=ident {
         }
       (EQUALS e=expr {
@@ -524,7 +563,7 @@ decl_field
         }
     ;
 
-decl_method
+decl_method returns[AbstractDeclMethod tree]
 @init {
 }
     : type ident OPARENT params=list_params CPARENT (block {
@@ -535,7 +574,7 @@ decl_method
         }
     ;
 
-list_params
+list_params returns[ListParams tree]
     : (p1=param {
         } (COMMA p2=param {
         }
