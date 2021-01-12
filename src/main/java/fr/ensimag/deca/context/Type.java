@@ -20,6 +20,35 @@ public abstract class Type {
      * classes, this means they represent the same class).
      */
     public abstract boolean sameType(Type otherType);
+    
+    /**
+    * True if we can assign to this a value of otherType 
+    */
+    public boolean assignCompatible(Type otherType) {
+    	if (this.isFloat() && otherType.isInt()) {
+    		return true;
+    	}
+    	if (this.subType(otherType)) {
+    		return true;
+    	}
+    	return false;
+    }
+    
+    public boolean subType(Type otherType) {
+    	if (this.sameType(otherType)) {
+    		return true;
+    	}
+    	return false;
+    }
+    
+    public boolean castCompatible(Type otherType) {
+    	if (!this.isVoid()) {
+    		if (this.assignCompatible(otherType) || otherType.assignCompatible(this)) {
+    			return true;
+    		}
+    	}
+    	return false;
+    }
 
     private final Symbol name;
 

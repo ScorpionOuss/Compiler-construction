@@ -19,7 +19,7 @@ public class Main extends AbstractMain {
     public Main(ListDeclVar declVariables,
             ListInst insts) {
         Validate.notNull(declVariables);
-        Validate.notNull(insts);
+        Validate.notNull(insts);	
         this.declVariables = declVariables;
         this.insts = insts;
     }
@@ -27,6 +27,7 @@ public class Main extends AbstractMain {
     @Override
     protected void verifyMain(DecacCompiler compiler) throws ContextualError {
         LOG.debug("verify Main: start");
+        declVariables.verifyListDeclVariable(compiler, null, null);
         insts.verifyListInst(compiler, null, null, null);
         // A FAIRE: Appeler méthodes "verify*" de ListDeclVarSet et ListInst.
         // Vous avez le droit de changer le profil fourni pour ces méthodes
