@@ -37,5 +37,20 @@ public class Assign extends AbstractBinaryExpr {
     protected String getOperatorName() {
         return "=";
     }
+    
+//    @Override
+//    protected void codeGenInst(DecacCompiler compiler) {
+//    	//Executing right operand
+//    	assert compiler.getRegisterPointer() == 2;
+//    	getRightOperand().codeExp(compiler.getRegisterPointer());
+//    	//Affectation
+//    	
+//    }
+//
+//	@Override
+//	protected void codeExp(int registerPointer) {
+//		// TODO Auto-generated method stub
+//		
+//	}
 
 }

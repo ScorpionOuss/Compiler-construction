@@ -67,11 +67,11 @@ public class DeclVar extends AbstractDeclVar {
 		//setOperand Daddr
 		assert(varName.getDefinition() instanceof VariableDefinition);//defensive programming
 		//down cast merde! il faut regarder s'il y a une autre issue.
-		VariableDefinition variableName = (VariableDefinition) varName.getDefinition();
 		
-		variableName.setOperand(new RegisterOffset(compiler.recoverAndIncrement(), Register.GB));
+		varName.getDefinition().setOperand(new RegisterOffset(compiler.recoverAndIncrement(), Register.GB));
 		
 		//à faire: traiter l'initialisation
-		
+		initialization.codeGenInitialization(compiler);
+		initialization.STOREInstrution(compiler, varName.getDefinition());
 	}
 }

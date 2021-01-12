@@ -48,6 +48,10 @@ public class StringLiteral extends AbstractStringLiteral {
     protected void codeGenPrint(DecacCompiler compiler) {
         compiler.addInstruction(new WSTR(new ImmediateString(value)));
     }
+    
+    @Override
+    protected void codeGenInst(DecacCompiler compiler) {
+    }
 
     @Override
     public void decompile(IndentPrintStream s) {
@@ -69,5 +73,7 @@ public class StringLiteral extends AbstractStringLiteral {
     String prettyPrintNode() {
         return "StringLiteral (" + value + ")";
     }
+
+
 
 }

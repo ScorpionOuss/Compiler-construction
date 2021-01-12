@@ -45,14 +45,14 @@ public class TestDeclaraction {
         AbstractIdentifier id2 = new Identifier(create2);
         id1.setDefinition(new TypeDefinition(new StringType(create), new Location(0, 0, null)));
         id2.setDefinition(new VariableDefinition(new StringType(create2), new Location(0, 0, null)));
-        listVar.add(new DeclVar(id1, id2, new NoInitialization()));
+        listVar.add(new DeclVar(id1, id2, new Initialization(new IntLiteral(1))));
         Symbol create3 = table.create("int");
         Symbol create4 = table.create("y");
         AbstractIdentifier id3 = new Identifier(create3);
         AbstractIdentifier id4 = new Identifier(create4);
         id3.setDefinition(new TypeDefinition(new StringType(create3), new Location(0, 0, null)));
         id4.setDefinition(new VariableDefinition(new StringType(create4), new Location(0, 0, null)));
-        listVar.add(new DeclVar(id3, id4, new NoInitialization()));
+        listVar.add(new DeclVar(id3, id4, new Initialization(new FloatLiteral(2))));
 
 
 

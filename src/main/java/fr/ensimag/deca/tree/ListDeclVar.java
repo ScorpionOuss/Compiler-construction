@@ -45,11 +45,13 @@ public class ListDeclVar extends TreeList<AbstractDeclVar> {
     }
 
 	private void instructionADDSP(DecacCompiler compiler) {
+		if (size() > 0) {
 		//Increment SP pointer
 		compiler.addInstruction(new ADDSP(size()));
 				
 		//Increment stackcounter
 		compiler.incrementStackCounterMax(size());
+		}
 	}
 
 }

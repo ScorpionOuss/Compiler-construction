@@ -273,13 +273,28 @@ public class DecacCompiler {
     	 return numberCurrentVariables;
      }
 
-//     //On suppose pour l'instant qu'on ne dépasse pas 15 registres(15déclarations)
-//     private int pointerRegister = 1;
-//     
-//     public int recoverAndIncrementpR() {
-//    	 numberCurrentVariables++;
-//    	 return numberCurrentVariables;
-//     }
-
+     //Pointeur registre courant manipulé
+     private int registerPointer = 1;
+     
+     /*
+      * Increments the register Pointer
+      */
+     public void incrementRegisterPointer() {
+    	 registerPointer++;
+     }
+     
+     /*
+      * Decrements Register Pointer
+      */
+     public void decrementRegisterPointer() {
+    	 registerPointer++;
+     }
+     
+     /*
+      * Getter of registerPointer
+      */
+     public int getRegisterPointer() {
+    	 return registerPointer;
+     }
      
 }
