@@ -26,21 +26,4 @@ public class FloatType extends Type {
     	return otherType.isFloat();
     }
     
-    @Override
-    public boolean assignCompatible(Type otherType) {
-    	return otherType.isInt();
-    }
-
-	@Override
-	public boolean subType(Type otherType) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean castCompatible(Type otherType) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
 }

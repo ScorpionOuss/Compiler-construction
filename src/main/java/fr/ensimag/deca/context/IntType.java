@@ -26,23 +26,5 @@ public class IntType extends Type {
     	return otherType.isInt();
     }
 
-	@Override
-	public boolean assignCompatible(Type otherType) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean subType(Type otherType) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean castCompatible(Type otherType) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
 
 }

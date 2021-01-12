@@ -24,11 +24,31 @@ public abstract class Type {
     /**
     * True if we can assign to this a value of otherType 
     */
-    public abstract boolean assignCompatible(Type otherType);
+    public boolean assignCompatible(Type otherType) {
+    	if (this.isFloat() && otherType.isInt()) {
+    		return true;
+    	}
+    	if (this.subType(otherType)) {
+    		return true;
+    	}
+    	return false;
+    }
     
-    public abstract boolean subType(Type otherType);
+    public boolean subType(Type otherType) {
+    	if (this.sameType(otherType)) {
+    		return true;
+    	}
+    	return false;
+    }
     
-    public abstract boolean castCompatible(Type otherType);
+    public boolean castCompatible(Type otherType) {
+    	if (!this.isVoid()) {
+    		if (this.assignCompatible(otherType) || otherType.assignCompatible(this)) {
+    			return true;
+    		}
+    	}
+    	return false;
+    }
 
     private final Symbol name;
 

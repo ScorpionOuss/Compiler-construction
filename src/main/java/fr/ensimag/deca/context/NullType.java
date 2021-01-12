@@ -32,20 +32,10 @@ public class NullType extends Type {
     }
 
 	@Override
-	public boolean assignCompatible(Type otherType) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
 	public boolean subType(Type otherType) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean castCompatible(Type otherType) {
-		// TODO Auto-generated method stub
+		if (otherType.isClassOrNull()) {
+			return true;
+		} 
 		return false;
 	}
 
