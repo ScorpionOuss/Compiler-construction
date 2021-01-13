@@ -56,6 +56,15 @@ public class SymbolTable {
         public int hashCode() {
         	return name.hashCode();
         }
+        
+        @Override
+        public boolean equals(Object o) {
+        	if (o instanceof Symbol) {
+        		Symbol s = (Symbol)o;
+        		return this.getName().equals(s.getName());
+        	}
+        	return false;
+        }
 
         private String name;
     }

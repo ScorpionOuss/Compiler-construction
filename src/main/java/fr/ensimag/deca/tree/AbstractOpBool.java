@@ -1,6 +1,7 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.context.Type;
+import fr.ensimag.deca.tools.SymbolTable;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
@@ -20,7 +21,13 @@ public abstract class AbstractOpBool extends AbstractBinaryExpr {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+    	Type leftType = this.getLeftOperand().verifyExpr(compiler, localEnv, currentClass);
+    	Type rightType = this.getRightOperand().verifyExpr(compiler, localEnv, currentClass);
+    	SymbolTable symbolTable = new SymbolTable();
+    	if (leftType.isBoolean() && rightType.isBoolean()) {
+    		return compiler.getEnvironment().get(symbolTable.create("boolean")).getType();
+    	}
+    	throw new ContextualError("Incompatible types for binary boolean operation", this.getLocation());
     }
 
 }

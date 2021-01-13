@@ -5,51 +5,36 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
-import fr.ensimag.deca.context.StringType;
+import fr.ensimag.deca.context.NullType;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable;
-import fr.ensimag.ima.pseudocode.ImmediateString;
-import fr.ensimag.ima.pseudocode.instructions.WSTR;
+
 import java.io.PrintStream;
-import org.apache.commons.lang.Validate;
 
 /**
- * String literal
+ * Null
  *
  * @author gl16
- * @date 01/01/2021
+ * @date 12/01/2021
  */
-public class StringLiteral extends AbstractStringLiteral {
-
-    @Override
-    public String getValue() {
-        return value;
-    }
-
-    private String value;
-
-    public StringLiteral(String value) {
-        Validate.notNull(value);
-        this.value = value;
-    }
+public class Null extends AbstractExpr {
 
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-        // implemented
     	SymbolTable symbolTable = new SymbolTable();
-    	return compiler.getEnvironment().get(symbolTable.create("string")).getType(); 
+    	return new NullType(symbolTable.create("null"));
     }
 
+
     @Override
-    protected void codeGenPrint(DecacCompiler compiler) {
-        compiler.addInstruction(new WSTR(new ImmediateString(value)));
+    String prettyPrintNode() {
+        return "Null";
     }
 
     @Override
     public void decompile(IndentPrintStream s) {
-    	// to be verified
-    	s.print(value);
+    	throw new UnsupportedOperationException("not yet imlemented");
     }
 
     @Override
@@ -60,11 +45,6 @@ public class StringLiteral extends AbstractStringLiteral {
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
         // leaf node => nothing to do
-    }
-    
-    @Override
-    String prettyPrintNode() {
-        return "StringLiteral (" + value + ")";
     }
 
 }

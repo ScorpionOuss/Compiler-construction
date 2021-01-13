@@ -1,6 +1,7 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.context.Type;
+import fr.ensimag.deca.tools.SymbolTable;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
@@ -21,6 +22,25 @@ public abstract class AbstractOpArith extends AbstractBinaryExpr {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+    	Type leftType = this.getLeftOperand().verifyExpr(compiler, localEnv, currentClass);
+    	Type rightType = this.getRightOperand().verifyExpr(compiler, localEnv, currentClass);
+    	SymbolTable symbolTable = new SymbolTable();
+    	if (leftType.isInt()) {
+    		if (rightType.isInt()) {
+    			return compiler.getEnvironment().get(symbolTable.create("int")).getType();
+    		}
+    		if (rightType.isFloat()) {
+    			return compiler.getEnvironment().get(symbolTable.create("float")).getType();
+    		}
+    	}
+    	if (rightType.isFloat()) {
+    		if (leftType.isInt()) {
+    			return compiler.getEnvironment().get(symbolTable.create("float")).getType();
+    		}
+    		if (leftType.isFloat()) {
+    			return compiler.getEnvironment().get(symbolTable.create("float")).getType();
+    		}
+    	}
+    	throw new ContextualError("Arithmetic operation not defined for the used types", this.getLocation());
     }
 }
