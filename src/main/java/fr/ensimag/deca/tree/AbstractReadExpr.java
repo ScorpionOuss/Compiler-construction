@@ -1,5 +1,8 @@
 package fr.ensimag.deca.tree;
 
+import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.ima.pseudocode.DVal;
+import fr.ensimag.ima.pseudocode.Label;
 
 /**
  * read...() statement.
@@ -12,6 +15,20 @@ public abstract class AbstractReadExpr extends AbstractExpr {
     public AbstractReadExpr() {
         super();
     }
+    
+	@Override
+	public boolean adressable() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
+	@Override
+	public DVal getAdresse() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
+	public void codeCond(DecacCompiler compiler, boolean bool, Label endAnd) {
+        throw new UnsupportedOperationException("not yet implemented");
+	}
 }

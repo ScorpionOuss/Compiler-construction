@@ -1,7 +1,10 @@
 package fr.ensimag.deca.context;
 
+import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.tree.Location;
 import fr.ensimag.ima.pseudocode.DAddr;
+import fr.ensimag.ima.pseudocode.GPRegister;
+import fr.ensimag.ima.pseudocode.RegisterOffset;
 
 /**
  * Definition of an identifier.
@@ -80,5 +83,9 @@ public abstract class Definition {
     }
 
     public abstract boolean isExpression();
+
+	public abstract void setOperand(DAddr operand);
+
+	public abstract DAddr getOperand();
 
 }

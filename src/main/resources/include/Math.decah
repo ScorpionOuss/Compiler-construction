@@ -45,17 +45,29 @@ class Math {
     	}
 
     }
-    float sin(float f) {
-
-        println("sin(f) not yet implemented");
+//implémentation de la fonction sinus en utilisant le dévellopement en série entière par récurrence
+		double sin(double f) {
+			if(n==0) return x;
+			else{
+				return mysin(x ,n-1) + (Math.pow(-1, n)/fact(2*n+1))*Math.pow(x, 2*n+1);
+				}
     }
-    float asin(float f) {
+
+
+		float asin(float f) {
         println("asin(f) not yet implemented");
     }
-    float atan(float f) {
-        println("atan(f) not yet implemented");
+
+//implémentation de la fonction arctan en utilisant le dévellopement en série entière par récurrence
+		double atan(double f) {
+			if(n==0) return x;
+			else{
+				return myarctan(x ,n-1) + (Math.pow(-1, n)/(2*n+1))*Math.pow(x, 2*n+1);
+				}
+
     }
-    float ulp(float f) {
+
+		float ulp(float f) {
         println("ulp(f) not yet implemented");
     }
 }

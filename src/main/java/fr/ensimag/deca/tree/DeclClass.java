@@ -17,6 +17,17 @@ import org.apache.commons.lang.Validate;
  * @date 01/01/2021
  */
 public class DeclClass extends AbstractDeclClass {
+    private AbstractIdentifier name;
+    private AbstractIdentifier superClass;
+    private ListDeclFieldSet listDeclFieldSet;
+    private ListDeclMethod listDeclMethod;
+    public DeclClass(AbstractIdentifier name,AbstractIdentifier superClass,
+            ListDeclFieldSet listDeclFieldSet, ListDeclMethod listDeclMethod){
+            this.name = name;
+            this.superClass = superClass;
+            this.listDeclFieldSet = listDeclFieldSet; 
+            this.listDeclMethod = listDeclMethod;
+    }
 
 
     private final AbstractIdentifier type;
@@ -59,7 +70,11 @@ public class DeclClass extends AbstractDeclClass {
 
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
-        throw new UnsupportedOperationException("Not yet supported");
+        name.prettyPrint(s, prefix, false);
+        superClass.prettyPrint(s, prefix, false);
+        listDeclFieldSet.prettyPrint(s, prefix, true);
+        listDeclMethod.prettyPrint(s, prefix, true);
+        //throw new UnsupportedOperationException("Not yet supported");
     }
 
     @Override

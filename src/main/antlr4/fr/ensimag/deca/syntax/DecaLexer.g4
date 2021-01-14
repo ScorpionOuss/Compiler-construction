@@ -54,6 +54,7 @@ EXCLAM: '!';
 DOT: '.';
 TIMES: '*';
 SLASH: '/';
+
 fragment DIGIT: '0'..'9';
 fragment POSITIVE_DIGIT: '1'..'9';
 fragment LETTER: ('a'..'z'|'A'..'Z');

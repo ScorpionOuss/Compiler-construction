@@ -1,21 +1,18 @@
 package fr.ensimag.deca.tree;
 
-import fr.ensimag.deca.context.Type;
-import fr.ensimag.deca.context.VariableDefinition;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
+import fr.ensimag.deca.context.Type;
+
 import fr.ensimag.deca.context.EnvironmentExp.DoubleDefException;
-import fr.ensimag.deca.context.ExpDefinition;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.RegisterOffset;
-import fr.ensimag.ima.pseudocode.instructions.ADDSP;
 
 import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
-
 /**
  * @author gl16
  * @date 01/01/2021
@@ -40,7 +37,7 @@ public class DeclVar extends AbstractDeclVar {
     protected void verifyDeclVar(DecacCompiler compiler,
             EnvironmentExp localEnv, ClassDefinition currentClass)
             throws ContextualError {
-    	Type varType = type.verifyType(compiler);
+        Type varType = type.verifyType(compiler);
     	try {
 			localEnv.declare(varName.getName(), new VariableDefinition(varType, varName.getLocation()));
 		} catch (DoubleDefException e) {
@@ -52,7 +49,7 @@ public class DeclVar extends AbstractDeclVar {
     
     @Override
     public void decompile(IndentPrintStream s) {
-        throw new UnsupportedOperationException("not yet implemented");
+        //throw new UnsupportedOperationException("not yet implemented");
     }
 
     @Override
@@ -75,11 +72,11 @@ public class DeclVar extends AbstractDeclVar {
 		//setOperand Daddr
 		assert(varName.getDefinition() instanceof VariableDefinition);//defensive programming
 		//down cast merde! il faut regarder s'il y a une autre issue.
-		VariableDefinition variableName = (VariableDefinition) varName.getDefinition();
 		
-		variableName.setOperand(new RegisterOffset(compiler.recoverAndIncrement(), Register.GB));
+		varName.getDefinition().setOperand(new RegisterOffset(compiler.recoverAndIncrement(), Register.GB));
 		
 		//à faire: traiter l'initialisation
-		
+		initialization.codeGenInitialization(compiler);
+		initialization.STOREInstrution(compiler, varName.getDefinition());
 	}
 }

@@ -1,0 +1,4 @@
+
+ class A extends B{int x ;
+	int add(int y){}}
+	
