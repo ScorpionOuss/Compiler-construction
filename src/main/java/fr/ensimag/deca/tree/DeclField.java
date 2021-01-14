@@ -15,20 +15,17 @@ import fr.ensimag.deca.tools.IndentPrintStream;
  * @date 14/01/2021
 */
 public class DeclField extends AbstractDeclField {
-
-	final private Visibility visibility;
-    final private AbstractIdentifier type;
-    final private AbstractIdentifier fieldName;
+    
+    final private AbstractIdentifier ident;
+    
     final private AbstractInitialization initialization;
 
-    public DeclField(Visibility visibility, AbstractIdentifier type, AbstractIdentifier fieldName, AbstractInitialization initialization) {
-    	Validate.notNull(visibility);
-        Validate.notNull(type);
-        Validate.notNull(fieldName);
+    public DeclField( AbstractIdentifier ident, AbstractInitialization initialization) {
+    	
+        Validate.notNull(ident);
         Validate.notNull(initialization);
-        this.visibility = visibility;
-        this.type = type;
-        this.fieldName = fieldName;
+       
+        this.ident = ident;
         this.initialization = initialization;
     }
 
@@ -49,17 +46,15 @@ public class DeclField extends AbstractDeclField {
     protected
     void iterChildren(TreeFunction f) {
     	// to be verified
-        type.iter(f);
-        fieldName.iter(f);
+        ident.iter(f);
         initialization.iter(f);
     }
 
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
     	// to be verified
-        type.prettyPrint(s, prefix, false);
-        fieldName.prettyPrint(s, prefix, false);
-        initialization.prettyPrint(s, prefix, true);
+        ident.prettyPrint(s, prefix, false);
+        initialization.prettyPrint(s, prefix, false);
     }
 
 }

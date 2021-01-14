@@ -25,10 +25,7 @@ public class DeclClass extends AbstractDeclClass {
     
     public DeclClass(AbstractIdentifier name,AbstractIdentifier superClass,
             ListDeclFieldSet listDeclFieldSet, ListDeclMethod listDeclMethod){
-			Validate.notNull(name);
-			Validate.notNull(superClass);
-			Validate.notNull(fields);
-			Validate.notNull(methods);
+			
             this.name = name;
             this.superClass = superClass;
             this.fields = listDeclFieldSet; 

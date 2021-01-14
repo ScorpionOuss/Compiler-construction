@@ -1,1 +1,1 @@
-{println(this);}
+{ this.x = 3;}
