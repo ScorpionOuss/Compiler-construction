@@ -6,7 +6,7 @@
 //    Hello2
 
 {
-      if(true){}
-      else if(){}
-      else{}
+      if(true){int x=3;}
+      else if(false){int x=4;}
+      else{return false;}
 }
