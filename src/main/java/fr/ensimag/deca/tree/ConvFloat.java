@@ -22,10 +22,18 @@ public class ConvFloat extends AbstractUnaryExpr {
         throw new UnsupportedOperationException("not yet implemented");
     }
 
-
     @Override
     protected String getOperatorName() {
         return "/* conv float */";
     }
 
+    @Override
+    protected void codeGenInst(DecacCompiler compiler) {
+    	assert(getOperand().getType().isInt());
+    }
+    
+	@Override
+	public void codeExp(DecacCompiler compiler, int registerPointer) {
+        throw new UnsupportedOperationException("not yet implemented");		
+	}
 }

@@ -274,7 +274,9 @@ public class DecacCompiler {
      }
 
      //Pointeur registre courant manipulé
-     private int registerPointer = 1;
+     private int registerPointer = 2;
+
+	public int numberOfRegister = 15;
      
      /*
       * Increments the register Pointer

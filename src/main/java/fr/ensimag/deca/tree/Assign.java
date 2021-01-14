@@ -1,6 +1,9 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.context.Type;
+import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.instructions.STORE;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
@@ -38,19 +41,25 @@ public class Assign extends AbstractBinaryExpr {
         return "=";
     }
     
-//    @Override
-//    protected void codeGenInst(DecacCompiler compiler) {
-//    	//Executing right operand
-//    	assert compiler.getRegisterPointer() == 2;
-//    	getRightOperand().codeExp(compiler.getRegisterPointer());
-//    	//Affectation
-//    	
-//    }
-//
-//	@Override
-//	protected void codeExp(int registerPointer) {
-//		// TODO Auto-generated method stub
-//		
-//	}
+    @Override
+    protected void codeGenInst(DecacCompiler compiler) {
+    	//Executing right operand
+    	assert compiler.getRegisterPointer() == 2;
+    	//On peut aussi faire codeGenInst
+    	getRightOperand().codeExp(compiler, compiler.getRegisterPointer());
+    	//Affectation
+    	compiler.addInstruction(new STORE(Register.getR(2),
+    			getLeftOperand().getAdresse()));
+    }
 
+	@Override
+	public void codeExp(DecacCompiler compiler, int registerPointer) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	public void codeCond(DecacCompiler compiler, boolean bool, Label endAnd) {
+        throw new UnsupportedOperationException("not yet implemented");
+	}
 }

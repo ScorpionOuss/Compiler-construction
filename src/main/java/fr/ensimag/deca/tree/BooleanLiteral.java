@@ -6,6 +6,10 @@ import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.DVal;
+import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.instructions.BRA;
+
 import java.io.PrintStream;
 
 /**
@@ -52,4 +56,27 @@ public class BooleanLiteral extends AbstractExpr {
         return "BooleanLiteral (" + value + ")";
     }
 
+	@Override
+	public
+	void codeExp(DecacCompiler compiler, int registerPointer) {
+        throw new UnsupportedOperationException("not yet implemented");		
+	}
+
+	@Override
+	public boolean adressable() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public DVal getAdresse() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void codeCond(DecacCompiler compiler, boolean bool, Label etiquette) {
+		if (bool == value) {
+			compiler.addInstruction(new BRA(etiquette));
+		}
+	}
 }

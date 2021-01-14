@@ -1,5 +1,7 @@
 package fr.ensimag.deca.tree;
 
+import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.ima.pseudocode.Label;
 
 /**
  *
@@ -18,4 +20,17 @@ public class NotEquals extends AbstractOpExactCmp {
         return "!=";
     }
 
+
+	@Override
+	public
+	void codeExp(DecacCompiler compiler, int registerPointer) {
+        throw new UnsupportedOperationException("not yet implemented");
+		
+	}
+
+	public void codeCond(DecacCompiler compiler, boolean bool, Label etiquette) {
+		//We use the Equals method
+		Equals equal = new Equals(getLeftOperand(), getRightOperand());
+		equal.codeCond(compiler, !bool, etiquette);
+	}
 }

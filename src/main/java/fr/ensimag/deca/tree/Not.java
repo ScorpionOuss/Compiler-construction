@@ -1,6 +1,7 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.context.Type;
+import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
@@ -28,4 +29,17 @@ public class Not extends AbstractUnaryExpr {
     protected String getOperatorName() {
         return "!";
     }
+
+	@Override
+	public
+	void codeExp(DecacCompiler compiler, int registerPointer) {
+        throw new UnsupportedOperationException("not yet implemented");
+		
+	}
+	
+	@Override
+	public void codeCond(DecacCompiler compiler, boolean bool, Label etiquette) {
+		getOperand().codeCond(compiler, !bool, etiquette);
+	}
+	
 }

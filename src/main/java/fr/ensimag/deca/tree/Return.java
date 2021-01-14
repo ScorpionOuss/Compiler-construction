@@ -7,6 +7,9 @@ import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
+
 import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
 public class Return extends AbstractInst {
@@ -21,7 +24,9 @@ public class Return extends AbstractInst {
     }
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
-        throw new UnsupportedOperationException("not yet implemented");
+    	exp.codeExp(compiler, compiler.getRegisterPointer());
+    	compiler.addInstruction(new LOAD(Register.getR(compiler.getRegisterPointer()),
+    			Register.R0));
     }
     @Override
     protected void verifyInst(DecacCompiler compiler, EnvironmentExp localEnv,

@@ -1,6 +1,13 @@
 package fr.ensimag.deca.tree;
 
+import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.DVal;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
+import fr.ensimag.ima.pseudocode.instructions.POP;
+import fr.ensimag.ima.pseudocode.instructions.PUSH;
+
 import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
 
@@ -65,5 +72,29 @@ public abstract class AbstractBinaryExpr extends AbstractExpr {
         leftOperand.prettyPrint(s, prefix, false);
         rightOperand.prettyPrint(s, prefix, true);
     }
-    
+	@Override
+	public boolean adressable() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
+	@Override
+	public DVal getAdresse() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void depassementCapacite(DecacCompiler compiler) {
+		// PUSH Rmax
+		compiler.addInstruction(new PUSH(Register.getR(compiler.numberOfRegister)));
+		compiler.incrementStackCounterMax(1);
+		//Execution 
+		getRightOperand().codeExp(compiler, compiler.numberOfRegister);
+		
+		//LOAD Rmax, R1
+		compiler.addInstruction(new LOAD(Register.getR(compiler.numberOfRegister), Register.R1));
+		
+		//POP Rmax
+		compiler.addInstruction(new POP(Register.getR(compiler.numberOfRegister)));
+	}
 }
