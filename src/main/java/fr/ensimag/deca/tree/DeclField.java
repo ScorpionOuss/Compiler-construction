@@ -1,38 +1,66 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package fr.ensimag.deca.tree;
 
-import fr.ensimag.deca.tools.IndentPrintStream;
 import java.io.PrintStream;
 
+import org.apache.commons.lang.Validate;
+
+import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.deca.context.ClassDefinition;
+import fr.ensimag.deca.context.ContextualError;
+import fr.ensimag.deca.context.EnvironmentExp;
+import fr.ensimag.deca.tools.IndentPrintStream;
+
 /**
- *
- * @author ensimag
- */
+ * @author gl16
+ * @date 14/01/2021
+*/
 public class DeclField extends AbstractDeclField {
-    private AbstractIdentifier ident;
-    private AbstractInitialization expr;
-    public DeclField(AbstractIdentifier ident, AbstractInitialization expr){
-        this.ident = ident;
-        this.expr  = expr;
+
+	final private Visibility visibility;
+    final private AbstractIdentifier type;
+    final private AbstractIdentifier fieldName;
+    final private AbstractInitialization initialization;
+
+    public DeclField(Visibility visibility, AbstractIdentifier type, AbstractIdentifier fieldName, AbstractInitialization initialization) {
+    	Validate.notNull(visibility);
+        Validate.notNull(type);
+        Validate.notNull(fieldName);
+        Validate.notNull(initialization);
+        this.visibility = visibility;
+        this.type = type;
+        this.fieldName = fieldName;
+        this.initialization = initialization;
     }
+
+    @Override
+    protected void verifyDeclField(DecacCompiler compiler,
+            EnvironmentExp localEnv, ClassDefinition currentClass)
+            throws ContextualError {
+        throw new UnsupportedOperationException("not yet implemented");
+    }
+
+
     @Override
     public void decompile(IndentPrintStream s) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("not yet implemented");
+    }
+
+    @Override
+    protected
+    void iterChildren(TreeFunction f) {
+    	// to be verified
+        type.iter(f);
+        fieldName.iter(f);
+        initialization.iter(f);
     }
 
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
-           ident.prettyPrint(s, prefix, false);
-           expr.prettyPrint(s, prefix, false);
+    	// to be verified
+        type.prettyPrint(s, prefix, false);
+        fieldName.prettyPrint(s, prefix, false);
+        initialization.prettyPrint(s, prefix, true);
     }
 
-    @Override
-    protected void iterChildren(TreeFunction f) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
 }
+
