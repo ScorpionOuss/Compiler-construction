@@ -15,17 +15,13 @@ import org.apache.commons.lang.Validate;
  * @author gl16
  * @date 01/01/2021
  */
-public class IfThenElse extends AbstractInst {
-    
-    private final AbstractExpr condition; 
+public class Else extends AbstractInst {
     private final ListInst thenBranch;
     private ListInst elseBranch;
 
-    public IfThenElse(AbstractExpr condition, ListInst thenBranch, ListInst elseBranch) {
-        Validate.notNull(condition);
+    public Else(AbstractExpr condition, ListInst thenBranch, ListInst elseBranch) {
         Validate.notNull(thenBranch);
         Validate.notNull(elseBranch);
-        this.condition = condition;
         this.thenBranch = thenBranch;
         this.elseBranch = elseBranch;
     }
@@ -34,15 +30,6 @@ public class IfThenElse extends AbstractInst {
     protected void verifyInst(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass, Type returnType)
             throws ContextualError {
-    	Type type = condition.verifyExpr(compiler, localEnv, currentClass);
-    	if (type.isBoolean()) {
-    		for (AbstractInst inst: thenBranch.getList()) {
-    			inst.verifyInst(compiler, localEnv, currentClass, returnType);
-    		}
-    		for (AbstractInst inst: elseBranch.getList()) {
-    			inst.verifyInst(compiler, localEnv, currentClass, returnType);
-    		}
-    	} else throw new ContextualError("if condition must be of boolean type", this.getLocation());
     }
 
     @Override
@@ -58,14 +45,12 @@ public class IfThenElse extends AbstractInst {
     @Override
     protected
     void iterChildren(TreeFunction f) {
-        condition.iter(f);
         thenBranch.iter(f);
         elseBranch.iter(f);
     }
 
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
-        condition.prettyPrint(s, prefix, false);
         thenBranch.prettyPrint(s, prefix, false);
         elseBranch.prettyPrint(s, prefix, true);
     }

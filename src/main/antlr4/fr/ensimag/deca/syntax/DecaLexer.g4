@@ -11,89 +11,76 @@ options {
 @members {
 }
 // Deca lexer rules.
-EOL: '\n' { skip(); };
-
-ASM: 'asm';
+EOL: '\n' -> skip;
+PRINTLNX: 'printlnx';
+PRINTLN: 'println';
+PRINTX: 'printx';
+PRINT: 'print';
+IF: 'if';
+ELSE: 'else';
+TRUE: 'true';
+FALSE: 'false';
+THIS: 'this';
+NULL: 'null';
 CLASS: 'class';
 EXTENDS: 'extends';
-ELSE: 'else';
-FALSE: 'false';
-IF: 'if';
+NEW: 'new';
+READINT: 'readInt';
+READFLOAT: 'readFloat';
 INSTANCEOF: 'instanceof';
-NEW:'new';
-NULL: 'null';
-READINT:'readFloat';
-PRINT:'print';
-PRINTLN:'println';
-PRINTLNX: 'printlnx';
-PRINTX:'printx';
-PROTECTED:'protected';
-RETURN: 'return';
-THIS: 'this';
-TRUE: 'true';
 WHILE: 'while';
-INFERIOR: '<';
-SUPERIOR: '>';
-EQUALS:'=';
-PLUS:'+';
-MINUS:'-';
+RETURN: 'return';
+ASM: 'asm';
+PROTECTED: 'protected';
+OR: '||';
+AND: '&&';
+GEQ: '>=';
+LEQ: '<=';
+NEQ: '!=';
+EQEQ: '==';
+GT: '>';
+LT: '<';
+PLUS: '+';
+MINUS: '-';
+SEMI: ';';
+COMMA: ',';
+EQUALS: '=';
+OPARENT: '(';
+CPARENT: ')';
+OBRACE: '{';
+CBRACE: '}';
+PERCENT: '%';
+EXCLAM: '!';
+DOT: '.';
 TIMES: '*';
 SLASH: '/';
-PERCENT:'%';
-POINT: '.';
-COMMA: ',';
-OPARENT:'(';
-CPARENT:')';
-OBRACE:'{';
-CBRACE:'}';
-EXCLAM:'!';
-SEMI: ';';
-DOUBLEEQUALS:'==';
-DIFFERENT:'!=';
-SUPOREQUAL:'>=';
-INFOREQUAL:'<=';
-AND:'&&';
-OR:'||';
 
+fragment DIGIT: '0'..'9';
+fragment POSITIVE_DIGIT: '1'..'9';
+fragment LETTER: ('a'..'z'|'A'..'Z');
 
-
-WS  :   ( ' '
-        | '\t'
-        | '\r'
-        ) {
-              skip(); // avoid producing a token
-          }
-    ;
-//Comments
-CLASSIC_COMMENT : '/*' .*? '*/'{ skip(); } ;
-ONE_LINE_COMMENT : '//' (~('\n'))* (EOL|EOF){ skip(); };
-
-fragment LETTER : 'a'..'z' | 'A'..'Z';
-fragment DIGIT : '0'..'9';
-IDENT : (LETTER|'$'|'_')(LETTER|DIGIT|'$'|'_')*;
-//Integer literals
-fragment POSITIVE_DIGIT : '1'..'9';
-INT: '0'| POSITIVE_DIGIT+;
-//FLoat literals
-NUM : DIGIT+;
-fragment SIGN: '+'|'-';
+fragment NUM: DIGIT+;
+fragment SIGN: '+' | '-' | ;
 fragment EXP: ('E'|'e') SIGN NUM;
-fragment DEC : NUM '.' NUM ;
-fragment FLOATDEC : (DEC|DEC EXP) ('F'|'f'|);
-fragment DIGITHEX: '0'.. '9'|'A'..'F'|'a'..'f';
-fragment NUMHEX : DIGITHEX+;
-fragment FLOATHEX: ('0x' |'0X') NUMHEX'.' NUMHEX('P'|'p')SIGN NUM('F'|'f'|);
-FLOAT : FLOATDEC | FLOATHEX;
+fragment DEC: NUM '.' NUM;
+fragment FLOATDEC: (DEC | (DEC EXP)) ('F' | 'f' | );
+fragment DIGITHEX: ('0'..'9' | 'A'..'F' | 'a'..'f');
+fragment NUMHEX: DIGITHEX+;
+fragment FLOATHEX: ('0x'|'0X') NUMHEX '.' NUMHEX ('P'|'p') SIGN NUM ('F'|'f'|);
 
-//Strings
+fragment FILENAME: (LETTER | DIGIT | '.' | '-' | '_')+;
+INCLUDE: '#include' (' ')* '"' FILENAME '"'{
+    doInclude(getText());
+};
 
-STRING_CAR: ~('"'|'\\'|'\n');
-STRING: '"' (STRING_CAR |'\\"'|'\\\\')* '"';
-MULTI_LINE_STRING: '"' (STRING_CAR |EOL|'\\"'|'\\\\')* '"';
+fragment STRING_CAR: ~('"' | '\\' | '\n');
+STRING: '"' (STRING_CAR | '\\"' | '\\\\')* '"';
+MULTI_LINE_STRING: '"' (STRING_CAR | '\n' | '\\"' | '\\\\')* '"';
 
+FLOAT: (FLOATDEC | FLOATHEX);
+INT: '0' | (POSITIVE_DIGIT DIGIT*);
+IDENT: (LETTER | '$' | '_') (LETTER | DIGIT | '$' | '_')*;
+COMMENT: ('//' .*? '\n' | '/*' .*? '*/' ) -> skip;
 
-// Ignore spaces, tabs, newlines and whitespaces
+WHITESPACE: (' ' | '\t' | '\r' | '\n') -> skip;
 
-//Include
-fragment FILENAME : (LETTER|DIGIT|'.'|'+'|'-'|'_')+;
-INCLUDE: '#include' ()* '"' FILENAME '"';

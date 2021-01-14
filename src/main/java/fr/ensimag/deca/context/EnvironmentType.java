@@ -41,13 +41,15 @@ public class EnvironmentType {
 			this.declare(symbolTable.create("float"), new TypeDefinition(new FloatType(symbolTable.create("float")), null));
 			this.declare(symbolTable.create("boolean"), new TypeDefinition(new BooleanType(symbolTable.create("boolean")), null));
 			this.declare(symbolTable.create("void"), new TypeDefinition(new VoidType(symbolTable.create("void")), null));
+			this.declare(symbolTable.create("string"), new TypeDefinition(new StringType(symbolTable.create("string")), null));
 
 			// env_exp_object definition
+			ClassType objectType = new ClassType(symbolTable.create("Object"), null, null);
+			ClassDefinition objectDefinition = objectType.getDefinition();
 			Signature signature = new Signature();
-			signature.add(this.get(symbolTable.create("Object")).getType());
+			signature.add(objectDefinition.getType());
 			Type returnType = this.get(symbolTable.create("boolean")).getType();
 			MethodDefinition equalsDefinition = new MethodDefinition(returnType, null, signature, 0);
-			ClassDefinition objectDefinition = new ClassDefinition(new ClassType(symbolTable.create("Object")), null, null);
 			objectDefinition.getMembers().declare(symbolTable.create("equals"), equalsDefinition);
 			// type_class(Object) definition
 			this.declare(symbolTable.create("Object"), objectDefinition); 
@@ -67,7 +69,9 @@ public class EnvironmentType {
     	// implemented
     	if (environment.containsKey(key)) {
     		return environment.get(key);
-    	} else return null;
+    	} else {
+    		return null;
+    	}
     }
 
     /**
@@ -90,7 +94,9 @@ public class EnvironmentType {
     	// to be verified
     	if (environment.containsKey(name)) {
     		throw new DoubleDefException();
-    	} else environment.put(name, def);
+    	} else {
+    		environment.put(name, def);
+    	}
     }
 
 }
