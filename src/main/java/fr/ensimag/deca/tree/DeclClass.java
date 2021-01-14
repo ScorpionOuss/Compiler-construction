@@ -17,34 +17,26 @@ import org.apache.commons.lang.Validate;
  * @date 01/01/2021
  */
 public class DeclClass extends AbstractDeclClass {
+
     private AbstractIdentifier name;
     private AbstractIdentifier superClass;
-    private ListDeclFieldSet listDeclFieldSet;
-    private ListDeclMethod listDeclMethod;
+    private ListDeclFieldSet fields;
+    private ListDeclMethod methods;
+    
     public DeclClass(AbstractIdentifier name,AbstractIdentifier superClass,
             ListDeclFieldSet listDeclFieldSet, ListDeclMethod listDeclMethod){
+			Validate.notNull(name);
+			Validate.notNull(superClass);
+			Validate.notNull(fields);
+			Validate.notNull(methods);
             this.name = name;
             this.superClass = superClass;
-            this.listDeclFieldSet = listDeclFieldSet; 
-            this.listDeclMethod = listDeclMethod;
+            this.fields = listDeclFieldSet; 
+            this.methods = listDeclMethod;
     }
 
 
-    private final AbstractIdentifier type;
-    final private AbstractIdentifier ClassName;
-    final private ListDeclField fields;
-    final private ListDeclMethod methods;
     
-    public DeclClass(AbstractIdentifier type, AbstractIdentifier className, ListDeclField fields, ListDeclMethod methods) {
-    	Validate.notNull(type);
-    	Validate.notNull(className);
-    	Validate.notNull(fields);
-    	Validate.notNull(methods);
-    	this.type = type;
-    	this.ClassName = className;
-    	this.fields = fields;
-    	this.methods = methods;
-	}
 	
     @Override
     public void decompile(IndentPrintStream s) {
@@ -72,8 +64,8 @@ public class DeclClass extends AbstractDeclClass {
     protected void prettyPrintChildren(PrintStream s, String prefix) {
         name.prettyPrint(s, prefix, false);
         superClass.prettyPrint(s, prefix, false);
-        listDeclFieldSet.prettyPrint(s, prefix, true);
-        listDeclMethod.prettyPrint(s, prefix, true);
+        fields.prettyPrint(s, prefix, true);
+        methods.prettyPrint(s, prefix, true);
         //throw new UnsupportedOperationException("Not yet supported");
     }
 
