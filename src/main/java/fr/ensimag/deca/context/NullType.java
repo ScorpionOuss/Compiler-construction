@@ -17,7 +17,8 @@ public class NullType extends Type {
 
     @Override
     public boolean sameType(Type otherType) {
-        throw new UnsupportedOperationException("not yet implemented");
+    	// implemented
+    	return otherType.isNull();
     }
 
     @Override
@@ -29,6 +30,14 @@ public class NullType extends Type {
     public boolean isClassOrNull() {
         return true;
     }
+
+	@Override
+	public boolean subType(Type otherType) {
+		if (otherType.isClassOrNull()) {
+			return true;
+		} 
+		return false;
+	}
 
 
 }

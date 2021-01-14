@@ -24,7 +24,7 @@ public class LocationException extends Exception {
             line = Integer.toString(loc.getLine());
             column = ":" + loc.getPositionInLine();
         }
-        s.println(location.getFilename() + ":" + line + column + ": " + getMessage());
+        s.println(location.getFilename() + ":" + line + ":" + column + ": " + getMessage());
     }
 
     private static final long serialVersionUID = 7628400022855935597L;

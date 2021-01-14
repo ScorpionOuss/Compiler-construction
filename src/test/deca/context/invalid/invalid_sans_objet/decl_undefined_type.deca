@@ -1,0 +1,13 @@
+// Description:
+//    test de programme contextuellement incorrect.
+//
+// Resultats:
+//    Ligne 12 : Erreur de déclaration.
+//    le type A n'existe pas.
+//
+// Historique:
+//    cree le 09/01/2021
+
+{
+	A a;
+}

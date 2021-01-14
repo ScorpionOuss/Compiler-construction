@@ -6,9 +6,23 @@ import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.ImmediateString;
 import fr.ensimag.ima.pseudocode.instructions.WSTR;
 import org.apache.commons.lang.Validate;
+import fr.ensimag.deca.context.Type;
+import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.deca.context.ClassDefinition;
+import fr.ensimag.deca.context.ContextualError;
+import fr.ensimag.deca.context.EnvironmentExp;
+import fr.ensimag.deca.context.NullType;
+import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.deca.tools.SymbolTable;
 
 import java.io.PrintStream;
 
+/**
+ * Null
+ *
+ * @author gl16
+ * @date 12/01/2021
+ */
 public class Null extends AbstractExpr {
 
     @Override
@@ -24,7 +38,12 @@ public class Null extends AbstractExpr {
 
     @Override
     protected void codeGenPrint(DecacCompiler compiler) {
-        //nothing to do
+    }
+
+
+    @Override
+    String prettyPrintNode() {
+        return "Null";
     }
 
     @Override
@@ -42,10 +61,5 @@ public class Null extends AbstractExpr {
         // leaf node => nothing to do
     }
 
-    @Override
-    String prettyPrintNode() {
-        return "Null";
-    }
 
 }
-

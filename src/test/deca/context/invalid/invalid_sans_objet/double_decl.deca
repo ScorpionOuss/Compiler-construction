@@ -1,0 +1,14 @@
+// Description:
+//    test de programme contextuellement incorrect.
+//
+// Resultats:
+//    Ligne 13 : Erreur de déclaration.
+//    x déjà déclaré dans le main.
+//
+// Historique:
+//    cree le 09/01/2021
+
+{
+	int x;
+	float x;
+}
