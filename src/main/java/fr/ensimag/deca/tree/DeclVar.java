@@ -5,12 +5,16 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
+
+import fr.ensimag.deca.context.EnvironmentExp.DoubleDefException;
+import fr.ensimag.deca.context.ExpDefinition;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.RegisterOffset;
+
+import java.awt.Window.Type;
 import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
-
 /**
  * @author gl16
  * @date 01/01/2021
@@ -35,6 +39,14 @@ public class DeclVar extends AbstractDeclVar {
     protected void verifyDeclVar(DecacCompiler compiler,
             EnvironmentExp localEnv, ClassDefinition currentClass)
             throws ContextualError {
+    	System.out.println("verifydeclvar");
+    	fr.ensimag.deca.context.Type varType = type.verifyType(compiler);
+    	try {
+			localEnv.declare(varName.getName(), new VariableDefinition(varType, varName.getLocation()));
+		} catch (DoubleDefException e) {
+			throw new ContextualError("Variable " + varName.toString() + " is already declared", varName.getLocation());
+		}
+    	initialization.verifyInitialization(compiler, varType, localEnv, currentClass);
     }
 
     

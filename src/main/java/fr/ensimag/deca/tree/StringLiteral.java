@@ -38,11 +38,8 @@ public class StringLiteral extends AbstractStringLiteral {
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
         // implemented
-    	SymbolTable symboltable = new SymbolTable();
-    	SymbolTable.Symbol symbol = symboltable.create(value);
-    	Type type = new StringType(symbol);
-    	setType(type);
-    	return getType();
+    	SymbolTable symbolTable = new SymbolTable();
+    	return compiler.getEnvironment().get(symbolTable.create("string")).getType(); 
     }
 
     @Override

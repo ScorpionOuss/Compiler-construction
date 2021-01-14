@@ -9,6 +9,7 @@ import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.DVal;
 import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.instructions.BRA;
+import fr.ensimag.deca.tools.SymbolTable;
 
 import java.io.PrintStream;
 
@@ -32,7 +33,8 @@ public class BooleanLiteral extends AbstractExpr {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+    	SymbolTable symbolTable = new SymbolTable();
+    	return compiler.getEnvironment().get(symbolTable.create("boolean")).getType();
     }
 
 

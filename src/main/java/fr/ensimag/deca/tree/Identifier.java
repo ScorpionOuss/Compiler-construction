@@ -1,6 +1,7 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.context.Type;
+import fr.ensimag.deca.context.TypeDefinition;
 import fr.ensimag.deca.context.ClassType;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
@@ -13,6 +14,7 @@ import fr.ensimag.deca.context.ExpDefinition;
 import fr.ensimag.deca.context.VariableDefinition;
 import fr.ensimag.deca.tools.DecacInternalError;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.deca.tools.SymbolTable;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
 import fr.ensimag.ima.pseudocode.DAddr;
 import fr.ensimag.ima.pseudocode.DVal;
@@ -172,7 +174,12 @@ public class Identifier extends AbstractIdentifier {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+    	ExpDefinition expDefinition = localEnv.get(name);
+    	if (expDefinition == null) {
+    		throw new ContextualError("The variable " + name.getName() + " was not declared", this.getLocation());
+    	}
+    	Type type = compiler.getEnvironment().get(name).getType();
+    	return type;
     }
 
     /**
@@ -181,7 +188,13 @@ public class Identifier extends AbstractIdentifier {
      */
     @Override
     public Type verifyType(DecacCompiler compiler) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+    	TypeDefinition typeDefinition = compiler.getEnvironment().get(name);
+    	if (typeDefinition == null) {
+    		throw new ContextualError("The type " + name.getName() + " is not defined", this.getLocation());
+    	} else if (typeDefinition.getType().isVoid()) {
+    		throw new ContextualError("Type void variable declaration", this.getLocation());
+    	}
+    	return typeDefinition.getType();
     }
     
     

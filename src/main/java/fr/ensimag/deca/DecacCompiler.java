@@ -1,5 +1,6 @@
 package fr.ensimag.deca;
 
+import fr.ensimag.deca.context.EnvironmentType;
 import fr.ensimag.deca.syntax.DecaLexer;
 import fr.ensimag.deca.syntax.DecaParser;
 import fr.ensimag.deca.tools.DecacInternalError;
@@ -40,11 +41,13 @@ public class DecacCompiler {
      * Portable newline character.
      */
     private static final String nl = System.getProperty("line.separator", "\n");
+    
 
     public DecacCompiler(CompilerOptions compilerOptions, File source) {
         super();
         this.compilerOptions = compilerOptions;
         this.source = source;
+        this.environmentType = new EnvironmentType();
     }
 
     /**
@@ -299,4 +302,21 @@ public class DecacCompiler {
     	 return registerPointer;
      }
      
+
+
+//     //On suppose pour l'instant qu'on ne dépasse pas 15 registres(15déclarations)
+//     private int pointerRegister = 1;
+//     
+//     public int recoverAndIncrementpR() {
+//    	 numberCurrentVariables++;
+//    	 return numberCurrentVariables;
+//     }
+
+    private EnvironmentType environmentType;
+
+	public EnvironmentType getEnvironment() {
+		return environmentType;
+	}
+
+
 }

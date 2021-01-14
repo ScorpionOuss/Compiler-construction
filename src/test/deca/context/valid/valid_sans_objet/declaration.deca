@@ -1,0 +1,11 @@
+// Description:
+//    Programme  avec une simple declaration.
+//
+// Resultats:
+
+{
+	int x = 2;
+	int y = 3;
+	int z;
+	z = x + y;
+}

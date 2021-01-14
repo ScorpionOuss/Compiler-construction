@@ -1,5 +1,6 @@
 package fr.ensimag.deca.context;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
@@ -31,6 +32,7 @@ public class EnvironmentExp {
     
     public EnvironmentExp(EnvironmentExp parentEnvironment) {
         this.parentEnvironment = parentEnvironment;
+        environment = new HashMap<>();
     }
 
     public static class DoubleDefException extends Exception {

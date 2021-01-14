@@ -32,7 +32,12 @@ public class Assign extends AbstractBinaryExpr {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+    	Type leftTtype = this.getLeftOperand().verifyExpr(compiler, localEnv, currentClass);
+    	Type rightType = this.getRightOperand().verifyExpr(compiler, localEnv, currentClass);
+    	if (!leftTtype.assignCompatible(rightType)) {
+    		throw new ContextualError("Incompatible types for assign", this.getLocation());
+    	}
+    	return rightType;
     }
 
 

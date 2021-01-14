@@ -1,7 +1,12 @@
 package fr.ensimag.deca.context;
 
+import java.util.HashMap;
 import java.util.Map;
+
+import fr.ensimag.deca.tools.DecacInternalError;
+import fr.ensimag.deca.tools.SymbolTable;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
+import fr.ensimag.deca.context.EnvironmentExp.DoubleDefException;
 
 /**
  * Dictionary associating identifier's TypeDefinition to their names.
@@ -26,15 +31,35 @@ public class EnvironmentType {
     // d'empilement).
 	Map<Symbol, TypeDefinition> environment; 
 
-    EnvironmentType parentEnvironment;
     
-    public EnvironmentType(EnvironmentType parentEnvironment) {
-        this.parentEnvironment = parentEnvironment;
+    public EnvironmentType() {
+    	environment = new HashMap<Symbol, TypeDefinition>();
+    	SymbolTable symbolTable = new SymbolTable();
+    	try {
+    		// type definition
+			this.declare(symbolTable.create("int"), new TypeDefinition(new IntType(symbolTable.create("int")), null));
+			this.declare(symbolTable.create("float"), new TypeDefinition(new FloatType(symbolTable.create("float")), null));
+			this.declare(symbolTable.create("boolean"), new TypeDefinition(new BooleanType(symbolTable.create("boolean")), null));
+			this.declare(symbolTable.create("void"), new TypeDefinition(new VoidType(symbolTable.create("void")), null));
+			this.declare(symbolTable.create("string"), new TypeDefinition(new StringType(symbolTable.create("string")), null));
+
+			// env_exp_object definition
+			ClassType objectType = new ClassType(symbolTable.create("Object"), null, null);
+			ClassDefinition objectDefinition = objectType.getDefinition();
+			Signature signature = new Signature();
+			signature.add(objectDefinition.getType());
+			Type returnType = this.get(symbolTable.create("boolean")).getType();
+			MethodDefinition equalsDefinition = new MethodDefinition(returnType, null, signature, 0);
+			objectDefinition.getMembers().declare(symbolTable.create("equals"), equalsDefinition);
+			// type_class(Object) definition
+			this.declare(symbolTable.create("Object"), objectDefinition); 
+			
+		} catch (DoubleDefException e) {
+			e.printStackTrace();
+			throw new DecacInternalError("EnvironmentType definition Error");
+		}
     }
 
-    public static class DoubleDefException extends Exception {
-        private static final long serialVersionUID = -2733379901827316441L;
-    }
 
     /**
      * Return the definition of the symbol in the environment, or null if the
@@ -44,7 +69,9 @@ public class EnvironmentType {
     	// implemented
     	if (environment.containsKey(key)) {
     		return environment.get(key);
-    	} else return null;
+    	} else {
+    		return null;
+    	}
     }
 
     /**
@@ -67,7 +94,9 @@ public class EnvironmentType {
     	// to be verified
     	if (environment.containsKey(name)) {
     		throw new DoubleDefException();
-    	} else environment.put(name, def);
+    	} else {
+    		environment.put(name, def);
+    	}
     }
 
 }
