@@ -4,7 +4,11 @@ import fr.ensimag.deca.context.ClassType;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.deca.tools.SymbolTable;
+
 import java.io.PrintStream;
+
+import org.apache.commons.lang.Validate;
 
 /**
  * Declaration of a class (<code>class name extends superClass {members}<code>).
@@ -14,6 +18,23 @@ import java.io.PrintStream;
  */
 public class DeclClass extends AbstractDeclClass {
 
+
+    private final AbstractIdentifier type;
+    final private AbstractIdentifier ClassName;
+    final private ListDeclField fields;
+    final private ListDeclMethod methods;
+    
+    public DeclClass(AbstractIdentifier type, AbstractIdentifier className, ListDeclField fields, ListDeclMethod methods) {
+    	Validate.notNull(type);
+    	Validate.notNull(className);
+    	Validate.notNull(fields);
+    	Validate.notNull(methods);
+    	this.type = type;
+    	this.ClassName = className;
+    	this.fields = fields;
+    	this.methods = methods;
+	}
+	
     @Override
     public void decompile(IndentPrintStream s) {
         s.print("class { ... A FAIRE ... }");
@@ -21,7 +42,7 @@ public class DeclClass extends AbstractDeclClass {
 
     @Override
     protected void verifyClass(DecacCompiler compiler) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+    	SymbolTable symbolTable = new SymbolTable();
     }
 
     @Override

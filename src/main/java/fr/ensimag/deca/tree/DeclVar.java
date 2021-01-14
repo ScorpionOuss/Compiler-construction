@@ -40,7 +40,6 @@ public class DeclVar extends AbstractDeclVar {
     protected void verifyDeclVar(DecacCompiler compiler,
             EnvironmentExp localEnv, ClassDefinition currentClass)
             throws ContextualError {
-    	System.out.println("verifydeclvar");
     	Type varType = type.verifyType(compiler);
     	try {
 			localEnv.declare(varName.getName(), new VariableDefinition(varType, varName.getLocation()));
