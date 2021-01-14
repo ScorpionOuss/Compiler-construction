@@ -6,6 +6,11 @@ import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.DVal;
+import fr.ensimag.ima.pseudocode.ImmediateFloat;
+import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
 import fr.ensimag.deca.tools.SymbolTable;
 
 import java.io.PrintStream;
@@ -61,4 +66,26 @@ public class FloatLiteral extends AbstractExpr {
         // leaf node => nothing to do
     }
 
+	@Override
+	public
+	void codeExp(DecacCompiler compiler, int registerPointer) {
+		compiler.addInstruction(new LOAD(value, Register.getR(registerPointer)));		
+	}
+	
+	@Override
+	public boolean adressable() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+	
+	@Override
+	public DVal getAdresse() {
+		// TODO Auto-generated method stub
+		return new ImmediateFloat(value);
+	}
+
+	public void codeCond(DecacCompiler compiler, boolean bool, Label endAnd) {
+        throw new UnsupportedOperationException("not yet implemented");
+	}
 }
+

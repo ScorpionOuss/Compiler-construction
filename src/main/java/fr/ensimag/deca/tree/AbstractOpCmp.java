@@ -1,6 +1,8 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.context.Type;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.instructions.CMP;
 import fr.ensimag.deca.tools.SymbolTable;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
@@ -36,5 +38,28 @@ public abstract class AbstractOpCmp extends AbstractBinaryExpr {
     	throw new ContextualError("The binary operation used is not defined for the operands types", this.getLocation());
     }
 
-
+    protected void codeCMP(DecacCompiler compiler) {
+    	if (getRightOperand().adressable()) {
+			getLeftOperand().codeExp(compiler, compiler.getRegisterPointer());
+			compiler.addInstruction(new CMP(getRightOperand().getAdresse(),
+					Register.getR(compiler.getRegisterPointer())));
+    	}
+    	else {
+			assert(getRightOperand().adressable() == false);
+			getLeftOperand().codeExp(compiler, compiler.getRegisterPointer());
+			if (compiler.getRegisterPointer() < compiler.numberOfRegister) {
+				getRightOperand().codeExp(compiler, compiler.getRegisterPointer() + 1);
+				compiler.addInstruction(new CMP(Register.getR(compiler.getRegisterPointer() + 1), 
+						Register.getR(compiler.getRegisterPointer())));
+			}
+			else {
+				assert( compiler.getRegisterPointer() == compiler.numberOfRegister);
+				/*Manage capacity overrun*/
+				depassementCapacite(compiler);
+				
+				compiler.addInstruction(new CMP(Register.R1, 
+						Register.getR(compiler.numberOfRegister)));
+			}
+    	}
+    }
 }

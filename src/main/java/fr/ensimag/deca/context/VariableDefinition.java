@@ -1,6 +1,12 @@
 package fr.ensimag.deca.context;
 
+import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.tree.Location;
+import fr.ensimag.ima.pseudocode.DAddr;
+import fr.ensimag.ima.pseudocode.GPRegister;
+import fr.ensimag.ima.pseudocode.Operand;
+import fr.ensimag.ima.pseudocode.RegisterOffset;
+import fr.ensimag.ima.pseudocode.instructions.STORE;
 
 /**
  * Definition of a variable.
@@ -22,4 +28,6 @@ public class VariableDefinition extends ExpDefinition {
     public boolean isExpression() {
         return true;
     }
+
+
 }

@@ -7,7 +7,13 @@ import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.DecacInternalError;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.DVal;
 import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
+import fr.ensimag.ima.pseudocode.instructions.WFLOAT;
+import fr.ensimag.ima.pseudocode.instructions.WINT;
+
 import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
 
@@ -115,12 +121,26 @@ public abstract class AbstractExpr extends AbstractInst {
      * @param compiler
      */
     protected void codeGenPrint(DecacCompiler compiler) {
-        throw new UnsupportedOperationException("not yet implemented");
+    	//load the result in R2
+    	codeExp(compiler, 2);
+    	compiler.addInstruction(new LOAD(Register.getR(2), Register.R1));
+    	
+    	if (getType().isInt()) {
+            compiler.addInstruction(new WINT());
+    	}
+    	else if(getType().isFloat()) {
+    		//Pour l'instant nous ne traitons pas
+    		//lécriture en hexadécimal
+    		compiler.addInstruction(new WFLOAT());
+    	}
+    	else {
+            throw new UnsupportedOperationException("not yet implemented");
+    	}
     }
 
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
-        throw new UnsupportedOperationException("not yet implemented");
+    	codeExp(compiler, compiler.getRegisterPointer());
     }
     
 
@@ -140,4 +160,12 @@ public abstract class AbstractExpr extends AbstractInst {
             s.println();
         }
     }
+
+	public abstract void codeExp(DecacCompiler compiler, int registerPointer);
+
+	public abstract boolean adressable();
+
+	public abstract DVal getAdresse();
+
+	public abstract void codeCond(DecacCompiler compiler, boolean bool, Label endAnd);
 }

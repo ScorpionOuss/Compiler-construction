@@ -9,6 +9,7 @@ import fr.ensimag.deca.context.StringType;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable;
 import fr.ensimag.ima.pseudocode.ImmediateString;
+import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.instructions.WSTR;
 import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
@@ -45,6 +46,10 @@ public class StringLiteral extends AbstractStringLiteral {
     protected void codeGenPrint(DecacCompiler compiler) {
         compiler.addInstruction(new WSTR(new ImmediateString(value)));
     }
+    
+    @Override
+    protected void codeGenInst(DecacCompiler compiler) {
+    }
 
     @Override
     public void decompile(IndentPrintStream s) {
@@ -66,5 +71,22 @@ public class StringLiteral extends AbstractStringLiteral {
     String prettyPrintNode() {
         return "StringLiteral (" + value + ")";
     }
+
+	@Override
+	public
+	void codeExp(DecacCompiler compiler, int registerPointer) {
+        throw new UnsupportedOperationException("not yet implemented");
+		
+	}
+
+	@Override
+	public boolean adressable() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public void codeCond(DecacCompiler compiler, boolean bool, Label endAnd) {
+        throw new UnsupportedOperationException("not yet implemented");
+	}
 
 }

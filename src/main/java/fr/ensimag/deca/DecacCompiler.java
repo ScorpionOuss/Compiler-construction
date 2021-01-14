@@ -276,6 +276,33 @@ public class DecacCompiler {
     	 return numberCurrentVariables;
      }
 
+     //Pointeur registre courant manipulé
+     private int registerPointer = 2;
+
+	public int numberOfRegister = 15;
+     
+     /*
+      * Increments the register Pointer
+      */
+     public void incrementRegisterPointer() {
+    	 registerPointer++;
+     }
+     
+     /*
+      * Decrements Register Pointer
+      */
+     public void decrementRegisterPointer() {
+    	 registerPointer++;
+     }
+     
+     /*
+      * Getter of registerPointer
+      */
+     public int getRegisterPointer() {
+    	 return registerPointer;
+     }
+     
+
 
 //     //On suppose pour l'instant qu'on ne dépasse pas 15 registres(15déclarations)
 //     private int pointerRegister = 1;
@@ -290,5 +317,6 @@ public class DecacCompiler {
 	public EnvironmentType getEnvironment() {
 		return environmentType;
 	}
+
 
 }

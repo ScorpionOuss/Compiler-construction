@@ -1,6 +1,10 @@
 package fr.ensimag.deca.context;
 
+import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.tree.Location;
+import fr.ensimag.ima.pseudocode.DAddr;
+import fr.ensimag.ima.pseudocode.GPRegister;
+import fr.ensimag.ima.pseudocode.RegisterOffset;
 
 /**
  * Definition of a Deca type (builtin or class).
@@ -24,4 +28,16 @@ public class TypeDefinition extends Definition {
         return false;
     }
 
+	@Override
+	public void setOperand(DAddr operand) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public DAddr getOperand() {
+		// TODO Auto-generated method stub
+		//il faut faire une exception.
+		return null;
+	}
 }

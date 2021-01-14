@@ -1,16 +1,13 @@
 package fr.ensimag.deca.tree;
 
-import javax.swing.event.ListDataEvent;
-
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.StringType;
-import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.context.TypeDefinition;
 import fr.ensimag.deca.context.VariableDefinition;
 import fr.ensimag.deca.tools.SymbolTable;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
 
-public class TestDeclaraction {
+public class TestAffectation {
 
 	public static void main(String[] args) {
 		test1();
@@ -33,11 +30,15 @@ public class TestDeclaraction {
     }
 
     public static AbstractProgram initTest1() {
+        ListInst linst = new ListInst();
         ListDeclVar listVar = new ListDeclVar();
         AbstractProgram source =
             new Program(
                 new ListDeclClass(),
-                new Main(listVar ,new ListInst()));
+                new Main(listVar , linst));
+      
+        
+        /***************************declaration variables*********************/
         SymbolTable table = new SymbolTable();
         Symbol create = table.create("int");
         Symbol create2 = table.create("x");
@@ -53,9 +54,15 @@ public class TestDeclaraction {
         id3.setDefinition(new TypeDefinition(new StringType(create3), new Location(0, 0, null)));
         id4.setDefinition(new VariableDefinition(new StringType(create4), new Location(0, 0, null)));
         listVar.add(new DeclVar(id3, id4, new Initialization(new FloatLiteral(2))));
-
-
-
+        /*********************************************************************/
+        
+        /***************************declaration des instructions****************/
+        AbstractExpr moins = new Minus(id2, new IntLiteral(7));
+        AbstractExpr read = new ReadInt();
+        AbstractExpr plus = new Plus(moins, read);
+        AbstractExpr fois = new Multiply(plus, new IntLiteral(5));
+        AbstractExpr affect = new Assign(id2, fois);
+        linst.add(affect);
 
 //        linst.add(new Print(false,lexp1));
 //        linst.add(new Println(false,lexp2));
