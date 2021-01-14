@@ -4,7 +4,11 @@ import fr.ensimag.deca.context.ClassType;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.deca.tools.SymbolTable;
+
 import java.io.PrintStream;
+
+import org.apache.commons.lang.Validate;
 
 /**
  * Declaration of a class (<code>class name extends superClass {members}<code>).
@@ -13,18 +17,27 @@ import java.io.PrintStream;
  * @date 01/01/2021
  */
 public class DeclClass extends AbstractDeclClass {
+
     private AbstractIdentifier name;
     private AbstractIdentifier superClass;
-    private ListDeclFieldSet listDeclFieldSet;
-    private ListDeclMethod listDeclMethod;
+    private ListDeclFieldSet fields;
+    private ListDeclMethod methods;
+    
     public DeclClass(AbstractIdentifier name,AbstractIdentifier superClass,
             ListDeclFieldSet listDeclFieldSet, ListDeclMethod listDeclMethod){
+			Validate.notNull(name);
+			Validate.notNull(superClass);
+			Validate.notNull(fields);
+			Validate.notNull(methods);
             this.name = name;
             this.superClass = superClass;
-            this.listDeclFieldSet = listDeclFieldSet; 
-            this.listDeclMethod = listDeclMethod;
+            this.fields = listDeclFieldSet; 
+            this.methods = listDeclMethod;
     }
 
+
+    
+	
     @Override
     public void decompile(IndentPrintStream s) {
         s.print("class { ... A FAIRE ... }");
@@ -32,7 +45,7 @@ public class DeclClass extends AbstractDeclClass {
 
     @Override
     protected void verifyClass(DecacCompiler compiler) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+    	SymbolTable symbolTable = new SymbolTable();
     }
 
     @Override
@@ -51,8 +64,8 @@ public class DeclClass extends AbstractDeclClass {
     protected void prettyPrintChildren(PrintStream s, String prefix) {
         name.prettyPrint(s, prefix, false);
         superClass.prettyPrint(s, prefix, false);
-        listDeclFieldSet.prettyPrint(s, prefix, true);
-        listDeclMethod.prettyPrint(s, prefix, true);
+        fields.prettyPrint(s, prefix, true);
+        methods.prettyPrint(s, prefix, true);
         //throw new UnsupportedOperationException("Not yet supported");
     }
 
