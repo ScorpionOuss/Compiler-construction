@@ -2,8 +2,10 @@ package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.instructions.BGT;
 import fr.ensimag.ima.pseudocode.instructions.BLE;
+import fr.ensimag.ima.pseudocode.instructions.SGT;
 
 /**
  *
@@ -26,8 +28,10 @@ public class Greater extends AbstractOpIneq {
 	@Override
 	public
 	void codeExp(DecacCompiler compiler, int registerPointer) {
-        throw new UnsupportedOperationException("not yet implemented");
-		
+		//CMP operands
+		codeCMP(compiler);
+		//Scc instruction
+		compiler.addInstruction(new SGT(Register.getR(registerPointer)));
 	}
 
 	public void codeCond(DecacCompiler compiler, boolean bool, Label etiquette) {

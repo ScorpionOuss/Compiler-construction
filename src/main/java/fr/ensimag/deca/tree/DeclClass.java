@@ -17,20 +17,20 @@ import org.apache.commons.lang.Validate;
  * @date 01/01/2021
  */
 public class DeclClass extends AbstractDeclClass {
-
-    private AbstractIdentifier name;
-    private AbstractIdentifier superClass;
-    private ListDeclFieldSet fields;
-    private ListDeclMethod methods;
-    
-    public DeclClass(AbstractIdentifier name,AbstractIdentifier superClass,
-            ListDeclFieldSet listDeclFieldSet, ListDeclMethod listDeclMethod){
-			
-            this.name = name;
-            this.superClass = superClass;
-            this.fields = listDeclFieldSet; 
-            this.methods = listDeclMethod;
-    }
+//
+//    private AbstractIdentifier name;
+//    private AbstractIdentifier superClass;
+//    private ListDeclFieldSet fields;
+//    private ListDeclMethod methods;
+//    
+//    public DeclClass(AbstractIdentifier name,AbstractIdentifier superClass,
+//            ListDeclFieldSet listDeclFieldSet, ListDeclMethod listDeclMethod){
+//			
+//            this.name = name;
+//            this.superClass = superClass;
+//            this.fields = listDeclFieldSet; 
+//            this.methods = listDeclMethod;
+//    }
 
 
     
@@ -56,19 +56,31 @@ public class DeclClass extends AbstractDeclClass {
         throw new UnsupportedOperationException("not yet implemented");
     }
 
+	@Override
+	protected void prettyPrintChildren(PrintStream s, String prefix) {
+		// TODO Auto-generated method stub
+		
+	}
 
-    @Override
-    protected void prettyPrintChildren(PrintStream s, String prefix) {
-        name.prettyPrint(s, prefix, false);
-        superClass.prettyPrint(s, prefix, false);
-        fields.prettyPrint(s, prefix, true);
-        methods.prettyPrint(s, prefix, true);
-        //throw new UnsupportedOperationException("Not yet supported");
-    }
+	@Override
+	protected void iterChildren(TreeFunction f) {
+		// TODO Auto-generated method stub
+		
+	}
 
-    @Override
-    protected void iterChildren(TreeFunction f) {
-        throw new UnsupportedOperationException("Not yet supported");
-    }
+
+//    @Override
+//    protected void prettyPrintChildren(PrintStream s, String prefix) {
+//        name.prettyPrint(s, prefix, false);
+//        superClass.prettyPrint(s, prefix, false);
+//        fields.prettyPrint(s, prefix, true);
+//        methods.prettyPrint(s, prefix, true);
+//        //throw new UnsupportedOperationException("Not yet supported");
+//    }
+//
+//    @Override
+//    protected void iterChildren(TreeFunction f) {
+//        throw new UnsupportedOperationException("Not yet supported");
+//    }
 
 }
