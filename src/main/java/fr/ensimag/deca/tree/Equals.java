@@ -6,6 +6,7 @@ import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.instructions.BEQ;
 import fr.ensimag.ima.pseudocode.instructions.BNE;
 import fr.ensimag.ima.pseudocode.instructions.CMP;
+import fr.ensimag.ima.pseudocode.instructions.SEQ;
 
 /**
  *
@@ -28,8 +29,8 @@ public class Equals extends AbstractOpExactCmp {
 	@Override
 	public
 	void codeExp(DecacCompiler compiler, int registerPointer) {
-        throw new UnsupportedOperationException("not yet implemented");
-		
+		codeCMP(compiler);
+		compiler.addInstruction(new SEQ(Register.getR(registerPointer)));
 	}    
 	
 //	public void codeGenCond(DecacCompiler compiler, Label etiquette) {

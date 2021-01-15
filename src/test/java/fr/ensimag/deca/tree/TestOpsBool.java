@@ -1,14 +1,14 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
-import fr.ensimag.deca.context.IntType;
+import fr.ensimag.deca.context.BooleanType;
 import fr.ensimag.deca.context.StringType;
 import fr.ensimag.deca.context.TypeDefinition;
 import fr.ensimag.deca.context.VariableDefinition;
 import fr.ensimag.deca.tools.SymbolTable;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
 
-public class TestWhileOPB {
+public class TestOpsBool {
 	public static void main(String[] args) {
 		test1();
 	}
@@ -40,40 +40,35 @@ public class TestWhileOPB {
         
         /***************************declaration variables*********************/
         SymbolTable table = new SymbolTable();
-        Symbol create = table.create("int");
+        Symbol create = table.create("boolean");
         Symbol create2 = table.create("x");
         AbstractIdentifier id1 = new Identifier(create);
         AbstractIdentifier id2 = new Identifier(create2);
-        id2.setType(new IntType(create2));
-
         id1.setDefinition(new TypeDefinition(new StringType(create), new Location(0, 0, null)));
-        id2.setDefinition(new VariableDefinition(new StringType(create2), new Location(0, 0, null)));
-        listVar.add(new DeclVar(id1, id2, new Initialization(new IntLiteral(1))));
-        Symbol create3 = table.create("int");
+        id2.setDefinition(new VariableDefinition(new BooleanType(create2), new Location(0, 0, null)));
+        listVar.add(new DeclVar(id1, id2, new Initialization(new BooleanLiteral(true))));
+        Symbol create3 = table.create("boolean");
         Symbol create4 = table.create("y");
         AbstractIdentifier id3 = new Identifier(create3);
         AbstractIdentifier id4 = new Identifier(create4);
         id3.setDefinition(new TypeDefinition(new StringType(create3), new Location(0, 0, null)));
-        id4.setDefinition(new VariableDefinition(new StringType(create4), new Location(0, 0, null)));
-        listVar.add(new DeclVar(id3, id4, new Initialization(new IntLiteral(2))));
+        id4.setDefinition(new VariableDefinition(new BooleanType(create4), new Location(0, 0, null)));
+        listVar.add(new DeclVar(id3, id4, new Initialization(new BooleanLiteral(false))));
         /*********************************************************************/
         
         /***************************declaration des instructions****************/
-        AbstractExpr inegalite = new Lower(id2, new IntLiteral(3));
-        AbstractExpr egalite  = new Equals(id4, new IntLiteral(2));
-        AbstractExpr and = new And(inegalite, egalite);
-        AbstractExpr plus = new Plus(id2, new IntLiteral(1));
-        AbstractExpr affect = new Assign(id2, plus);
+        AbstractExpr or = new And(id2, id4);
+        AbstractExpr assign = new Assign(id2, or);
+        AbstractExpr sup = new Greater(new IntLiteral(1), new IntLiteral(2));
+        AbstractExpr assign2 = new Assign(id4, sup);
         ListInst body = new ListInst();
-        ListExpr arguments= new ListExpr();
-        arguments.add(id2);
-        Println print = new Println(false, arguments);
-        body.add(affect);
-        body.add(print);
-        AbstractInst t = new While(and, body);
+        AbstractExpr plus = new Plus(id2, id4);
+        body.add(plus);
+        AbstractInst t = new While(id2, body);
+        
+        linst.add(assign);
+        linst.add(assign2);
         linst.add(t);
-        linst.add(t);
-
         return source;
     }
 }

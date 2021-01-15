@@ -3,6 +3,8 @@ package fr.ensimag.deca.tree;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.ima.pseudocode.DVal;
 import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.instructions.MUL;
 
 /**
  *
@@ -23,8 +25,22 @@ public class And extends AbstractOpBool {
 	@Override
 	public
 	void codeExp(DecacCompiler compiler, int registerPointer) {
-		// TODO Auto-generated method stub
-        throw new UnsupportedOperationException("not yet implemented");
+		assert(registerPointer < compiler.numberOfRegister);
+		
+		getLeftOperand().codeExp(compiler, registerPointer);
+		if (registerPointer < compiler.numberOfRegister) {
+			getRightOperand().codeExp(compiler, registerPointer + 1);
+			compiler.addInstruction(new MUL(Register.getR(registerPointer + 1), 
+					Register.getR(registerPointer)));
+		}
+		else {
+			assert(registerPointer == compiler.numberOfRegister);
+			/*Manage capacity overrun*/
+			depassementCapacite(compiler);
+			//Plus
+			compiler.addInstruction(new MUL(Register.R1,
+					Register.getR(compiler.numberOfRegister)));
+		}
 	}
 
 
@@ -37,7 +53,8 @@ public class And extends AbstractOpBool {
 		}
 		//〈Code(C,vrai,E)〉
 		else {
-			Label endAnd = new Label("endAnd");
+			Label endAnd = new Label("endAnd." + 
+					String.valueOf(compiler.incrementAndCounter()));
 			getLeftOperand().codeCond(compiler, !bool, endAnd);
 			getRightOperand().codeCond(compiler, bool, etiquette);
 			compiler.addLabel(endAnd);

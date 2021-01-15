@@ -69,6 +69,7 @@ public class Initialization extends AbstractInitialization {
 
 	@Override
 	protected void STOREInstrution(DecacCompiler compiler, Definition definition) {
-		compiler.addInstruction(new STORE(Register.getR(2), definition.getOperand()));
+		compiler.addInstruction(new STORE(Register.getR(compiler.getRegisterPointer()),
+				definition.getOperand()));
 	}
 }
