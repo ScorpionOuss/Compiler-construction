@@ -39,7 +39,9 @@ public class StringLiteral extends AbstractStringLiteral {
             ClassDefinition currentClass) throws ContextualError {
         // implemented
     	SymbolTable symbolTable = new SymbolTable();
-    	return compiler.getEnvironment().get(symbolTable.create("string")).getType(); 
+    	Type type = new StringType(symbolTable.create(value)); 
+    	this.setType(type);
+    	return type; 
     }
 
     @Override

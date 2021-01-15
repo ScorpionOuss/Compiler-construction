@@ -30,8 +30,8 @@ public class Not extends AbstractUnaryExpr {
     	if (!type.isBoolean()) {
     		throw new ContextualError("Not operator incompatible whith this expression", this.getLocation());
     	} 
-    	SymbolTable symbolTable = new SymbolTable();
-    	return compiler.getEnvironment().get(symbolTable.create("boolean")).getType();
+    	this.setType(type);
+    	return type; 
     }
 
 

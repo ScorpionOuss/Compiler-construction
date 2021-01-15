@@ -27,26 +27,27 @@ public abstract class AbstractOpArith extends AbstractBinaryExpr {
     	Type leftType = this.getLeftOperand().verifyExpr(compiler, localEnv, currentClass);
     	Type rightType = this.getRightOperand().verifyExpr(compiler, localEnv, currentClass);
     	SymbolTable symbolTable = new SymbolTable();
+    	Type type;
     	if (leftType.isInt()) {
     		if (rightType.isInt()) {
-				Type type = compiler.getEnvironment().get(symbolTable.create("int")).getType();
+				type = compiler.getEnvironment().get(symbolTable.create("int")).getType();
 				this.setType(type);
 				return type;
     		}
     		if (rightType.isFloat()) {
-				Type type = compiler.getEnvironment().get(symbolTable.create("float")).getType();
+				type = compiler.getEnvironment().get(symbolTable.create("float")).getType();
 				this.setType(type);
 				return type;
     		}
     	}
     	if (rightType.isFloat()) {
     		if (leftType.isInt()) {
-				Type type = compiler.getEnvironment().get(symbolTable.create("float")).getType();
+				type = compiler.getEnvironment().get(symbolTable.create("float")).getType();
 				this.setType(type);
 				return type;
     		}
     		if (leftType.isFloat()) {
-				Type type = compiler.getEnvironment().get(symbolTable.create("float")).getType();
+				type = compiler.getEnvironment().get(symbolTable.create("float")).getType();
 				this.setType(type);
 				return type;
     		}
