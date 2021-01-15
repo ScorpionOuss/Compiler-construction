@@ -40,7 +40,10 @@ public abstract class AbstractPrint extends AbstractInst {
             ClassDefinition currentClass, Type returnType)
             throws ContextualError {
     	for (AbstractExpr expr: arguments.getList()) {
-    		expr.verifyInst(compiler, localEnv, currentClass, returnType);
+    		Type type = expr.verifyExpr(compiler, localEnv, currentClass);
+    		if (!(type.isString() || type.isInt() || type.isFloat())) {
+    			throw new ContextualError("this expression can't be printed", this.getLocation());
+    		}
     	}
     }
 
