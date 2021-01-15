@@ -185,6 +185,7 @@ public class Identifier extends AbstractIdentifier {
     	}
     	this.setDefinition(expDefinition);
     	Type type = localEnv.get(name).getType();
+    	this.setType(type);
     	return type;
     }
 
