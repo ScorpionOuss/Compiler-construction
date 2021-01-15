@@ -52,7 +52,8 @@ assert(registerPointer < compiler.numberOfRegister);
 		}
 		//〈Code(C, faux, E)〉
 		else {
-			Label endOr = new Label("endOr");
+			Label endOr = new Label("endOr" + 
+					String.valueOf(compiler.incrementOrCounter()));
 			getLeftOperand().codeCond(compiler, !bool, endOr);
 			getRightOperand().codeCond(compiler, bool, etiquette);
 			compiler.addLabel(endOr);

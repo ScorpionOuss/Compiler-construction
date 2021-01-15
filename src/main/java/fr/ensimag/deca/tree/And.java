@@ -53,7 +53,8 @@ public class And extends AbstractOpBool {
 		}
 		//〈Code(C,vrai,E)〉
 		else {
-			Label endAnd = new Label("endAnd");
+			Label endAnd = new Label("endAnd." + 
+					String.valueOf(compiler.incrementAndCounter()));
 			getLeftOperand().codeCond(compiler, !bool, endAnd);
 			getRightOperand().codeCond(compiler, bool, etiquette);
 			compiler.addLabel(endAnd);
