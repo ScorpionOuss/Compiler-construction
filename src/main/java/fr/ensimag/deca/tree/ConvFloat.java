@@ -21,7 +21,9 @@ public class ConvFloat extends AbstractUnaryExpr {
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) {
     	SymbolTable symbolTable = new SymbolTable();
-    	return compiler.getEnvironment().get(symbolTable.create("float")).getType();
+    	Type type = compiler.getEnvironment().get(symbolTable.create("float")).getType();
+    	this.setType(type);
+    	return type; 
     }
 
     @Override

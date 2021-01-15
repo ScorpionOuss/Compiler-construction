@@ -25,7 +25,9 @@ public abstract class AbstractOpIneq extends AbstractOpCmp {
     	Type rightType = this.getRightOperand().verifyExpr(compiler, localEnv, currentClass);
     	SymbolTable symbolTable = new SymbolTable();
     	if ((leftType.isInt() || leftType.isFloat()) && (rightType.isInt() || rightType.isFloat())) {
-			return compiler.getEnvironment().get(symbolTable.create("boolean")).getType();
+    		Type type = compiler.getEnvironment().get(symbolTable.create("boolean")).getType(); 
+    		this.setType(type);
+			return type; 
     	}
     	throw new ContextualError("The binary operation used is not defined for the operands types", this.getLocation());
     }

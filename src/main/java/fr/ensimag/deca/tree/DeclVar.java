@@ -38,8 +38,6 @@ public class DeclVar extends AbstractDeclVar {
             EnvironmentExp localEnv, ClassDefinition currentClass)
             throws ContextualError {
 		Type varType = type.verifyType(compiler);
-		if (varType == null) System.out.println("null type");
-		else System.out.println("not null");
     	try {
     		VariableDefinition varDefinition = new VariableDefinition(varType, varName.getLocation());
 			localEnv.declare(varName.getName(), varDefinition);

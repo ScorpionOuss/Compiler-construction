@@ -26,8 +26,8 @@ public class UnaryMinus extends AbstractUnaryExpr {
     	if (!(type.isInt() || type.isFloat())) {
     		throw new ContextualError("Unary operator - incompatible whith this expression", this.getLocation());
     	} 
-    	SymbolTable symbolTable = new SymbolTable();
-    	return compiler.getEnvironment().get(symbolTable.create(type.toString())).getType();
+    	this.setType(type);
+    	return type; 
     }
 
 
