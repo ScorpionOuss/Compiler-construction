@@ -17,20 +17,20 @@ import org.apache.commons.lang.Validate;
  * @date 01/01/2021
  */
 public class DeclClass extends AbstractDeclClass {
-//
-//    private AbstractIdentifier name;
-//    private AbstractIdentifier superClass;
-//    private ListDeclFieldSet fields;
-//    private ListDeclMethod methods;
-//    
-//    public DeclClass(AbstractIdentifier name,AbstractIdentifier superClass,
-//            ListDeclFieldSet listDeclFieldSet, ListDeclMethod listDeclMethod){
-//			
-//            this.name = name;
-//            this.superClass = superClass;
-//            this.fields = listDeclFieldSet; 
-//            this.methods = listDeclMethod;
-//    }
+
+    private AbstractIdentifier name;
+    private AbstractIdentifier superClass;
+    private ListDeclFieldSet fields;
+    private ListDeclMethod methods;
+    
+    public DeclClass(AbstractIdentifier name,AbstractIdentifier superClass,
+            ListDeclFieldSet listDeclFieldSet, ListDeclMethod listDeclMethod){
+			
+            this.name = name;
+            this.superClass = superClass;
+            this.fields = listDeclFieldSet; 
+            this.methods = listDeclMethod;
+    }
 
 
     
