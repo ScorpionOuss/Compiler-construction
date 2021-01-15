@@ -184,7 +184,7 @@ public class Identifier extends AbstractIdentifier {
     		throw new ContextualError("The variable " + name.getName() + " was not declared", this.getLocation());
     	}
     	this.setDefinition(expDefinition);
-    	Type type = localEnv.get(name).getType();
+    	Type type = expDefinition.getType();
     	this.setType(type);
     	return type;
     }
@@ -202,6 +202,7 @@ public class Identifier extends AbstractIdentifier {
     		throw new ContextualError("Type void variable declaration", this.getLocation());
     	}
     	this.setDefinition(typeDefinition);
+    	this.setType(typeDefinition.getType());
     	return typeDefinition.getType();
     }
     
