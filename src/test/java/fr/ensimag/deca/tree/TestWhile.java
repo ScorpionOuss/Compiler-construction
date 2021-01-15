@@ -70,10 +70,7 @@ public class TestWhile {
         body.add(print);
         AbstractInst t = new While(inegalite, body);
         linst.add(t);
-//        linst.add(new Print(false,lexp1));
-//        linst.add(new Println(false,lexp2));
-//        lexp1.add(new StringLiteral("Hello "));
-//        lexp2.add(new StringLiteral("everybody !"));
+
         return source;
     }
 }

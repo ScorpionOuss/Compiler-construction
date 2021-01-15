@@ -47,7 +47,7 @@ public class DecacCompiler {
         super();
         this.compilerOptions = compilerOptions;
         this.source = source;
-        //this.environmentType = new EnvironmentType();
+        this.environmentType = new EnvironmentType();
     }
 
     /**
