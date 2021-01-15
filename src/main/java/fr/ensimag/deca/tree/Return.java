@@ -8,6 +8,7 @@ import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.instructions.HALT;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
 
 import java.io.PrintStream;
@@ -29,7 +30,9 @@ public class Return extends AbstractInst {
     	exp.codeExp(compiler, compiler.getRegisterPointer());
     	compiler.addInstruction(new LOAD(Register.getR(compiler.getRegisterPointer()),
     			Register.R0));
+    	compiler.addInstruction(new HALT());
     }
+    
     @Override
     protected void verifyInst(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass, Type returnType)

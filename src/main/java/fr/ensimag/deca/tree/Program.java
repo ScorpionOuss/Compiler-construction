@@ -51,6 +51,7 @@ public class Program extends AbstractProgram {
         compiler.addInstruction(new HALT());
         compiler.addStackException();
         compiler.addStackVerification();
+        //add io_exception!
     }
 
     @Override
