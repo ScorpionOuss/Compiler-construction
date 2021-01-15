@@ -6,6 +6,7 @@ import java.util.Map;
 import fr.ensimag.deca.tools.DecacInternalError;
 import fr.ensimag.deca.tools.SymbolTable;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
+import fr.ensimag.deca.tree.Location;
 import fr.ensimag.deca.context.EnvironmentExp.DoubleDefException;
 
 /**
@@ -37,19 +38,18 @@ public class EnvironmentType {
     	SymbolTable symbolTable = new SymbolTable();
     	try {
     		// type definition
-			this.declare(symbolTable.create("int"), new TypeDefinition(new IntType(symbolTable.create("int")), null));
-			this.declare(symbolTable.create("float"), new TypeDefinition(new FloatType(symbolTable.create("float")), null));
-			this.declare(symbolTable.create("boolean"), new TypeDefinition(new BooleanType(symbolTable.create("boolean")), null));
-			this.declare(symbolTable.create("void"), new TypeDefinition(new VoidType(symbolTable.create("void")), null));
-			this.declare(symbolTable.create("string"), new TypeDefinition(new StringType(symbolTable.create("string")), null));
+			this.declare(symbolTable.create("int"), new TypeDefinition(new IntType(symbolTable.create("int")), Location.BUILTIN));
+			this.declare(symbolTable.create("float"), new TypeDefinition(new FloatType(symbolTable.create("float")), Location.BUILTIN));
+			this.declare(symbolTable.create("boolean"), new TypeDefinition(new BooleanType(symbolTable.create("boolean")), Location.BUILTIN));
+			this.declare(symbolTable.create("void"), new TypeDefinition(new VoidType(symbolTable.create("void")), Location.BUILTIN));
 
 			// env_exp_object definition
-			ClassType objectType = new ClassType(symbolTable.create("Object"), null, null);
+			ClassType objectType = new ClassType(symbolTable.create("Object"), Location.BUILTIN, null);
 			ClassDefinition objectDefinition = objectType.getDefinition();
 			Signature signature = new Signature();
 			signature.add(objectDefinition.getType());
 			Type returnType = this.get(symbolTable.create("boolean")).getType();
-			MethodDefinition equalsDefinition = new MethodDefinition(returnType, null, signature, 0);
+			MethodDefinition equalsDefinition = new MethodDefinition(returnType, Location.BUILTIN, signature, 0);
 			objectDefinition.getMembers().declare(symbolTable.create("equals"), equalsDefinition);
 			// type_class(Object) definition
 			this.declare(symbolTable.create("Object"), objectDefinition); 

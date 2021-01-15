@@ -5,11 +5,9 @@
 
 {
 	int x = 2;
-	//int y = x + 4;
+	int y = x + 4;
 	boolean z = true;
 	//float f = 2,5;
-	//string s = "s";
-	float f;
 	//printlnx(x, y + 3);
 	//if (x < 2) {print(x);} else {print(x);};
 	//while (x < 2) {print(x);};
