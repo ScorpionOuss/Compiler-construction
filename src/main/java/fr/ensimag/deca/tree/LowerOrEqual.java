@@ -2,10 +2,10 @@ package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.ima.pseudocode.Label;
-import fr.ensimag.ima.pseudocode.instructions.BGE;
+import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.instructions.BGT;
 import fr.ensimag.ima.pseudocode.instructions.BLE;
-import fr.ensimag.ima.pseudocode.instructions.BLT;
+import fr.ensimag.ima.pseudocode.instructions.SLE;
 
 /**
  *
@@ -27,8 +27,10 @@ public class LowerOrEqual extends AbstractOpIneq {
 	@Override
 	public
 	void codeExp(DecacCompiler compiler, int registerPointer) {
-        throw new UnsupportedOperationException("not yet implemented");
-		
+		//CMP operands
+		codeCMP(compiler);
+		//Scc instruction
+		compiler.addInstruction(new SLE(Register.getR(registerPointer)));
 	}
 
 	public void codeCond(DecacCompiler compiler, boolean bool, Label etiquette) {

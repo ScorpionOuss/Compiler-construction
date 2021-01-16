@@ -47,7 +47,7 @@ public class DecacCompiler {
         super();
         this.compilerOptions = compilerOptions;
         this.source = source;
-        //this.environmentType = new EnvironmentType();
+        this.environmentType = new EnvironmentType();
     }
 
     /**
@@ -186,7 +186,7 @@ public class DecacCompiler {
 
 
         prog.verifyProgram(this);
-        assert(prog.checkAllDecorations());
+        //assert(prog.checkAllDecorations());
 
         addComment("start main program");
         prog.codeGenProgram(this);
@@ -317,6 +317,42 @@ public class DecacCompiler {
 	public EnvironmentType getEnvironment() {
 		return environmentType;
 	}
+	
+	private int whileCounter = 0;
+	private int ifCounter = 0;
+	private int andCounter = 0;
+	private int orCounter = 0;
+	
+	
+	 /*
+     * Increments the register Pointer
+     */
+    public int incrementWhileCounter() {
+   	 whileCounter++;
+   	 return whileCounter;
+    }
 
-
+    /*
+     * Increments the register Pointer
+     */
+    public int incrementIfCounter() {
+   	 ifCounter++;
+   	 return ifCounter;
+    }
+    
+    /*
+     * Increments the register Pointer
+     */
+    public int incrementAndCounter() {
+   	 andCounter++;
+   	 return andCounter;
+    }
+    
+    /*
+     * Increments the register Pointer
+     */
+    public int incrementOrCounter() {
+   	 orCounter++;
+   	 return orCounter;
+    }
 }

@@ -72,6 +72,7 @@ public class TestWhileOPB {
         body.add(print);
         AbstractInst t = new While(and, body);
         linst.add(t);
+        linst.add(t);
 
         return source;
     }

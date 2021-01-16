@@ -8,7 +8,7 @@ import fr.ensimag.deca.context.VariableDefinition;
 import fr.ensimag.deca.tools.SymbolTable;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
 
-public class TestWhile {
+public class TestReturn {
 	public static void main(String[] args) {
 		test1();
 	}
@@ -44,8 +44,6 @@ public class TestWhile {
         Symbol create2 = table.create("x");
         AbstractIdentifier id1 = new Identifier(create);
         AbstractIdentifier id2 = new Identifier(create2);
-        id2.setType(new IntType(create2));
-
         id1.setDefinition(new TypeDefinition(new StringType(create), new Location(0, 0, null)));
         id2.setDefinition(new VariableDefinition(new StringType(create2), new Location(0, 0, null)));
         listVar.add(new DeclVar(id1, id2, new Initialization(new IntLiteral(1))));
@@ -59,17 +57,18 @@ public class TestWhile {
         /*********************************************************************/
         
         /***************************declaration des instructions****************/
-        AbstractExpr inegalite = new Lower(id2, new IntLiteral(3));
-        AbstractExpr plus = new Plus(id2, new IntLiteral(1));
-        AbstractExpr affect = new Assign(id2, plus);
-        ListInst body = new ListInst();
+        AbstractExpr moins = new Minus(id2, new IntLiteral(7));
+        AbstractExpr read = new ReadInt();
+        AbstractExpr plus = new Plus(moins, read);
+        AbstractExpr fois = new Multiply(plus, new IntLiteral(5));
+        fois.setType(new IntType(create2));
         ListExpr arguments= new ListExpr();
-        arguments.add(id2);
-        Println print = new Println(false, arguments);
-        body.add(affect);
-        body.add(print);
-        AbstractInst t = new While(inegalite, body);
-        linst.add(t);
+        arguments.add(new StringLiteral("result"));
+        arguments.add(fois);
+        AbstractInst print = new Print(false, arguments);
+        AbstractInst returnx = new Return(fois);
+        linst.add(returnx);
+        linst.add(print);
 
         return source;
     }

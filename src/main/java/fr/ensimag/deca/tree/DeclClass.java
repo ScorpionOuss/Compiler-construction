@@ -56,19 +56,31 @@ public class DeclClass extends AbstractDeclClass {
         throw new UnsupportedOperationException("not yet implemented");
     }
 
+	@Override
+	protected void prettyPrintChildren(PrintStream s, String prefix) {
+		// TODO Auto-generated method stub
+		
+	}
 
-    @Override
-    protected void prettyPrintChildren(PrintStream s, String prefix) {
-        name.prettyPrint(s, prefix, false);
-        superClass.prettyPrint(s, prefix, false);
-        fields.prettyPrint(s, prefix, true);
-        methods.prettyPrint(s, prefix, true);
-        //throw new UnsupportedOperationException("Not yet supported");
-    }
+	@Override
+	protected void iterChildren(TreeFunction f) {
+		// TODO Auto-generated method stub
+		
+	}
 
-    @Override
-    protected void iterChildren(TreeFunction f) {
-        throw new UnsupportedOperationException("Not yet supported");
-    }
+
+//    @Override
+//    protected void prettyPrintChildren(PrintStream s, String prefix) {
+//        name.prettyPrint(s, prefix, false);
+//        superClass.prettyPrint(s, prefix, false);
+//        fields.prettyPrint(s, prefix, true);
+//        methods.prettyPrint(s, prefix, true);
+//        //throw new UnsupportedOperationException("Not yet supported");
+//    }
+//
+//    @Override
+//    protected void iterChildren(TreeFunction f) {
+//        throw new UnsupportedOperationException("Not yet supported");
+//    }
 
 }

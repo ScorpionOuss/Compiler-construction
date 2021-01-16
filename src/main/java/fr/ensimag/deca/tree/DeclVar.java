@@ -37,9 +37,12 @@ public class DeclVar extends AbstractDeclVar {
     protected void verifyDeclVar(DecacCompiler compiler,
             EnvironmentExp localEnv, ClassDefinition currentClass)
             throws ContextualError {
-        Type varType = type.verifyType(compiler);
+		Type varType = type.verifyType(compiler);
     	try {
-			localEnv.declare(varName.getName(), new VariableDefinition(varType, varName.getLocation()));
+    		VariableDefinition varDefinition = new VariableDefinition(varType, varName.getLocation());
+			localEnv.declare(varName.getName(), varDefinition);
+			varName.setType(varType);
+			varName.setDefinition(varDefinition);
 		} catch (DoubleDefException e) {
 			throw new ContextualError("Variable " + varName.toString() + " is already declared", varName.getLocation());
 		}

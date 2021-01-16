@@ -7,8 +7,11 @@ import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.DVal;
+import fr.ensimag.ima.pseudocode.ImmediateInteger;
 import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.instructions.BRA;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
 import fr.ensimag.deca.tools.SymbolTable;
 
 import java.io.PrintStream;
@@ -34,7 +37,9 @@ public class BooleanLiteral extends AbstractExpr {
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
     	SymbolTable symbolTable = new SymbolTable();
-    	return compiler.getEnvironment().get(symbolTable.create("boolean")).getType();
+    	Type type = compiler.getEnvironment().get(symbolTable.create("boolean")).getType();
+    	this.setType(type);
+    	return type; 
     }
 
 
@@ -61,7 +66,16 @@ public class BooleanLiteral extends AbstractExpr {
 	@Override
 	public
 	void codeExp(DecacCompiler compiler, int registerPointer) {
-        throw new UnsupportedOperationException("not yet implemented");		
+		if (value) {
+			compiler.addInstruction(new LOAD(new ImmediateInteger(1),
+					Register.getR(registerPointer)));
+
+		}
+		else {
+			compiler.addInstruction(new LOAD(new ImmediateInteger(0),
+					Register.getR(registerPointer)));
+
+		}
 	}
 
 	@Override
