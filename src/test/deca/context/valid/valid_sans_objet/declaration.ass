@@ -20,30 +20,20 @@
 	WINT
 	WNL
 	LOAD 1(GB), R2
-	CMP #2, R2
-	BGE E_Sinon.1
+	CMP 2(GB), R2
+	SNE R2
+	STORE R2, 3(GB)
+	LOAD 3(GB), R0
+	CMP #0, R0
+	BEQ E_Sinon.1
 	LOAD 1(GB), R2
-	LOAD R2, R1
-	WINT
-	BRA E_Fin.1
-E_Sinon.1:
-	LOAD 2(GB), R2
-	LOAD R2, R1
-	WINT
-E_Fin.1:
-	BRA E_Cond1
-E_Debut1:
-	LOAD 1(GB), R2
+	MUL 1(GB), R2
 	LOAD R2, R1
 	WINT
 	WNL
-	LOAD 1(GB), R2
-	ADD #1, R2
-	STORE R2, 1(GB)
-E_Cond1:
-	LOAD 1(GB), R2
-	CMP #4, R2
-	BLT E_Debut1
+	BRA E_Fin.1
+E_Sinon.1:
+E_Fin.1:
 	HALT
 stack_overflow_error:
 	WSTR "Error: Stack Overflow"

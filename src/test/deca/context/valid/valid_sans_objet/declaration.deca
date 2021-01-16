@@ -8,10 +8,11 @@
 	int y = x + 4;
 	boolean z = true;
 	//float f = 2,5;
-	println(x, y + 3);
-	if (x < 2) {print(x);} else {print(y);};
-	while (x < 4) {
-		println(x);
-		x = x + 1;
-	};
+	printlnx(x, y + 3);
+	//if (x < 2) {print(x);} else {print(x);}
+	//while (x < 2) {print(x);};
+	z = x != y;
+	if (z){
+		println(x*x);
+	}
 }
