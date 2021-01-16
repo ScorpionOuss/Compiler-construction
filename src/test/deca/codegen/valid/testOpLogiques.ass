@@ -1,0 +1,34 @@
+; start main program
+	TSTO #1
+	BOV stack_overflow_error
+; Main program
+	ADDSP #1
+	LOAD #2, R2
+	STORE R2, 1(GB)
+; Beginning of main instructions:
+	LOAD #3, R2
+	CMP 1(GB), R2
+	BGT endAnd.1
+	LOAD 1(GB), R2
+	CMP #5, R2
+	BLT E_Sinon.1
+endAnd.1:
+	LOAD #10, R2
+	CMP 1(GB), R2
+	BLT E_Sinon.1
+	LOAD 1(GB), R2
+	CMP #2, R2
+	BGE E_Sinon.1
+	WSTR """Condition verified"""
+	WNL
+	BRA E_Fin.1
+E_Sinon.1:
+	WSTR """Condition denied"""
+	WNL
+E_Fin.1:
+	HALT
+stack_overflow_error:
+	WSTR "Error: Stack Overflow"
+	WNL
+	ERROR
+; end main program

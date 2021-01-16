@@ -42,7 +42,15 @@ public class DeclClass extends AbstractDeclClass {
 	
     @Override
     public void decompile(IndentPrintStream s) {
-        s.print("class { ... A FAIRE ... }");
+        s.print("class ");
+        name.decompile(s);
+        s.print("extends");
+        superClass.decompile(s);
+        s.println("{");
+        fields.decompile(s);
+        methods.decompile(s);
+        s.println("}");
+        
     }
 
     @Override
@@ -83,6 +91,7 @@ public class DeclClass extends AbstractDeclClass {
 		fields.prettyPrint(s, prefix, false);
 		methods.prettyPrint(s, prefix, true);
 	}
+	
 
 	@Override
 	protected void iterChildren(TreeFunction f) {
@@ -96,5 +105,6 @@ public class DeclClass extends AbstractDeclClass {
     String prettyPrintNode() {
         return "Class " + name.getName() + " extends " + superClass.getName();
     }
+
 
 }

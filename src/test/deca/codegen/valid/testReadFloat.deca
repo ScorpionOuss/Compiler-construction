@@ -1,0 +1,14 @@
+// Description:
+//    tests conditionnelle
+//
+// Resultats:
+//    ok
+// 
+// Historique:
+//    cree le 15/01/2021
+
+{
+float x = readFloat();
+int y = readInt();
+print(x);
+}

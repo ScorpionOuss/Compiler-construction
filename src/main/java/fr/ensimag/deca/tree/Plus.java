@@ -25,7 +25,7 @@ public class Plus extends AbstractOpArith {
 
 	@Override
 	public void codeExp(DecacCompiler compiler, int registerPointer) {
-		assert(registerPointer < compiler.numberOfRegister);
+		assert(registerPointer <= compiler.numberOfRegister);
 		
 		if (getRightOperand().adressable()) {
 			getLeftOperand().codeExp(compiler, registerPointer);
@@ -51,6 +51,7 @@ public class Plus extends AbstractOpArith {
 				compiler.addInstruction(new ADD(Register.R1, Register.getR(compiler.numberOfRegister)));
 			}
 		}
+		addArithFloatInstruction(compiler);
 	}
 
 }

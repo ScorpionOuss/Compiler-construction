@@ -2,6 +2,8 @@ package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.tools.SymbolTable;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.instructions.FLOAT;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
@@ -35,14 +37,11 @@ public class ConvFloat extends AbstractUnaryExpr {
     protected String getOperatorName() {
         return "/* conv float */";
     }
-
-    @Override
-    protected void codeGenInst(DecacCompiler compiler) {
-    	assert(getOperand().getType().isInt());
-    }
     
 	@Override
 	public void codeExp(DecacCompiler compiler, int registerPointer) {
-        throw new UnsupportedOperationException("not yet implemented");		
+		getOperand().codeExp(compiler, registerPointer);
+		compiler.addInstruction(new FLOAT(Register.getR(registerPointer),
+				Register.getR(registerPointer)));
 	}
 }

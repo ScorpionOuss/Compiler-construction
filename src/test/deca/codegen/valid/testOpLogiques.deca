@@ -1,0 +1,17 @@
+// Description:
+//    tests conditions et opérations logiques
+//
+// Resultats:
+// Condition denied
+// Historique:
+//    cree le 15/01/2021
+
+{
+int x = 2;
+if(! ((3 <= x && x < 5) || (10 < x || x  >= 2))){
+    println("Condition verified");
+    }
+else{
+    println("Condition denied");
+    }
+}

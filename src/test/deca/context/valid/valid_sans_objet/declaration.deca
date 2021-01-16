@@ -9,7 +9,10 @@
 	boolean z = true;
 	float f = 2.5;
 	printlnx(x, y + 3);
-	if (x < 2) {print(x);} else {print(x);};
-	while (x < 2) {print(x);};
-	
+	//if (x < 2) {print(x);} else {print(x);}
+	//while (x < 2) {print(x);};
+	z = x != y;
+	if (z){
+		println(x*x);
+	}
 }

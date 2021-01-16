@@ -1,0 +1,12 @@
+// Description:
+//    Test de  readFLoat
+//
+// Resultats:
+//    Rien
+//
+// Historique:
+//    cree le 01/01/2021
+
+{   
+    float y = readFloat();
+}

@@ -15,7 +15,10 @@ public  class ListDeclFieldSet extends TreeList<AbstractDeclFieldSet> {
 
     @Override
     public void decompile(IndentPrintStream s) {
-        
+            for (AbstractDeclFieldSet c : getList()) {
+            c.decompile(s);
+            s.println();
+        }
     }
     
 }

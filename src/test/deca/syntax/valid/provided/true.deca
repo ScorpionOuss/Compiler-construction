@@ -1,1 +1,12 @@
-{print(true);}
+// Description:
+//    Test de true
+//
+// Resultats:
+//    
+//
+// Historique:
+//    cree le 01/01/2021
+
+{
+    print(true);
+}

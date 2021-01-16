@@ -1,1 +1,12 @@
-{string x = "hello";}
+// Description:
+//    Déclaration et affectation d'un string
+//
+// Resultats:
+//    Rien
+//
+// Historique:
+//    cree le 01/01/2021
+
+{
+    string x = "hello";
+}

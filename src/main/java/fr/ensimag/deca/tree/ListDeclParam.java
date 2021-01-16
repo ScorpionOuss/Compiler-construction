@@ -15,7 +15,10 @@ public class ListDeclParam extends TreeList<DeclParam> {
 
     @Override
     public void decompile(IndentPrintStream s) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       for (DeclParam c : getList()) {
+            c.decompile(s);
+            s.println();
+        }
     }
     
 }

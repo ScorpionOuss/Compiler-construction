@@ -26,13 +26,15 @@ public class DeclParam extends AbstractDeclParam{
 
     @Override
     public void decompile(IndentPrintStream s) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       type.decompile(s);
+       s.print(" ");;
+       ident.decompile();
     }
 
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
         type.prettyPrint(s, prefix, false);
-      ident.prettyPrint(s, prefix, false);
+        ident.prettyPrint(s, prefix, false);
     }
 
     @Override
