@@ -1,12 +1,12 @@
 // Description:
-//    Test de true
+//    Déclaration de plusieurs variables
 //
 // Resultats:
-//    
+//    Rien
 //
 // Historique:
 //    cree le 01/01/2021
 
 {
-    print(true);
+    int x,y,z=1;
 }

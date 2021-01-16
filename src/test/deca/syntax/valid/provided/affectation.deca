@@ -1,12 +1,12 @@
 // Description:
-//    Test de true
+//    Test d'affectation de variable
 //
 // Resultats:
-//    
+//    Rien
 //
 // Historique:
 //    cree le 01/01/2021
 
-{
-    print(true);
+{  int x; 
+    x = 3;
 }

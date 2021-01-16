@@ -1,12 +1,9 @@
 // Description:
-//    Test de true
+//    Main vide
 //
 // Resultats:
-//    
+//    rien
 //
 // Historique:
 //    cree le 01/01/2021
-
-{
-    print(true);
-}
+{}

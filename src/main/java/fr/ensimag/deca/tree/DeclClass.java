@@ -37,7 +37,15 @@ public class DeclClass extends AbstractDeclClass {
 	
     @Override
     public void decompile(IndentPrintStream s) {
-        s.print("class { ... A FAIRE ... }");
+        s.print("class ");
+        name.decompile(s);
+        s.print("extends");
+        superClass.decompile(s);
+        s.println("{");
+        fields.decompile(s);
+        methods.decompile(s);
+        s.println("}");
+        
     }
 
     @Override
@@ -56,11 +64,7 @@ public class DeclClass extends AbstractDeclClass {
         throw new UnsupportedOperationException("not yet implemented");
     }
 
-	@Override
-	protected void prettyPrintChildren(PrintStream s, String prefix) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 
 	@Override
 	protected void iterChildren(TreeFunction f) {
@@ -69,14 +73,14 @@ public class DeclClass extends AbstractDeclClass {
 	}
 
 
-//    @Override
-//    protected void prettyPrintChildren(PrintStream s, String prefix) {
-//        name.prettyPrint(s, prefix, false);
-//        superClass.prettyPrint(s, prefix, false);
-//        fields.prettyPrint(s, prefix, true);
-//        methods.prettyPrint(s, prefix, true);
-//        //throw new UnsupportedOperationException("Not yet supported");
-//    }
+    @Override
+    protected void prettyPrintChildren(PrintStream s, String prefix) {
+        name.prettyPrint(s, prefix, false);
+        superClass.prettyPrint(s, prefix, false);
+        fields.prettyPrint(s, prefix, true);
+        methods.prettyPrint(s, prefix, true);
+        
+    }
 //
 //    @Override
 //    protected void iterChildren(TreeFunction f) {

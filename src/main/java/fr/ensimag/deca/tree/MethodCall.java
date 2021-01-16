@@ -40,6 +40,13 @@ public class MethodCall extends AbstractExpr{
 
     @Override
     public void decompile(IndentPrintStream s) {
+        obj.decompile(s);
+        s.print("(");
+        method.decompile(s);
+        s.print(")");
+        params.decompile(s);
+         s.println(")");
+        
     }
 
     @Override

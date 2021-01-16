@@ -5,6 +5,10 @@
  */
 package fr.ensimag.deca.tree;
 
+import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.deca.context.ClassDefinition;
+import fr.ensimag.deca.context.ContextualError;
+import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import java.io.PrintStream;
 
@@ -12,38 +16,23 @@ import java.io.PrintStream;
  *
  * @author ensimag
  */
-public class DeclFieldSet extends AbstractDeclFieldSet {
-    private Visibility visibility;
-    private AbstractIdentifier type;
-    private ListDeclField listDeclField;
-    public DeclFieldSet(Visibility v, AbstractIdentifier t, ListDeclField ldf){
-        visibility = v;
-        type = t;
-        listDeclField = ldf;
-        
-    }
-    
+public class AbstractMethodBody extends Tree{
+
     @Override
     public void decompile(IndentPrintStream s) {
-        s.print(visibility.toString());
-        s.print(" ");
-        type.decompile(s);
-        s.print(" ");
-        listDeclField.decompile(s);
-        s.println(";");
-        
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
-//      visibility.prettyPrint(s, prefix, false);
-      type.prettyPrint(s, prefix, false);
-      listDeclField.prettyPrint(s, prefix, true);
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     protected void iterChildren(TreeFunction f) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    
     
 }

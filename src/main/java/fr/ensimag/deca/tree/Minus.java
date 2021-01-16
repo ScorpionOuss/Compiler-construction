@@ -1,13 +1,7 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
-import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.Register;
-import fr.ensimag.ima.pseudocode.instructions.ADD;
-import fr.ensimag.ima.pseudocode.instructions.BOV;
-import fr.ensimag.ima.pseudocode.instructions.LOAD;
-import fr.ensimag.ima.pseudocode.instructions.POP;
-import fr.ensimag.ima.pseudocode.instructions.PUSH;
 import fr.ensimag.ima.pseudocode.instructions.SUB;
 
 /**
@@ -57,4 +51,6 @@ public class Minus extends AbstractOpArith {
 		}
 		addArithFloatInstruction(compiler);
 	}
+        
+
 }

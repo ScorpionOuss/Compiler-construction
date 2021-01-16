@@ -1,12 +1,10 @@
 // Description:
-//    Test de true
+//    Programme ne contenant qu'un point virgule
 //
 // Resultats:
-//    
+//    Rien
 //
 // Historique:
 //    cree le 01/01/2021
 
-{
-    print(true);
-}
+{;}

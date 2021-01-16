@@ -1,5 +1,5 @@
 // Description:
-//    test de non égalité entre deux variables
+//    Déclaration de classe héritant d'une autre
 //
 // Resultats:
 //    Rien
@@ -7,6 +7,7 @@
 // Historique:
 //    cree le 01/01/2021
 
-{ 
-    x != y;
+ class A extends B {
+	
 }
+	

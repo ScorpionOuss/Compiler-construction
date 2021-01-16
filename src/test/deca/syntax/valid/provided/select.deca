@@ -1,2 +1,13 @@
-{print(3.attribut);
-println(this.attr(true));}
+// Description:
+//    Test de la règle MethodCall
+//
+// Resultats:
+//    
+//
+// Historique:
+//    cree le 01/01/2021
+
+{
+    print(a.attribut);
+    println(this.attr(true));
+}
