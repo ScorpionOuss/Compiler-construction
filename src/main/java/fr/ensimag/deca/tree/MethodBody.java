@@ -31,7 +31,12 @@ public class MethodBody extends AbstractMethodBody {
 
     @Override
     public void decompile(IndentPrintStream s) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       s.println("{");
+       s.indent();
+       listDeclVar.decompile(s);
+       listInst.decompile(s);
+       s.unindent();
+       s.println("}");
     }
 
     @Override

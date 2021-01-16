@@ -145,12 +145,12 @@ inst returns[AbstractInst tree]
         }
     | PRINTX OPARENT list_expr CPARENT SEMI {
             assert($list_expr.tree != null);
-            $tree = new Println(false, $list_expr.tree);
+            $tree = new Println(true, $list_expr.tree);
             setLocation($tree, $PRINTX);
         }
     | PRINTLNX OPARENT list_expr CPARENT SEMI {
             assert($list_expr.tree != null);
-            $tree = new Println(false, $list_expr.tree);
+            $tree = new Println(true, $list_expr.tree);
             setLocation($tree, $PRINTLNX);
         }
     | if_then_else {
@@ -648,12 +648,15 @@ decl_method returns[AbstractDeclMethod tree]
         }
       | ASM OPARENT code=multi_line_string CPARENT SEMI {
         assert($code.text != null);
+        mb = new MethodAsmBody(new StringLiteral($code.text));
+        setLocation(mb, $code.start);
+        
         }
       ) {
         assert($type.tree != null);
         assert($ident.tree != null);
         assert($params.tree != null);
-        $tree = new DeclMethod($type.tree, $ident.tree, mb);
+        $tree = new DeclMethod($type.tree, $ident.tree, $params.tree,mb);
         setLocation($tree, $type.start);
         }
     ;
@@ -690,6 +693,6 @@ param returns[DeclParam tree]
         assert($type.tree != null);
         assert($ident.tree != null);
         $tree = new DeclParam($type.tree, $ident.tree);
-        setLocation($tree,$type.start);
+        setLocation($tree, $type.start);
         }
     ;

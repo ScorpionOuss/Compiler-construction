@@ -19,22 +19,34 @@ import java.io.PrintStream;
 public class DeclMethod extends AbstractDeclMethod {
     private AbstractIdentifier type;
     private AbstractIdentifier ident;
+    private ListDeclParam listDeclParam;
     private AbstractMethodBody  methodBody;
     
-    public DeclMethod(AbstractIdentifier type,AbstractIdentifier ident, AbstractMethodBody methodBody ){
+    public DeclMethod(AbstractIdentifier type,AbstractIdentifier ident, 
+           ListDeclParam listDeclParam, AbstractMethodBody methodBody  ){
         this.type = type;
         this.ident = ident;
+        this.listDeclParam = listDeclParam;
         this.methodBody = methodBody;
     }
     @Override
     public void decompile(IndentPrintStream s) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        type.decompile(s);
+        s.print(" ");
+        ident.decompile(s);
+        s.print("(");
+        listDeclParam.decompile(s);
+        s.print(")");
+        methodBody.decompile(s);
+        
     }
 
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
       type.prettyPrint(s, prefix, false);
       ident.prettyPrint(s, prefix, false);
+      listDeclParam.prettyPrint(s, prefix, false);
+      methodBody.prettyPrint(s, prefix, false);
       
     }
 

@@ -42,7 +42,12 @@ if(currentClass == null) {
     @Override
     protected void codeGenPrint(DecacCompiler compiler){}
     protected void codeGenPrintX(DecacCompiler compiler){}
-    public void decompile(IndentPrintStream s) {}
+    @Override
+    public void decompile(IndentPrintStream s) {
+        obj.decompile(s);
+        s.print(".");
+        field.decompile(s);
+    }
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
         obj.prettyPrint(s, prefix, false);

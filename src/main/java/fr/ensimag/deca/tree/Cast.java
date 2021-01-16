@@ -54,7 +54,14 @@ public class Cast extends AbstractExpr{
 
     @Override
     public void decompile(IndentPrintStream s) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       s.print("(");
+       type.decompile(s);
+       s.print(") (");
+       expr.decompile();
+       s.println(")");
+       
+       
+       
     }
 
     @Override

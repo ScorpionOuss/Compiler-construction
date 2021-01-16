@@ -16,7 +16,7 @@ public class DeclFieldSet extends AbstractDeclFieldSet {
     private Visibility visibility;
     private AbstractIdentifier type;
     private ListDeclField listDeclField;
-    public DeclFieldSet(Visibility v,AbstractIdentifier t, ListDeclField ldf){
+    public DeclFieldSet(Visibility v, AbstractIdentifier t, ListDeclField ldf){
         visibility = v;
         type = t;
         listDeclField = ldf;
@@ -25,7 +25,13 @@ public class DeclFieldSet extends AbstractDeclFieldSet {
     
     @Override
     public void decompile(IndentPrintStream s) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        s.print(visibility.toString());
+        s.print(" ");
+        type.decompile(s);
+        s.print(" ");
+        listDeclField.decompile(s);
+        s.println(";");
+        
     }
 
     @Override

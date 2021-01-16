@@ -39,7 +39,12 @@ public class Else extends AbstractInst {
 
     @Override
     public void decompile(IndentPrintStream s) {
-        throw new UnsupportedOperationException("not yet implemented");
+        s.println("else{");
+        s.indent();
+        thenBranch.decompile();
+        elseBranch.decompile();
+        s.indent();
+        s.println("}");
     }
 
     @Override

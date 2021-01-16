@@ -11,14 +11,17 @@ import fr.ensimag.deca.tools.IndentPrintStream;
  *
  * @author ensimag
  */
-public class ListDeclParam extends TreeList<DeclParam> {
-
+public class MethodAsmBody extends AbstractMethodBody{
+    
+   private StringLiteral code;
+   public MethodAsmBody(StringLiteral code){
+       this.code =  code;
+   }
+   
     @Override
     public void decompile(IndentPrintStream s) {
-       for (DeclParam c : getList()) {
-            c.decompile(s);
-            s.println();
-        }
+        s.print("asm(");
+        code.decompile(s);
+        s.println(");");
     }
-    
 }
