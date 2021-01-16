@@ -23,14 +23,7 @@ public class ConvFloat extends AbstractUnaryExpr {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-		Type typeOperand = this.getOperand().verifyExpr(compiler, localEnv, currentClass);
-		if (!(typeOperand.isInt() || typeOperand.isFloat())) {
-			throw new ContextualError("impossible float conversion", getLocation());
-		}
-    	SymbolTable symbolTable = new SymbolTable();
-    	Type type = compiler.getEnvironment().get(symbolTable.create("float")).getType();
-    	this.setType(type);
-    	return type; 
+    	return getType(); 
     }
 
     @Override

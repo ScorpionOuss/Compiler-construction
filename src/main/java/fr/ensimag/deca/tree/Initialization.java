@@ -40,8 +40,12 @@ public class Initialization extends AbstractInitialization {
             EnvironmentExp localEnv, ClassDefinition currentClass)
             throws ContextualError {
     	Type type = expression.verifyExpr(compiler, localEnv, currentClass);
-    	if (!type.assignCompatible(t)) {
+    	if (!t.assignCompatible(type)) {
     		throw new ContextualError("Incompatible types for assignement", this.getLocation());
+    	}
+    	if (t.isFloat() && type.isInt()) {
+    		expression = new ConvFloat(expression);
+    		expression.setType(t);
     	}
     }
 
