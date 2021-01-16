@@ -1,7 +1,13 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.context.Type;
+import fr.ensimag.ima.pseudocode.ImmediateInteger;
 import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.instructions.BEQ;
+import fr.ensimag.ima.pseudocode.instructions.BOV;
+import fr.ensimag.ima.pseudocode.instructions.CMP;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
 import fr.ensimag.deca.tools.SymbolTable;
 
 import fr.ensimag.deca.DecacCompiler;
@@ -55,9 +61,17 @@ public abstract class AbstractOpArith extends AbstractBinaryExpr {
     	throw new ContextualError("Arithmetic operation not defined for the used types", this.getLocation());
     }
     
-
 	
 	public void codeCond(DecacCompiler compiler, boolean bool, Label endAnd) {
         throw new UnsupportedOperationException("not yet implemented");
+	}
+
+	protected void addZeroDivisionInstruction(DecacCompiler compiler, int register){
+		if (getType().isInt()) {
+			getRightOperand().codeExp(compiler, register);
+			compiler.addInstruction(new CMP(new ImmediateInteger(0),
+					Register.getR(register)));
+			compiler.addInstruction(new BEQ(new Label("ZeroDivision_Error")));
+		}
 	}
 }

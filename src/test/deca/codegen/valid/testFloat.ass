@@ -1,0 +1,36 @@
+; start main program
+	TSTO #3
+	BOV stack_overflow_error
+; Main program
+	ADDSP #3
+	LOAD #0x1.8p0, R2
+	STORE R2, 1(GB)
+	LOAD #0x1.333334p0, R2
+	STORE R2, 2(GB)
+; Beginning of main instructions:
+	LOAD 1(GB), R2
+	ADD #0x1.0p0, R2
+	BOV ArithFloat_Error
+	STORE R2, 1(GB)
+	LOAD 1(GB), R2
+	DIV 2(GB), R2
+	BOV ArithFloat_Error
+	STORE R2, 3(GB)
+	LOAD 3(GB), R2
+	LOAD R2, R1
+	WFLOAT
+	WNL
+	HALT
+stack_overflow_error:
+	WSTR "Error: Stack Overflow"
+	WNL
+	ERROR
+io_error:
+	WSTR "Error: Input/Output error"
+	WNL
+	ERROR
+ArithFloat_Error:
+	WSTR "Error: Débordement arithmétique sur flottants"
+	WNL
+	ERROR
+; end main program

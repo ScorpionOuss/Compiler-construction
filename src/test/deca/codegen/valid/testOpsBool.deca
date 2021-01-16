@@ -1,0 +1,28 @@
+// Description:
+//    tests conditionnelle
+//
+// Resultats:
+// "Et oui ça marche!"
+//
+// Historique:
+//    cree le 15/01/2021
+
+{
+    boolean y;
+    boolean x = true;
+    boolean z = false;
+
+    y = true && ((x || x) && (13<5));
+
+    if (y) {
+        print("ça ne marche pas!#1");
+    }
+    else {
+        if (z){
+            print("ça ne marche pas! #2");
+        }
+        else{
+            print("Et oui ça marche!");
+        }
+    }
+}

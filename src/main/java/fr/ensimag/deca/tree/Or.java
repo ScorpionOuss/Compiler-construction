@@ -23,24 +23,11 @@ public class Or extends AbstractOpBool {
     }
 
 	@Override
-	public
-	void codeExp(DecacCompiler compiler, int registerPointer) {
-assert(registerPointer < compiler.numberOfRegister);
-		
-		getLeftOperand().codeExp(compiler, registerPointer);
-		if (registerPointer < compiler.numberOfRegister) {
-			getRightOperand().codeExp(compiler, registerPointer + 1);
-			compiler.addInstruction(new ADD(Register.getR(registerPointer + 1), 
-					Register.getR(registerPointer)));
-		}
-		else {
-			assert(registerPointer == compiler.numberOfRegister);
-			/*Manage capacity overrun*/
-			depassementCapacite(compiler);
-			//Plus
-			compiler.addInstruction(new ADD(Register.R1,
-					Register.getR(compiler.numberOfRegister)));
-		}
+	public void codeExp(DecacCompiler compiler, int registerPointer) {
+	assert(registerPointer <= compiler.numberOfRegister);
+	AbstractExpr newNot = new Not(new And(new Not(getLeftOperand()),
+				new Not(getRightOperand())));
+	newNot.codeExp(compiler, registerPointer);
 	}
 	
 	public void codeCond(DecacCompiler compiler, boolean bool, Label etiquette) {

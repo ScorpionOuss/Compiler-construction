@@ -10,6 +10,7 @@ import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.DVal;
 import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.instructions.BOV;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
 import fr.ensimag.ima.pseudocode.instructions.WFLOAT;
 import fr.ensimag.ima.pseudocode.instructions.WFLOATX;
@@ -176,4 +177,13 @@ public abstract class AbstractExpr extends AbstractInst {
     	//execution
 		compiler.addInstruction(new WFLOATX());
 	}
+	
+	protected void addArithFloatInstruction(DecacCompiler compiler) {
+		// TODO Auto-generated method stub
+		if (getType().isFloat()) {
+			compiler.addInstruction(new BOV(new Label("ArithFloat_Error")));
+		}
+	}
+	
+
 }

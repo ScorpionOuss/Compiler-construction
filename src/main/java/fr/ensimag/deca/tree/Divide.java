@@ -27,8 +27,9 @@ public class Divide extends AbstractOpArith {
 	public
 	void codeExp(DecacCompiler compiler, int registerPointer) {
 		/*Il faut absolument factoriser*/
-		assert(registerPointer < compiler.numberOfRegister);
+		assert(registerPointer <= compiler.numberOfRegister);
 		
+		addZeroDivisionInstruction(compiler, registerPointer);
 		if (getRightOperand().adressable()) {
 			getLeftOperand().codeExp(compiler, registerPointer);
 			if (getType().isInt()) {
@@ -74,6 +75,7 @@ public class Divide extends AbstractOpArith {
 					}
 			}
 		}
+		addArithFloatInstruction(compiler);
 	}
 
 }

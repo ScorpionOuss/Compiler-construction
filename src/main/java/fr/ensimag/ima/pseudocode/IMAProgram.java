@@ -109,4 +109,30 @@ public class IMAProgram {
 		
 		lines.add(TSTOLocation, new Line(new TSTO(new ImmediateInteger(counterMAx))));
 	}
+
+	
+	public void addIOException() {
+		Label iOErreurLabel = new Label("io_error");
+		addLabel(iOErreurLabel);
+		addInstruction(new WSTR(new ImmediateString("Error: Input/Output error")));
+		addInstruction(new WNL());
+		addInstruction(new ERROR());
+	}
+
+	public void addArithFloatException() {
+		Label iOErreurLabel = new Label("ArithFloat_Error");
+		addLabel(iOErreurLabel);
+		addInstruction(new WSTR(new ImmediateString("Error: Débordement arithmétique sur flottants")));
+		addInstruction(new WNL());
+		addInstruction(new ERROR());
+	}
+
+	public void addZeroDivision() {
+		// TODO Auto-generated method stub
+		Label iOErreurLabel = new Label("ZeroDivision_Error");
+		addLabel(iOErreurLabel);
+		addInstruction(new WSTR(new ImmediateString("Error: Division entière par 0")));
+		addInstruction(new WNL());
+		addInstruction(new ERROR());
+	}
 }

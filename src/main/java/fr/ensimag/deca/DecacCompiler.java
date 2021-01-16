@@ -265,6 +265,19 @@ public class DecacCompiler {
     	 program.addStackVerification(stackCounterMax);
      }
      
+     public void addIOException() {
+    	 program.addIOException();
+ 	}
+     
+
+ 	public void addArithFloatException() {
+ 		program.addArithFloatException();
+ 	}
+ 	
+	public void addZeroDivision() {
+		// TODO Auto-generated method stub
+		program.addZeroDivision();
+	}
      //number of global variables declared so far
      private int numberCurrentVariables = 0;
      
@@ -355,4 +368,8 @@ public class DecacCompiler {
    	 orCounter++;
    	 return orCounter;
     }
+
+
+
 }
+

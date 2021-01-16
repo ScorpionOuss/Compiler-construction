@@ -51,6 +51,7 @@ public class Plus extends AbstractOpArith {
 				compiler.addInstruction(new ADD(Register.R1, Register.getR(compiler.numberOfRegister)));
 			}
 		}
+		addArithFloatInstruction(compiler);
 	}
 
 }

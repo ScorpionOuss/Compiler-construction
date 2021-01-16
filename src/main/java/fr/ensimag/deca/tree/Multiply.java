@@ -48,6 +48,7 @@ public class Multiply extends AbstractOpArith {
 						Register.getR(registerPointer))); 
 			}
 		}
+		addArithFloatInstruction(compiler);
 	}
 
 }
