@@ -1,9 +1,11 @@
 // Description:
-//    Programme  avec deux println.
+//    if then else  
 //
 // Resultats:
-//    Hello
-//    Hello2
+//    Rien
+//
+// Historique:
+//    cree le 01/01/2021
 
 {
       if(true){int x=3;}

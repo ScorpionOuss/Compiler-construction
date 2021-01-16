@@ -1,1 +1,10 @@
+// Description:
+//    Test d'égalité entre deux identificateurs
+//
+// Resultats:
+//    rien
+//
+// Historique:
+//    cree le 14/01/2021
+
 {x == y;}

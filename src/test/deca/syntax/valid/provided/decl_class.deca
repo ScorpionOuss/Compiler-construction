@@ -1,6 +1,11 @@
+// Description:
+//    Déclaration de classe
+//
+// Resultats:
+//    Rien
+//
+// Historique:
+//    cree le 01/01/2021
 
- class A {
-	protected int x ;
-	int add(int y){}
-}
+ class A {}
 	

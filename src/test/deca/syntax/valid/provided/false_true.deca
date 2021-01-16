@@ -1,0 +1,10 @@
+// Description:
+//    Affichage de true et false
+//
+// Resultats:
+//    true false
+//
+// Historique:
+//    cree le 12/01/2021
+
+{print(false,true);}

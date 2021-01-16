@@ -1,2 +1,17 @@
-{if(true){int x=3;}
-else{x=4;}}
+// Description:
+//    Un "if else" classique
+//
+// Resultats:
+//    rien
+//
+// Historique:
+//    cree le 01/01/2021
+
+{
+    if(true){
+         int x=3;
+    }
+    else{
+          x=4;
+    }
+}

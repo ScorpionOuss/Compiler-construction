@@ -16,16 +16,19 @@ import java.io.PrintStream;
  *
  * @author ensimag
  */
-public class DeclMethod extends AbstractDeclMethod {
-    private AbstractIdentifier type;
-    private AbstractIdentifier ident;
-    private AbstractMethodBody  methodBody;
-    
-    public DeclMethod(AbstractIdentifier type,AbstractIdentifier ident, AbstractMethodBody methodBody ){
-        this.type = type;
-        this.ident = ident;
-        this.methodBody = methodBody;
+public class MethodBody extends AbstractMethodBody {
+    private ListDeclVar listDeclVar;
+    private ListInst listInst;
+    public MethodBody(){}
+    public MethodBody(ListDeclVar listDeclVar,  ListInst listInst){
+        this.listDeclVar = listDeclVar;
+        this.listInst = listInst;
     }
+
+    protected void verifyMethodBody(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass) throws ContextualError {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     @Override
     public void decompile(IndentPrintStream s) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -33,18 +36,12 @@ public class DeclMethod extends AbstractDeclMethod {
 
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
-      type.prettyPrint(s, prefix, false);
-      ident.prettyPrint(s, prefix, false);
-      
+        listDeclVar.prettyPrint(s, prefix, false);
+        listInst.prettyPrint(s, prefix, false);
     }
 
     @Override
     protected void iterChildren(TreeFunction f) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    protected void verifyDeclMethod(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass) throws ContextualError {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

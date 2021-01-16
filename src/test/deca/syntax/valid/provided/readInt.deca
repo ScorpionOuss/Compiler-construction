@@ -1,12 +1,12 @@
 // Description:
-//    Test de true
+//    Test de readInt 
 //
 // Resultats:
-//    
+//    Rien
 //
 // Historique:
 //    cree le 01/01/2021
 
-{
-    print(true);
+{   
+    int x = readInt();
 }

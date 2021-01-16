@@ -1,1 +1,12 @@
-{3>=4;}
+// Description:
+//    Test de >=
+//
+// Resultats:
+//    Rien
+//
+// Historique:
+//    cree le 01/01/2021
+
+{
+    boolean b = 3>=4;
+}

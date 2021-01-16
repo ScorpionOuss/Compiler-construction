@@ -16,16 +16,8 @@ import java.io.PrintStream;
  *
  * @author ensimag
  */
-public class DeclMethod extends AbstractDeclMethod {
-    private AbstractIdentifier type;
-    private AbstractIdentifier ident;
-    private AbstractMethodBody  methodBody;
-    
-    public DeclMethod(AbstractIdentifier type,AbstractIdentifier ident, AbstractMethodBody methodBody ){
-        this.type = type;
-        this.ident = ident;
-        this.methodBody = methodBody;
-    }
+public class AbstractMethodBody extends Tree{
+
     @Override
     public void decompile(IndentPrintStream s) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -33,9 +25,7 @@ public class DeclMethod extends AbstractDeclMethod {
 
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
-      type.prettyPrint(s, prefix, false);
-      ident.prettyPrint(s, prefix, false);
-      
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -43,9 +33,6 @@ public class DeclMethod extends AbstractDeclMethod {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
-    protected void verifyDeclMethod(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass) throws ContextualError {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    
     
 }

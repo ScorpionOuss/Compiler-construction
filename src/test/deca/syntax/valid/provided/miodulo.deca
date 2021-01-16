@@ -1,5 +1,5 @@
 // Description:
-//    test de non égalité entre deux variables
+//    Test de division
 //
 // Resultats:
 //    Rien
@@ -7,6 +7,8 @@
 // Historique:
 //    cree le 01/01/2021
 
-{ 
-    x != y;
+{   
+    int x = 12;
+    int y = 5;
+    int z = x/y;
 }

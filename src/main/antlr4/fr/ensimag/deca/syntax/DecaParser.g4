@@ -114,7 +114,7 @@ list_inst returns[ListInst tree]
     $tree = new ListInst();
 }
     : (inst {
-             assert($inst.tree != null);
+            assert($inst.tree != null);
             assert($inst.tree != null);
             if ($tree.isEmpty()) {
                 setLocation($tree, $inst.start);
@@ -129,8 +129,9 @@ inst returns[AbstractInst tree]
             assert($e1.tree != null);
             $tree = $e1.tree;
         }
-    | SEMI {$tree = new NoOperation();
-    		setLocation($tree, $SEMI);
+    | SEMI {
+            $tree = new NoOperation();
+            setLocation($tree, $SEMI);
         }
     | pr=PRINT OPARENT list_expr CPARENT SEMI {
             assert($list_expr.tree != null);
@@ -635,22 +636,24 @@ decl_field returns[AbstractDeclField tree]
 
 decl_method returns[AbstractDeclMethod tree]
 @init {
+        AbstractMethodBody mb = new MethodBody();
       
 }
     : type ident OPARENT params=list_params CPARENT (block {
          assert($block.decls != null);
          assert($block.insts != null);
-         
+         mb = new MethodBody($block.decls, $block.insts);
+         setLocation(mb,$block.start);
         }
       | ASM OPARENT code=multi_line_string CPARENT SEMI {
-       
+        assert($code.text != null);
         }
       ) {
         assert($type.tree != null);
         assert($ident.tree != null);
         assert($params.tree != null);
-        $tree = new DeclMethod($type.tree, $ident.tree, $params.tree,
-                                $block.decls,$block.insts);
+        $tree = new DeclMethod($type.tree, $ident.tree, mb);
+        setLocation($tree, $type.start);
         }
     ;
 
