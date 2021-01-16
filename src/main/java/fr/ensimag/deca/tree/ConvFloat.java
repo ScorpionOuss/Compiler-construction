@@ -4,6 +4,7 @@ import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.tools.SymbolTable;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
+import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 
 /**
@@ -19,7 +20,11 @@ public class ConvFloat extends AbstractUnaryExpr {
 
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
-            ClassDefinition currentClass) {
+            ClassDefinition currentClass) throws ContextualError {
+		Type typeOperand = this.getOperand().verifyExpr(compiler, localEnv, currentClass);
+		if (!(typeOperand.isInt() || typeOperand.isFloat())) {
+			throw new ContextualError("impossible float conversion", getLocation());
+		}
     	SymbolTable symbolTable = new SymbolTable();
     	Type type = compiler.getEnvironment().get(symbolTable.create("float")).getType();
     	this.setType(type);

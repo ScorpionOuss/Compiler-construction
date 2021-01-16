@@ -35,18 +35,22 @@ public abstract class AbstractOpArith extends AbstractBinaryExpr {
 				return type;
     		}
     		if (rightType.isFloat()) {
+    			this.setLeftOperand(new ConvFloat(this.getLeftOperand()));
 				type = compiler.getEnvironment().get(symbolTable.create("float")).getType();
+				this.getLeftOperand().setType(type);
 				this.setType(type);
 				return type;
     		}
     	}
-    	if (rightType.isFloat()) {
-    		if (leftType.isInt()) {
+    	if (leftType.isFloat()) {
+    		if (rightType.isInt()) {
+    			this.setRightOperand(new ConvFloat(this.getRightOperand()));
 				type = compiler.getEnvironment().get(symbolTable.create("float")).getType();
+				this.getRightOperand().setType(type);
 				this.setType(type);
 				return type;
     		}
-    		if (leftType.isFloat()) {
+    		if (rightType.isFloat()) {
 				type = compiler.getEnvironment().get(symbolTable.create("float")).getType();
 				this.setType(type);
 				return type;
