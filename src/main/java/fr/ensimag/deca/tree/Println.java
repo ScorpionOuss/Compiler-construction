@@ -26,6 +26,7 @@ public class Println extends AbstractPrint {
 
     @Override
     String getSuffix() {
+        if (super.getPrintHex())return "lnx";
         return "ln";
     }
 }

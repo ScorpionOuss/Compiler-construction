@@ -31,17 +31,27 @@ public class CompilerOptions {
     public boolean getPrintBanner() {
         return printBanner;
     }
-    
+ 
+    public boolean getDecompile(){
+        return decompile;
+    }
+    public boolean getVerifOption(){
+        return verification;
+    }
     public List<File> getSourceFiles() {
         return Collections.unmodifiableList(sourceFiles);
     }
 
     private int debug = 0;
+    
     private boolean parallel = false;
     private boolean printBanner = false;
-    private List<File> sourceFiles = new ArrayList<File>();
+    private boolean decompile = false;
+    private boolean verification = false;
 
-    
+    private List<File> sourceFiles = new ArrayList<File>();
+   
+  
     public void parseArgs(String[] args) throws CLIException {
         // A FAIRE : parcourir args pour positionner les options correctement.
         
@@ -51,7 +61,26 @@ public class CompilerOptions {
     	 */
     	
     	for (String argument:args) {
-    		sourceFiles.add(new File(argument));
+                if (argument.equals("-p")){
+                    decompile = true;
+                }
+                else if(argument.equals("-b")){
+                    printBanner = true;
+                }
+               
+                   else if(argument.equals("-P")){
+                    parallel = true;
+                }
+                    else if(argument.equals("-v")){
+                    verification = true;
+                }
+//                    else if(argument.equals("-d")){
+//                    debugOption = true;
+//                }  
+                    
+                else{
+                    sourceFiles.add(new File(argument));
+                }
     	}
     	
     	Logger logger = Logger.getRootLogger();
@@ -79,6 +108,9 @@ public class CompilerOptions {
 
         //throw new UnsupportedOperationException("not yet implemented");
     }
+    public boolean hasOptions(){
+        return parallel || printBanner || decompile||verification;
+    } 
 
     protected void displayUsage() {
         throw new UnsupportedOperationException("not yet implemented");
