@@ -1,0 +1,12 @@
+// Description:
+//    Programme de test des conditions.
+//
+
+{
+	int x = 2;
+	boolean z = true;
+	if (x < 2) {println("x < 2");} else {println("x >= 2");}
+	if (z){
+		println(x*x);
+	}
+}

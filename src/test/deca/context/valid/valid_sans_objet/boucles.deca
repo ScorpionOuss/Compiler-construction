@@ -1,0 +1,11 @@
+// Description:
+//    Programme de test des boucles.
+//
+
+{
+	int x = 2;
+	while (x < 5) {
+		print(x);
+		x = x + 1;
+		};
+}

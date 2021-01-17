@@ -1,0 +1,10 @@
+// Description:
+//    Programme de tests des instrucions.
+//
+
+{
+	int x = readInt();
+	boolean z = x == 2;
+	float f = readFloat();
+	printlnx(x, x + 3);
+}
