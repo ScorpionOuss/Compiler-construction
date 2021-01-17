@@ -1,5 +1,5 @@
 #!/bin/sh
-for i in src/test/deca/context/valid/valid_sans_objet/*.deca
+for i in ~/gl16/src/test/deca/context/valid/valid_sans_objet/*.deca
     do
         echo "$i"
         cat $i
@@ -8,7 +8,7 @@ for i in src/test/deca/context/valid/valid_sans_objet/*.deca
     echo "---------------------------------------------------------------------------------------"
     done
 
-for i in src/test/deca/context/valid/valid_hello_world/*.deca
+for i in ~/gl16/src/test/deca/context/valid/valid_hello_world/*.deca
     do
         echo "$i"
         cat $i
