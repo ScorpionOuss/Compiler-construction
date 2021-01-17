@@ -34,19 +34,21 @@ public class Program extends AbstractProgram {
 
     @Override
     public void verifyProgram(DecacCompiler compiler) throws ContextualError {
-        LOG.debug("verify program: start");
+        //LOG.debug("verify program: start");
         //classes.verifyListClass(compiler);
         //classes.verifyListClassMembers(compiler);
         //classes.verifyListClassBody(compiler);
         main.verifyMain(compiler);
-        LOG.debug("verify program: end");
+        //LOG.debug("verify program: end");
     }
     
-    public static int StackCounterMax = 0;
     @Override
     public void codeGenProgram(DecacCompiler compiler) {
-        // A FAIRE: compléter ce squelette très rudimentaire de code
-        compiler.addComment("Main program");
+    	/*First pass*/
+    	
+    	
+    	/*Main execution*/
+    	compiler.addComment("Main program");
         main.codeGenMain(compiler);
         //End ...
         compiler.addInstruction(new HALT());

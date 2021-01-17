@@ -1,8 +1,8 @@
 // Description:
-//    tests conditionnelle
+//    tests conversion int float
 //
 // Resultats:
-//    ok
+//    3.00000e+00
 // 
 // Historique:
 //    cree le 15/01/2021
@@ -10,5 +10,5 @@
 {
     float x = 2.0;
     x = x + 1;
-    //print(x);
+    print(x);
 }

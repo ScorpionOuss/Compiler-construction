@@ -1,15 +1,15 @@
 // Description:
-//    tests conditionnelle
+//    tests print
 //
 // Resultats:
-//    1 et 0 
-// 
+//    1 et 0.00000e+00
+//
 // Historique:
 //    cree le 14/01/2021
 {
 int x;
-int y;
+float y;
 x = 1;
-y = 0;
-println(x, " et ",  y);
+y = 0.0;
+print(x, " et ",  y);
 }

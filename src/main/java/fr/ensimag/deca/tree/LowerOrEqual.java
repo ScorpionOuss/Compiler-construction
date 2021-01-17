@@ -28,20 +28,20 @@ public class LowerOrEqual extends AbstractOpIneq {
 	public
 	void codeExp(DecacCompiler compiler, int registerPointer) {
 		//CMP operands
-		codeCMP(compiler);
+		codeCMP(compiler, registerPointer);
 		//Scc instruction
 		compiler.addInstruction(new SLE(Register.getR(registerPointer)));
 	}
 
 	public void codeCond(DecacCompiler compiler, boolean bool, Label etiquette) {
 		//CMP operands
-		codeCMP(compiler);
+		codeCMP(compiler, compiler.getRegisterPointer());
 		//Bcc instruction
 		if (bool) {
 			compiler.addInstruction(new BLE(etiquette));
-
 		}
 		else {
 			compiler.addInstruction(new BGT(etiquette));
-		}	}
+			}	
+		}
 }

@@ -29,4 +29,6 @@ public abstract class AbstractDeclMethod extends Tree {
             EnvironmentExp localEnv, ClassDefinition currentClass)
             throws ContextualError;
 
+	protected abstract void buidTable(DecacCompiler compiler);
+
 }

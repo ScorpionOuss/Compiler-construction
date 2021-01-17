@@ -368,8 +368,21 @@ public class DecacCompiler {
    	 orCounter++;
    	 return orCounter;
     }
-
-
-
+    
+    private int methodStackCounter = 0;
+    
+    /*
+     * Setter for methodStackCouter
+     */
+    public void incrementMethodStackCouter(int i) {
+    	methodStackCounter += i;
+    }
+    
+    /*
+     * Getter for methodStackCouter
+     */
+    public int getMethodStackCouter() {
+    	return methodStackCounter;
+    }
 }
 

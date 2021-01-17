@@ -1,0 +1,82 @@
+// Description:
+//    tests opérations booléennes avec codeExp
+//
+// Resultats:
+//  1-oui
+//  2-oui
+//  3-oui
+//  4-oui
+//  5-oui
+//  6-oui
+//  7-oui
+//  8-oui
+//  9-oui
+//
+// Historique:
+//    cree le 15/01/2021
+
+{
+    boolean x = (13 > 7) && (15 >= 3);
+    boolean y = (13 < 7) && (15 >3);
+    boolean z = (13 < 7) && (15 <= 3);
+    boolean m = (13 > 7) || (15 >= 3);
+    boolean n = (13 < 7) || (15 >= 3);
+    boolean e = (13 < 7) && (15 <= 3);
+    boolean r = 13 != 2;
+    boolean p = 13 == 13;
+    boolean a = !(13 > 7);
+    if (x) {
+        println("1/oui");
+    }
+    else {
+    println("1-non");
+    }
+    if (!y){
+        println("2-oui");
+    }
+    else {
+    println("2-non");
+    }
+    if (!z){
+        println("3-oui");
+    }
+    else {
+    println("3-non");
+    }
+    if (m){
+        println("4-oui");
+    }
+    else {
+    println("4-non");
+    }
+    if (n){
+        println("5-oui");
+    }
+    else {
+    println("5-non");
+    }
+    if (!e){
+        println("6-oui");
+    }
+    else {
+    println("6-non");
+    }
+    if (r){
+        println("7-oui");
+    }
+    else {
+    println("7-non");
+    }
+    if (p){
+        println("8-oui");
+    }
+    else {
+    println("8-non");
+    }
+    if (!a) {
+      println("9-oui");
+    }
+    else {
+      println("9-non");
+    }
+}

@@ -57,7 +57,6 @@ public abstract class AbstractPrint extends AbstractInst {
     	else {
     		assert(getPrintHex());
     		for (AbstractExpr a : getArguments().getList()) {
-	            assert(a.getType().isFloat());
     			a.codeGenPrintHex(compiler);
 	        }
     	}

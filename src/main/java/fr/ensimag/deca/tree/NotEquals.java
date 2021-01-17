@@ -28,7 +28,7 @@ public class NotEquals extends AbstractOpExactCmp {
 	public
 	void codeExp(DecacCompiler compiler, int registerPointer) {
 		//CMP operands
-		codeCMP(compiler);
+		codeCMP(compiler, registerPointer);
 		//Scc instruction
 		compiler.addInstruction(new SNE(Register.getR(registerPointer)));
 	}

@@ -1,0 +1,16 @@
+// Description:
+//    tests opérations booléennes avec codeExp
+//
+// Resultats:
+// 0
+// 1
+// 2
+// Historique:
+//    cree le 15/01/2021
+{
+    int x = 0;
+    while (x < 3) {
+        println(x);
+        x = x + 1;
+    }
+}

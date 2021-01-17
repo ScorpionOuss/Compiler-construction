@@ -1,0 +1,21 @@
+// Description:
+//    test conditions
+//    Nous avons testé les conditions dans la partie des opérations booléennes
+//    Du coup, on se suffit de ce test pour cette partie.
+// Resultats:
+//    oui
+// 
+// Historique:
+//    cree le 15/01/2021
+
+{
+    int x = 3;
+    if (5 > x) {
+        if(true && (7*2)> 7){
+        println("oui");
+        }
+    }
+    else {
+        println("non");
+    }
+}

@@ -41,5 +41,13 @@ public class ListDeclMethod extends TreeList<AbstractDeclMethod> {
     		declMethod.verifyDeclMethod(compiler, localEnv, currentClass);
     	}
     }
+
+	public void buildTable(DecacCompiler compiler) {
+		// TODO Auto-generated method stub
+		compiler.incrementMethodStackCouter(size() + 1);
+		for (AbstractDeclMethod method : getList()) {
+			method.buidTable(compiler);
+		}
+	}
     
 }

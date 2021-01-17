@@ -22,4 +22,16 @@ stack_overflow_error:
 	WSTR "Error: Stack Overflow"
 	WNL
 	ERROR
+io_error:
+	WSTR "Error: Input/Output error"
+	WNL
+	ERROR
+ArithFloat_Error:
+	WSTR "Error: Débordement arithmétique sur flottants"
+	WNL
+	ERROR
+ZeroDivision_Error:
+	WSTR "Error: Division entière par 0"
+	WNL
+	ERROR
 ; end main program

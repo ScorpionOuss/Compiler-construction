@@ -9,8 +9,11 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
+import fr.ensimag.deca.context.MethodDefinition;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import java.io.PrintStream;
+
+import org.mockito.internal.matchers.InstanceOf;
 
 /**
  *
@@ -59,5 +62,12 @@ public class DeclMethod extends AbstractDeclMethod {
     protected void verifyDeclMethod(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass) throws ContextualError {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+	@Override
+	protected void buidTable(DecacCompiler compiler) {
+		// TODO Auto-generated method stub
+		assert(ident.getDefinition() instanceof MethodDefinition);//defensive programming
+
+	}
     
 }
