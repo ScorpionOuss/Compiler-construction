@@ -6,7 +6,7 @@
 ; Beginning of main instructions:
 	LOAD #1, R2
 	STORE R2, 1(GB)
-	LOAD #0, R2
+	LOAD #0x0.0p0, R2
 	STORE R2, 2(GB)
 	LOAD 1(GB), R2
 	LOAD R2, R1
@@ -14,11 +14,22 @@
 	WSTR """ et """
 	LOAD 2(GB), R2
 	LOAD R2, R1
-	WINT
-	WNL
+	WFLOAT
 	HALT
 stack_overflow_error:
 	WSTR "Error: Stack Overflow"
+	WNL
+	ERROR
+io_error:
+	WSTR "Error: Input/Output error"
+	WNL
+	ERROR
+ArithFloat_Error:
+	WSTR "Error: Débordement arithmétique sur flottants"
+	WNL
+	ERROR
+ZeroDivision_Error:
+	WSTR "Error: Division entière par 0"
 	WNL
 	ERROR
 ; end main program

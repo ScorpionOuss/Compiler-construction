@@ -1,30 +1,34 @@
 ; start main program
-	TSTO #2
+	TSTO #1
 	BOV stack_overflow_error
 ; Main program
-	ADDSP #2
-	RINT
-	BOV io_error
-	LOAD R1, R2
-	STORE R2, 1(GB)
-	RINT
-	BOV io_error
-	LOAD R1, R2
-	STORE R2, 2(GB)
-; Beginning of main instructions:
+	ADDSP #1
 	LOAD #3, R2
-	MUL 1(GB), R2
-	LOAD #7, R3
-	MUL 2(GB), R3
-	CMP R3, R2
-	BGT E_Sinon.1
-	WSTR """Gagné !"""
+	STORE R2, 1(GB)
+; Beginning of main instructions:
+	LOAD 1(GB), R2
+	ADD #7, R2
+	LOAD #3, R3
+	CMP #0, R3
+	BEQ ZeroDivision_Error
+	LOAD 1(GB), R3
+	QUO #3, R3
+	SUB R3, R2
+	MUL #5, R2
+	STORE R2, 1(GB)
+	WSTR """x = """
+	LOAD 1(GB), R2
+	LOAD R2, R1
+	WINT
 	WNL
-	BRA E_Fin.1
-E_Sinon.1:
-	WSTR """Perdu !"""
-	WNL
-E_Fin.1:
+	WSTR """division entière: """
+	LOAD #2, R2
+	CMP #0, R2
+	BEQ ZeroDivision_Error
+	LOAD 1(GB), R2
+	QUO #2, R2
+	LOAD R2, R1
+	WINT
 	HALT
 stack_overflow_error:
 	WSTR "Error: Stack Overflow"

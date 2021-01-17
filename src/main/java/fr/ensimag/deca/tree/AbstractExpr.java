@@ -170,12 +170,15 @@ public abstract class AbstractExpr extends AbstractInst {
 	public abstract void codeCond(DecacCompiler compiler, boolean bool, Label endAnd);
 
 	protected void codeGenPrintHex(DecacCompiler compiler) {
-		assert(getType().isFloat());
-	   	//load the result in R2
-    	codeExp(compiler, 2);
-    	compiler.addInstruction(new LOAD(Register.getR(2), Register.R1));
-    	//execution
-		compiler.addInstruction(new WFLOATX());
+		if(getType().isFloat()) {
+			//load the result in R2
+	    	codeExp(compiler, 2);
+	    	compiler.addInstruction(new LOAD(Register.getR(2), Register.R1));
+	    	compiler.addInstruction(new WFLOATX());
+		}
+		else {
+			codeGenPrint(compiler);
+		}
 	}
 	
 	protected void addArithFloatInstruction(DecacCompiler compiler) {

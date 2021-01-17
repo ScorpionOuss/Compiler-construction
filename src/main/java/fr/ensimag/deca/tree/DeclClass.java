@@ -107,4 +107,12 @@ public class DeclClass extends AbstractDeclClass {
     }
 
 
+
+
+	@Override
+	protected void buildTable(DecacCompiler compiler) {
+		methods.buildTable(compiler);
+	}
+
+
 }

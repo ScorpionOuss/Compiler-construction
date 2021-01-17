@@ -44,9 +44,4 @@ public abstract class AbstractInst extends Tree {
     protected void decompileInst(IndentPrintStream s) {
         decompile(s);
     }
-
-	protected void codeGenPrintHex(DecacCompiler compiler) {
-		// TODO Auto-generated method stub
-		
-	}
 }

@@ -1,30 +1,20 @@
 ; start main program
-	TSTO #2
+	TSTO #1
 	BOV stack_overflow_error
 ; Main program
-	ADDSP #2
-	RINT
-	BOV io_error
-	LOAD R1, R2
+	ADDSP #1
+	LOAD #0x1.0p1, R2
 	STORE R2, 1(GB)
-	RINT
-	BOV io_error
-	LOAD R1, R2
-	STORE R2, 2(GB)
 ; Beginning of main instructions:
-	LOAD #3, R2
-	MUL 1(GB), R2
-	LOAD #7, R3
-	MUL 2(GB), R3
-	CMP R3, R2
-	BGT E_Sinon.1
-	WSTR """Gagné !"""
-	WNL
-	BRA E_Fin.1
-E_Sinon.1:
-	WSTR """Perdu !"""
-	WNL
-E_Fin.1:
+	LOAD 1(GB), R2
+	LOAD #1, R3
+	FLOAT R3, R3
+	ADD R3, R2
+	BOV ArithFloat_Error
+	STORE R2, 1(GB)
+	LOAD 1(GB), R2
+	LOAD R2, R1
+	WFLOAT
 	HALT
 stack_overflow_error:
 	WSTR "Error: Stack Overflow"

@@ -54,5 +54,13 @@ public class ListDeclClass extends TreeList<AbstractDeclClass> {
         LOG.debug("verify listClassBody: end");
     }
 
+    /**
+     * First pass of [GenCode]
+     */
+    protected void buildClassesTable(DecacCompiler compiler) {
+    	for (AbstractDeclClass classe : getList()) {
+    		classe.buildTable(compiler);
+    	}
+    }
 
 }

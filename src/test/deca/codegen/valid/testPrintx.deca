@@ -1,7 +1,0 @@
-{
-   if (1 >= 0) {
-      printlnx("ok"); 
-   } else { 
-      printlnx("erreur");
-   }
-}
