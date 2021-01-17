@@ -4,12 +4,15 @@ import fr.ensimag.deca.tree.AbstractProgram;
 import java.io.File;
 import org.apache.log4j.Logger;
 import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.deca.context.ContextualError;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.logging.Level;
 /**
  * Main class for the command-line Deca compiler.
  *
@@ -19,7 +22,7 @@ import java.util.concurrent.Future;
 public class DecacMain {
     private static Logger LOG = Logger.getLogger(DecacMain.class);
     
-    public static void main(String[] args) throws DecacFatalError {
+    public static void main(String[] args) throws DecacFatalError, InterruptedException, ExecutionException {
         // example log4j message.
         LOG.info("Decac compiler started");
         boolean error = false;
@@ -33,12 +36,31 @@ public class DecacMain {
             System.exit(1);
         }
         if (options.getPrintBanner()) {
-           System.out.println("Equipe GL: 16");
+           System.out.println("Equipe GL : 16");
         }
-          if (options.getVerifOption()&& options.getDecompile()) {
+          if (options.getVerification()&& options.getDecompile()) {
            System.err.println("Les options -p et -v sont icompatibles");
         }
-       
+         if (options.getVerification()) {
+            
+            for (File source : options.getSourceFiles()) {
+                 DecacCompiler compiler = new DecacCompiler(options, source);
+                 AbstractProgram prog = compiler.doLexingAndParsing(source.getAbsolutePath(), System.err);
+  
+                assert(prog.checkAllLocations());
+            
+                
+                try {
+                    prog.verifyProgram(compiler);
+                } catch (ContextualError ex) {
+                     System.out.println(ex);
+                     System.exit(1 );
+                }
+              
+              
+              
+            }
+        }
         
         if (options.getDecompile()){
              for (File source : options.getSourceFiles()) {
@@ -49,21 +71,14 @@ public class DecacMain {
             
            
         }
+          if (options.getRegisters()){
+            System.out.println("Nombre de registres"+options.getNbRegistres());
+            
+           
+        }
         if (!options.hasOptions() && options.getSourceFiles().isEmpty()) {
 
-            System.out.println("La syntaxe d’utilisation de l’exécutable decac est :\n"+
-                    "decac [[-p | -v] [-n] [-r X] [-d]* [-P] [-w] <fichier deca>...] | [-b]\n"
-            +"-b:    affiche une bannière indiquant le nom de l’équipe\n"
-            +"-p:    arrête decac après l’étape de construction de l’arbre, et affiche la décompilation de ce dernier\n" +
-             "       (i.e. s’il n’y a qu’un fichier source à compiler, la sortie doit être un programmedeca syntaxiquement correct)\n" 
-            +"-v:    arrête decac après l’étape de vérifications (ne produit aucune sortie en l’absence d’erreur)\n"+
-            "-n:    supprime les tests de débordement à l’exécution\n" +
-             "         - débordement arithmétique\n" +
-             "         - débordement mémoire\n" +
-             "         - déréférencement de null\n"+
-             "-r X:   limite les registres banalisés disponibles à R0 ... R{X-1}, avec 4 <= X <= 16\n"+
-             "-d:    active les traces de debug. Répéter l’option plusieurs fois pour avoir plus de traces. \n"+
-             "-P:    s’il y a plusieurs fichiers sources, lance la compilation des fichiers en parallèle (pour accélérer la compilation)");
+           options.displayUsage();
                     
         }
         if (options.getParallel()) {
@@ -71,32 +86,33 @@ public class DecacMain {
             // compiler, et lancer l'exécution des méthodes compile() de chaque
             // instance en parallèle. Il est conseillé d'utiliser
             // java.util.concurrent de la bibliothèque standard Java.
-            int fileCount = options.getSourceFiles().size();
+           int nbFiles = options.getSourceFiles().size();
             
-           ExecutorService executor = Executors.newFixedThreadPool(fileCount);
-            List<Callable<Boolean>> callableTasks = new ArrayList<>();
+           ExecutorService executor = Executors.newFixedThreadPool(nbFiles);
+           List<Callable<Boolean>> callables = new ArrayList<>();
+           
            for (File source : options.getSourceFiles()) {
-                Callable<Boolean> cal = ()->{
-                   
+                Callable<Boolean> callable = ()->{
+                 
                     DecacCompiler c = new DecacCompiler(options, source);
-                    System.out.println("Ici");
+                    
                     c.compile();
                     return c.compile();
                 
            };
                        
-                callableTasks.add(cal);
+                callables.add(callable);
            }
-           System.out.println(callableTasks.size());
-           Future<Boolean> future = executor.submit(()->{
-                   
-                    
-                    System.out.println("Ici");
-                    return true ;
-                
-           });
-////            throw new UnsupportedOperationException("Parallel build not yet implemented");
-        } else {
+           
+           
+           List<Future<Boolean>> futures = new ArrayList<>();
+           for(Callable<Boolean> callable: callables){
+               executor.submit( callable).get();
+           }
+           
+        } 
+        if(!options.hasOptions()) {
+            
             for (File source : options.getSourceFiles()) {
                 DecacCompiler compiler = new DecacCompiler(options, source);
                 if (compiler.compile()) {

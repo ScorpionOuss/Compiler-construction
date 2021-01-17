@@ -71,7 +71,7 @@ public abstract class AbstractPrint extends AbstractInst {
     public void decompile(IndentPrintStream s) {
        s.print("print");
        s.print(getSuffix()+"(");
-       arguments.decompile(s);
+       arguments.decompilePrint(s);
        s.println(");");
 
     }

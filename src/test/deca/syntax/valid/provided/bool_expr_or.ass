@@ -5,9 +5,17 @@
 	BOV stack_overflow_error
 ; Main program
 	ADDSP #1
-; Beginning of main instructions:
-	LOAD #3, R2
+	LOAD #1, R2
+	CMP #0, R2
+	SEQ R2
+	LOAD #0, R3
+	CMP #0, R3
+	SEQ R3
+	MUL R3, R2
+	CMP #0, R2
+	SEQ R2
 	STORE R2, 1(GB)
+; Beginning of main instructions:
 	HALT
 stack_overflow_error:
 	WSTR "Error: Stack Overflow"
@@ -29,9 +37,17 @@ ZeroDivision_Error:
 ; start main program
 ; Main program
 	ADDSP #1
-; Beginning of main instructions:
-	LOAD #3, R2
+	LOAD #1, R2
+	CMP #0, R2
+	SEQ R2
+	LOAD #0, R3
+	CMP #0, R3
+	SEQ R3
+	MUL R3, R2
+	CMP #0, R2
+	SEQ R2
 	STORE R2, 2(GB)
+; Beginning of main instructions:
 	HALT
 stack_overflow_error:
 	WSTR "Error: Stack Overflow"

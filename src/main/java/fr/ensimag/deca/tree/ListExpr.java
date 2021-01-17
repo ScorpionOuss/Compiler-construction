@@ -23,4 +23,14 @@ public class ListExpr extends TreeList<AbstractExpr> {
             s.println();
         }
     }
+
+    void decompilePrint(IndentPrintStream s) {
+         int i;
+         for ( i = 0; i < getList().size()-1; i++) {
+            AbstractExpr c =  getList().get(i);
+            c.decompile(s);
+            s.print(",");
+        }
+         getList().get(i).decompile(s);
+    }
 }
