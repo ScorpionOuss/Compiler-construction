@@ -47,6 +47,7 @@ public class UnaryMinus extends AbstractUnaryExpr {
 			compiler.addInstruction(new OPP(Register.getR(registerPointer),
 					Register.getR(registerPointer)));
 		}
+		addArithFloatInstruction(compiler);
 	}
 
 }

@@ -1,10 +1,12 @@
 package fr.ensimag.deca.tree;
 
+import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ClassType;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ContextualError;
+import fr.ensimag.deca.context.EnvironmentExp.DoubleDefException;
+import fr.ensimag.deca.context.TypeDefinition;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import fr.ensimag.deca.tools.SymbolTable;
 
 import java.io.PrintStream;
 
@@ -25,7 +27,10 @@ public class DeclClass extends AbstractDeclClass {
     
     public DeclClass(AbstractIdentifier name,AbstractIdentifier superClass,
             ListDeclFieldSet listDeclFieldSet, ListDeclMethod listDeclMethod){
-			
+    		Validate.notNull(name);
+    		//Validate.notNull(superClass);
+    		Validate.notNull(fields);
+    		Validate.notNull(methods);
             this.name = name;
             this.superClass = superClass;
             this.fields = listDeclFieldSet; 
@@ -50,7 +55,24 @@ public class DeclClass extends AbstractDeclClass {
 
     @Override
     protected void verifyClass(DecacCompiler compiler) throws ContextualError {
-    	SymbolTable symbolTable = new SymbolTable();
+    	// TODO cas superclass = object
+    	TypeDefinition definition = compiler.getEnvironment().get(superClass.getName()); 
+    	if ((definition == null) || !definition.getType().isClass()) {
+    		throw new ContextualError("The class " + superClass.getName().getName() + " is not defined", superClass.getLocation());
+    	}
+    	ClassDefinition superClassDefinition = (ClassDefinition) definition;
+    	ClassType type = new ClassType(name.getName(), name.getLocation(), superClassDefinition); 
+    	ClassDefinition classDefinition = type.getDefinition();
+    	try {
+			compiler.getEnvironment().declare(name.getName(), classDefinition);
+			superClass.setDefinition(superClassDefinition);
+			superClass.setType(superClassDefinition.getType());
+			name.setDefinition(classDefinition);
+			name.setType(type);
+		} catch (DoubleDefException e) {
+			e.printStackTrace();
+			throw new ContextualError("class already defined or forbidden name used", name.getLocation());
+		}
     }
 
     @Override
@@ -64,27 +86,25 @@ public class DeclClass extends AbstractDeclClass {
         throw new UnsupportedOperationException("not yet implemented");
     }
 
+	@Override
+	protected void prettyPrintChildren(PrintStream s, String prefix) {
+		fields.prettyPrint(s, prefix, false);
+		methods.prettyPrint(s, prefix, true);
+	}
 	
 
 	@Override
 	protected void iterChildren(TreeFunction f) {
-		// TODO Auto-generated method stub
-		
+		name.iter(f);
+		superClass.iter(f);
+		fields.iter(f);
+		methods.iter(f);
 	}
-
-
-    @Override
-    protected void prettyPrintChildren(PrintStream s, String prefix) {
-        name.prettyPrint(s, prefix, false);
-        superClass.prettyPrint(s, prefix, false);
-        fields.prettyPrint(s, prefix, true);
-        methods.prettyPrint(s, prefix, true);
-        
+	
+	@Override
+    String prettyPrintNode() {
+        return "Class " + name.getName() + " extends " + superClass.getName();
     }
-//
-//    @Override
-//    protected void iterChildren(TreeFunction f) {
-//        throw new UnsupportedOperationException("Not yet supported");
-//    }
+
 
 }

@@ -1,0 +1,13 @@
+// Description:
+//    tests conditionnelle
+//
+// Resultats:
+//    En fonction des valeurs entrées
+//Par exemple en entrant 1. On obtient:
+// 1=1
+// 
+// Historique:
+//    cree le 14/01/2021
+{
+int x = readInt();
+print(x , ":", readInt());}

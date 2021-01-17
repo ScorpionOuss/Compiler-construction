@@ -1,0 +1,14 @@
+// Description:
+//    tests conditionnelle
+//
+// Resultats:
+//    x = 35
+// 
+// Historique:
+//    cree le 15/01/2021
+
+{
+int x = 3;
+x = ((x + 7) - x) * 5;
+print("x = ", x);
+}

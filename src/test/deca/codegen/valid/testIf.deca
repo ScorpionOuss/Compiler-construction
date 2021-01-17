@@ -1,0 +1,18 @@
+// Description:
+//    test conditions et expressions booléennes
+//
+// Resultats:
+//    5>3
+// 
+// Historique:
+//    cree le 15/01/2021
+
+{
+int x = 3;
+if (5 > x){
+    println("5 >", x);
+    }
+else{
+    println(x, "  <= 5");
+    }
+}

@@ -48,10 +48,14 @@ public class Program extends AbstractProgram {
         // A FAIRE: compléter ce squelette très rudimentaire de code
         compiler.addComment("Main program");
         main.codeGenMain(compiler);
+        //End ...
         compiler.addInstruction(new HALT());
+        //Exceptions handlers
         compiler.addStackException();
         compiler.addStackVerification();
-        //add io_exception!
+        compiler.addIOException();
+        compiler.addArithFloatException();
+        compiler.addZeroDivision();
     }
 
     @Override

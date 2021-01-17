@@ -10,8 +10,10 @@ import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.DVal;
 import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.instructions.BOV;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
 import fr.ensimag.ima.pseudocode.instructions.WFLOAT;
+import fr.ensimag.ima.pseudocode.instructions.WFLOATX;
 import fr.ensimag.ima.pseudocode.instructions.WINT;
 
 import java.io.PrintStream;
@@ -129,8 +131,6 @@ public abstract class AbstractExpr extends AbstractInst {
             compiler.addInstruction(new WINT());
     	}
     	else if(getType().isFloat()) {
-    		//Pour l'instant nous ne traitons pas
-    		//lécriture en hexadécimal
     		compiler.addInstruction(new WFLOAT());
     	}
     	else {
@@ -168,4 +168,22 @@ public abstract class AbstractExpr extends AbstractInst {
 	public abstract DVal getAdresse();
 
 	public abstract void codeCond(DecacCompiler compiler, boolean bool, Label endAnd);
+
+	protected void codeGenPrintHex(DecacCompiler compiler) {
+		assert(getType().isFloat());
+	   	//load the result in R2
+    	codeExp(compiler, 2);
+    	compiler.addInstruction(new LOAD(Register.getR(2), Register.R1));
+    	//execution
+		compiler.addInstruction(new WFLOATX());
+	}
+	
+	protected void addArithFloatInstruction(DecacCompiler compiler) {
+		// TODO Auto-generated method stub
+		if (getType().isFloat()) {
+			compiler.addInstruction(new BOV(new Label("ArithFloat_Error")));
+		}
+	}
+	
+
 }

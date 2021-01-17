@@ -1,12 +1,7 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
-import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.Register;
-import fr.ensimag.ima.pseudocode.instructions.ADD;
-import fr.ensimag.ima.pseudocode.instructions.LOAD;
-import fr.ensimag.ima.pseudocode.instructions.POP;
-import fr.ensimag.ima.pseudocode.instructions.PUSH;
 import fr.ensimag.ima.pseudocode.instructions.SUB;
 
 /**
@@ -28,7 +23,7 @@ public class Minus extends AbstractOpArith {
 	@Override
 	public
 	void codeExp(DecacCompiler compiler, int registerPointer) {
-		assert(registerPointer < compiler.numberOfRegister);
+		assert(registerPointer <= compiler.numberOfRegister);
 
 		if (getRightOperand().adressable()) {
 			getLeftOperand().codeExp(compiler, registerPointer);
@@ -54,6 +49,7 @@ public class Minus extends AbstractOpArith {
 
 			}
 		}
+		addArithFloatInstruction(compiler);
 	}
         
 

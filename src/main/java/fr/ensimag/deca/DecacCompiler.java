@@ -186,7 +186,7 @@ public class DecacCompiler {
 
 
         prog.verifyProgram(this);
-        //assert(prog.checkAllDecorations());
+        assert(prog.checkAllDecorations());
 
         addComment("start main program");
         prog.codeGenProgram(this);
@@ -265,6 +265,19 @@ public class DecacCompiler {
     	 program.addStackVerification(stackCounterMax);
      }
      
+     public void addIOException() {
+    	 program.addIOException();
+ 	}
+     
+
+ 	public void addArithFloatException() {
+ 		program.addArithFloatException();
+ 	}
+ 	
+	public void addZeroDivision() {
+		// TODO Auto-generated method stub
+		program.addZeroDivision();
+	}
      //number of global variables declared so far
      private int numberCurrentVariables = 0;
      
@@ -279,7 +292,7 @@ public class DecacCompiler {
      //Pointeur registre courant manipulé
      private int registerPointer = 2;
 
-	public int numberOfRegister = 15;
+	public int numberOfRegister = 3;
      
      /*
       * Increments the register Pointer
@@ -355,4 +368,8 @@ public class DecacCompiler {
    	 orCounter++;
    	 return orCounter;
     }
+
+
+
 }
+

@@ -1,0 +1,15 @@
+// Description:
+//    tests conditionnelle
+//
+// Resultats:
+//    1 et 0 
+// 
+// Historique:
+//    cree le 14/01/2021
+{
+int x;
+int y;
+x = 1;
+y = 0;
+println(x, " et ",  y);
+}
