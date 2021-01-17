@@ -29,7 +29,7 @@ public class Equals extends AbstractOpExactCmp {
 	@Override
 	public
 	void codeExp(DecacCompiler compiler, int registerPointer) {
-		codeCMP(compiler);
+		codeCMP(compiler, registerPointer);
 		compiler.addInstruction(new SEQ(Register.getR(registerPointer)));
 	}    
 	
@@ -43,7 +43,7 @@ public class Equals extends AbstractOpExactCmp {
 //	}
     
 	public void codeCond(DecacCompiler compiler, boolean bool, Label etiquette) {
-		codeCMP(compiler);
+		codeCMP(compiler, compiler.getRegisterPointer());
 		if (bool) {
 			compiler.addInstruction(new BEQ(etiquette));
 

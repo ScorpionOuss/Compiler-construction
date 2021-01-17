@@ -45,22 +45,24 @@ public abstract class AbstractOpCmp extends AbstractBinaryExpr {
     	throw new ContextualError("The binary operation used is not defined for the operands types", this.getLocation());
     }
 
-    protected void codeCMP(DecacCompiler compiler) {
+    protected void codeCMP(DecacCompiler compiler, int registerPointer) {
+		assert(registerPointer <= compiler.numberOfRegister);
+
     	if (getRightOperand().adressable()) {
-			getLeftOperand().codeExp(compiler, compiler.getRegisterPointer());
+			getLeftOperand().codeExp(compiler, registerPointer);
 			compiler.addInstruction(new CMP(getRightOperand().getAdresse(),
-					Register.getR(compiler.getRegisterPointer())));
+					Register.getR(registerPointer)));
     	}
     	else {
 			assert(getRightOperand().adressable() == false);
-			getLeftOperand().codeExp(compiler, compiler.getRegisterPointer());
-			if (compiler.getRegisterPointer() < compiler.numberOfRegister) {
-				getRightOperand().codeExp(compiler, compiler.getRegisterPointer() + 1);
-				compiler.addInstruction(new CMP(Register.getR(compiler.getRegisterPointer() + 1), 
-						Register.getR(compiler.getRegisterPointer())));
+			getLeftOperand().codeExp(compiler, registerPointer);
+			if (registerPointer < compiler.numberOfRegister) {
+				getRightOperand().codeExp(compiler, registerPointer + 1);
+				compiler.addInstruction(new CMP(Register.getR(registerPointer + 1), 
+						Register.getR(registerPointer)));
 			}
 			else {
-				assert( compiler.getRegisterPointer() == compiler.numberOfRegister);
+				assert( registerPointer == compiler.numberOfRegister);
 				/*Manage capacity overrun*/
 				depassementCapacite(compiler);
 				

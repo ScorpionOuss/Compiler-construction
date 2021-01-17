@@ -1,5 +1,0 @@
-{int x1 = readInt();
-int x2 = readInt ();
-if(3 * x1  <= 7 * x2){
-println("Gagné !");}
-else{println("Perdu !");}}
