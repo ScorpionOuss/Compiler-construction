@@ -27,7 +27,9 @@ public class Modulo extends AbstractOpArith {
     	Type rightType = this.getRightOperand().verifyExpr(compiler, localEnv, currentClass);
     	SymbolTable symbolTable = new SymbolTable();
     	if (leftType.isInt() && rightType.isInt()) {
-			return compiler.getEnvironment().get(symbolTable.create("int")).getType();
+    		Type type = compiler.getEnvironment().get(symbolTable.create("int")).getType();
+    		this.setType(type);
+			return type;
     	}
     	throw new ContextualError("Arithmetic operation Modulo is not defined for the used types", this.getLocation());
     }
