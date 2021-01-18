@@ -316,6 +316,16 @@
                              <goal>exec</goal>
                          </goals>
                      </execution>
+                     <execution>
+                     	<id>gencode-test</id>
+                         <configuration>
+                             <executable>./src/test/script/gencode-test.sh</executable>
+                         </configuration>
+                         <phase>test</phase>
+                         <goals>
+                             <goal>exec</goal>
+                         </goals>
+                      </execution>
                 </executions>
             </plugin>
 

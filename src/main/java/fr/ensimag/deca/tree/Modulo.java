@@ -45,6 +45,8 @@ public class Modulo extends AbstractOpArith {
 	public void codeExp(DecacCompiler compiler, int registerPointer) {
 		assert(registerPointer <= compiler.numberOfRegister);
 		
+		addZeroDivisionInstruction(compiler, registerPointer);
+
 		if (getRightOperand().adressable()) {
 			getLeftOperand().codeExp(compiler, registerPointer);
 			compiler.addInstruction(new REM(getRightOperand().getAdresse(),

@@ -1,18 +1,18 @@
 ; start main program
-	TSTO #0
+	TSTO #1
 	BOV stack_overflow_error
 ; Main program
-; Beginning of main instructions:
+	ADDSP #1
 	LOAD #1, R2
+	STORE R2, 1(GB)
+; Beginning of main instructions:
+	LOAD #0, R2
 	CMP #0, R2
-	BLT E_Sinon.1
-	WSTR "ok"
-	WNL
-	BRA E_Fin.1
-E_Sinon.1:
-	WSTR "erreur"
-	WNL
-E_Fin.1:
+	BEQ ZeroDivision_Error
+	LOAD 1(GB), R2
+	REM #0, R2
+	STORE R2, 1(GB)
+	WSTR "Ah non! il faut lever une excpetion."
 	HALT
 stack_overflow_error:
 	WSTR "Error: Stack Overflow"

@@ -1,18 +1,24 @@
 ; start main program
-	TSTO #0
+	TSTO #1
 	BOV stack_overflow_error
 ; Main program
+	ADDSP #1
+	LOAD #0, R2
+	STORE R2, 1(GB)
 ; Beginning of main instructions:
-	LOAD #1, R2
-	CMP #0, R2
-	BLT E_Sinon.1
-	WSTR "ok"
+	BRA E_Cond1
+E_Debut1:
+	LOAD 1(GB), R2
+	LOAD R2, R1
+	WINT
 	WNL
-	BRA E_Fin.1
-E_Sinon.1:
-	WSTR "erreur"
-	WNL
-E_Fin.1:
+	LOAD 1(GB), R2
+	ADD #1, R2
+	STORE R2, 1(GB)
+E_Cond1:
+	LOAD 1(GB), R2
+	CMP #3, R2
+	BLT E_Debut1
 	HALT
 stack_overflow_error:
 	WSTR "Error: Stack Overflow"

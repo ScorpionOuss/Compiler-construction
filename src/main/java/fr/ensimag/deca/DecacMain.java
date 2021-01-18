@@ -1,6 +1,8 @@
 package fr.ensimag.deca;
 
 import fr.ensimag.deca.tree.AbstractProgram;
+import fr.ensimag.deca.tree.LocationException;
+
 import java.io.File;
 import org.apache.log4j.Logger;
 import fr.ensimag.deca.DecacCompiler;
@@ -22,7 +24,7 @@ import java.util.logging.Level;
 public class DecacMain {
     private static Logger LOG = Logger.getLogger(DecacMain.class);
     
-    public static void main(String[] args) throws DecacFatalError, InterruptedException, ExecutionException {
+    public static void main(String[] args) throws DecacFatalError, InterruptedException, ExecutionException, ContextualError {
         // example log4j message.
         LOG.info("Decac compiler started");
         boolean error = false;
@@ -52,12 +54,11 @@ public class DecacMain {
                 
                 try {
                     prog.verifyProgram(compiler);
-                } catch (ContextualError ex) {
-                     System.out.println(ex);
-                     System.exit(1 );
+                    assert(prog.checkAllDecorations());
+                } catch (ContextualError e) {
+                	e.display(System.err);
+                	error = true;
                 }
-              
-              
               
             }
         }

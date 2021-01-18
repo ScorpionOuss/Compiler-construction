@@ -1,0 +1,3 @@
+Exception in thread "main" fr.ensimag.deca.DecacFatalError: Failed to open input file: /home/kaddami/Projet_GL/src/test/deca/.minimal-test.6917/source/syn
+	at fr.ensimag.deca.DecacCompiler.doLexingAndParsing(DecacCompiler.java:230)
+	at fr.ensimag.deca.DecacMain.main(DecacMain.java:48)
