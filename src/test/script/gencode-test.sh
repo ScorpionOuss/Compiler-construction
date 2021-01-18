@@ -13,6 +13,8 @@ do
         echo "\n"
         decac "$j"
         ima $assembly > $result
+        echo "fichier $assembly généré\n"
+        echo "Résultat de l'exécution dans $result"
     echo "------------------------------------------------------------------------------------"
     done
 done
