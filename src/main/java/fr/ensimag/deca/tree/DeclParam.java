@@ -5,8 +5,14 @@
  */
 package fr.ensimag.deca.tree;
 
+import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.deca.context.Type;
+import fr.ensimag.deca.context.ContextualError;
+import fr.ensimag.deca.context.Signature;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import java.io.PrintStream;
+
+import org.apache.commons.lang.Validate;
 
 /**
  *
@@ -15,12 +21,14 @@ import java.io.PrintStream;
 public class DeclParam extends AbstractDeclParam{
     
     private AbstractIdentifier type;
-    private AbstractIdentifier ident;
+    private AbstractIdentifier name;
    
     
     public DeclParam(AbstractIdentifier type,AbstractIdentifier ident){
+    	Validate.notNull(type);
+    	Validate.notNull(name);
         this.type = type;
-        this.ident = ident;
+        this.name = ident;
        
     }
 
@@ -28,19 +36,28 @@ public class DeclParam extends AbstractDeclParam{
     public void decompile(IndentPrintStream s) {
        type.decompile(s);
        s.print(" ");;
-       ident.decompile();
+       name.decompile();
     }
 
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
         type.prettyPrint(s, prefix, false);
-        ident.prettyPrint(s, prefix, false);
+        name.prettyPrint(s, prefix, false);
     }
 
     @Override
     protected void iterChildren(TreeFunction f) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    	type.iter(f);
+    	name.iter(f);
     }
+
+	@Override
+	protected void verifyDeclParam(DecacCompiler compiler, Signature signature) throws ContextualError {
+		Type parType = type.verifyType(compiler);
+		name.setType(parType);
+		name.setDefinition(type.getDefinition());
+		signature.add(parType);
+	}
     
     
 }

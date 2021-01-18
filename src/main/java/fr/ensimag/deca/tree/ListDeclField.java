@@ -3,7 +3,6 @@ package fr.ensimag.deca.tree;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
-import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
 
 /**
@@ -34,10 +33,10 @@ public class ListDeclField extends TreeList<AbstractDeclField> {
      * @param currentClass 
      *          corresponds to "class" attribute (null in the main bloc).
      */    
-    void verifyListDeclField(DecacCompiler compiler, EnvironmentExp localEnv,
+    void verifyListDeclField(DecacCompiler compiler,
             ClassDefinition currentClass) throws ContextualError {
     	for (AbstractDeclField declField: this.getList()) {
-    		declField.verifyDeclField(compiler, localEnv, currentClass);
+    		declField.verifyDeclField(compiler, currentClass);
     	}
     }
     
