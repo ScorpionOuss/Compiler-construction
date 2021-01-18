@@ -1,0 +1,14 @@
+// Description:
+//    tests division entière par 0
+//
+// Resultats:
+//  Error: Division entière par 0
+//
+// Historique:
+//    cree le 15/01/2021
+{
+int x = 1;
+x = x%0;
+print("Ah non! il faut lever une excpetion.");
+}
+

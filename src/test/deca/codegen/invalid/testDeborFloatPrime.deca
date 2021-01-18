@@ -1,0 +1,16 @@
+// Description:
+//    tests opérations booléennes avec codeExp
+//
+// Resultats:
+//
+//  Error: Débordement arithmétique sur flottants
+//
+// Historique:
+//    cree le 15/01/2021
+
+{
+    float x = 1000.0;
+    while(true){
+        x = x*x*x*x;
+    }
+}
