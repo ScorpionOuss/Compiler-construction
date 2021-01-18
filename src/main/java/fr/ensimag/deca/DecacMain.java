@@ -53,8 +53,8 @@ public class DecacMain {
                 try {
                     prog.verifyProgram(compiler);
                 } catch (ContextualError ex) {
-                     System.out.println(ex);
-                     System.exit(1 );
+                    ex.display(System.err);
+                     error = true;
                 }
               
               
