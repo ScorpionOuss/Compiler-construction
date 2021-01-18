@@ -1,0 +1,14 @@
+// Description:
+//    tests division flottante sur 0; débordement lors d'opération arithmétique sur flottants.
+//
+// Resultats:
+//    Error: Débordement arithmétique sur flottants
+// 
+// Historique:
+//    cree le 01/01/2021
+
+{
+float x = 1.1;
+x = 1.1/0.0;
+print("Ah non! il faut lever une exception.");
+}
