@@ -69,7 +69,6 @@ public class DeclClass extends AbstractDeclClass {
 			name.setDefinition(classDefinition);
 			name.setType(type);
 		} catch (DoubleDefException e) {
-			e.printStackTrace();
 			throw new ContextualError("class already defined or forbidden name used", name.getLocation());
 		}
     }
@@ -83,7 +82,7 @@ public class DeclClass extends AbstractDeclClass {
     
     @Override
     protected void verifyClassBody(DecacCompiler compiler) throws ContextualError {
-    	methods.verifyListMethodsBody(compiler);
+    	methods.verifyListMethodsBody(compiler, (ClassDefinition)name.getDefinition());
     }
 
 	@Override
