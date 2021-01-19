@@ -62,5 +62,17 @@ public class ListDeclClass extends TreeList<AbstractDeclClass> {
     		classe.buildTable(compiler);
     	}
     }
+    
+    /**
+     * Second pass
+     */
+    protected void methodsGeneration(DecacCompiler compiler) {
+    	for (AbstractDeclClass classe : getList()) {
+    		//Fields initialization methods generation.
+    		classe.fieldsInitMethodsGen(compiler);
+    		//Class methods generation
+    		/****À FAIRE****/
+    	}
+    }
 
 }

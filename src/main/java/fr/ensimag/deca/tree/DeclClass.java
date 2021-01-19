@@ -7,6 +7,9 @@ import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp.DoubleDefException;
 import fr.ensimag.deca.context.TypeDefinition;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.RegisterOffset;
+import fr.ensimag.ima.pseudocode.instructions.RTS;
 
 import java.io.PrintStream;
 
@@ -111,5 +114,24 @@ public class DeclClass extends AbstractDeclClass {
 		methods.buildTable(compiler);
 	}
 
+
+
+
+	@Override
+	protected void fieldsInitMethodsGen(DecacCompiler compiler) {
+		//deal with labels
+		//TSTO and BOV
+		//ADDSP
+		//Save registers
+		//Method code
+		RegisterOffset spot = new RegisterOffset(-1, Register.LB);
+		fields.initFields(compiler, spot);
+		//Errors
+		//Restore registers.
+		//RTS
+		compiler.addInstruction(new RTS());
+	}
+
+	
 
 }

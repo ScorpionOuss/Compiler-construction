@@ -4,6 +4,7 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.RegisterOffset;
 
 /**
  * List of class fields declarations .
@@ -39,6 +40,15 @@ public class ListDeclField extends TreeList<AbstractDeclField> {
     		declField.verifyDeclField(compiler, currentClass);
     	}
     }
+
+    /*
+     * Initialization of fields
+     */
+	public void initFields(DecacCompiler compiler, RegisterOffset spot) {
+		for (AbstractDeclField field : getList()) {
+			field.initField(compiler, spot);
+		}
+	}
     
 }
 

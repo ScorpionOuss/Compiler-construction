@@ -11,6 +11,7 @@ import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp.DoubleDefException;
 import fr.ensimag.deca.context.FieldDefinition;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.RegisterOffset;
 
 /**
  * @author gl16
@@ -80,6 +81,14 @@ public class DeclField extends AbstractDeclField {
     String prettyPrintNode() {
         return "[visibility=" + visibility + "] " + this.getClass().getName();
     }
+
+	/**
+	 * Initialization of field.
+	 */
+    @Override
+	protected void initField(DecacCompiler compiler, RegisterOffset spot) {
+    	
+	}
     
 }
 

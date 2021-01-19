@@ -53,13 +53,26 @@ public class NoInitialization extends AbstractInitialization {
 
 	@Override
 	protected void codeGenInitialization(DecacCompiler compiler) {
-		// TODO Auto-generated method stub
 		
 	}
 
 
 	@Override
 	protected void STOREInstrution(DecacCompiler compiler, Definition definition) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	protected void codeGenexp(DecacCompiler compiler, int registerPointer) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	protected void STOREInstrution(DecacCompiler compiler, Definition definition, int registerPointer) {
 		// TODO Auto-generated method stub
 		
 	}

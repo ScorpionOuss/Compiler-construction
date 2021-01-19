@@ -77,4 +77,17 @@ public class Initialization extends AbstractInitialization {
 		compiler.addInstruction(new STORE(Register.getR(compiler.getRegisterPointer()),
 				definition.getOperand()));
 	}
+	
+	
+
+	@Override
+	protected void codeGenexp(DecacCompiler compiler, int registerPointer) {
+		expression.codeExp(compiler, registerPointer);
+	}
+
+	@Override
+	protected void STOREInstrution(DecacCompiler compiler, Definition definition, int registerPointer) {
+		compiler.addInstruction(new STORE(Register.getR(registerPointer),
+				definition.getOperand()));
+	}
 }
