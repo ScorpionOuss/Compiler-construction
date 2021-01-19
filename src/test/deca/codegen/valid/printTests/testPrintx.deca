@@ -7,7 +7,7 @@
 // Historique:
 //    cree le 01/01/2021{
 {
-float x = 1.0;
+    float x = 1.0;
     int y = 1;
     if (1 >= 0) {
     printx("ok");

@@ -22,18 +22,18 @@ public class DeclClass extends AbstractDeclClass {
 
     private AbstractIdentifier name;
     private AbstractIdentifier superClass;
-    private ListDeclFieldSet fields;
+    private ListDeclField fields;
     private ListDeclMethod methods;
     
     public DeclClass(AbstractIdentifier name,AbstractIdentifier superClass,
-            ListDeclFieldSet listDeclFieldSet, ListDeclMethod listDeclMethod){
+            ListDeclField listDeclField, ListDeclMethod listDeclMethod){
     		Validate.notNull(name);
-    		//Validate.notNull(superClass);
+    		Validate.notNull(superClass);
     		Validate.notNull(fields);
     		Validate.notNull(methods);
             this.name = name;
             this.superClass = superClass;
-            this.fields = listDeclFieldSet; 
+            this.fields = listDeclField; 
             this.methods = listDeclMethod;
     }
 
@@ -55,7 +55,6 @@ public class DeclClass extends AbstractDeclClass {
 
     @Override
     protected void verifyClass(DecacCompiler compiler) throws ContextualError {
-    	// TODO cas superclass = object
     	TypeDefinition definition = compiler.getEnvironment().get(superClass.getName()); 
     	if ((definition == null) || !definition.getType().isClass()) {
     		throw new ContextualError("The class " + superClass.getName().getName() + " is not defined", superClass.getLocation());
@@ -78,16 +77,19 @@ public class DeclClass extends AbstractDeclClass {
     @Override
     protected void verifyClassMembers(DecacCompiler compiler)
             throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+    	fields.verifyListDeclField(compiler, (ClassDefinition)name.getDefinition());
+    	methods.verifyListDeclMethod(compiler, (ClassDefinition)name.getDefinition());
     }
     
     @Override
     protected void verifyClassBody(DecacCompiler compiler) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+    	methods.verifyListMethodsBody(compiler);
     }
 
 	@Override
 	protected void prettyPrintChildren(PrintStream s, String prefix) {
+		name.prettyPrint(s, prefix, false);
+		superClass.prettyPrint(s, prefix, false);
 		fields.prettyPrint(s, prefix, false);
 		methods.prettyPrint(s, prefix, true);
 	}
@@ -101,11 +103,6 @@ public class DeclClass extends AbstractDeclClass {
 		methods.iter(f);
 	}
 	
-	@Override
-    String prettyPrintNode() {
-        return "Class " + name.getName() + " extends " + superClass.getName();
-    }
-
 
 
 
