@@ -44,9 +44,9 @@ public class ListDeclMethod extends TreeList<AbstractDeclMethod> {
 		}
 	}
 
-	public void verifyListMethodsBody(DecacCompiler compiler) {
+	public void verifyListMethodsBody(DecacCompiler compiler, ClassDefinition classDefinition) throws ContextualError {
 		for (AbstractDeclMethod declMethod: this.getList()) {
-    		declMethod.verifyMethodBody(compiler);
+    		declMethod.verifyMethodBody(compiler, classDefinition);
     	}
 	}
     
