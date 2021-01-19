@@ -55,9 +55,9 @@ public class DecacMain {
                 try {
                     prog.verifyProgram(compiler);
                     assert(prog.checkAllDecorations());
-                } catch (ContextualError e) {
-                	e.display(System.err);
-                	error = true;
+                } catch (ContextualError ex) {
+                    ex.display(System.err);
+                     error = true;
                 }
               
             }
