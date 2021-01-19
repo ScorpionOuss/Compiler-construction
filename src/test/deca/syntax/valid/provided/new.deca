@@ -1,6 +1,5 @@
 // Description:
-// Description:
-//    Déclaration de classe
+//    Test de new
 //
 // Resultats:
 //    Rien
@@ -8,5 +7,7 @@
 // Historique:
 //    cree le 01/01/2021
 
- class A {}
-	
+
+{   
+   A a = new A();
+}
