@@ -18,7 +18,7 @@ import fr.ensimag.deca.tools.IndentPrintStream;
 */
 public class DeclField extends AbstractDeclField {
     
-	final private Visibility visibility;
+    final private Visibility visibility;
     final private AbstractIdentifier type;
     final private AbstractIdentifier name;
     final private AbstractInitialization initialization;

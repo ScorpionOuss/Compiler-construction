@@ -237,17 +237,17 @@ public class Identifier extends AbstractIdentifier {
         }
     }
     
-    public void codeCond(DecacCompiler compiler, boolean bool, Label etiquette) {
-		assert(getType().isBoolean());
-    	compiler.addInstruction(new LOAD(getAdresse(), Register.R0));
-		compiler.addInstruction(new CMP(0, Register.R0));
-    	if (bool) {
-			compiler.addInstruction(new BNE(etiquette));
-		}
-    	else {
-			compiler.addInstruction(new BEQ(etiquette));
-    	}
-	}
+//    public void codeCond(DecacCompiler compiler, boolean bool, Label etiquette) {
+//		assert(getType().isBoolean());
+//    	compiler.addInstruction(new LOAD(getAdresse(), Register.R0));
+//		compiler.addInstruction(new CMP(0, Register.R0));
+//    	if (bool) {
+//			compiler.addInstruction(new BNE(etiquette));
+//		}
+//    	else {
+//			compiler.addInstruction(new BEQ(etiquette));
+//    	}
+//	}
 
 	@Override
 	public

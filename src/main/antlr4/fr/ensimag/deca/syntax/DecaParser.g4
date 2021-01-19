@@ -543,7 +543,7 @@ class_decl returns[AbstractDeclClass tree]
             assert($class_body.listdeclfieldset != null);
             assert($class_body.listdeclmethod != null);
             $tree = new DeclClass($name.tree, $superclass.tree, 
-            $class_body.listdeclfieldset, $class_body.listdeclmethod);
+            $class_body.listdeclfield, $class_body.listdeclmethod);
             setLocation($tree, $CLASS);
 
         }
@@ -560,9 +560,9 @@ class_extension returns[AbstractIdentifier tree]
         }
     ;
 
-class_body returns[ListDeclFieldSet listdeclfieldset, ListDeclMethod listdeclmethod]
+class_body returns[ListDeclField listdeclfield, ListDeclMethod listdeclmethod]
     @init{
-         $listdeclfieldset = new ListDeclFieldSet();
+         $listdeclfield = new ListDeclField();
          $listdeclmethod = new ListDeclMethod();
     }
     : (m=decl_method {
@@ -572,20 +572,21 @@ class_body returns[ListDeclFieldSet listdeclfieldset, ListDeclMethod listdeclmet
         }
       | decl_field_set{
         assert($decl_field_set.tree != null);
-        $listdeclfieldset.add($decl_field_set.tree);
+        $listdeclfield.add($decl_field_set.tree);
         setLocation($listdeclfieldset, $decl_field_set.start);
         }
       )*
     ;
 
-decl_field_set returns[AbstractDeclFieldSet tree]
+decl_field_set returns[Visiblity vi, AbstractIdentifier ident, ListDeclField listdf]
     : v=visibility t=type ldf=list_decl_field
       SEMI{
       assert($v.tree != null);
       assert($t.tree != null);
       assert($ldf.tree != null);
-      $tree = new DeclFieldSet($v.tree, $t.tree, $ldf.tree);
-      setLocation($tree,$v.start);
+      $vi = $v.tree;
+      $ident = $type.tree;
+      $listdf = $ldf.tree;
         }
     ;
 
@@ -596,7 +597,6 @@ visibility returns[Visibility tree]
         }
     | PROTECTED {
         $tree = Visibility.PROTECTED;
-        
         }
     ;
 
