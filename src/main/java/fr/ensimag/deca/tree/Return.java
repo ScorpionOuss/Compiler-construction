@@ -42,9 +42,9 @@ public class Return extends AbstractInst {
     	if (currentClass == null) {
     		throw new ContextualError("Main should not have a return instruction", getLocation());
     	}
-    	Type type = exp.verifyExpr(compiler, localEnv, currentClass);
-    	if (type.isVoid() || !type.subType(returnType)) {
-    		throw new ContextualError("incorrect type of return", getLocation());
+    	exp = exp.verifyRValue(compiler, localEnv, currentClass, returnType);
+    	if (exp.getType().isVoid()) {
+    		throw new ContextualError("unexpected return for this method", getLocation());
     	}
     }
 

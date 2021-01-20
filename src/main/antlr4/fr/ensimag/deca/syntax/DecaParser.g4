@@ -540,7 +540,7 @@ class_decl returns[AbstractDeclClass tree]
     : CLASS name=ident superclass=class_extension OBRACE class_body CBRACE {
             assert($name.tree != null);
             assert($superclass.tree != null);
-            assert($class_body.listdeclfieldset != null);
+            assert($class_body.listdeclfield != null);
             assert($class_body.listdeclmethod != null);
             $tree = new DeclClass($name.tree, $superclass.tree, 
             $class_body.listdeclfield, $class_body.listdeclmethod);

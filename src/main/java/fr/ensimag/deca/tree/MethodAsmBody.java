@@ -15,7 +15,7 @@ import java.io.PrintStream;
 
 /**
  *
- * @author ensimag
+ * @author gl16
  */
 public class MethodAsmBody extends AbstractMethodBody{
     
@@ -33,16 +33,13 @@ public class MethodAsmBody extends AbstractMethodBody{
 
     @Override
     protected void verifyMethodBody(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition classDefinition, Type returnType) throws ContextualError {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     protected void iterChildren(TreeFunction f) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

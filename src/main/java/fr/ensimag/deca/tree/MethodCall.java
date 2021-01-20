@@ -33,8 +33,10 @@ public class MethodCall extends AbstractExpr{
           this.setType(currentClass.getType());
          return currentClass.getType();
     }
+
     @Override
     protected void codeGenInst(DecacCompiler compiler){}
+
     @Override
     protected void codeGenPrint(DecacCompiler compiler){}
 

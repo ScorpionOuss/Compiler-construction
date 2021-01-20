@@ -17,7 +17,7 @@ import java.io.PrintStream;
 
 /**
  *
- * @author ensimag
+ * @author gl16
  */
 public class New extends AbstractExpr {
 

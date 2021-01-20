@@ -18,21 +18,22 @@ public class Selection extends AbstractLValue {
     public Selection(AbstractExpr obj, AbstractIdentifier field) {
         Validate.notNull(obj);
         Validate.notNull(field);
-
         this.obj = obj;
         this.field = field;
     }
+
     public  SymbolTable.Symbol getName(){
         return field.getName();
     }
 
-        @Override
-    public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass) throws ContextualError {
-if(currentClass == null) {
-             throw new ContextualError("Cannot use 'this' in main.", getLocation());
-         }
-         this.setType(currentClass.getType());
-         return currentClass.getType();
+    @Override
+    public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
+    		ClassDefinition currentClass) throws ContextualError {
+    	Type type = obj.verifyExpr(compiler, localEnv, currentClass);
+    	type = field.verifyExpr(compiler, type.asClassType("selection undefined for non class types", obj.getLocation()).getDefinition().getMembers(),
+    			currentClass);
+        this.setType(type);
+        return type;
     }
     @Override
     protected void codeGenInst(DecacCompiler compiler){

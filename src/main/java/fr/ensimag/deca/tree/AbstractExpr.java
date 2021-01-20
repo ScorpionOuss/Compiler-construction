@@ -7,6 +7,7 @@ import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.DecacInternalError;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.DVal;
 import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.instructions.BOV;
@@ -89,7 +90,16 @@ public abstract class AbstractExpr extends AbstractInst {
             EnvironmentExp localEnv, ClassDefinition currentClass, 
             Type expectedType)
             throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+    	Type type = this.verifyExpr(compiler, localEnv, currentClass);
+    	if (!expectedType.assignCompatible(type)) {
+    		throw new ContextualError("incompatible types", this.getLocation());
+    	}
+    	if (expectedType.isFloat() && type.isInt()) {
+    		AbstractExpr expr = new ConvFloat(this);
+    		expr.setType(expectedType);
+    		return expr;
+    	}
+    	return this;
     }
     
     
