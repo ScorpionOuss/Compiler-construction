@@ -8,6 +8,7 @@ import org.apache.commons.lang.Validate;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
+import fr.ensimag.deca.context.Definition;
 import fr.ensimag.deca.context.EnvironmentExp.DoubleDefException;
 import fr.ensimag.deca.context.FieldDefinition;
 import fr.ensimag.deca.tools.IndentPrintStream;
@@ -21,7 +22,7 @@ import fr.ensimag.ima.pseudocode.instructions.STORE;
 */
 public class DeclField extends AbstractDeclField {
     
-	final private Visibility visibility;
+    final private Visibility visibility;
     final private AbstractIdentifier type;
     final private AbstractIdentifier name;
     final private AbstractInitialization initialization;
@@ -43,19 +44,31 @@ public class DeclField extends AbstractDeclField {
     @Override
     protected void verifyDeclField(DecacCompiler compiler, ClassDefinition currentClass)
             throws ContextualError {
+    	
     	Type fieldType = type.verifyType(compiler);
+    	
     	FieldDefinition fieldDefinition = new FieldDefinition(fieldType, name.getLocation(),
     			visibility, currentClass, currentClass.incNumberOfFields());
+    	
+    	// the definition used for the name in this class or in a superclass (if it exists)
+    	// only used if the name is not defined in this class
+    	Definition superNameDefinition = currentClass.getMembers().get(name.getName());
+    	
+    	// verifies if the name is already defined in this class
     	try {
 			currentClass.getMembers().declare(name.getName(), fieldDefinition);
 			name.setType(fieldType);
 			name.setDefinition(fieldDefinition);
 		} catch (DoubleDefException e) {
-			e.printStackTrace();
-			throw new ContextualError("field name already exists", name.getLocation());
+			throw new ContextualError("The name " + name.getName() + " is already used", name.getLocation());
 		}
-    	// vérification de l'utilisation des champs de la classe mère
-    	// l'utilisation de la classe dans le corps de la classe elle même 
+    	
+    	// verifies if the name is defined as a field in the superclass (if it is defined in the superclass)
+    	if (superNameDefinition != null && !superNameDefinition.isField()) {
+    		throw new ContextualError("The name " + name.getName() + " was declared as method name in the superclass",
+    				name.getLocation());
+    	}
+
     	initialization.verifyInitialization(compiler, fieldType, currentClass.getMembers(), currentClass);
     }
 

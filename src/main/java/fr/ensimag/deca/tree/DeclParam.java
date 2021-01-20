@@ -17,7 +17,7 @@ import org.apache.commons.lang.Validate;
 
 /**
  *
- * @author ensimag
+ * @author gl16
  */
 public class DeclParam extends AbstractDeclParam{
     
@@ -32,6 +32,11 @@ public class DeclParam extends AbstractDeclParam{
         this.name = ident;
        
     }
+    
+    @Override
+    protected AbstractIdentifier getName() {
+    	return name;
+    }
 
     @Override
     public void decompile(IndentPrintStream s) {
@@ -43,7 +48,7 @@ public class DeclParam extends AbstractDeclParam{
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
         type.prettyPrint(s, prefix, false);
-        name.prettyPrint(s, prefix, false);
+        name.prettyPrint(s, prefix, true);
     }
 
     @Override
@@ -56,7 +61,7 @@ public class DeclParam extends AbstractDeclParam{
 	protected void verifyDeclParam(DecacCompiler compiler, Signature signature) throws ContextualError {
 		Type parType = type.verifyType(compiler);
 		name.setType(parType);
-		name.setDefinition(type.getDefinition());
+		name.setDefinition(new ParamDefinition(parType, name.getLocation()));
 		signature.add(parType);
 	}
 

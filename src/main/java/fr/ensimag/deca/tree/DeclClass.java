@@ -40,15 +40,15 @@ public class DeclClass extends AbstractDeclClass {
     private ListDeclMethod methods;
     
     public DeclClass(AbstractIdentifier name,AbstractIdentifier superClass,
-            ListDeclField listDeclField, ListDeclMethod listDeclMethod){
+            ListDeclField fields, ListDeclMethod methods){
     		Validate.notNull(name);
     		Validate.notNull(superClass);
     		Validate.notNull(fields);
     		Validate.notNull(methods);
             this.name = name;
             this.superClass = superClass;
-            this.fields = listDeclField; 
-            this.methods = listDeclMethod;
+            this.fields = fields; 
+            this.methods = methods;
     }
 
 
@@ -78,14 +78,13 @@ public class DeclClass extends AbstractDeclClass {
     	ClassDefinition classDefinition = type.getDefinition();
     	try {
 			compiler.getEnvironment().declare(name.getName(), classDefinition);
-			superClass.setDefinition(superClassDefinition);
-			superClass.setType(superClassDefinition.getType());
-			name.setDefinition(classDefinition);
-			name.setType(type);
 		} catch (DoubleDefException e) {
-			e.printStackTrace();
 			throw new ContextualError("class already defined or forbidden name used", name.getLocation());
 		}
+		superClass.setDefinition(superClassDefinition);
+		superClass.setType(superClassDefinition.getType());
+		name.setDefinition(classDefinition);
+		name.setType(type);
     }
 
     @Override
@@ -97,7 +96,7 @@ public class DeclClass extends AbstractDeclClass {
     
     @Override
     protected void verifyClassBody(DecacCompiler compiler) throws ContextualError {
-    	methods.verifyListMethodsBody(compiler);
+    	methods.verifyListMethodsBody(compiler, (ClassDefinition)name.getDefinition());
     }
 
 	@Override

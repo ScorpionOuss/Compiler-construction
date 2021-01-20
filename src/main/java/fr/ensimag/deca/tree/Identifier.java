@@ -16,11 +16,7 @@ import fr.ensimag.deca.tools.DecacInternalError;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
 import fr.ensimag.ima.pseudocode.DAddr;
-import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.Register;
-import fr.ensimag.ima.pseudocode.instructions.BEQ;
-import fr.ensimag.ima.pseudocode.instructions.BNE;
-import fr.ensimag.ima.pseudocode.instructions.CMP;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
 
 import java.io.PrintStream;
@@ -175,14 +171,27 @@ public class Identifier extends AbstractIdentifier {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-    	ExpDefinition expDefinition = localEnv.get(name);
-    	if (expDefinition == null) {
-    		throw new ContextualError("The variable " + name.getName() + " was not declared", this.getLocation());
+    	ExpDefinition localExpDefinition = localEnv.get(name);
+    	ExpDefinition classExpDefinition = currentClass.getMembers().get(name);
+    	if (localExpDefinition == null) {
+    		if (classExpDefinition == null) {
+				throw new ContextualError("The variable " + name.getName() + " is not defined", this.getLocation());
+    		}
+    		else {
+    			this.setType(classExpDefinition.getType());
+    			this.setDefinition(classExpDefinition);
+    			return classExpDefinition.getType();
+    		}
+    	} else {
+    		if (classExpDefinition == null) {
+    			this.setType(localExpDefinition.getType());
+    			this.setDefinition(localExpDefinition);
+    			return localExpDefinition.getType();
+    		} else {
+    			throw new ContextualError("this name can't be resolved field and variable definitions exist for this name",
+    					getLocation());
+    		}
     	}
-    	this.setDefinition(expDefinition);
-    	Type type = expDefinition.getType();
-    	this.setType(type);
-    	return type;
     }
 
     /**
@@ -237,17 +246,17 @@ public class Identifier extends AbstractIdentifier {
         }
     }
     
-    public void codeCond(DecacCompiler compiler, boolean bool, Label etiquette) {
-		assert(getType().isBoolean());
-    	compiler.addInstruction(new LOAD(getAdresse(), Register.R0));
-		compiler.addInstruction(new CMP(0, Register.R0));
-    	if (bool) {
-			compiler.addInstruction(new BNE(etiquette));
-		}
-    	else {
-			compiler.addInstruction(new BEQ(etiquette));
-    	}
-	}
+//    public void codeCond(DecacCompiler compiler, boolean bool, Label etiquette) {
+//		assert(getType().isBoolean());
+//    	compiler.addInstruction(new LOAD(getAdresse(), Register.R0));
+//		compiler.addInstruction(new CMP(0, Register.R0));
+//    	if (bool) {
+//			compiler.addInstruction(new BNE(etiquette));
+//		}
+//    	else {
+//			compiler.addInstruction(new BEQ(etiquette));
+//    	}
+//	}
 
 	@Override
 	public

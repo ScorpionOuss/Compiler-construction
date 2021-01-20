@@ -1,5 +1,4 @@
 // Description:
-// Description:
 //    Déclaration de classe
 //
 // Resultats:
@@ -8,5 +7,11 @@
 // Historique:
 //    cree le 01/01/2021
 
- class A {}
+ class A {
+    	
+    int test(){
+        asm("C'EST UN TEST");
+            }
+    
+}
 	

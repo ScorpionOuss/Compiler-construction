@@ -4,6 +4,7 @@ import fr.ensimag.deca.tree.Location;
 import fr.ensimag.ima.pseudocode.DAddr;
 import fr.ensimag.ima.pseudocode.Label;
 
+
 /**
  * Definition of an identifier.
  * 

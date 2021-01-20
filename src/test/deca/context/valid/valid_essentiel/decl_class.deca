@@ -1,0 +1,11 @@
+// Description:
+//    Programme de test de declaration de classes.
+//
+
+class A {
+	protected int x;
+}
+
+{
+	int x = 2;
+}
