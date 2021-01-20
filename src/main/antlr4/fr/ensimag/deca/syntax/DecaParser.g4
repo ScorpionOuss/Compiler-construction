@@ -568,7 +568,6 @@ class_body returns[ListDeclField listdeclfield, ListDeclMethod listdeclmethod]
     : (m=decl_method {
         assert($m.tree != null);
         $listdeclmethod.add($m.tree);
-        setLocation($listdeclmethod, $m.start);
         }
       | decl_field_set[$listdeclfield]
       )*
@@ -621,7 +620,7 @@ decl_field [Visibility v, AbstractIdentifier t] returns[AbstractDeclField tree]
 
 decl_method returns[AbstractDeclMethod tree]
 @init {
-        AbstractMethodBody mb = new MethodBody();
+        AbstractMethodBody mb;
       
 }
     : type ident OPARENT params=list_params CPARENT (block {
@@ -652,11 +651,9 @@ list_params returns[ListDeclParam tree]
     : (p1=param {
         assert($p1.tree != null);
         $tree.add($p1.tree);
-        setLocation($tree, $p1.start);
         } (COMMA p2=param {
         assert($p2.tree != null);
         $tree.add($p2.tree);
-        setLocation($tree,$COMMA);
         }
       )*)?
     ;
