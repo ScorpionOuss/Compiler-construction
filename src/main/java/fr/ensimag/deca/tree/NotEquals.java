@@ -26,11 +26,11 @@ public class NotEquals extends AbstractOpExactCmp {
 
 	@Override
 	public
-	void codeExp(DecacCompiler compiler, int registerPointer) {
+	void codeGenInst(DecacCompiler compiler) {
 		//CMP operands
-		codeCMP(compiler, registerPointer);
+		codeCMP(compiler);
 		//Scc instruction
-		compiler.addInstruction(new SNE(Register.getR(registerPointer)));
+		compiler.addInstruction(new SNE(Register.getR(getRP(compiler))));
 	}
 
 	public void codeCond(DecacCompiler compiler, boolean bool, Label etiquette) {

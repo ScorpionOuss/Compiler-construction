@@ -28,16 +28,16 @@ public class Lower extends AbstractOpIneq {
 
 	@Override
 	public
-	void codeExp(DecacCompiler compiler, int registerPointer) {
+	void codeGenInst(DecacCompiler compiler) {
 		//CMP operands
-		codeCMP(compiler, registerPointer);
+		codeCMP(compiler);
 		//Scc instruction
-		compiler.addInstruction(new SLT(Register.getR(registerPointer)));		
+		compiler.addInstruction(new SLT(Register.getR(getRP(compiler))));		
 	}
 
 	public void codeCond(DecacCompiler compiler, boolean bool, Label etiquette) {
 		//CMP operands
-		codeCMP(compiler, compiler.getRegisterPointer());
+		codeCMP(compiler);
 		//Bcc instruction
 		if (bool) {
 			compiler.addInstruction(new BLT(etiquette));

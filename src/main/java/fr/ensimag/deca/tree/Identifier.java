@@ -9,6 +9,7 @@ import fr.ensimag.deca.context.Definition;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.context.FieldDefinition;
 import fr.ensimag.deca.context.MethodDefinition;
+import fr.ensimag.deca.context.ParamDefinition;
 import fr.ensimag.deca.context.ExpDefinition;
 import fr.ensimag.deca.context.VariableDefinition;
 import fr.ensimag.deca.tools.DecacInternalError;
@@ -19,13 +20,11 @@ import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.instructions.BEQ;
 import fr.ensimag.ima.pseudocode.instructions.BNE;
-import fr.ensimag.ima.pseudocode.instructions.BRA;
 import fr.ensimag.ima.pseudocode.instructions.CMP;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
 
 import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
-import org.apache.log4j.Logger;
 
 /**
  * Deca Identifier
@@ -252,8 +251,9 @@ public class Identifier extends AbstractIdentifier {
 
 	@Override
 	public
-	void codeExp(DecacCompiler compiler, int registerPointer) {
-		compiler.addInstruction(new LOAD(getAdresse(), Register.getR(registerPointer)));
+	void codeGenInst(DecacCompiler compiler) {
+		compiler.addInstruction(new LOAD(getAdresse(),
+				Register.getR(getRP(compiler))));
 	}
 	
 	@Override
@@ -268,4 +268,16 @@ public class Identifier extends AbstractIdentifier {
 		return definition.getOperand();
 	}
 
+	@Override
+	protected ParamDefinition getParamDefinition() {
+		// TODO Auto-generated method stub
+	     try {
+	            return (ParamDefinition) definition;
+	        } catch (ClassCastException e) {
+	            throw new DecacInternalError(
+	                    "Identifier "
+	                            + getName()
+	                            + " is not a parameter identifier, you can't call getParamDefinition on it");
+	        }
+	}
 }

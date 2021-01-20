@@ -10,7 +10,9 @@ import fr.ensimag.deca.tree.Visibility;
  * @date 01/01/2021
  */
 public class FieldDefinition extends ExpDefinition {
-    public int getIndex() {
+    
+	@Override
+	public int getIndex() {
         return index;
     }
 
@@ -55,5 +57,6 @@ public class FieldDefinition extends ExpDefinition {
     public boolean isExpression() {
         return true;
     }
+    
 
 }

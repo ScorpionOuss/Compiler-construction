@@ -32,10 +32,6 @@ public class Cast extends AbstractExpr{
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
-    public void codeExp(DecacCompiler compiler, int registerPointer) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
     @Override
     public boolean adressable() {

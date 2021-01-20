@@ -20,35 +20,63 @@ public class Multiply extends AbstractOpArith {
     }
 
 
-	@Override
-	public void codeExp(DecacCompiler compiler, int registerPointer) {
-		assert(registerPointer <= compiler.numberOfRegister);
+    /**
+     * 
+     * @param compiler
+     */
+    private void adressableCase(DecacCompiler compiler) {
+		compiler.addInstruction(new MUL(getRightOperand().getAdresse(),
+				Register.getR(getRP(compiler))));
+    }
+    
+    /**
+     * 
+     * @param compiler
+     */
+    private void nonDepassementCase(DecacCompiler compiler) {
+    	compiler.registersManag.incrementRegisterPointer();
 
+    	getRightOperand().codeGenInst(compiler);;
+		
+    	compiler.addInstruction(new MUL(Register.getR(getRP(compiler)), 
+				Register.getR(getRP(compiler)- 1)));
+		
+		compiler.registersManag.decrementRegisterPointer();
+
+    }
+    
+    /**
+     * 
+     * @param compiler
+     */
+    private void depassementCase(DecacCompiler compiler) {
+    	assert(getRP(compiler) == getMP(compiler));
+		/*Manage capacity overrun*/
+		depassementCapacite(compiler);
+
+		//Minus
+		compiler.addInstruction(new MUL(Register.R1, Register.getR(getRP(compiler))));
+    }
+    
+	@Override
+	public void codeGenInst(DecacCompiler compiler) {
+		assert(getRP(compiler) <= getMP(compiler));
+		getLeftOperand().codeGenInst(compiler);
+		
 		if (getRightOperand().adressable()) {
-			getLeftOperand().codeExp(compiler, registerPointer);
-			compiler.addInstruction(new MUL(getRightOperand().getAdresse(),
-					Register.getR(registerPointer)));
+			adressableCase(compiler);
 		}
 		
 		else {
 			assert(getRightOperand().adressable() == false);
-			getLeftOperand().codeExp(compiler, registerPointer);
-			if (registerPointer < compiler.numberOfRegister) {
-				getRightOperand().codeExp(compiler, registerPointer + 1);
-				compiler.addInstruction(new MUL(Register.getR(registerPointer + 1), 
-						Register.getR(registerPointer)));
+			if (getRP(compiler) < getMP(compiler)) {
+				nonDepassementCase(compiler);
 			}
 			else {
-				assert(registerPointer == compiler.numberOfRegister);
-				/*Manage capacity overrun*/
-				depassementCapacite(compiler);
-
-				//Multiply
-				compiler.addInstruction(new MUL(Register.R1,
-						Register.getR(registerPointer))); 
+				depassementCase(compiler);
 			}
 		}
-		addArithFloatInstruction(compiler);
+		//addArithFloatInstruction(compiler);
 	}
 
 }

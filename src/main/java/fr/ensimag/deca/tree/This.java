@@ -49,11 +49,7 @@ public class This extends AbstractThis {
     }
 
 
-	@Override
-	public void codeExp(DecacCompiler compiler, int registerPointer) {
-		// TODO Auto-generated method stub
-		
-	}
+
 
 
 	@Override

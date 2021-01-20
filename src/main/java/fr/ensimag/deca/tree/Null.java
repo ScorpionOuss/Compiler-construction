@@ -64,12 +64,6 @@ public class Null extends AbstractExpr {
     }
 
 	@Override
-	public void codeExp(DecacCompiler compiler, int registerPointer) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public boolean adressable() {
 		// TODO Auto-generated method stub
 		return false;

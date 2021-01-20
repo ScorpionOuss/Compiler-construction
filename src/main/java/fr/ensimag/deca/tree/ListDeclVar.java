@@ -42,6 +42,10 @@ public class ListDeclVar extends TreeList<AbstractDeclVar> {
     	}
     }
     
+    /**
+     * code Generation and link vars of ListDeclVariable
+     * @param compiler
+     */
     public void codeGenAndLinkListDeclVariable(DecacCompiler compiler) {
     	instructionADDSP(compiler);
     	for (AbstractDeclVar var : getList()) {
@@ -50,13 +54,17 @@ public class ListDeclVar extends TreeList<AbstractDeclVar> {
     	}
     }
 
+    /**
+     * instruction ADDSP
+     * @param compiler
+     */
 	private void instructionADDSP(DecacCompiler compiler) {
 		if (size() > 0) {
 		//Increment SP pointer
 		compiler.addInstruction(new ADDSP(size()));
 				
 		//Increment stackcounter
-		compiler.incrementStackCounterMax(size());
+		compiler.stackManager.incrementStackCounterMax(size());
 		}
 	}
 

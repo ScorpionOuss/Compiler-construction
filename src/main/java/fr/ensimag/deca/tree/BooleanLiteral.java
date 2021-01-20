@@ -65,15 +65,15 @@ public class BooleanLiteral extends AbstractExpr {
 
 	@Override
 	public
-	void codeExp(DecacCompiler compiler, int registerPointer) {
+	void codeGenInst(DecacCompiler compiler) {
 		if (value) {
 			compiler.addInstruction(new LOAD(new ImmediateInteger(1),
-					Register.getR(registerPointer)));
+					Register.getR(getRP(compiler))));
 
 		}
 		else {
 			compiler.addInstruction(new LOAD(new ImmediateInteger(0),
-					Register.getR(registerPointer)));
+					Register.getR(getRP(compiler))));
 
 		}
 	}

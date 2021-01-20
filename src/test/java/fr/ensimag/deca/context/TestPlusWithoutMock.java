@@ -56,10 +56,7 @@ public class TestPlusWithoutMock {
             throw new UnsupportedOperationException("Should not be called.");
         }
         
-        @Override
-        public void codeExp(DecacCompiler compiler, int registerPointer) {
-        	
-        }
+       
 
         /**
          * Check that the object has been properly used after the test.

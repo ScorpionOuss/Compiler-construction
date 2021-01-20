@@ -6,9 +6,6 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
-import fr.ensimag.deca.context.ClassDefinition;
-import fr.ensimag.deca.context.ContextualError;
-import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import java.io.PrintStream;
 
@@ -16,7 +13,7 @@ import java.io.PrintStream;
  *
  * @author ensimag
  */
-public class AbstractMethodBody extends Tree{
+public abstract class AbstractMethodBody extends Tree{
 
     @Override
     public void decompile(IndentPrintStream s) {
@@ -33,6 +30,9 @@ public class AbstractMethodBody extends Tree{
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    
+	protected abstract void GenbodyCodeVars(DecacCompiler compiler);
+
+	protected abstract void GenbodyCodeInsts(DecacCompiler compiler);
+
     
 }

@@ -55,7 +55,8 @@ public class ListDeclClass extends TreeList<AbstractDeclClass> {
     }
 
     /**
-     * First pass of [GenCode]
+     * First Pass of [GenCode] 
+     * @param compiler
      */
     protected void buildClassesTable(DecacCompiler compiler) {
     	for (AbstractDeclClass classe : getList()) {
@@ -64,14 +65,15 @@ public class ListDeclClass extends TreeList<AbstractDeclClass> {
     }
     
     /**
-     * Second pass
+     * Second Pass of [GenCode]
+     * @param compiler
      */
     protected void methodsGeneration(DecacCompiler compiler) {
     	for (AbstractDeclClass classe : getList()) {
     		//Fields initialization methods generation.
     		classe.fieldsInitMethodsGen(compiler);
     		//Class methods generation
-    		/****À FAIRE****/
+    		classe.classMethodsGen(compiler);
     	}
     }
 

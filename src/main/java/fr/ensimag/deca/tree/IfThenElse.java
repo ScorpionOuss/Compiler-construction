@@ -50,7 +50,7 @@ public class IfThenElse extends AbstractInst {
 
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
-    	int labelIndex = compiler.incrementIfCounter();
+    	int labelIndex = compiler.labelsManager.incrementIfCounter();
     	Label eSinon = new Label("E_Sinon." + String.valueOf(labelIndex));
     	Label eFin = new Label("E_Fin." + String.valueOf(labelIndex));
     	condition.codeCond(compiler, false, eSinon);

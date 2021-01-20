@@ -42,11 +42,11 @@ public class Not extends AbstractUnaryExpr {
 
 	@Override
 	public
-	void codeExp(DecacCompiler compiler, int registerPointer) {
-		getOperand().codeExp(compiler, registerPointer);
+	void codeGenInst(DecacCompiler compiler) {
+		getOperand().codeGenInst(compiler);;
 		compiler.addInstruction(new CMP(new ImmediateInteger(0), 
-				Register.getR(registerPointer)));
-		compiler.addInstruction(new SEQ(Register.getR(registerPointer)));
+				Register.getR(getRP(compiler))));
+		compiler.addInstruction(new SEQ(Register.getR(getRP(compiler))));
 	}
 	
 	@Override

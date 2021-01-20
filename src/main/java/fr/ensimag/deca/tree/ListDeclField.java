@@ -44,9 +44,9 @@ public class ListDeclField extends TreeList<AbstractDeclField> {
     /*
      * Initialization of fields
      */
-	public void initFields(DecacCompiler compiler, RegisterOffset spot) {
+	public void initFields(DecacCompiler compiler) {
 		for (AbstractDeclField field : getList()) {
-			field.initField(compiler, spot);
+			field.initField(compiler);
 		}
 	}
     

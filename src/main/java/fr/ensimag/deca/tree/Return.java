@@ -27,8 +27,8 @@ public class Return extends AbstractInst {
     }
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
-    	exp.codeExp(compiler, compiler.getRegisterPointer());
-    	compiler.addInstruction(new LOAD(Register.getR(compiler.getRegisterPointer()),
+    	exp.codeGenInst(compiler);
+    	compiler.addInstruction(new LOAD(Register.getR(getRP(compiler)),
     			Register.R0));
     	compiler.addInstruction(new HALT());
     }

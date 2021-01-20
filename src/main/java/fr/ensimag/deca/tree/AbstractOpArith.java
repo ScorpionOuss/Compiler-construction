@@ -5,9 +5,7 @@ import fr.ensimag.ima.pseudocode.ImmediateInteger;
 import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.instructions.BEQ;
-import fr.ensimag.ima.pseudocode.instructions.BOV;
 import fr.ensimag.ima.pseudocode.instructions.CMP;
-import fr.ensimag.ima.pseudocode.instructions.LOAD;
 import fr.ensimag.deca.tools.SymbolTable;
 
 import fr.ensimag.deca.DecacCompiler;
@@ -70,11 +68,10 @@ public abstract class AbstractOpArith extends AbstractBinaryExpr {
         throw new UnsupportedOperationException("not yet implemented");
 	}
 
-	protected void addZeroDivisionInstruction(DecacCompiler compiler, int register){
+	protected void addZeroDivisionInstruction(DecacCompiler compiler){
 		if (getType().isInt()) {
-			getRightOperand().codeExp(compiler, register);
 			compiler.addInstruction(new CMP(new ImmediateInteger(0),
-					Register.getR(register)));
+					Register.getR(getRP(compiler))));
 			compiler.addInstruction(new BEQ(new Label("ZeroDivision_Error")));
 		}
 	}

@@ -83,5 +83,4 @@ public class ClassDefinition extends TypeDefinition {
         return "class";
     }
 
-    
 }

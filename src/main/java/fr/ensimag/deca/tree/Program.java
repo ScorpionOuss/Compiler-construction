@@ -3,6 +3,11 @@ package fr.ensimag.deca.tree;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.LabelOperand;
+import fr.ensimag.ima.pseudocode.NullOperand;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.RegisterOffset;
 import fr.ensimag.ima.pseudocode.instructions.*;
 import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
@@ -45,8 +50,8 @@ public class Program extends AbstractProgram {
     @Override
     public void codeGenProgram(DecacCompiler compiler) {
     	/*First pass*/
-    	
-    	
+    	codeGenObjectTable(compiler);
+    	classes.buildClassesTable(compiler);
     	/*Main execution*/
     	compiler.addComment("Main program");
         main.codeGenMain(compiler);
@@ -58,9 +63,24 @@ public class Program extends AbstractProgram {
         compiler.addIOException();
         compiler.addArithFloatException();
         compiler.addZeroDivision();
+        compiler.addNullRefException();
     }
 
-    @Override
+    private void codeGenObjectTable(DecacCompiler compiler) {
+    	compiler.addInstruction(new LOAD(new NullOperand(), Register.R0));
+    	
+    	compiler.addInstruction(new STORE(Register.R0, 
+    			new RegisterOffset(1, Register.GB)));
+    	
+    	compiler.addInstruction(new LOAD(new LabelOperand(new 
+    			Label("code.Object.equals")), Register.R0));
+    	
+    	compiler.addInstruction(new STORE(Register.R0, 
+    			new RegisterOffset(2, Register.GB)));
+    	
+	}
+    
+	@Override
     public void decompile(IndentPrintStream s) {
         getClasses().decompile(s);
         getMain().decompile(s);

@@ -96,10 +96,10 @@ public class IMAProgram {
 		addInstruction(new ERROR());
 	}
 	
-	/*
-	 * add TSTO and BOV instructions in the code
-	 * in order to ensure a correct execution
-	 * regarding stack_overflow_error
+
+	/**
+	 * 
+	 * @param counterMAx
 	 */
 	public void addStackVerification(int counterMAx) {
 		// add BOV instruction
@@ -109,8 +109,20 @@ public class IMAProgram {
 		
 		lines.add(TSTOLocation, new Line(new TSTO(new ImmediateInteger(counterMAx))));
 	}
-
 	
+	public void addStackVerificationBlock(int spot, int counterMax) {
+		// add BOV instruction
+		lines.add(spot, new Line(new BOV(new Label("stack_overflow_error"))));
+		
+		//add TSTO instruction
+		lines.add(spot, new Line(new TSTO(new ImmediateInteger(counterMax))));
+
+
+	}
+
+	/**
+	 * addIOException
+	 */
 	public void addIOException() {
 		Label iOErreurLabel = new Label("io_error");
 		addLabel(iOErreurLabel);
@@ -119,6 +131,9 @@ public class IMAProgram {
 		addInstruction(new ERROR());
 	}
 
+	/**
+	 * addArithFloatException
+	 */
 	public void addArithFloatException() {
 		Label iOErreurLabel = new Label("ArithFloat_Error");
 		addLabel(iOErreurLabel);
@@ -127,6 +142,9 @@ public class IMAProgram {
 		addInstruction(new ERROR());
 	}
 
+	/**
+	 * addZeroDivision
+	 */
 	public void addZeroDivision() {
 		// TODO Auto-generated method stub
 		Label iOErreurLabel = new Label("ZeroDivision_Error");
@@ -134,5 +152,27 @@ public class IMAProgram {
 		addInstruction(new WSTR(new ImmediateString("Error: Division entière par 0")));
 		addInstruction(new WNL());
 		addInstruction(new ERROR());
+	}
+	
+
+
+	/**
+	 * 
+	 */
+	public void addNullRefException() {
+		// TODO Auto-generated method stub
+		Label nullRef = new Label("dereferencement.null");
+		addLabel(nullRef);
+		addInstruction(new WSTR(new ImmediateString("Erreur : dereferencement de null")));
+		addInstruction(new WNL());
+		addInstruction(new ERROR());
+	}
+	
+	/**
+	 * 
+	 * @return size of lines
+	 */
+	public int currentLinesSize() {
+		return lines.size();
 	}
 }

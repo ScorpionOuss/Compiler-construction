@@ -37,15 +37,15 @@ public class UnaryMinus extends AbstractUnaryExpr {
     }
 
 	@Override
-	public void codeExp(DecacCompiler compiler, int registerPointer) {
+	public void codeGenInst(DecacCompiler compiler) {
 		if (getOperand().adressable()) {
 			compiler.addInstruction(new OPP(getOperand().getAdresse(),
-					Register.getR(registerPointer)));
+					Register.getR(getRP(compiler))));
 		}
 		else {
 			/*On verra plus tard */
-			compiler.addInstruction(new OPP(Register.getR(registerPointer),
-					Register.getR(registerPointer)));
+			compiler.addInstruction(new OPP(Register.getR(getRP(compiler)),
+					Register.getR(getRP(compiler))));
 		}
 		addArithFloatInstruction(compiler);
 	}

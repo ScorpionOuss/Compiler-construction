@@ -23,11 +23,11 @@ public class Or extends AbstractOpBool {
     }
 
 	@Override
-	public void codeExp(DecacCompiler compiler, int registerPointer) {
-	assert(registerPointer <= compiler.numberOfRegister);
+	public void codeGenInst(DecacCompiler compiler){
+	assert(getRP(compiler) <= getMP(compiler));
 	AbstractExpr newNot = new Not(new And(new Not(getLeftOperand()),
 				new Not(getRightOperand())));
-	newNot.codeExp(compiler, registerPointer);
+	newNot.codeGenInst(compiler);
 	}
 	
 	public void codeCond(DecacCompiler compiler, boolean bool, Label etiquette) {
@@ -40,7 +40,7 @@ public class Or extends AbstractOpBool {
 		//〈Code(C, faux, E)〉
 		else {
 			Label endOr = new Label("endOr" + 
-					String.valueOf(compiler.incrementOrCounter()));
+					String.valueOf(compiler.labelsManager.incrementOrCounter()));
 			getLeftOperand().codeCond(compiler, !bool, endOr);
 			getRightOperand().codeCond(compiler, bool, etiquette);
 			compiler.addLabel(endOr);

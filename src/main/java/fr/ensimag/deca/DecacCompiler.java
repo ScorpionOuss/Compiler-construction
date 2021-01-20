@@ -1,5 +1,8 @@
 package fr.ensimag.deca;
 
+import fr.ensimag.deca.codegen.LabelsManager;
+import fr.ensimag.deca.codegen.RegistersManager;
+import fr.ensimag.deca.codegen.StackManager;
 import fr.ensimag.deca.context.EnvironmentType;
 import fr.ensimag.deca.syntax.DecaLexer;
 import fr.ensimag.deca.syntax.DecaParser;
@@ -15,6 +18,9 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
+
+import javax.swing.plaf.LabelUI;
+
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.apache.log4j.Logger;
@@ -236,17 +242,14 @@ public class DecacCompiler {
         return parser.parseProgramAndManageErrors(err);
     }
     
-    //the number of stack memory words needed 
-    private int stackCounterMax = 0;
-    
-    /*
-     * sort of setter for stackCounterMax
-     * @param i increment unit
-     */
-    public void incrementStackCounterMax(int i) {
-    	stackCounterMax += i;
-    }
 
+    public RegistersManager registersManag = new RegistersManager();
+    
+    public StackManager stackManager = new StackManager();
+    
+    public LabelsManager labelsManager = new LabelsManager();
+    
+    
     /*
      * Add the stack_over_flow code
      */
@@ -258,131 +261,61 @@ public class DecacCompiler {
       * Add the TSTO and BOV instructions
       * for stack_over_flow avoidance
       * 
-      * @param counterMax the maximum of memory words needed in stack
       * 
       */
      public void addStackVerification() {
-    	 program.addStackVerification(stackCounterMax);
+    	 program.addStackVerification(stackManager.getStackCounterMax());
      }
      
+     /**
+      * addIOException
+      */
      public void addIOException() {
     	 program.addIOException();
  	}
      
 
+     /**
+      * addArithFloatException
+      */
  	public void addArithFloatException() {
  		program.addArithFloatException();
  	}
  	
+ 	/**
+ 	 * addZeroDivision
+ 	 */
 	public void addZeroDivision() {
 		// TODO Auto-generated method stub
 		program.addZeroDivision();
+	}    
+
+	/**
+	 * addNullRefException
+	 */
+	public void addNullRefException() {
+		program.addNullRefException();
 	}
-     //number of global variables declared so far
-     private int numberCurrentVariables = 0;
-     
-     /*
-      * recover and increment
-      */
-     public int recoverAndIncrement() {
-    	 numberCurrentVariables++;
-    	 return numberCurrentVariables;
-     }
-
-     //Pointeur registre courant manipulé
-     private int registerPointer = 2;
-
-	public int numberOfRegister = 3;
-     
-     /*
-      * Increments the register Pointer
-      */
-     public void incrementRegisterPointer() {
-    	 registerPointer++;
-     }
-     
-     /*
-      * Decrements Register Pointer
-      */
-     public void decrementRegisterPointer() {
-    	 registerPointer++;
-     }
-     
-     /*
-      * Getter of registerPointer
-      */
-     public int getRegisterPointer() {
-    	 return registerPointer;
-     }
-     
-
-
-//     //On suppose pour l'instant qu'on ne dépasse pas 15 registres(15déclarations)
-//     private int pointerRegister = 1;
-//     
-//     public int recoverAndIncrementpR() {
-//    	 numberCurrentVariables++;
-//    	 return numberCurrentVariables;
-//     }
-
+	
     private EnvironmentType environmentType;
 
 	public EnvironmentType getEnvironment() {
 		return environmentType;
 	}
 	
-	private int whileCounter = 0;
-	private int ifCounter = 0;
-	private int andCounter = 0;
-	private int orCounter = 0;
 	
-	
-	 /*
-     * Increments the register Pointer
+    /**
+     * 
+     * @return current size of program lines
      */
-    public int incrementWhileCounter() {
-   	 whileCounter++;
-   	 return whileCounter;
+    public int currentLinesSize() {
+    	return program.currentLinesSize();
     }
 
-    /*
-     * Increments the register Pointer
-     */
-    public int incrementIfCounter() {
-   	 ifCounter++;
-   	 return ifCounter;
-    }
-    
-    /*
-     * Increments the register Pointer
-     */
-    public int incrementAndCounter() {
-   	 andCounter++;
-   	 return andCounter;
-    }
-    
-    /*
-     * Increments the register Pointer
-     */
-    public int incrementOrCounter() {
-   	 orCounter++;
-   	 return orCounter;
-    }
-    
-    private int methodStackCounter = 0;
-    
-    /*
-     * Setter for methodStackCouter
-     */
-    public void incrementMethodStackCouter(int i) {
-    	methodStackCounter += i;
-    }
-    
-    /*
-     * Getter for methodStackCouter
-     */
-    public int getMethodStackCouter() {
-    	return methodStackCounter;
-    }
+	public void addStackVerificationBlock(int snapShotLines) {
+		program.addStackVerificationBlock(snapShotLines, stackManager.getStackCounterMax());
+	}
+
+
 }
 

@@ -5,6 +5,7 @@
  */
 package fr.ensimag.deca.tree;
 
+import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.tools.IndentPrintStream;
 
 /**
@@ -24,4 +25,17 @@ public class MethodAsmBody extends AbstractMethodBody{
         code.decompile(s);
         s.println(");");
     }
+
+
+	@Override
+	protected void GenbodyCodeVars(DecacCompiler compiler) {
+		throw new UnsupportedOperationException("Not supported yet.");		
+		
+	}
+
+	@Override
+	protected void GenbodyCodeInsts(DecacCompiler compiler) {
+		throw new UnsupportedOperationException("Not supported yet.");		
+		
+	}
 }

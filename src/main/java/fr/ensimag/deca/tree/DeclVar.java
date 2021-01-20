@@ -78,9 +78,9 @@ public class DeclVar extends AbstractDeclVar {
 	protected void codeGenAndLinkDeclVariable(DecacCompiler compiler) {
 		//setOperand Daddr
 		assert(varName.getDefinition() instanceof VariableDefinition);//defensive programming
-		//down cast merde! il faut regarder s'il y a une autre issue.
 		
-		varName.getDefinition().setOperand(new RegisterOffset(compiler.recoverAndIncrement(), Register.GB));
+		varName.getDefinition().setOperand(new RegisterOffset(compiler.stackManager.recoverAndIncrement(),
+				Register.LB));
 		
 		//à faire: traiter l'initialisation
 		initialization.codeGenInitialization(compiler);

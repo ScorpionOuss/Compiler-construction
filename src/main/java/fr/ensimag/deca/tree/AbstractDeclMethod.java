@@ -4,6 +4,7 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
+import fr.ensimag.ima.pseudocode.DAddr;
 
 /**
  * Method declaration
@@ -23,8 +24,10 @@ public abstract class AbstractDeclMethod extends Tree {
             ClassDefinition currentClass)
             throws ContextualError;
 
-	protected abstract void buidTable(DecacCompiler compiler);
+	protected abstract void buidTable(DecacCompiler compiler, String className, int offset);
 
 	protected abstract void verifyMethodBody(DecacCompiler compiler);
+
+	protected abstract void GenMethodeCode(DecacCompiler compiler);
 
 }

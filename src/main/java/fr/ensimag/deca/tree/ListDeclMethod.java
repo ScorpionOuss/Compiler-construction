@@ -6,6 +6,7 @@ import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.DAddr;
 
 /**
  * List of class methods declarations .
@@ -36,11 +37,9 @@ public class ListDeclMethod extends TreeList<AbstractDeclMethod> {
     	}
     }
 
-	public void buildTable(DecacCompiler compiler) {
-		// TODO Auto-generated method stub
-		compiler.incrementMethodStackCouter(size() + 1);
+	public void buildTable(DecacCompiler compiler, String className, int offset) {
 		for (AbstractDeclMethod method : getList()) {
-			method.buidTable(compiler);
+			method.buidTable(compiler, className, offset);
 		}
 	}
 

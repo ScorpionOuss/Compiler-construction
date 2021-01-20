@@ -8,6 +8,7 @@ package fr.ensimag.deca.tree;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.context.ContextualError;
+import fr.ensimag.deca.context.ParamDefinition;
 import fr.ensimag.deca.context.Signature;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import java.io.PrintStream;
@@ -57,6 +58,12 @@ public class DeclParam extends AbstractDeclParam{
 		name.setType(parType);
 		name.setDefinition(type.getDefinition());
 		signature.add(parType);
+	}
+
+	@Override
+	protected ParamDefinition getNameDef() {
+		// TODO Auto-generated method stub
+		return name.getParamDefinition();
 	}
     
     

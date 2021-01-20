@@ -75,13 +75,6 @@ public class StringLiteral extends AbstractStringLiteral {
     }
 
 	@Override
-	public
-	void codeExp(DecacCompiler compiler, int registerPointer) {
-        throw new UnsupportedOperationException("not yet implemented");
-		
-	}
-
-	@Override
 	public boolean adressable() {
 		// TODO Auto-generated method stub
 		return false;

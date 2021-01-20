@@ -29,7 +29,7 @@ public abstract class AbstractDeclField extends Tree {
     protected abstract void verifyDeclField(DecacCompiler compiler, ClassDefinition currentClass)
             throws ContextualError;
 
-	protected abstract void initField(DecacCompiler compiler, RegisterOffset spot);
+	protected abstract void initField(DecacCompiler compiler);
 
 }
 
