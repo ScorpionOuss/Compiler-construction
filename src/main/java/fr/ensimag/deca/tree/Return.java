@@ -16,6 +16,7 @@ import org.apache.commons.lang.Validate;
 
 
 public class Return extends AbstractInst {
+
     private AbstractExpr exp;
 
     public AbstractExpr getExp() {
@@ -25,6 +26,7 @@ public class Return extends AbstractInst {
         Validate.notNull(exp);
         this.exp = exp;
     }
+
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
     	exp.codeExp(compiler, compiler.getRegisterPointer());
@@ -37,17 +39,27 @@ public class Return extends AbstractInst {
     protected void verifyInst(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass, Type returnType)
             throws ContextualError {
+    	if (currentClass == null) {
+    		throw new ContextualError("Main should not have a return instruction", getLocation());
+    	}
+    	Type type = exp.verifyExpr(compiler, localEnv, currentClass);
+    	if (type.isVoid() || !type.subType(returnType)) {
+    		throw new ContextualError("incorrect type of return", getLocation());
+    	}
     }
+
     @Override
     public void decompile(IndentPrintStream s) {
         s.print("return ");
         getExp().decompile(s);
         s.println(";");
     }
+
     @Override
     protected void iterChildren(TreeFunction f) {
         exp.iter(f);
     }
+
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
         exp.prettyPrint(s, prefix, false);

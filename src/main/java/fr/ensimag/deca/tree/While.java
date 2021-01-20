@@ -6,7 +6,6 @@ import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.instructions.BRA;
 
 import java.io.PrintStream;
@@ -40,12 +39,10 @@ public class While extends AbstractInst {
     protected void verifyInst(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass, Type returnType)
             throws ContextualError {
-    	Type type = condition.verifyExpr(compiler, localEnv, currentClass);
-    	if (type.isBoolean()) {
-    		for (AbstractInst inst: body.getList()) {
-    			inst.verifyInst(compiler, localEnv, currentClass, returnType);
-    		}
-    	} else throw new ContextualError("while condition must be of boolean type", this.getLocation());
+    	condition.verifyCondition(compiler, localEnv, currentClass);
+		for (AbstractInst inst: body.getList()) {
+			inst.verifyInst(compiler, localEnv, currentClass, returnType);
+		}
     }
 
     @Override

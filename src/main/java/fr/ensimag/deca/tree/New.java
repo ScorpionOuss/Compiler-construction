@@ -20,13 +20,25 @@ import java.io.PrintStream;
  * @author ensimag
  */
 public class New extends AbstractExpr {
+
     AbstractIdentifier ident;
+    
     public New(AbstractIdentifier ident){
         this.ident = ident;
     }
+    
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass) throws ContextualError {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    	Type type;
+    	try {type = ident.verifyType(compiler);} 
+    	catch (ContextualError c) {
+    		throw new ContextualError("undefined class", getLocation());
+    	}
+    	if (!type.isClass()) {
+    		throw new ContextualError("undefined class", getLocation());
+    	}
+    	this.setType(type);
+    	return type;
     }
 
     @Override
@@ -63,7 +75,7 @@ public class New extends AbstractExpr {
 
     @Override
     protected void iterChildren(TreeFunction f) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    	ident.iter(f);
     }
     
 }

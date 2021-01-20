@@ -30,12 +30,7 @@ public class Null extends AbstractExpr {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass)  throws ContextualError {
-
-        if(currentClass == null) {
-            throw new ContextualError("Cannot use 'this' in main.", getLocation());
-          }
-        this.setType(currentClass.getType());
-        return currentClass.getType();
+        return new NullType(new SymbolTable().create("null"));
     }
 
     @Override
