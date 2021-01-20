@@ -1,12 +1,14 @@
 public class Trigo{
-				protected float pi = 3.1415926536f;
+		protected float pi = 3.1415926536f;
         protected float PiS2 = 1.5707963267949f;
-				protected float posInf = Float.POSITIVE_INFINITY;
+		protected float posInf = Float.POSITIVE_INFINITY;
         protected float negInf = Float.NEGATIVE_INFINITY;
         protected float MAXVALUE = 3.4028234663852886E38f;
         protected float MINVALUE = 1.4E-45f;
         protected float NaN = 0.0f/0.0f;
 //////////////////////min max///////////////////////////////////////
+
+
 float _min(float a, float b) {
     if (a < b) {
         return a;
@@ -15,6 +17,8 @@ float _min(float a, float b) {
     }
 }
 
+
+
 float _max(float a, float b) {
     if (a > b) {
         return a;
@@ -22,7 +26,14 @@ float _max(float a, float b) {
         return b;
     }
 }
+
+
+
 /////////////////////////////factoriel//////////////////////////////
+
+
+
+
 public static float fact(int n){
   if (n==1 || n==0){
     return 1;
@@ -30,13 +41,16 @@ public static float fact(int n){
   else{
     return n*fact(n-1);
   }
+
 }
+
+
 //////////////////////Puissance x^n/////////////////////////////////
 	float _pow(float x, int n){
 			if (x == 0) {
 	        return 0;
 	        }
-      float ex = x;
+            float ex = x;
 			if (n == 0){
 	        return 1;
 	        }
@@ -53,7 +67,7 @@ public static float fact(int n){
 					}
 				}
 ///////////////////ulp(x) les résultats sont compatibles///////////////////////////////////////////
- float _ulp(float x) {
+    float _ulp(float x) {
 	 		int ex = 0;
 	 		if(x<=0){
 				x = -x;
@@ -63,7 +77,7 @@ public static float fact(int n){
 	 		else if (x == NaN) {
 				 return NaN;
 					 }
-	 	  else if (x == 0.0 || x == -0.0) {
+	 	    else if (x == 0.0 || x == -0.0) {
 				 return MINVALUE;
 					 }
 	 		else if (x == MAXVALUE) {
@@ -90,14 +104,23 @@ public static float fact(int n){
 float _Modulo2Pi(float x, float y) {
     return x - y * (int)(x/y);
 }
+
+
 //////////////////////////la valeur absolue//////////////////////////////////
+
+
 float _abs(float a) {
         if (a < 0) {
                 a = -a;
         }
         return a;
 }
+
+
 //////////////////////////signe/////////////////////////////////////////
+
+
+
 int _signe(float z){
   int s;
   if (z > 0){
@@ -107,7 +130,17 @@ int _signe(float z){
   }
   return s;
 }
+
+
+
+
 ///////////////////////Version de cos(serie de taylor)///////////////////
+
+
+
+
+
+
 float _cosTaylor(float f){
 			 float res = 1;
 			 float r = 0.1f;
@@ -128,6 +161,9 @@ float _cosTaylor(float f){
 			 return res;
 }
 
+
+
+
 public float _cos(float x){
   x = _Modulo2Pi(x, 2*pi);
   if((0<=x && x<pi) ||(x<=0 && x>=-pi/4)) {
@@ -140,7 +176,14 @@ public float _cos(float x){
     return 0;
   }
 }
+
+
+
 ////////////////////////////////arcsin Taylor//////////////////////////
+
+
+
+
 float asin1(float x) {
     float res = x;
     float prov = x;
@@ -152,6 +195,9 @@ float asin1(float x) {
     }
     return res;
 }
+
+
+
 public  float asinse(float x){
   int n=35;
   int N=n-1;
@@ -169,6 +215,8 @@ public  float asinse(float x){
   }
   return res;
 }
+
+
 public  float asin10(float x){
   if(_abs(x)>1){
     System.out.println("ArgumentError");
@@ -185,6 +233,9 @@ public  float asin10(float x){
   }
 }
 /////////////////////////////Version Hermite///////////////////////////////////////
+
+
+
 public float atanHermite(float x){
 	float tab[]= {1.1097301E-6f,-3.1647858E-5f, 4.3415572E-4f, -0.0038123499f,
 	0.024052639f, -0.11600586f, 0.44423878f, -1.3847452f, 3.5731058f, -7.719477f,
@@ -202,6 +253,9 @@ public float atanHermite(float x){
 	resu +=x;
 			return resu;
 }
+
+
+
 float _atan(float x){
 		int signe = 1 ;
 		if (x<0){
@@ -225,7 +279,7 @@ float _atan(float x){
 		float NaN = 0.0f/0.0f;
 		float MAXVALUE = 3.4028234663852886E38f;
 		float posInf = Float.POSITIVE_INFINITY;
-    float negInf = Float.NEGATIVE_INFINITY;
+        float negInf = Float.NEGATIVE_INFINITY;
 		float pi = 3.1415926536f;
 		float PiS2 = 1.5707963267949f;
 		// for(int k =100;k < 10000;k=k+100){
