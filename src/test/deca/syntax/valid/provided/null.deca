@@ -1,1 +1,3 @@
-{print(null);}
+{
+float x = 1.3;
+}
