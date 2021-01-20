@@ -1,0 +1,13 @@
+// Description:
+//    Test de new
+//
+// Resultats:
+//    Rien
+//
+// Historique:
+//    cree le 01/01/2021
+
+
+{   
+   A a = new A();
+}

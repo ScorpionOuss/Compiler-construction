@@ -21,8 +21,9 @@ public class ClassDefinition extends TypeDefinition {
         return numberOfFields;
     }
 
-    public void incNumberOfFields() {
-        this.numberOfFields++;
+    public int incNumberOfFields() {
+        numberOfFields++;
+        return numberOfFields;
     }
 
     public int getNumberOfMethods() {

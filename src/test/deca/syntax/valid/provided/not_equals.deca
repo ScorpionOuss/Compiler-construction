@@ -1,0 +1,12 @@
+// Description:
+//    test de non égalité entre deux variables
+//
+// Resultats:
+//    Rien
+//
+// Historique:
+//    cree le 01/01/2021
+
+{ 
+    x != y;
+}

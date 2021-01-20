@@ -1,0 +1,11 @@
+// Description:
+//    Test de &&
+//
+// Resultats:
+//    Rien
+//
+// Historique:
+//    cree le 01/01/2021
+{
+    boolean x = true && false;
+}

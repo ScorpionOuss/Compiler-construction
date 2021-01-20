@@ -1,0 +1,18 @@
+// Description:
+//    tests opérations arithmétiques sur entiers
+//
+// Resultats:
+//    x = 45
+//    division entière: 22
+//    reste: 1
+// Historique:
+//    cree le 15/01/2021
+
+{
+    int x = 3;
+    int y = 0;
+    x = ((x + 7) - x/3) * 5;
+    println("x = ", x);
+    println("division entière: ", x/2);
+    print("reste: ", x%2);
+}

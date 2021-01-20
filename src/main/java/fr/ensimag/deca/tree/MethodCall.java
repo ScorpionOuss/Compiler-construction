@@ -40,6 +40,13 @@ public class MethodCall extends AbstractExpr{
 
     @Override
     public void decompile(IndentPrintStream s) {
+        obj.decompile(s);
+        s.print("(");
+        method.decompile(s);
+        s.print(")");
+        params.decompile(s);
+         s.println(")");
+        
     }
 
     @Override
@@ -55,5 +62,33 @@ public class MethodCall extends AbstractExpr{
         method.iter(f);
         params.iter(f);
     }
+
+
+	@Override
+	public void codeExp(DecacCompiler compiler, int registerPointer) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public boolean adressable() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+	@Override
+	public DVal getAdresse() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public void codeCond(DecacCompiler compiler, boolean bool, Label endAnd) {
+		// TODO Auto-generated method stub
+		
+	}
 }
 

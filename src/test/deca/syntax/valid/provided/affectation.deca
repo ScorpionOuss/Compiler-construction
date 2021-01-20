@@ -1,0 +1,12 @@
+// Description:
+//    Test d'affectation de variable
+//
+// Resultats:
+//    Rien
+//
+// Historique:
+//    cree le 01/01/2021
+
+{  int x; 
+    x = 3;
+}

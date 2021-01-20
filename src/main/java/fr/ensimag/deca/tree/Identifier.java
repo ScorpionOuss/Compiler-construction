@@ -2,7 +2,6 @@ package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.context.TypeDefinition;
-import fr.ensimag.deca.context.ClassType;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
@@ -14,8 +13,15 @@ import fr.ensimag.deca.context.ExpDefinition;
 import fr.ensimag.deca.context.VariableDefinition;
 import fr.ensimag.deca.tools.DecacInternalError;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import fr.ensimag.deca.tools.SymbolTable;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
+import fr.ensimag.ima.pseudocode.DAddr;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.instructions.BEQ;
+import fr.ensimag.ima.pseudocode.instructions.BNE;
+import fr.ensimag.ima.pseudocode.instructions.BRA;
+import fr.ensimag.ima.pseudocode.instructions.CMP;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
+
 import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
@@ -173,7 +179,9 @@ public class Identifier extends AbstractIdentifier {
     	if (expDefinition == null) {
     		throw new ContextualError("The variable " + name.getName() + " was not declared", this.getLocation());
     	}
-    	Type type = compiler.getEnvironment().get(name).getType();
+    	this.setDefinition(expDefinition);
+    	Type type = expDefinition.getType();
+    	this.setType(type);
     	return type;
     }
 
@@ -189,6 +197,8 @@ public class Identifier extends AbstractIdentifier {
     	} else if (typeDefinition.getType().isVoid()) {
     		throw new ContextualError("Type void variable declaration", this.getLocation());
     	}
+    	this.setDefinition(typeDefinition);
+    	this.setType(typeDefinition.getType());
     	return typeDefinition.getType();
     }
     
@@ -226,5 +236,35 @@ public class Identifier extends AbstractIdentifier {
             s.println();
         }
     }
+    
+//    public void codeCond(DecacCompiler compiler, boolean bool, Label etiquette) {
+//		assert(getType().isBoolean());
+//    	compiler.addInstruction(new LOAD(getAdresse(), Register.R0));
+//		compiler.addInstruction(new CMP(0, Register.R0));
+//    	if (bool) {
+//			compiler.addInstruction(new BNE(etiquette));
+//		}
+//    	else {
+//			compiler.addInstruction(new BEQ(etiquette));
+//    	}
+//	}
+
+	@Override
+	public
+	void codeExp(DecacCompiler compiler, int registerPointer) {
+		compiler.addInstruction(new LOAD(getAdresse(), Register.getR(registerPointer)));
+	}
+	
+	@Override
+	public boolean adressable() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public DAddr getAdresse() {
+		// TODO Auto-generated method stub
+		return definition.getOperand();
+	}
 
 }

@@ -2,8 +2,11 @@ package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.tools.SymbolTable;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.instructions.FLOAT;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
+import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 
 /**
@@ -19,15 +22,19 @@ public class ConvFloat extends AbstractUnaryExpr {
 
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
-            ClassDefinition currentClass) {
-    	SymbolTable symbolTable = new SymbolTable();
-    	return compiler.getEnvironment().get(symbolTable.create("float")).getType();
+            ClassDefinition currentClass) throws ContextualError {
+    	return getType(); 
     }
-
 
     @Override
     protected String getOperatorName() {
         return "/* conv float */";
     }
-
+    
+	@Override
+	public void codeExp(DecacCompiler compiler, int registerPointer) {
+		getOperand().codeExp(compiler, registerPointer);
+		compiler.addInstruction(new FLOAT(Register.getR(registerPointer),
+				Register.getR(registerPointer)));
+	}
 }

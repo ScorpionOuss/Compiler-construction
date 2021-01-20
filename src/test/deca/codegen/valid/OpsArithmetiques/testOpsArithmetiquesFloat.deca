@@ -1,0 +1,16 @@
+// Description:
+//    tests opérations arithmétiques sur flottants
+//
+// Resultats:
+//    x = 4.50000e+01
+//    division flottante 2.25000e+01
+// Historique:
+//    cree le 15/01/2021
+
+{
+    float x = 3.0;
+    x = ((x + 7) - x/3) * 5;
+    println("x = ", x);
+    print("division entière: ", x/2.0);
+}
+

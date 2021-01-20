@@ -6,6 +6,11 @@ import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.instructions.BOV;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
+import fr.ensimag.ima.pseudocode.instructions.RINT;
 import fr.ensimag.deca.tools.SymbolTable;
 
 import java.io.PrintStream;
@@ -21,7 +26,9 @@ public class ReadInt extends AbstractReadExpr {
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
     	SymbolTable symbolTable = new SymbolTable();
-    	return compiler.getEnvironment().get(symbolTable.create("int")).getType();
+    	Type type = compiler.getEnvironment().get(symbolTable.create("int")).getType();
+    	this.setType(type);
+    	return type; 
     }
 
 
@@ -40,4 +47,14 @@ public class ReadInt extends AbstractReadExpr {
         // leaf node => nothing to do
     }
 
+
+	@Override
+	public
+	void codeExp(DecacCompiler compiler, int registerPointer) {
+		compiler.addInstruction(new RINT());
+		//IO exception
+		compiler.addInstruction(new BOV(new Label("io_error")));
+		//LOAD
+		compiler.addInstruction(new LOAD(Register.R1, Register.getR(registerPointer)));
+	}
 }

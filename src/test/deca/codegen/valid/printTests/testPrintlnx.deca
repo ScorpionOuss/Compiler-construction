@@ -1,0 +1,24 @@
+// Description:
+//    tests printlnx
+//
+// Resultats:
+//  ok
+//  1
+//  0x1.19999ap+0
+//  ok10x1.19999ap+0
+//
+// Historique:
+//    cree le 01/01/2021
+
+{
+   int x = 1;
+   float y = 1.1;
+   if (1 >= 0) {
+      printlnx("ok");
+      printlnx(x);
+      printlnx(y);
+   } else {
+      printlnx("erreur");
+   }
+   printlnx("ok", x, y);
+}

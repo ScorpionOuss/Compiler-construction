@@ -1,0 +1,15 @@
+// Description:
+//    test readFloat
+//
+// Resultats:
+//   En entrant 1.0
+//   On obtient 1.00000e+00
+//
+// Historique:
+//    cree le 15/01/2021
+
+{
+float x = readFloat();
+
+print(x);
+}

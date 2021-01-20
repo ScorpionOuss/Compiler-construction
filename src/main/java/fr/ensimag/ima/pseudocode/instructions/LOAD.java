@@ -3,6 +3,7 @@ package fr.ensimag.ima.pseudocode.instructions;
 import fr.ensimag.ima.pseudocode.BinaryInstructionDValToReg;
 import fr.ensimag.ima.pseudocode.DVal;
 import fr.ensimag.ima.pseudocode.GPRegister;
+import fr.ensimag.ima.pseudocode.ImmediateFloat;
 import fr.ensimag.ima.pseudocode.ImmediateInteger;
 
 /**
@@ -18,5 +19,8 @@ public class LOAD extends BinaryInstructionDValToReg {
     public LOAD(int i, GPRegister r) {
         this(new ImmediateInteger(i), r);
     }
-
+    
+    public LOAD(float f, GPRegister r) {
+    	this(new ImmediateFloat(f), r);
+    }
 }

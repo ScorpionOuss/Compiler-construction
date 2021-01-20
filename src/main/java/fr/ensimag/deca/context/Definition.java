@@ -81,4 +81,8 @@ public abstract class Definition {
 
     public abstract boolean isExpression();
 
+	public abstract void setOperand(DAddr operand);
+
+	public abstract DAddr getOperand();
+
 }

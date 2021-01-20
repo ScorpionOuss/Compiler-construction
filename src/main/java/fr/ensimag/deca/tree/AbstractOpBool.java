@@ -25,7 +25,9 @@ public abstract class AbstractOpBool extends AbstractBinaryExpr {
     	Type rightType = this.getRightOperand().verifyExpr(compiler, localEnv, currentClass);
     	SymbolTable symbolTable = new SymbolTable();
     	if (leftType.isBoolean() && rightType.isBoolean()) {
-    		return compiler.getEnvironment().get(symbolTable.create("boolean")).getType();
+    		Type type = compiler.getEnvironment().get(symbolTable.create("boolean")).getType();
+    		this.setType(type);
+    		return type;
     	}
     	throw new ContextualError("Incompatible types for binary boolean operation", this.getLocation());
     }

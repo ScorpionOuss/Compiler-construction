@@ -265,6 +265,19 @@ public class DecacCompiler {
     	 program.addStackVerification(stackCounterMax);
      }
      
+     public void addIOException() {
+    	 program.addIOException();
+ 	}
+     
+
+ 	public void addArithFloatException() {
+ 		program.addArithFloatException();
+ 	}
+ 	
+	public void addZeroDivision() {
+		// TODO Auto-generated method stub
+		program.addZeroDivision();
+	}
      //number of global variables declared so far
      private int numberCurrentVariables = 0;
      
@@ -275,6 +288,33 @@ public class DecacCompiler {
     	 numberCurrentVariables++;
     	 return numberCurrentVariables;
      }
+
+     //Pointeur registre courant manipulé
+     private int registerPointer = 2;
+
+	public int numberOfRegister = 3;
+     
+     /*
+      * Increments the register Pointer
+      */
+     public void incrementRegisterPointer() {
+    	 registerPointer++;
+     }
+     
+     /*
+      * Decrements Register Pointer
+      */
+     public void decrementRegisterPointer() {
+    	 registerPointer++;
+     }
+     
+     /*
+      * Getter of registerPointer
+      */
+     public int getRegisterPointer() {
+    	 return registerPointer;
+     }
+     
 
 
 //     //On suppose pour l'instant qu'on ne dépasse pas 15 registres(15déclarations)
@@ -290,5 +330,59 @@ public class DecacCompiler {
 	public EnvironmentType getEnvironment() {
 		return environmentType;
 	}
+	
+	private int whileCounter = 0;
+	private int ifCounter = 0;
+	private int andCounter = 0;
+	private int orCounter = 0;
+	
+	
+	 /*
+     * Increments the register Pointer
+     */
+    public int incrementWhileCounter() {
+   	 whileCounter++;
+   	 return whileCounter;
+    }
 
+    /*
+     * Increments the register Pointer
+     */
+    public int incrementIfCounter() {
+   	 ifCounter++;
+   	 return ifCounter;
+    }
+    
+    /*
+     * Increments the register Pointer
+     */
+    public int incrementAndCounter() {
+   	 andCounter++;
+   	 return andCounter;
+    }
+    
+    /*
+     * Increments the register Pointer
+     */
+    public int incrementOrCounter() {
+   	 orCounter++;
+   	 return orCounter;
+    }
+    
+    private int methodStackCounter = 0;
+    
+    /*
+     * Setter for methodStackCouter
+     */
+    public void incrementMethodStackCouter(int i) {
+    	methodStackCounter += i;
+    }
+    
+    /*
+     * Getter for methodStackCouter
+     */
+    public int getMethodStackCouter() {
+    	return methodStackCounter;
+    }
 }
+

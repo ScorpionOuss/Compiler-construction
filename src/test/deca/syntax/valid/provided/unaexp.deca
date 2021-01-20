@@ -1,3 +1,13 @@
-{println(-3);
-println(!4);
+// Description:
+//    Test de unaexp
+//
+// Resultats:
+//    affiche -3 et false
+//
+// Historique:
+//    cree le 01/01/2021
+
+{
+    println(-3);
+    println(!true);
 }

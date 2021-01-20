@@ -1,3 +1,12 @@
+// Description:
+//    Test de null
+//
+// Resultats:
+//    null
+//
+// Historique:
+//    cree le 01/01/2021
+
 {
-float x = 1.3;
+    print(null);
 }

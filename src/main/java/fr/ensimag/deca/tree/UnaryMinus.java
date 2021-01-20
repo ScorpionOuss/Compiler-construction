@@ -1,6 +1,8 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.context.Type;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.instructions.OPP;
 import fr.ensimag.deca.tools.SymbolTable;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
@@ -24,8 +26,8 @@ public class UnaryMinus extends AbstractUnaryExpr {
     	if (!(type.isInt() || type.isFloat())) {
     		throw new ContextualError("Unary operator - incompatible whith this expression", this.getLocation());
     	} 
-    	SymbolTable symbolTable = new SymbolTable();
-    	return compiler.getEnvironment().get(symbolTable.create(type.toString())).getType();
+    	this.setType(type);
+    	return type; 
     }
 
 
@@ -33,5 +35,19 @@ public class UnaryMinus extends AbstractUnaryExpr {
     protected String getOperatorName() {
         return "-";
     }
+
+	@Override
+	public void codeExp(DecacCompiler compiler, int registerPointer) {
+		if (getOperand().adressable()) {
+			compiler.addInstruction(new OPP(getOperand().getAdresse(),
+					Register.getR(registerPointer)));
+		}
+		else {
+			/*On verra plus tard */
+			compiler.addInstruction(new OPP(Register.getR(registerPointer),
+					Register.getR(registerPointer)));
+		}
+		addArithFloatInstruction(compiler);
+	}
 
 }

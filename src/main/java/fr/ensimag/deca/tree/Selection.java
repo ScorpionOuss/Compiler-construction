@@ -3,14 +3,10 @@ package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.*;
-import fr.ensimag.deca.tools.DecacInternalError;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable;
+import fr.ensimag.ima.pseudocode.DAddr;
 import fr.ensimag.ima.pseudocode.GPRegister;
-import fr.ensimag.ima.pseudocode.Label;
-import fr.ensimag.ima.pseudocode.Register;
-import fr.ensimag.ima.pseudocode.RegisterOffset;
-import fr.ensimag.ima.pseudocode.instructions.*;
 import org.apache.commons.lang.Validate;
 
 import java.io.PrintStream;
@@ -46,7 +42,12 @@ if(currentClass == null) {
     @Override
     protected void codeGenPrint(DecacCompiler compiler){}
     protected void codeGenPrintX(DecacCompiler compiler){}
-    public void decompile(IndentPrintStream s) {}
+    @Override
+    public void decompile(IndentPrintStream s) {
+        obj.decompile(s);
+        s.print(".");
+        field.decompile(s);
+    }
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
         obj.prettyPrint(s, prefix, false);
@@ -58,5 +59,20 @@ if(currentClass == null) {
         obj.iter(f);
         field.iter(f);
     }
+	@Override
+	public DAddr getAdresse() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public void codeExp(DecacCompiler compiler, int registerPointer) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public boolean adressable() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }
 

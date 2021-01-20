@@ -1,6 +1,7 @@
 package fr.ensimag.deca.context;
 
 import fr.ensimag.deca.tree.Location;
+import fr.ensimag.ima.pseudocode.RegisterOffset;
 
 /**
  * Definition of a method parameter.
@@ -28,5 +29,6 @@ public class ParamDefinition extends ExpDefinition {
     public boolean isParam() {
         return true;
     }
+
 
 }

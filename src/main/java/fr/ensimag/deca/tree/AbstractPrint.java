@@ -40,24 +40,39 @@ public abstract class AbstractPrint extends AbstractInst {
             ClassDefinition currentClass, Type returnType)
             throws ContextualError {
     	for (AbstractExpr expr: arguments.getList()) {
-    		expr.verifyInst(compiler, localEnv, currentClass, returnType);
+    		Type type = expr.verifyExpr(compiler, localEnv, currentClass);
+    		if (!(type.isString() || type.isInt() || type.isFloat())) {
+    			throw new ContextualError("this expression can't be printed", this.getLocation());
+    		}
     	}
     }
 
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
-        for (AbstractExpr a : getArguments().getList()) {
-            a.codeGenPrint(compiler);
-        }
+    	if (!getPrintHex()) {
+	    	for (AbstractExpr a : getArguments().getList()) {
+	            a.codeGenPrint(compiler);
+	        }
+    	}
+    	else {
+    		assert(getPrintHex());
+    		for (AbstractExpr a : getArguments().getList()) {
+    			a.codeGenPrintHex(compiler);
+	        }
+    	}
     }
 
-    private boolean getPrintHex() {
+    public boolean getPrintHex() {
         return printHex;
     }
 
     @Override
     public void decompile(IndentPrintStream s) {
-        throw new UnsupportedOperationException("not yet implemented");
+       s.print("print");
+       s.print(getSuffix()+"(");
+       arguments.decompilePrint(s);
+       s.println(");");
+
     }
 
     @Override

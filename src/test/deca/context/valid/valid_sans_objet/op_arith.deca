@@ -1,0 +1,12 @@
+// Description:
+//    Programme de test des opérations arithmetiques.
+
+{
+	int x = 2;
+	int y = x + 4;
+	float f = 2.5;
+	f = f * x;
+	f = f / 2;
+	x = x - 1;
+	y = y % 5;
+}

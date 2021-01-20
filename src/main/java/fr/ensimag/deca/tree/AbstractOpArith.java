@@ -1,7 +1,15 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.context.Type;
+import fr.ensimag.ima.pseudocode.ImmediateInteger;
+import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.instructions.BEQ;
+import fr.ensimag.ima.pseudocode.instructions.BOV;
+import fr.ensimag.ima.pseudocode.instructions.CMP;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
 import fr.ensimag.deca.tools.SymbolTable;
+
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
@@ -25,22 +33,49 @@ public abstract class AbstractOpArith extends AbstractBinaryExpr {
     	Type leftType = this.getLeftOperand().verifyExpr(compiler, localEnv, currentClass);
     	Type rightType = this.getRightOperand().verifyExpr(compiler, localEnv, currentClass);
     	SymbolTable symbolTable = new SymbolTable();
+    	Type type;
     	if (leftType.isInt()) {
     		if (rightType.isInt()) {
-    			return compiler.getEnvironment().get(symbolTable.create("int")).getType();
+				type = compiler.getEnvironment().get(symbolTable.create("int")).getType();
+				this.setType(type);
+				return type;
     		}
     		if (rightType.isFloat()) {
-    			return compiler.getEnvironment().get(symbolTable.create("float")).getType();
+    			this.setLeftOperand(new ConvFloat(this.getLeftOperand()));
+				type = compiler.getEnvironment().get(symbolTable.create("float")).getType();
+				this.getLeftOperand().setType(type);
+				this.setType(type);
+				return type;
     		}
     	}
-    	if (rightType.isFloat()) {
-    		if (leftType.isInt()) {
-    			return compiler.getEnvironment().get(symbolTable.create("float")).getType();
+    	if (leftType.isFloat()) {
+    		if (rightType.isInt()) {
+    			this.setRightOperand(new ConvFloat(this.getRightOperand()));
+				type = compiler.getEnvironment().get(symbolTable.create("float")).getType();
+				this.getRightOperand().setType(type);
+				this.setType(type);
+				return type;
     		}
-    		if (leftType.isFloat()) {
-    			return compiler.getEnvironment().get(symbolTable.create("float")).getType();
+    		if (rightType.isFloat()) {
+				type = compiler.getEnvironment().get(symbolTable.create("float")).getType();
+				this.setType(type);
+				return type;
     		}
     	}
     	throw new ContextualError("Arithmetic operation not defined for the used types", this.getLocation());
     }
+    
+	
+	public void codeCond(DecacCompiler compiler, boolean bool, Label endAnd) {
+        throw new UnsupportedOperationException("not yet implemented");
+	}
+
+	protected void addZeroDivisionInstruction(DecacCompiler compiler, int register){
+		if (getType().isInt()) {
+			getRightOperand().codeExp(compiler, register);
+			compiler.addInstruction(new CMP(new ImmediateInteger(0),
+					Register.getR(register)));
+			compiler.addInstruction(new BEQ(new Label("ZeroDivision_Error")));
+		}
+	}
 }

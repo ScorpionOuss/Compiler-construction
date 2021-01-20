@@ -18,6 +18,19 @@ public class ListExpr extends TreeList<AbstractExpr> {
 
     @Override
     public void decompile(IndentPrintStream s) {
-        throw new UnsupportedOperationException("Not yet implemented");
+         for (AbstractExpr c : getList()) {
+            c.decompile(s);
+            s.println();
+        }
+    }
+
+    void decompilePrint(IndentPrintStream s) {
+         int i;
+         for ( i = 0; i < getList().size()-1; i++) {
+            AbstractExpr c =  getList().get(i);
+            c.decompile(s);
+            s.print(",");
+        }
+         getList().get(i).decompile(s);
     }
 }

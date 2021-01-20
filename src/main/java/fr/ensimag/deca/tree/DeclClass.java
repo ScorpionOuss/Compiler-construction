@@ -1,10 +1,16 @@
 package fr.ensimag.deca.tree;
 
+import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ClassType;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ContextualError;
+import fr.ensimag.deca.context.EnvironmentExp.DoubleDefException;
+import fr.ensimag.deca.context.TypeDefinition;
 import fr.ensimag.deca.tools.IndentPrintStream;
+
 import java.io.PrintStream;
+
+import org.apache.commons.lang.Validate;
 
 /**
  * Declaration of a class (<code>class name extends superClass {members}<code>).
@@ -14,36 +20,96 @@ import java.io.PrintStream;
  */
 public class DeclClass extends AbstractDeclClass {
 
+    private AbstractIdentifier name;
+    private AbstractIdentifier superClass;
+    private ListDeclField fields;
+    private ListDeclMethod methods;
+    
+    public DeclClass(AbstractIdentifier name,AbstractIdentifier superClass,
+            ListDeclField listDeclField, ListDeclMethod listDeclMethod){
+    		Validate.notNull(name);
+
+    		Validate.notNull(superClass);
+    		Validate.notNull(fields);
+    		Validate.notNull(methods);
+            this.name = name;
+            this.superClass = superClass;
+            this.fields = listDeclField; 
+            this.methods = listDeclMethod;
+    }
+
+
+    
+	
     @Override
     public void decompile(IndentPrintStream s) {
-        s.print("class { ... A FAIRE ... }");
+        s.print("class ");
+        name.decompile(s);
+        s.print("extends");
+        superClass.decompile(s);
+        s.println("{");
+        fields.decompile(s);
+        methods.decompile(s);
+        s.println("}");
+        
     }
 
     @Override
     protected void verifyClass(DecacCompiler compiler) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+    	TypeDefinition definition = compiler.getEnvironment().get(superClass.getName()); 
+    	if ((definition == null) || !definition.getType().isClass()) {
+    		throw new ContextualError("The class " + superClass.getName().getName() + " is not defined", superClass.getLocation());
+    	}
+    	ClassDefinition superClassDefinition = (ClassDefinition) definition;
+    	ClassType type = new ClassType(name.getName(), name.getLocation(), superClassDefinition); 
+    	ClassDefinition classDefinition = type.getDefinition();
+    	try {
+			compiler.getEnvironment().declare(name.getName(), classDefinition);
+			superClass.setDefinition(superClassDefinition);
+			superClass.setType(superClassDefinition.getType());
+			name.setDefinition(classDefinition);
+			name.setType(type);
+		} catch (DoubleDefException e) {
+			throw new ContextualError("class already defined or forbidden name used", name.getLocation());
+		}
     }
 
     @Override
     protected void verifyClassMembers(DecacCompiler compiler)
             throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+    	fields.verifyListDeclField(compiler, (ClassDefinition)name.getDefinition());
+    	methods.verifyListDeclMethod(compiler, (ClassDefinition)name.getDefinition());
     }
     
     @Override
     protected void verifyClassBody(DecacCompiler compiler) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+    	methods.verifyListMethodsBody(compiler, (ClassDefinition)name.getDefinition());
     }
 
+	@Override
+	protected void prettyPrintChildren(PrintStream s, String prefix) {
+		name.prettyPrint(s, prefix, false);
+		superClass.prettyPrint(s, prefix, false);
+		fields.prettyPrint(s, prefix, false);
+		methods.prettyPrint(s, prefix, true);
+	}
+	
 
-    @Override
-    protected void prettyPrintChildren(PrintStream s, String prefix) {
-        throw new UnsupportedOperationException("Not yet supported");
-    }
+	@Override
+	protected void iterChildren(TreeFunction f) {
+		name.iter(f);
+		superClass.iter(f);
+		fields.iter(f);
+		methods.iter(f);
+	}
+	
 
-    @Override
-    protected void iterChildren(TreeFunction f) {
-        throw new UnsupportedOperationException("Not yet supported");
-    }
+
+
+	@Override
+	protected void buildTable(DecacCompiler compiler) {
+		methods.buildTable(compiler);
+	}
+
 
 }

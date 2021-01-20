@@ -1,3 +1,12 @@
+// Description:
+//    Programme testant un if avec 3 else if
+//
+// Resultats:
+//    retourne " "
+//
+// Historique:
+//    cree le 01/01/2021
+
 {
 if(true){return " ";}
 else if(true){return "1";}
