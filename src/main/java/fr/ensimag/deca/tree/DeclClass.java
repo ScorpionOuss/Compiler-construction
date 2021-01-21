@@ -121,7 +121,7 @@ public class DeclClass extends AbstractDeclClass {
 	protected void buildTable(DecacCompiler compiler) {
 		//Il faut régler le problème de dAddr..
 		int offset = compiler.stackManager.getMethodStackCounter() + 1;
-		
+		assert(name.getDefinition() instanceof ClassDefinition);
 		name.getClassDefinition().setOperand(new 
 				RegisterOffset(offset, Register.GB));
 		
@@ -142,6 +142,7 @@ public class DeclClass extends AbstractDeclClass {
 		assert(addr != null);
 		compiler.addInstruction(new LEA(addr, Register.R0));
 		DAddr classStackAddr = name.getClassDefinition().getOperand();
+		assert classStackAddr != null;
 		compiler.addInstruction(new STORE(Register.R0, classStackAddr));
 		//add methods label
 		methods.buildTable(compiler, name.getName().getName(), offset);

@@ -53,6 +53,8 @@ public class MethodCall extends AbstractExpr{
     
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
+    	int registerPointer = getRP(compiler);
+    	
     	ImmediateInteger numPar = new ImmediateInteger(params.size() + 1);
     	//ADDSP
     	compiler.addInstruction(new ADDSP(numPar));
@@ -96,7 +98,6 @@ public class MethodCall extends AbstractExpr{
     	
     	/****************************Jusque là**********************************************/
     	
-    	//assert getRP(compiler) == 2;
     	compiler.addInstruction(new BSR(new RegisterOffset(method.getMethodDefinition().getIndex(),
     			Register.getR(getRP(compiler)))));
     	
@@ -106,6 +107,8 @@ public class MethodCall extends AbstractExpr{
     	
     	//dépilement.
     	compiler.addInstruction(new SUBSP(numPar));
+    	
+    	assert registerPointer == getRP(compiler);
     }
     
 

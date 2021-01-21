@@ -48,6 +48,7 @@ public class Selection extends AbstractLValue {
         
     @Override
     protected void codeGenInst(DecacCompiler compiler){
+    	//Il faut revoir si on va avoir besoin d'un 2 ème registre
     	DAddr addr = getAdresse(compiler);
     	compiler.addInstruction(new LOAD(addr, 
     			Register.getR(getRP(compiler))));
@@ -78,10 +79,14 @@ public class Selection extends AbstractLValue {
     
 	@Override
 	public DAddr getAdresse(DecacCompiler compiler) {
+		int registerPointer = getRP(compiler);
+		
 		obj.codeGenInst(compiler);
 		compiler.addInstruction(new CMP(new NullOperand(),
 				Register.getR(getRP(compiler))));
 		compiler.addInstruction(new BEQ(new Label("dereferencement.null")));
+		assert registerPointer == getRP(compiler);
+
 		return new RegisterOffset(field.getFieldDefinition().getIndex(),
 				Register.getR(getRP(compiler)));
 	}
@@ -89,7 +94,7 @@ public class Selection extends AbstractLValue {
 	@Override
 	public boolean adressable() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 }
 

@@ -17,6 +17,8 @@ public class TypeDefinition extends Definition {
     public TypeDefinition(Type type, Location location) {
         super(type, location);
     }
+    
+    private DAddr operand;
 
     @Override
     public String getNature() {
@@ -30,14 +32,13 @@ public class TypeDefinition extends Definition {
 
 	@Override
 	public void setOperand(DAddr operand) {
-		// TODO Auto-generated method stub
-		
+		this.operand = operand;
 	}
 
 	@Override
 	public DAddr getOperand() {
 		// TODO Auto-generated method stub
 		//il faut faire une exception.
-		return null;
+		return operand;
 	}
 }

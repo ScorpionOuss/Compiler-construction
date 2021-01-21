@@ -78,8 +78,9 @@ public class Modulo extends AbstractOpArith {
     
 	@Override
 	public void codeGenInst(DecacCompiler compiler) {
+		int registerPointer = getRP(compiler);
 		assert(getRP(compiler) <= getMP(compiler));
-		System.out.println(getType().isInt());
+
 		addZeroDivisionInstruction(compiler);
 		getLeftOperand().codeGenInst(compiler);
 
@@ -97,5 +98,6 @@ public class Modulo extends AbstractOpArith {
 			}
 		}
 		
+		assert registerPointer == getRP(compiler);
 	}
 }

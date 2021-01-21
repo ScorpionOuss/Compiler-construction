@@ -56,6 +56,10 @@ public class New extends AbstractExpr {
 
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
+    	int registerPointer = getRP(compiler);
+    	/*On met l'adresse de l'objet créé dans le registre, il 
+    	 * faut la conserver jusqu'au push et après si on veut 
+    	 * réupérer l'adresse*/
     	//New #d , R
     	compiler.addInstruction(new NEW(new ImmediateInteger(ident.getClassDefinition().getNumberOfFields() + 1),
     			Register.getR(getRP(compiler))));
@@ -79,6 +83,8 @@ public class New extends AbstractExpr {
     	
     	// POP R
     	compiler.addInstruction(new POP(Register.getR(getRP(compiler))));
+    
+    	assert registerPointer == getRP(compiler);
     }
     	
     @Override

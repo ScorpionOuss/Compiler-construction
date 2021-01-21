@@ -3,3 +3,7 @@ class A {
     void p() {}
     }
 
+class B extends A {
+    void p() {}
+    void q() {}
+    }

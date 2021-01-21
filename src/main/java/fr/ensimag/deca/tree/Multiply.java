@@ -60,6 +60,8 @@ public class Multiply extends AbstractOpArith {
     
 	@Override
 	public void codeGenInst(DecacCompiler compiler) {
+		int registerPointer = getRP(compiler);
+		
 		assert(getRP(compiler) <= getMP(compiler));
 		getLeftOperand().codeGenInst(compiler);
 		
@@ -77,6 +79,8 @@ public class Multiply extends AbstractOpArith {
 			}
 		}
 		addArithFloatInstruction(compiler);
+		
+		assert registerPointer == getRP(compiler);
 	}
 
 }

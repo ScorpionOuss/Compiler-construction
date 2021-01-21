@@ -63,7 +63,8 @@ public class Plus extends AbstractOpArith {
     
     @Override
 	public void codeGenInst(DecacCompiler compiler) {
-		assert(getRP(compiler) <= getMP(compiler));
+		int registerPointer = getRP(compiler);
+    	assert(getRP(compiler) <= getMP(compiler));
 		getLeftOperand().codeGenInst(compiler);
 		
 		if (getRightOperand().adressable()) {
@@ -80,6 +81,7 @@ public class Plus extends AbstractOpArith {
 			}
 		}
 		addArithFloatInstruction(compiler);
+		assert registerPointer == getRP(compiler);
 	}
         
 }

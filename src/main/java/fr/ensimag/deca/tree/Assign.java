@@ -48,24 +48,22 @@ public class Assign extends AbstractBinaryExpr {
     
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
-    	if (getLeftOperand() instanceof Selection) {
-    		DAddr selectAddr = getLeftOperand().getAdresse(compiler);
-    		//On suppose qu'il reste des registres
-    		compiler.registersManag.incrementRegisterPointer();
-        	getRightOperand().codeGenInst(compiler);
-        	compiler.addInstruction(new STORE(Register.getR(getRP(compiler)),
-        			selectAddr));
-        	compiler.registersManag.decrementRegisterPointer();
-    	}
-    	else {
-    	//Executing right operand
-    	assert getRP(compiler) == 2;
-    	//On peut aussi faire codeGenInst
-    	getRightOperand().codeGenInst(compiler);;
-    	//Affectation
-    	compiler.addInstruction(new STORE(Register.getR(2),
-    			getLeftOperand().getAdresse(compiler)));
-    	}
+		DAddr selectAddr = getLeftOperand().getAdresse(compiler);
+		//On suppose qu'il reste des registres
+		//compiler.registersManag.incrementRegisterPointer();
+    	getRightOperand().codeGenInst(compiler);
+    	compiler.addInstruction(new STORE(Register.getR(getRP(compiler)),
+    			selectAddr));
+        	//compiler.registersManag.decrementRegisterPointer();
+//    	else {
+//    	//Executing right operand
+//    	assert getRP(compiler) == 2;
+//    	//On peut aussi faire codeGenInst
+//    	getRightOperand().codeGenInst(compiler);;
+//    	//Affectation
+//    	compiler.addInstruction(new STORE(Register.getR(2),
+//    			getLeftOperand().getAdresse(compiler)));
+//    	}
     }
 
 

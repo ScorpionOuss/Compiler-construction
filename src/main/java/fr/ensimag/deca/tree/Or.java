@@ -2,9 +2,6 @@ package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.ima.pseudocode.Label;
-import fr.ensimag.ima.pseudocode.Register;
-import fr.ensimag.ima.pseudocode.instructions.ADD;
-import fr.ensimag.ima.pseudocode.instructions.MUL;
 
 /**
  *
@@ -24,10 +21,13 @@ public class Or extends AbstractOpBool {
 
 	@Override
 	public void codeGenInst(DecacCompiler compiler){
-	assert(getRP(compiler) <= getMP(compiler));
-	AbstractExpr newNot = new Not(new And(new Not(getLeftOperand()),
+		int registerPointer = getRP(compiler);
+		assert(getRP(compiler) <= getMP(compiler));
+		AbstractExpr newNot = new Not(new And(new Not(getLeftOperand()),
 				new Not(getRightOperand())));
-	newNot.codeGenInst(compiler);
+		newNot.codeGenInst(compiler);
+		
+		assert registerPointer == getRP(compiler);
 	}
 	
 	public void codeCond(DecacCompiler compiler, boolean bool, Label etiquette) {
