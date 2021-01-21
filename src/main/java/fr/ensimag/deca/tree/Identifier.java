@@ -170,29 +170,88 @@ public class Identifier extends AbstractIdentifier {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-    	ExpDefinition localExpDefinition = localEnv.get(name);
-    	ExpDefinition classExpDefinition = currentClass.getMembers().get(name);
-    	if (localExpDefinition == null) {
-    		if (classExpDefinition == null) {
-				throw new ContextualError("The variable " + name.getName() + " is not defined", this.getLocation());
+		ExpDefinition localExpDefinition = localEnv.get(name);
+    	ExpDefinition classExpDefinition;
+    	
+    	// Main
+    	if (currentClass == null) {
+    		if (localExpDefinition == null) {
+    			throw new ContextualError("undefined identifier " + this.getName(), this.getLocation());
+    		}
+    		this.setType(localExpDefinition.getType());
+    		this.setDefinition(localExpDefinition);
+    		return localExpDefinition.getType();
+    	}
+
+    	// class currentClass
+    	else {
+    		classExpDefinition = currentClass.getMembers().get(name);
+    		
+    		if (localExpDefinition == null) {
+    			if (classExpDefinition == null) {
+    				throw new ContextualError("undefined identifier " + this.getName(), getLocation());
+    			}
+    			else {
+    				this.setType(classExpDefinition.getType());
+    				this.setDefinition(classExpDefinition);
+    				return classExpDefinition.getType();
+    			}
     		}
     		else {
-    			this.setType(classExpDefinition.getType());
-    			this.setDefinition(classExpDefinition);
-    			return classExpDefinition.getType();
-    		}
-    	} else {
-    		if (classExpDefinition == null) {
-    			this.setType(localExpDefinition.getType());
-    			this.setDefinition(localExpDefinition);
-    			return localExpDefinition.getType();
-    		} else {
-    			throw new ContextualError("this name can't be resolved field and variable definitions exist for this name",
-    					getLocation());
+				this.setType(localExpDefinition.getType());
+				this.setDefinition(localExpDefinition);
+				return localExpDefinition.getType();
     		}
     	}
     }
+ 
+    @Override
+	public Type verifySelection(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition className,
+			ClassDefinition currentClass) throws ContextualError {
+		ExpDefinition localExpDefinition = localEnv.get(name);
+    	ExpDefinition classExpDefinition;
 
+    	// Main
+    	if (currentClass == null) {
+    		if (localExpDefinition == null) {
+    			throw new ContextualError("undefined identifier " + this.getName(), this.getLocation());
+    		}
+    		if (localExpDefinition.isField()) {
+    			FieldDefinition fieldDef = localExpDefinition.asFieldDefinition("", this.getLocation());
+    			if (fieldDef.getVisibility().equals(Visibility.PROTECTED)) {
+    				throw new ContextualError("inaccessible protected field", getLocation());
+    			}
+    		}
+    		this.setType(localExpDefinition.getType());
+    		this.setDefinition(localExpDefinition);
+    		return localExpDefinition.getType();
+    	}
+
+    	// class currentClass
+    	else {
+    		classExpDefinition = currentClass.getMembers().get(name);
+    		
+    		if (localExpDefinition == null) {
+				throw new ContextualError("undefined identifier " + this.getName(), getLocation());
+    		}
+    		else {
+				if (localExpDefinition.isField()) {
+					FieldDefinition fieldDef = localExpDefinition.asFieldDefinition("", this.getLocation());
+					if (fieldDef.getVisibility().equals(Visibility.PROTECTED)) {
+						if (!(className.getType().subType(currentClass.getType()) && currentClass.getType().subType(fieldDef.getContainingClass().getType()))) {
+							throw new ContextualError("inaccessible protected type " + this.getName(), this.getLocation());
+						}
+					}
+				}
+				this.setType(localExpDefinition.getType());
+				this.setDefinition(localExpDefinition);
+				return localExpDefinition.getType();
+    		}
+    	}
+	}
+
+    
+    
     /**
      * Implements non-terminal "type" of [SyntaxeContextuelle] in the 3 passes
      * @param compiler contains "env_types" attribute
@@ -275,4 +334,5 @@ public class Identifier extends AbstractIdentifier {
 		return definition.getOperand();
 	}
 
+	
 }

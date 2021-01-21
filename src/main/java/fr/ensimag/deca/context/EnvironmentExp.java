@@ -30,7 +30,7 @@ public class EnvironmentExp {
     
     public EnvironmentExp(EnvironmentExp parentEnvironment) {
         this.parentEnvironment = parentEnvironment;
-        environment = new HashMap<>();
+        environment = new HashMap<Symbol, ExpDefinition>();
     }
 
     public static class DoubleDefException extends Exception {
@@ -44,7 +44,7 @@ public class EnvironmentExp {
     public ExpDefinition get(Symbol key) {
     	EnvironmentExp parentEnvExp = parentEnvironment; 
     	Map<Symbol, ExpDefinition> env = environment;
-    	while (!env.containsKey(key) || parentEnvExp != null) {
+    	while (!env.containsKey(key) && parentEnvExp != null) {
     		env = parentEnvExp.environment;
     		parentEnvExp = parentEnvExp.parentEnvironment;
     	}

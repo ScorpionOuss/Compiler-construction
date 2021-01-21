@@ -1,0 +1,28 @@
+// Description:
+//    Programme de tests de declaration des corps des méthodes .
+//
+
+class A {
+	int x;
+	float y;
+	
+	void init(){
+		x = 1;
+	}
+	
+	float q(int i, float f){
+		x = i;
+		y = i + f;	
+		return x;
+	}
+}
+
+class B extends A {
+	void r(){}
+	float q(int j, float f){
+		A a = new A();
+		a.init();
+		return a.y;
+	}	
+	
+}

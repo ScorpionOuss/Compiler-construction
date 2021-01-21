@@ -1,11 +1,26 @@
 // Description:
 //    Programme de test de declaration de classes.
 //
-
 class A {
-	//protected int x;
+	protected int x;
+}
+
+class X {
+	void m() {
+		A a = new A();
+ 		println(a.x);
+	}
 }
 
 {
-	//int x = 2;
+	int x = 2;
 }
+
+
+
+class B extends A {
+	void p() {}
+	void q() {}
+}
+
+
