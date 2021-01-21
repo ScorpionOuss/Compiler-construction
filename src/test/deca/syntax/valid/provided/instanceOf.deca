@@ -1,5 +1,5 @@
 // Description:
-//    Test de this
+//    Test de instanceof
 //
 // Resultats:
 //    Rien
@@ -8,5 +8,5 @@
 //    cree le 01/01/2021
 
 { 
-   boolean = x instanceof Integer;
+   boolean b = x instanceof Integer;
 }
