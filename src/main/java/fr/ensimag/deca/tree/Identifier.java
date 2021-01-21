@@ -176,7 +176,7 @@ public class Identifier extends AbstractIdentifier {
     	// Main
     	if (currentClass == null) {
     		if (localExpDefinition == null) {
-    			throw new ContextualError("undefined identifier", this.getLocation());
+    			throw new ContextualError("undefined identifier " + this.getName(), this.getLocation());
     		}
     		this.setType(localExpDefinition.getType());
     		this.setDefinition(localExpDefinition);
@@ -189,7 +189,7 @@ public class Identifier extends AbstractIdentifier {
     		
     		if (localExpDefinition == null) {
     			if (classExpDefinition == null) {
-    				throw new ContextualError("undefined identifier", getLocation());
+    				throw new ContextualError("undefined identifier " + this.getName(), getLocation());
     			}
     			else {
     				this.setType(classExpDefinition.getType());
@@ -214,7 +214,7 @@ public class Identifier extends AbstractIdentifier {
     	// Main
     	if (currentClass == null) {
     		if (localExpDefinition == null) {
-    			throw new ContextualError("undefined identifier", this.getLocation());
+    			throw new ContextualError("undefined identifier " + this.getName(), this.getLocation());
     		}
     		if (localExpDefinition.isField()) {
     			FieldDefinition fieldDef = localExpDefinition.asFieldDefinition("", this.getLocation());
@@ -232,14 +232,14 @@ public class Identifier extends AbstractIdentifier {
     		classExpDefinition = currentClass.getMembers().get(name);
     		
     		if (localExpDefinition == null) {
-				throw new ContextualError("undefined identifier", getLocation());
+				throw new ContextualError("undefined identifier " + this.getName(), getLocation());
     		}
     		else {
 				if (localExpDefinition.isField()) {
 					FieldDefinition fieldDef = localExpDefinition.asFieldDefinition("", this.getLocation());
 					if (fieldDef.getVisibility().equals(Visibility.PROTECTED)) {
 						if (!(className.getType().subType(currentClass.getType()) && currentClass.getType().subType(fieldDef.getContainingClass().getType()))) {
-							throw new ContextualError("inaccessible protected type", this.getLocation());
+							throw new ContextualError("inaccessible protected type " + this.getName(), this.getLocation());
 						}
 					}
 				}

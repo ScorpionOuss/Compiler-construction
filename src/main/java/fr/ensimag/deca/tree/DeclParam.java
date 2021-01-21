@@ -25,9 +25,9 @@ public class DeclParam extends AbstractDeclParam{
     private AbstractIdentifier name;
    
     
-    public DeclParam(AbstractIdentifier type,AbstractIdentifier ident){
+    public DeclParam(AbstractIdentifier type, AbstractIdentifier ident){
     	Validate.notNull(type);
-    	Validate.notNull(name);
+    	Validate.notNull(ident);
         this.type = type;
         this.name = ident;
        

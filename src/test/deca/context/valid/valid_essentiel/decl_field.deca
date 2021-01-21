@@ -1,0 +1,18 @@
+//Description:
+//    Programme de test de declaration des champs de classes.
+//
+
+class A {
+	int x;
+	float y = 2.0;
+	A a = new A();
+}
+
+class B extends A {
+	int x;
+	int u = this.x;
+	int v = u;
+	A b = new A();
+	A c = this.a;
+	int i = b.x;
+}
