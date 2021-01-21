@@ -58,25 +58,33 @@ public class MethodCall extends AbstractExpr{
     	for (AbstractExpr expr : params.getList()) {
     		//Pour l'instant on considère que c'est le registre 2
     		expr.codeGenInst(compiler);
-    		compiler.addInstruction(new STORE(Register.getR(2), 
+    		//assert getRP(compiler) == 2;
+    		compiler.addInstruction(new STORE(Register.getR(getRP(compiler)), 
     				new RegisterOffset(-compteur, Register.SP)));
     		compteur++;
     	}
     	
     	// récupérer 0(SP) et tester referNull
+    	//assert getRP(compiler) == 2;
     	compiler.addInstruction(new LOAD(new RegisterOffset(0, Register.SP), 
-    			Register.getR(2)));
-    	compiler.addInstruction(new CMP(new NullOperand(), Register.getR(2)));
+    			Register.getR(getRP(compiler))));
+    	compiler.addInstruction(new CMP(new NullOperand(), Register.getR(getRP(compiler))));
     	
     	compiler.addInstruction(new BEQ(new Label("dereferencement.null")));
     	//récupérer l'adresse de la table
-    	
-    	compiler.addInstruction(new LOAD(new RegisterOffset(0, Register.getR(2)),
-    			Register.getR(2)));
+    	//assert getRP(compiler) == 2;
+
+    	compiler.addInstruction(new LOAD(new RegisterOffset(0, Register.getR(getRP(compiler))),
+    			Register.getR(getRP(compiler))));
     	//appel de la méthode selon l'indice dans la table
     	
+    	//assert getRP(compiler) == 2;
     	compiler.addInstruction(new BSR(new RegisterOffset(method.getMethodDefinition().getIndex(),
-    			Register.getR(2))));
+    			Register.getR(getRP(compiler)))));
+    	
+    	//Récupération de la valeur de retour
+    	compiler.addInstruction(new LOAD(Register.R0, Register.getR(getRP(compiler))));
+    	
     	//dépilement.
     	compiler.addInstruction(new SUBSP(numPar));
     }
@@ -95,7 +103,6 @@ public class MethodCall extends AbstractExpr{
         s.print(")");
         params.decompile(s);
          s.println(")");
-        
     }
 
     @Override
@@ -121,7 +128,7 @@ public class MethodCall extends AbstractExpr{
 
 
 	@Override
-	public DVal getAdresse() {
+	public DVal getAdresse(DecacCompiler compiler) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -130,7 +137,6 @@ public class MethodCall extends AbstractExpr{
 	@Override
 	public void codeCond(DecacCompiler compiler, boolean bool, Label endAnd) {
 		// TODO Auto-generated method stub
-		
 	}
 }
 

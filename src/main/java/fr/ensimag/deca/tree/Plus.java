@@ -28,7 +28,7 @@ public class Plus extends AbstractOpArith {
      * @param compiler
      */
     private void adressableCase(DecacCompiler compiler) {
-		compiler.addInstruction(new ADD(getRightOperand().getAdresse(),
+		compiler.addInstruction(new ADD(getRightOperand().getAdresse(compiler),
 				Register.getR(getRP(compiler))));
     }
     

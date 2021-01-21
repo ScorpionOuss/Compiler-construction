@@ -297,6 +297,13 @@ public class DecacCompiler {
 		program.addNullRefException();
 	}
 	
+	/**
+	 * addHeapException
+	 */
+	public void addHeapException() {
+		program.addHeapException();
+	}
+
     private EnvironmentType environmentType;
 
 	public EnvironmentType getEnvironment() {
@@ -315,6 +322,7 @@ public class DecacCompiler {
 	public void addStackVerificationBlock(int snapShotLines) {
 		program.addStackVerificationBlock(snapShotLines, stackManager.getStackCounterMax());
 	}
+
 
 
 }

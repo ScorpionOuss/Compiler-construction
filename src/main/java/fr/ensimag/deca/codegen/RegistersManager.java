@@ -60,6 +60,7 @@ public class RegistersManager {
     public void saveRegisters(DecacCompiler compiler) {
     	for (int i = 2; i <= registerPointer; i++) {
     		compiler.addInstruction(new PUSH(Register.getR(i)));
+    		compiler.stackManager.incrementStackCounterMax(1);
     	}
     	listSavedPointers.add(registerPointer);
     	registerPointer = 2;

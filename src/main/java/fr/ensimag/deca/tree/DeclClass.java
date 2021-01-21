@@ -120,21 +120,27 @@ public class DeclClass extends AbstractDeclClass {
 	@Override
 	protected void buildTable(DecacCompiler compiler) {
 		//Il faut régler le problème de dAddr..
-		/***TODO***/
-		int offset = compiler.stackManager.getMethodStackCounter();
+		int offset = compiler.stackManager.getMethodStackCounter() + 1;
+		
+		name.getClassDefinition().setOperand(new 
+				RegisterOffset(offset, Register.GB));
+		
 		compiler.stackManager.incrementMethodStackCounter(methods.size() + 1);
 		//add superClass methods table pointer
-		//À Revoir
+		//À Revoir TODO
+		/******Ce qu'on peut faire je pense c'est d'initialiser la dAddr pour Objet*****/
+		DAddr addr;
 		if (superClass.getType().getName().getName() == "Object") {
-			compiler.addInstruction(new LOAD(new NullOperand(), Register.R0));
+			addr = new RegisterOffset(1, Register.GB);
 		}
 		else {
 			assert(superClass.getType().getName().getName() != "Object");
-			DAddr addr = superClass.getClassDefinition().getOperand();
+			addr = superClass.getClassDefinition().getOperand();
 			assert(addr != null);
-			compiler.addInstruction(new LEA(addr, Register.R0));
 		}
-		//on pourra faire un assert d'égalité entre offset et classStackAddr
+		//Instructions LEA et STORE
+		assert(addr != null);
+		compiler.addInstruction(new LEA(addr, Register.R0));
 		DAddr classStackAddr = name.getClassDefinition().getOperand();
 		compiler.addInstruction(new STORE(Register.R0, classStackAddr));
 		//add methods label
@@ -159,8 +165,10 @@ public class DeclClass extends AbstractDeclClass {
 		RegisterOffset offSetLB = new RegisterOffset(-1, Register.LB);
 		compiler.addInstruction(new LOAD(offSetLB, Register.R1));
 		
+		/*****TODO revoir si il faut initialiser avant les champs propres à 0*****/
 		////SuperClass attributes initialization
 		compiler.addInstruction(new PUSH(Register.R1));
+		compiler.stackManager.incrementStackCounterMax(1);
 		compiler.addInstruction(new BSR(new LabelOperand( new 
 				Label("init." +superClass.getName().getName()))));
 		compiler.addInstruction(new SUBSP(new ImmediateInteger(1)));

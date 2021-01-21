@@ -24,7 +24,7 @@ public class Minus extends AbstractOpArith {
      * @param compiler
      */
     private void adressableCase(DecacCompiler compiler) {
-		compiler.addInstruction(new SUB(getRightOperand().getAdresse(),
+		compiler.addInstruction(new SUB(getRightOperand().getAdresse(compiler),
 				Register.getR(getRP(compiler))));
     }
     

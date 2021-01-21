@@ -39,7 +39,7 @@ public class Cast extends AbstractExpr{
     }
 
     @Override
-    public DVal getAdresse() {
+    public DVal getAdresse(DecacCompiler compiler) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

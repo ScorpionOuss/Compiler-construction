@@ -25,7 +25,7 @@ public class Multiply extends AbstractOpArith {
      * @param compiler
      */
     private void adressableCase(DecacCompiler compiler) {
-		compiler.addInstruction(new MUL(getRightOperand().getAdresse(),
+		compiler.addInstruction(new MUL(getRightOperand().getAdresse(compiler),
 				Register.getR(getRP(compiler))));
     }
     

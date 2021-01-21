@@ -50,7 +50,7 @@ public abstract class AbstractOpCmp extends AbstractBinaryExpr {
      * @param compiler
      */
     private void adressableCase(DecacCompiler compiler) {
-    	compiler.addInstruction(new CMP(getRightOperand().getAdresse(),
+    	compiler.addInstruction(new CMP(getRightOperand().getAdresse(compiler),
 				Register.getR(getRP(compiler))));
     }
 

@@ -39,7 +39,7 @@ public class UnaryMinus extends AbstractUnaryExpr {
 	@Override
 	public void codeGenInst(DecacCompiler compiler) {
 		if (getOperand().adressable()) {
-			compiler.addInstruction(new OPP(getOperand().getAdresse(),
+			compiler.addInstruction(new OPP(getOperand().getAdresse(compiler),
 					Register.getR(getRP(compiler))));
 		}
 		else {

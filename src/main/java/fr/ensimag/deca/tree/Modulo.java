@@ -45,7 +45,7 @@ public class Modulo extends AbstractOpArith {
      * @param compiler
      */
     private void adressableCase(DecacCompiler compiler) {
-    	compiler.addInstruction(new REM(getRightOperand().getAdresse(),
+    	compiler.addInstruction(new REM(getRightOperand().getAdresse(compiler),
 				Register.getR(getRP(compiler))));
     }
     

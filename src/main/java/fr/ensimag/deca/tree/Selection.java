@@ -7,7 +7,16 @@ import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable;
 import fr.ensimag.ima.pseudocode.DAddr;
 import fr.ensimag.ima.pseudocode.GPRegister;
-import org.apache.commons.lang.Validate;
+import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.LabelOperand;
+import fr.ensimag.ima.pseudocode.NullOperand;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.RegisterOffset;
+import fr.ensimag.ima.pseudocode.instructions.BEQ;
+import fr.ensimag.ima.pseudocode.instructions.CMP;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
+
+import org.apache.commons.lang.Validate;import org.apache.log4j.helpers.Loader;
 
 import java.io.PrintStream;
 public class Selection extends AbstractLValue {
@@ -39,7 +48,9 @@ public class Selection extends AbstractLValue {
         
     @Override
     protected void codeGenInst(DecacCompiler compiler){
-    	
+    	DAddr addr = getAdresse(compiler);
+    	compiler.addInstruction(new LOAD(addr, 
+    			Register.getR(getRP(compiler))));
     }
     
     
@@ -52,6 +63,7 @@ public class Selection extends AbstractLValue {
         s.print(".");
         field.decompile(s);
     }
+    
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
         obj.prettyPrint(s, prefix, false);
@@ -65,9 +77,13 @@ public class Selection extends AbstractLValue {
     }
     
 	@Override
-	public DAddr getAdresse() {
-		// TODO Auto-generated method stub
-		return null;
+	public DAddr getAdresse(DecacCompiler compiler) {
+		obj.codeGenInst(compiler);
+		compiler.addInstruction(new CMP(new NullOperand(),
+				Register.getR(getRP(compiler))));
+		compiler.addInstruction(new BEQ(new Label("dereferencement.null")));
+		return new RegisterOffset(field.getFieldDefinition().getIndex(),
+				Register.getR(getRP(compiler)));
 	}
 	
 	@Override

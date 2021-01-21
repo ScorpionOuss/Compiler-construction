@@ -28,12 +28,12 @@ public class Divide extends AbstractOpArith {
      */
     private void adressableCase(DecacCompiler compiler) {
     	if (getType().isInt()) {
-			compiler.addInstruction(new QUO(getRightOperand().getAdresse(),
+			compiler.addInstruction(new QUO(getRightOperand().getAdresse(compiler),
 					Register.getR(getRP(compiler))));
 			}
 			else {
 				assert(getType().isFloat());
-				compiler.addInstruction(new DIV(getRightOperand().getAdresse(),
+				compiler.addInstruction(new DIV(getRightOperand().getAdresse(compiler),
 						Register.getR(getRP(compiler))));
 				addArithFloatInstruction(compiler);
 			}

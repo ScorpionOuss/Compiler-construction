@@ -103,9 +103,11 @@ public class DeclField extends AbstractDeclField {
 	 */
     @Override
 	protected void initField(DecacCompiler compiler) {
-    	//LOAD -> R0
+    	//LOAD -> R
+    	int registerPointer = compiler.registersManag.getRegisterPointer();
     	initialization.codeGenInitialization(compiler);
-    	//STORE R0 , index(R1)
+    	assert(registerPointer == compiler.registersManag.getRegisterPointer());
+    	//STORE R , index(R1)
     	assert(name.getDefinition() instanceof FieldDefinition);
     	compiler.addInstruction(new STORE(Register.getR(compiler.registersManag.getRegisterPointer()),
     			new RegisterOffset(name.getDefinition().getIndex(),

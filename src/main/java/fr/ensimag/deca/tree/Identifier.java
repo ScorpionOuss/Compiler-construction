@@ -261,7 +261,7 @@ public class Identifier extends AbstractIdentifier {
 	@Override
 	public
 	void codeGenInst(DecacCompiler compiler) {
-		compiler.addInstruction(new LOAD(getAdresse(),
+		compiler.addInstruction(new LOAD(getAdresse(compiler),
 				Register.getR(getRP(compiler))));
 	}
 	
@@ -272,7 +272,7 @@ public class Identifier extends AbstractIdentifier {
 	}
 
 	@Override
-	public DAddr getAdresse() {
+	public DAddr getAdresse(DecacCompiler compiler) {
 		// TODO Auto-generated method stub
 		return definition.getOperand();
 	}

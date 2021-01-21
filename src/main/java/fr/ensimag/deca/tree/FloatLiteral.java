@@ -81,7 +81,7 @@ public class FloatLiteral extends AbstractExpr {
 	}
 	
 	@Override
-	public DVal getAdresse() {
+	public DVal getAdresse(DecacCompiler compiler) {
 		// TODO Auto-generated method stub
 		return new ImmediateFloat(value);
 	}

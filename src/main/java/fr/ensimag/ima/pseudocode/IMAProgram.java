@@ -167,6 +167,18 @@ public class IMAProgram {
 		addInstruction(new WNL());
 		addInstruction(new ERROR());
 	}
+
+	/**
+	 * 
+	 */
+	public void addHeapException() {
+		Label tasOverFlow = new Label("tas_plein");
+		addLabel(tasOverFlow);
+		addInstruction(new WSTR(new ImmediateString("Erreur : heap_over_flow")));
+		addInstruction(new WNL());
+		addInstruction(new ERROR());
+
+	}
 	
 	/**
 	 * 
@@ -175,4 +187,5 @@ public class IMAProgram {
 	public int currentLinesSize() {
 		return lines.size();
 	}
+
 }

@@ -21,6 +21,6 @@ public abstract class AbstractLValue extends AbstractExpr {
 	}
 	
 	@Override
-	public abstract DAddr getAdresse();
+	public abstract DAddr getAdresse(DecacCompiler compiler);
 
 }

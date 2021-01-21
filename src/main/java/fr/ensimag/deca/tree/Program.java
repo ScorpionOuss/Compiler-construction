@@ -64,6 +64,7 @@ public class Program extends AbstractProgram {
         compiler.addArithFloatException();
         compiler.addZeroDivision();
         compiler.addNullRefException();
+        compiler.addHeapException();
     }
 
     private void codeGenObjectTable(DecacCompiler compiler) {

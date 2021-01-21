@@ -71,16 +71,17 @@ public class TestPlusWithoutMock {
 			return false;
 		}
 
-		@Override
-		public DVal getAdresse() {
-			// TODO Auto-generated method stub
-			return null;
-		}
 
 		@Override
 		public void codeCond(DecacCompiler compiler, boolean bool, Label endAnd) {
 			// TODO Auto-generated method stub
 			
+		}
+
+		@Override
+		public DVal getAdresse(DecacCompiler compiler) {
+			// TODO Auto-generated method stub
+			return null;
 		}
     }
 

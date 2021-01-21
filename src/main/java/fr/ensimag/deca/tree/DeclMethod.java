@@ -118,12 +118,11 @@ public class DeclMethod extends AbstractDeclMethod {
     }
     
 	@Override
-
 	protected void buidTable(DecacCompiler compiler, String className, int offset) {
 		
 		assert(name.getDefinition() instanceof MethodDefinition);//defensive programming
 		//set method label
-		name.getMethodDefinition().setLabel(new Label("code." + className +
+		name.getMethodDefinition().setLabel(new Label("code." + className + "." +
 				name.getName().getName()));
 		
 		//add instructions 
@@ -133,7 +132,6 @@ public class DeclMethod extends AbstractDeclMethod {
 		compiler.addInstruction(new STORE(Register.R0, 
 				new RegisterOffset(offset + name.getMethodDefinition().getIndex(),
 						Register.GB)));
-
 	}
 	
 
@@ -146,7 +144,7 @@ public class DeclMethod extends AbstractDeclMethod {
 		compiler.stackManager.saveStackPointers();
 		
 		//Label Management
-		methodLabelManager(compiler);
+		compiler.addLabel(name.getMethodDefinition().getLabel());
 		//TSTO and BOV Management
 		int snapShotLines = compiler.currentLinesSize();
 
@@ -175,13 +173,7 @@ public class DeclMethod extends AbstractDeclMethod {
 		compiler.stackManager.restoreStackPointers();
 	}
 	
-	private void methodLabelManager(DecacCompiler compiler) {
-		/***Attention il faut vérifier le nom***/
-		assert(name.getDefinition() instanceof MethodDefinition);
-		Label label = new Label("code" + name.getName().getName());
-		name.setLabel(label);
-		compiler.addLabel(label);
-	}
+
 
 	protected void verifyMethodBody(DecacCompiler compiler, ClassDefinition classDefinition) throws ContextualError {
 		EnvironmentExp localEnv = new EnvironmentExp(null);
