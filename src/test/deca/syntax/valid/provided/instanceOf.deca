@@ -1,5 +1,5 @@
 // Description:
-//    Test de cast
+//    Test de this
 //
 // Resultats:
 //    Rien
@@ -7,6 +7,6 @@
 // Historique:
 //    cree le 01/01/2021
 
-{
-	x = (int)(2*y);
+{ 
+   boolean = x instanceof Integer;
 }
