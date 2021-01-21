@@ -30,7 +30,7 @@ public class MethodCall extends AbstractExpr{
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass) throws ContextualError {
     	Type type = obj.verifyExpr(compiler, localEnv, currentClass);
     	ClassType classType = type.asClassType("selection undefined for non class types", obj.getLocation());
-    	type = method.verifyExpr(compiler, classType.getDefinition().getMembers(), currentClass);
+    	type = method.verifySelection(compiler, localEnv, classType.getDefinition(), currentClass);
     	Definition def= classType.getDefinition().getMembers().get(method.getName()); 
     	MethodDefinition methodDef = def.asMethodDefinition("undefined method identifier", getLocation());
     	Signature signature = methodDef.getSignature();

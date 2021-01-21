@@ -76,7 +76,10 @@ public class DeclMethod extends AbstractDeclMethod {
     	
     	Type type; 
     	if (returnType.getName().toString().equals("void")) {
-    		type = compiler.getEnvironment().get(returnType.getName()).getType();
+    		Definition voidDef = compiler.getEnvironment().get(returnType.getName());
+    		type = voidDef.getType();
+    		returnType.setType(type);
+    		returnType.setDefinition(voidDef);
     	} else type = returnType.verifyType(compiler);
     	
     	Signature signature = new Signature();
