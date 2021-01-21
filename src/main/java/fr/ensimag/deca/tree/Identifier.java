@@ -16,7 +16,11 @@ import fr.ensimag.deca.tools.DecacInternalError;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
 import fr.ensimag.ima.pseudocode.DAddr;
+import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.instructions.BEQ;
+import fr.ensimag.ima.pseudocode.instructions.BNE;
+import fr.ensimag.ima.pseudocode.instructions.CMP;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
 
 import java.io.PrintStream;
@@ -260,17 +264,17 @@ public class Identifier extends AbstractIdentifier {
         }
     }
     
-//    public void codeCond(DecacCompiler compiler, boolean bool, Label etiquette) {
-//		assert(getType().isBoolean());
-//    	compiler.addInstruction(new LOAD(getAdresse(), Register.R0));
-//		compiler.addInstruction(new CMP(0, Register.R0));
-//    	if (bool) {
-//			compiler.addInstruction(new BNE(etiquette));
-//		}
-//    	else {
-//			compiler.addInstruction(new BEQ(etiquette));
-//    	}
-//	}
+    public void codeCond(DecacCompiler compiler, boolean bool, Label etiquette) {
+		assert(getType().isBoolean());
+    	compiler.addInstruction(new LOAD(getAdresse(compiler), Register.R0));
+		compiler.addInstruction(new CMP(0, Register.R0));
+    	if (bool) {
+			compiler.addInstruction(new BNE(etiquette));
+		}
+    	else {
+			compiler.addInstruction(new BEQ(etiquette));
+    	}
+	}
 
 	@Override
 	public

@@ -56,7 +56,7 @@ public class Modulo extends AbstractOpArith {
     private void nonDepassementCase(DecacCompiler compiler) {
     	compiler.registersManag.incrementRegisterPointer();
 
-    	getRightOperand().codeGenInst(compiler);;
+    	getRightOperand().codeGenInst(compiler);
 		compiler.addInstruction(new REM(Register.getR(getRP(compiler)), 
 				Register.getR(getRP(compiler)- 1)));
 		
@@ -79,7 +79,7 @@ public class Modulo extends AbstractOpArith {
 	@Override
 	public void codeGenInst(DecacCompiler compiler) {
 		assert(getRP(compiler) <= getMP(compiler));
-		
+		System.out.println(getType().isInt());
 		addZeroDivisionInstruction(compiler);
 		getLeftOperand().codeGenInst(compiler);
 
@@ -96,7 +96,6 @@ public class Modulo extends AbstractOpArith {
 				depassementCase(compiler);
 			}
 		}
-		addArithFloatInstruction(compiler);
 		
 	}
 }

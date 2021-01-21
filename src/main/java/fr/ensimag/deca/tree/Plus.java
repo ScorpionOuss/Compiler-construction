@@ -79,7 +79,7 @@ public class Plus extends AbstractOpArith {
 				depassementCase(compiler);
 			}
 		}
-		//addArithFloatInstruction(compiler);
+		addArithFloatInstruction(compiler);
 	}
         
 }

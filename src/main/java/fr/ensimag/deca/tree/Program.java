@@ -65,9 +65,14 @@ public class Program extends AbstractProgram {
         compiler.addZeroDivision();
         compiler.addNullRefException();
         compiler.addHeapException();
+        //
+        insertObjectCode(compiler);
     }
 
-    private void codeGenObjectTable(DecacCompiler compiler) {
+    private void insertObjectCode(DecacCompiler compiler) {
+    	compiler.addLabel(new Label("code.Object.equals"));
+	}
+	private void codeGenObjectTable(DecacCompiler compiler) {
     	compiler.addInstruction(new LOAD(new NullOperand(), Register.R0));
     	
     	compiler.addInstruction(new STORE(Register.R0, 

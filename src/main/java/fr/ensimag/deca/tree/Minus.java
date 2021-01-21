@@ -75,7 +75,7 @@ public class Minus extends AbstractOpArith {
 				depassementCase(compiler);
 			}
 		}
-//		addArithFloatInstruction(compiler);
+		addArithFloatInstruction(compiler);
 	}
         
 

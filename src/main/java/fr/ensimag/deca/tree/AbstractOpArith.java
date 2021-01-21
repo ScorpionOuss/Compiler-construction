@@ -70,6 +70,7 @@ public abstract class AbstractOpArith extends AbstractBinaryExpr {
 
 	protected void addZeroDivisionInstruction(DecacCompiler compiler){
 		if (getType().isInt()) {
+			getRightOperand().codeGenInst(compiler);
 			compiler.addInstruction(new CMP(new ImmediateInteger(0),
 					Register.getR(getRP(compiler))));
 			compiler.addInstruction(new BEQ(new Label("ZeroDivision_Error")));

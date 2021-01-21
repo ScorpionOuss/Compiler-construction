@@ -35,7 +35,6 @@ public class Divide extends AbstractOpArith {
 				assert(getType().isFloat());
 				compiler.addInstruction(new DIV(getRightOperand().getAdresse(compiler),
 						Register.getR(getRP(compiler))));
-				addArithFloatInstruction(compiler);
 			}
     }
     
@@ -56,7 +55,6 @@ public class Divide extends AbstractOpArith {
 			assert(getType().isFloat());
 			compiler.addInstruction(new DIV(Register.getR(getRP(compiler)),
 					Register.getR(getRP(compiler) - 1)));
-			addArithFloatInstruction(compiler);
 		}
 		compiler.registersManag.decrementRegisterPointer();
     }
@@ -80,16 +78,15 @@ public class Divide extends AbstractOpArith {
 				assert(getType().isFloat());
 				compiler.addInstruction(new DIV(Register.R1,
 						Register.getR(getRP(compiler))));
-				addArithFloatInstruction(compiler);
 			}
     }
     
 	@Override
 	public void codeGenInst(DecacCompiler compiler) {		
 		//remove
+		getLeftOperand().codeGenInst(compiler);
 		addZeroDivisionInstruction(compiler);
 		
-		getLeftOperand().codeGenInst(compiler);;
 
 		if (getRightOperand().adressable()) {
 			adressableCase(compiler);
@@ -106,5 +103,7 @@ public class Divide extends AbstractOpArith {
 				depassementCase(compiler);
 				}
 			}
+		addArithFloatInstruction(compiler);
+
 	}
 }

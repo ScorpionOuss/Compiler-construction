@@ -76,7 +76,7 @@ public class Multiply extends AbstractOpArith {
 				depassementCase(compiler);
 			}
 		}
-		//addArithFloatInstruction(compiler);
+		addArithFloatInstruction(compiler);
 	}
 
 }
