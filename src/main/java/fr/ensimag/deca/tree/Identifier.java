@@ -172,18 +172,32 @@ public class Identifier extends AbstractIdentifier {
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
     	ExpDefinition localExpDefinition = localEnv.get(name);
-    	ExpDefinition classExpDefinition = currentClass.getMembers().get(name);
+    	ExpDefinition classExpDefinition = null;
+    	if (currentClass != null) {
+    		classExpDefinition = currentClass.getMembers().get(name);
+    	}
     	if (localExpDefinition == null) {
     		if (classExpDefinition == null) {
 				throw new ContextualError("The variable " + name.getName() + " is not defined", this.getLocation());
     		}
     		else {
+    			if (classExpDefinition.isField()) {
+    				FieldDefinition fieldDef = classExpDefinition.asFieldDefinition("", this.getLocation());
+    				if (fieldDef.getVisibility().equals(Visibility.PROTECTED)) {
+    				}
+    			}
     			this.setType(classExpDefinition.getType());
     			this.setDefinition(classExpDefinition);
     			return classExpDefinition.getType();
     		}
     	} else {
     		if (classExpDefinition == null) {
+    			if (localExpDefinition.isField()) {
+    				FieldDefinition fieldDef = localExpDefinition.asFieldDefinition("", this.getLocation());
+    				if (fieldDef.getVisibility().equals(Visibility.PROTECTED)) {
+    					throw new ContextualError("inaccessible protected variable", getLocation());
+    				}
+    			}
     			this.setType(localExpDefinition.getType());
     			this.setDefinition(localExpDefinition);
     			return localExpDefinition.getType();

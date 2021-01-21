@@ -3,7 +3,11 @@
 //
 
 class A {
-	protected int x;
+	protected int x = 2;
+}
+
+class B extends A {
+	int y = 3;
 }
 
 {

@@ -78,13 +78,13 @@ public class DeclClass extends AbstractDeclClass {
     	ClassDefinition classDefinition = type.getDefinition();
     	try {
 			compiler.getEnvironment().declare(name.getName(), classDefinition);
+			name.setDefinition(classDefinition);
+			name.setType(type);
+			superClass.setDefinition(superClassDefinition);
+			superClass.setType(superClassDefinition.getType());
 		} catch (DoubleDefException e) {
 			throw new ContextualError("class already defined or forbidden name used", name.getLocation());
 		}
-		superClass.setDefinition(superClassDefinition);
-		superClass.setType(superClassDefinition.getType());
-		name.setDefinition(classDefinition);
-		name.setType(type);
     }
 
     @Override

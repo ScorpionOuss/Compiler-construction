@@ -1,0 +1,65 @@
+class Math{
+      protected float pi = 3.1415926536f;
+      protected float PiS2 = 1.5707963267949f;
+      protected float posInf = Float.POSITIVE_INFINITY;
+      protected float negInf = Float.NEGATIVE_INFINITY;
+      protected float MAXVALUE = 3.4028234663852886E38f;
+      protected float MINVALUE = 1.4E-45f;
+      protected float NaN = 0.0f/0.0f;
+      protected float FPREC = 0.000001f;
+float _pow(float x, int n){
+  float ex;
+  if (x == 0) {
+        return 0;
+        }
+  if (n == 0){
+        return 1;
+        }
+  ex= x;
+  else if(n>0){
+  while ( n>1) {
+  x = x*ex ;
+  n--;
+  }
+  return x ;
+  }
+  else{
+  x = _pow(ex, -n) ;
+  return 1/x ;
+  }
+  }
+
+float _ulp(float x) {
+ int ex = 0;
+ if(x<=0){
+   x = -x;
+ }
+ if (x == posInf || x == negInf){
+    return x;}
+ else if (x == NaN) {
+    return NaN;
+      }
+   else if (x == 0.0 || x == -0.0) {
+    return MINVALUE;
+      }
+ else if (x == MAXVALUE) {
+    return _pow(2, 104);
+      }
+ else if ( x >= 1 ) {
+     ex-- ;
+     while (x >= 1 ) {
+       x =  x/(float)2.0;
+       ex ++ ;
+     }
+     return _pow(2,ex - 23);
+   }
+ else{
+   while ( x < 1) {
+     x = x*(float)2.0;
+     ex -- ;
+   }
+   return _pow(2,ex - 23);
+ }
+}
+}
+
