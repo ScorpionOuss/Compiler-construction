@@ -3,7 +3,7 @@
 //
 
 class A {
-	protected int x = 2;
+	void m() {}
 }
 
 class B extends A {
