@@ -49,7 +49,7 @@ public class And extends AbstractOpBool {
    
 	@Override
 	protected void codeGenInst(DecacCompiler compiler) {
-		
+		int registerPointer = getRP(compiler);
 		getLeftOperand().codeGenInst(compiler);
 		if (getRP(compiler) < getMP(compiler)) {
 			normalCase(compiler);
@@ -57,6 +57,7 @@ public class And extends AbstractOpBool {
 		else {
 			depassementCase(compiler);
 		}
+		assert registerPointer == getRP(compiler);
 	}
 
 

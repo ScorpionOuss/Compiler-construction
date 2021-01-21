@@ -66,33 +66,42 @@ public class MethodCall extends AbstractExpr{
     	////Empiler les paramètres effectifs
     	int compteur = 1;
     	for (AbstractExpr expr : params.getList()) {
-    		//Pour l'instant on considère que c'est le registre 2
     		expr.codeGenInst(compiler);
-    		//assert getRP(compiler) == 2;
     		compiler.addInstruction(new STORE(Register.getR(getRP(compiler)), 
     				new RegisterOffset(-compteur, Register.SP)));
     		compteur++;
     	}
     	
     	// récupérer 0(SP) et tester referNull
-    	//assert getRP(compiler) == 2;
+    	
+    	/*********************************************************************************/
+    	/****À partir de là, nous avons l'objet dans notre register*********/
+    	/********************************************************************************/
+    	
     	compiler.addInstruction(new LOAD(new RegisterOffset(0, Register.SP), 
     			Register.getR(getRP(compiler))));
-    	compiler.addInstruction(new CMP(new NullOperand(), Register.getR(getRP(compiler))));
+    	//Si on veut utiliser cette instruction on doit reload l'objet pour la suite!
+    	//compiler.addInstruction(new CMP(new NullOperand(), Register.getR(getRP(compiler))));
     	
     	compiler.addInstruction(new BEQ(new Label("dereferencement.null")));
     	//récupérer l'adresse de la table
-    	//assert getRP(compiler) == 2;
-
+    	
+    	/*************************************************************************************/
+    	/********On suppose toujours que nous avons l'objet dans notre registre**************/
+    	/***********************************************************************************/
+    	
     	compiler.addInstruction(new LOAD(new RegisterOffset(0, Register.getR(getRP(compiler))),
     			Register.getR(getRP(compiler))));
     	//appel de la méthode selon l'indice dans la table
+    	
+    	/****************************Jusque là**********************************************/
     	
     	//assert getRP(compiler) == 2;
     	compiler.addInstruction(new BSR(new RegisterOffset(method.getMethodDefinition().getIndex(),
     			Register.getR(getRP(compiler)))));
     	
     	//Récupération de la valeur de retour
+    	/***TODO À venir***/
     	compiler.addInstruction(new LOAD(Register.R0, Register.getR(getRP(compiler))));
     	
     	//dépilement.

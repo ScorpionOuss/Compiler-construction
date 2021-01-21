@@ -33,8 +33,12 @@ public class ConvFloat extends AbstractUnaryExpr {
     
 	@Override
 	public void codeGenInst(DecacCompiler compiler) {
-		getOperand().codeGenInst(compiler);;
+		int registerPointer = getRP(compiler);
+		
+		getOperand().codeGenInst(compiler);
 		compiler.addInstruction(new FLOAT(Register.getR(getRP(compiler)),
 				Register.getR(getRP(compiler))));
+		
+		assert registerPointer == getRP(compiler);
 	}
 }

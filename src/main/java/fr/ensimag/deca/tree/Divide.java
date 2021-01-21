@@ -83,10 +83,11 @@ public class Divide extends AbstractOpArith {
     
 	@Override
 	public void codeGenInst(DecacCompiler compiler) {		
-		//remove
-		getLeftOperand().codeGenInst(compiler);
+		int registerPointer = getRP(compiler);
+		
 		addZeroDivisionInstruction(compiler);
 		
+		getLeftOperand().codeGenInst(compiler);		
 
 		if (getRightOperand().adressable()) {
 			adressableCase(compiler);
@@ -105,5 +106,6 @@ public class Divide extends AbstractOpArith {
 			}
 		addArithFloatInstruction(compiler);
 
+		assert registerPointer == getRP(compiler);
 	}
 }

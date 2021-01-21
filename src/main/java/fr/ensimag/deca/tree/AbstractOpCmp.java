@@ -85,7 +85,8 @@ public abstract class AbstractOpCmp extends AbstractBinaryExpr {
      * @param compiler
      */
     protected void codeCMP(DecacCompiler compiler) {
-
+    	int registerPointer = getRP(compiler);
+    	
     	getLeftOperand().codeGenInst(compiler);;
 
     	if (getRightOperand().adressable()) {
@@ -100,5 +101,7 @@ public abstract class AbstractOpCmp extends AbstractBinaryExpr {
 				depassementCase(compiler);
 			}
     	}
+    	
+    	assert registerPointer == getRP(compiler);
     }
 }

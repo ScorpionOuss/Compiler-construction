@@ -28,8 +28,12 @@ public class Equals extends AbstractOpExactCmp {
 
 	@Override
 	public void codeGenInst(DecacCompiler compiler) {
+		int registerPointer = getRP(compiler);
+	
 		codeCMP(compiler);
 		compiler.addInstruction(new SEQ(Register.getR(getRP(compiler))));
+		
+		assert registerPointer == getRP(compiler);
 	}    
 	
 //	public void codeGenCond(DecacCompiler compiler, Label etiquette) {

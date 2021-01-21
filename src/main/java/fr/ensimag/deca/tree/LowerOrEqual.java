@@ -27,10 +27,13 @@ public class LowerOrEqual extends AbstractOpIneq {
 	@Override
 	public
 	void codeGenInst(DecacCompiler compiler) {
+		int registerPointer = getRP(compiler);
 		//CMP operands
 		codeCMP(compiler);
 		//Scc instruction
 		compiler.addInstruction(new SLE(Register.getR(getRP(compiler))));
+	
+		assert registerPointer == getRP(compiler);
 	}
 
 	public void codeCond(DecacCompiler compiler, boolean bool, Label etiquette) {
