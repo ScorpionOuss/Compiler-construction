@@ -5,11 +5,17 @@
  */
 package fr.ensimag.deca.tree;
 
+import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.deca.context.ClassDefinition;
+import fr.ensimag.deca.context.ContextualError;
+import fr.ensimag.deca.context.EnvironmentExp;
+import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import java.io.PrintStream;
 
 /**
  *
- * @author ensimag
+ * @author gl16
  */
 public class MethodAsmBody extends AbstractMethodBody{
     
@@ -23,5 +29,17 @@ public class MethodAsmBody extends AbstractMethodBody{
         s.print("asm(");
         code.decompile(s);
         s.println(");");
+    }
+
+    @Override
+    protected void verifyMethodBody(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition classDefinition, Type returnType) throws ContextualError {
+    }
+
+    @Override
+    protected void prettyPrintChildren(PrintStream s, String prefix) {
+    }
+
+    @Override
+    protected void iterChildren(TreeFunction f) {
     }
 }

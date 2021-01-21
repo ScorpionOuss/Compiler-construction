@@ -6,6 +6,9 @@ public class Trigo{
         protected float MAXVALUE = 3.4028234663852886E38f;
         protected float MINVALUE = 1.4E-45f;
         protected float NaN = 0.0f/0.0f;
+
+
+
 //////////////////////min max///////////////////////////////////////
 
 
@@ -66,6 +69,9 @@ public static float fact(int n){
 				return 1/x ;
 					}
 				}
+
+
+
 ///////////////////ulp(x) les résultats sont compatibles///////////////////////////////////////////
     float _ulp(float x) {
 	 		int ex = 0;
@@ -99,6 +105,10 @@ public static float fact(int n){
 				return _pow(2,ex - 23);
 		 	}
     }
+
+
+
+
 ///////////////////////modulo 2pi/////////////////////////////////////////
 
 float _Modulo2Pi(float x, float y) {
@@ -256,6 +266,7 @@ public float atanHermite(float x){
 
 
 
+
 float _atan(float x){
 		int signe = 1 ;
 		if (x<0){
@@ -271,6 +282,7 @@ float _atan(float x){
 				return signe*atanHermite(x);
 		}
 }
+
 
 ////////////////////////////main pour les tests//////////////////////////////////////
 
