@@ -8,6 +8,7 @@ import fr.ensimag.ima.pseudocode.*;
 import fr.ensimag.ima.pseudocode.instructions.*;
 import org.apache.commons.lang.Validate;
 import java.io.PrintStream;
+import java.util.List;
 public class MethodCall extends AbstractExpr{
 
     AbstractExpr obj;
@@ -27,11 +28,20 @@ public class MethodCall extends AbstractExpr{
 
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass) throws ContextualError {
-   if(currentClass == null) {
-              throw new ContextualError("Cannot use 'this' in main.", getLocation());
-          }
-          this.setType(currentClass.getType());
-         return currentClass.getType();
+    	Type type = obj.verifyExpr(compiler, localEnv, currentClass);
+    	ClassType classType = type.asClassType("selection undefined for non class types", obj.getLocation());
+    	type = method.verifyExpr(compiler, classType.getDefinition().getMembers(), currentClass);
+    	Definition def= classType.getDefinition().getMembers().get(method.getName()); 
+    	MethodDefinition methodDef = def.asMethodDefinition("undefined method identifier", getLocation());
+    	Signature signature = methodDef.getSignature();
+    	if (params.size() != signature.size()) {
+    		throw new ContextualError("the number of parameters is incorrect", getLocation());
+    	}
+    	List<AbstractExpr> listParam = params.getList();
+    	for (int i = 0; i < params.size(); i++) {
+    		listParam.get(i).verifyRValue(compiler, localEnv, currentClass, signature.paramNumber(i));
+    	}
+    	return type;
     }
 
     @Override

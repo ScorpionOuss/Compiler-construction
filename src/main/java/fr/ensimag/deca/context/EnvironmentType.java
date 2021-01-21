@@ -66,7 +66,6 @@ public class EnvironmentType {
      * symbol is undefined.
      */
     public TypeDefinition get(Symbol key) {
-    	// implemented
     	if (environment.containsKey(key)) {
     		return environment.get(key);
     	} else {

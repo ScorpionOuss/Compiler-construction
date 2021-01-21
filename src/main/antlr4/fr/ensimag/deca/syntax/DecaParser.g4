@@ -545,7 +545,6 @@ class_decl returns[AbstractDeclClass tree]
             $tree = new DeclClass($name.tree, $superclass.tree, 
             $class_body.listdeclfield, $class_body.listdeclmethod);
             setLocation($tree, $CLASS);
-
         }
     ;
 

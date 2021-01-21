@@ -24,7 +24,8 @@ public class DeclField extends AbstractDeclField {
     final private AbstractIdentifier name;
     final private AbstractInitialization initialization;
 
-    public DeclField(Visibility visibility, AbstractIdentifier type, AbstractIdentifier name, AbstractInitialization initialization) {
+    public DeclField(Visibility visibility, AbstractIdentifier type, AbstractIdentifier name,
+    		AbstractInitialization initialization) {
     	
         Validate.notNull(visibility);
         Validate.notNull(type);
@@ -91,7 +92,7 @@ public class DeclField extends AbstractDeclField {
 
     @Override
     String prettyPrintNode() {
-        return "[visibility=" + visibility + "] " + this.getClass().getName();
+        return "[visibility=" + visibility + "] " + this.getClass().getSimpleName();
     }
     
 }
