@@ -112,9 +112,9 @@ public class DeclMethod extends AbstractDeclMethod {
     	// verifies the conditions specified when the method name is defined in the superclass
     	if (superNameDefinition != null) {
     		if (!(superNameDefinition.asMethodDefinition("The name " + name.getName() + " is declare as a field in the superclass",
-    				name.getLocation()).getSignature().equals(signature) &&
+    				name.getLocation()).getSignature().getArgs().equals(signature.getArgs()) &&
     				type.subType(superNameDefinition.getType()))){
-    			throw new ContextualError("The declaration of" + name.getName() + " is not compatible with its declaration in superclass"
+    			throw new ContextualError("The declaration of " + name.getName() + " is not compatible with its declaration in superclass"
     					, name.getLocation());
     		}
     	}
