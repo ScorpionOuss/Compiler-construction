@@ -341,6 +341,8 @@ inequality_expr returns[AbstractExpr tree]
     | e1=inequality_expr INSTANCEOF type {
             assert($e1.tree != null);
             assert($type.tree != null);
+            $tree = new InstanceOf($e1.tree, $type.tree);
+            setLocation($tree, $e1.start);
         }
     ;
 
@@ -503,12 +505,15 @@ literal returns[AbstractExpr tree]
         }
     | FALSE {
     $tree = new BooleanLiteral(false);
+    setLocation($tree, $FALSE);
         }
     | THIS {
     $tree = new This();
+     setLocation($tree, $THIS);
         }
     | NULL {
     $tree = new Null();
+    setLocation($tree, $NULL);
         }
     ;
 
@@ -516,7 +521,7 @@ ident returns[AbstractIdentifier tree]
     : IDENT {
         SymbolTable symboltable = new SymbolTable();
         $tree = new Identifier(symboltable.create($IDENT.getText()));
-        setLocation($tree,$IDENT);
+        setLocation($tree, $IDENT);
         }
     ;
 
@@ -557,6 +562,7 @@ class_extension returns[AbstractIdentifier tree]
         }
     | /* epsilon */ {
         $tree = new Identifier((new SymbolTable()).create("Object"));
+            
         }
     ;
 
@@ -627,7 +633,7 @@ decl_method returns[AbstractDeclMethod tree]
          assert($block.decls != null);
          assert($block.insts != null);
          mb = new MethodBody($block.decls, $block.insts);
-         setLocation(mb,$block.start);
+         setLocation(mb, $block.start);
         }
       | ASM OPARENT code=multi_line_string CPARENT SEMI {
         assert($code.text != null);

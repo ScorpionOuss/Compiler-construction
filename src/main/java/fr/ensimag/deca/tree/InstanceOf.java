@@ -19,14 +19,13 @@ import java.io.PrintStream;
  *
  * @author ensimag
  */
-public class Cast extends AbstractExpr{
-    private AbstractIdentifier type;
+public class InstanceOf extends AbstractExpr{
     private AbstractExpr expr;
-    public Cast(AbstractIdentifier type, AbstractExpr expr ){
-       this.type = type;
-       this.expr = expr;
-    }
-
+    private AbstractIdentifier type;
+    public InstanceOf(AbstractExpr expr, AbstractIdentifier type){
+        this.expr = expr;
+        this.type = type;
+     }
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass) throws ContextualError {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -54,26 +53,18 @@ public class Cast extends AbstractExpr{
 
     @Override
     public void decompile(IndentPrintStream s) {
-       s.print("(");
-       type.decompile(s);
-       s.print(") (");
-       expr.decompile(s);
-       s.println(")");
-       
-       
-       
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
-        type.prettyPrint(s,prefix,false);
-         expr.prettyPrint(s,prefix,false);
+        expr.prettyPrint(s, prefix, false);
+        type.prettyPrint(s, prefix, true);
     }
 
     @Override
     protected void iterChildren(TreeFunction f) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
-
+    
 }

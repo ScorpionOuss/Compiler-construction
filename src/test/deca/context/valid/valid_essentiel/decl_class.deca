@@ -3,9 +3,9 @@
 //
 
 class A {
-	protected int x;
+	//protected int x;
 }
 
 {
-	int x = 2;
+	//int x = 2;
 }

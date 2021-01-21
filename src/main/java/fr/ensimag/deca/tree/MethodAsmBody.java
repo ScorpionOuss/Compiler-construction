@@ -37,6 +37,7 @@ public class MethodAsmBody extends AbstractMethodBody{
 
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
+        code.prettyPrint(s, prefix, true);
     }
 
     @Override
