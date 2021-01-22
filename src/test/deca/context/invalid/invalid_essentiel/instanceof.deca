@@ -1,0 +1,11 @@
+// Description:
+//    Programme de test de instanceof.
+
+class A {}
+
+{
+	A a = new A();
+	int i;
+	i instanceof A;
+	a instanceof int;
+}

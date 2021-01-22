@@ -1,0 +1,13 @@
+// Description:
+//    Programme de test de cast.
+
+class A {}
+
+class C {}
+
+
+{
+	A a = new A();
+	C c = new C();
+	c = (C)(a);
+}

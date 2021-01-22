@@ -16,7 +16,6 @@ import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.context.EnvironmentExp.DoubleDefException;
 import fr.ensimag.deca.context.ExpDefinition;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import fr.ensimag.ima.pseudocode.DAddr;
 import fr.ensimag.ima.pseudocode.ImmediateString;
 import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.LabelOperand;
@@ -100,7 +99,7 @@ public class DeclMethod extends AbstractDeclMethod {
     	Signature signature = new Signature();
     	listDeclParam.verifyListDeclParam(compiler, signature);
     	MethodDefinition methodDefinition = new MethodDefinition(type, name.getLocation(),
-    			signature, currentClass.getNumberOfFields() + 1);
+    			signature, currentClass.getNumberOfMethods() + 1);
     	
     	// the definition used for the name in this class or in a superclass (if it exists)
     	// only used if the name is not defined in this class
@@ -228,4 +227,8 @@ public class DeclMethod extends AbstractDeclMethod {
 	}
 	
 
+	public AbstractIdentifier getName() {
+		return name;
+	}
+    
 }

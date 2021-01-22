@@ -6,6 +6,8 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.Definition;
 import fr.ensimag.deca.context.EnvironmentExp.DoubleDefException;
+
+import fr.ensimag.deca.context.FieldDefinition;
 import fr.ensimag.deca.context.MethodDefinition;
 import fr.ensimag.deca.context.TypeDefinition;
 import fr.ensimag.deca.tools.IndentPrintStream;
@@ -98,8 +100,18 @@ public class DeclClass extends AbstractDeclClass {
     @Override
     protected void verifyClassMembers(DecacCompiler compiler)
             throws ContextualError {
-    	fields.verifyListDeclField(compiler, (ClassDefinition)name.getDefinition());
-    	methods.verifyListDeclMethod(compiler, (ClassDefinition)name.getDefinition());
+
+    	ClassDefinition classDefinition = (ClassDefinition) name.getDefinition();
+    	ClassDefinition superClassDef = (ClassDefinition) superClass.getDefinition();
+    	classDefinition.setNumberOfFields(superClassDef.getNumberOfFields());
+    	classDefinition.setNumberOfMethods(superClassDef.getNumberOfMethods());
+    	fields.verifyListDeclField(compiler, classDefinition);
+    	methods.verifyListDeclMethod(compiler, classDefinition);
+    	for (AbstractDeclMethod m: methods.getList()) {
+    		DeclMethod mm = (DeclMethod) m;
+    		MethodDefinition mmm = (MethodDefinition) classDefinition.getMembers().get(mm.getName().getName());
+    		System.out.println(mmm.getIndex());
+    	}
     }
     
     @Override
