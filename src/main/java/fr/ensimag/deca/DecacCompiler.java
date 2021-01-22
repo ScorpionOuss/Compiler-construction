@@ -13,6 +13,8 @@ import fr.ensimag.ima.pseudocode.AbstractLine;
 import fr.ensimag.ima.pseudocode.IMAProgram;
 import fr.ensimag.ima.pseudocode.Instruction;
 import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.instructions.PUSH;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -321,6 +323,10 @@ public class DecacCompiler {
 
 	public void addStackVerificationBlock(int snapShotLines) {
 		program.addStackVerificationBlock(snapShotLines, stackManager.getStackCounterMax());
+	}
+
+	public void addInstruction(Instruction instruction, int snapShotLines) {
+		program.addInstruction(instruction, snapShotLines);
 	}
 
 

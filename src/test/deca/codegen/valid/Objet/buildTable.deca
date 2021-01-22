@@ -1,9 +1,19 @@
 class A {
-    void m() {}
+    boolean z = true;
+    int x = (0 + 2)*3;
+    int y = 1;
+    void m() {
+    }
     void p() {}
     }
 
 class B extends A {
+    int x = 3;
     void p() {}
     void q() {}
     }
+
+{
+    A a = new A();
+    a.x = 2;
+}

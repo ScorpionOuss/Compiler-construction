@@ -4,7 +4,9 @@ import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ClassType;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ContextualError;
+import fr.ensimag.deca.context.Definition;
 import fr.ensimag.deca.context.EnvironmentExp.DoubleDefException;
+import fr.ensimag.deca.context.MethodDefinition;
 import fr.ensimag.deca.context.TypeDefinition;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.DAddr;
@@ -17,12 +19,14 @@ import fr.ensimag.ima.pseudocode.RegisterOffset;
 import fr.ensimag.ima.pseudocode.instructions.BSR;
 import fr.ensimag.ima.pseudocode.instructions.LEA;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
+import fr.ensimag.ima.pseudocode.instructions.POP;
 import fr.ensimag.ima.pseudocode.instructions.PUSH;
 import fr.ensimag.ima.pseudocode.instructions.RTS;
 import fr.ensimag.ima.pseudocode.instructions.STORE;
 import fr.ensimag.ima.pseudocode.instructions.SUBSP;
 
 import java.io.PrintStream;
+import java.util.LinkedList;
 
 import org.apache.commons.lang.Validate;
 
@@ -38,6 +42,7 @@ public class DeclClass extends AbstractDeclClass {
     private AbstractIdentifier superClass;
     private ListDeclField fields;
     private ListDeclMethod methods;
+    private LinkedList<Definition> tableau;
     
     public DeclClass(AbstractIdentifier name,AbstractIdentifier superClass,
             ListDeclField fields, ListDeclMethod methods){
@@ -124,8 +129,8 @@ public class DeclClass extends AbstractDeclClass {
 		assert(name.getDefinition() instanceof ClassDefinition);
 		name.getClassDefinition().setOperand(new 
 				RegisterOffset(offset, Register.GB));
-		
-		compiler.stackManager.incrementMethodStackCounter(methods.size() + 1);
+		System.out.println(offset);
+		compiler.stackManager.incrementMethodStackCounter(name.getClassDefinition().getNumberOfMethods() + 1);
 		//add superClass methods table pointer
 		//À Revoir TODO
 		/******Ce qu'on peut faire je pense c'est d'initialiser la dAddr pour Objet*****/
@@ -145,7 +150,10 @@ public class DeclClass extends AbstractDeclClass {
 		assert classStackAddr != null;
 		compiler.addInstruction(new STORE(Register.R0, classStackAddr));
 		//add methods label
-		methods.buildTable(compiler, name.getName().getName(), offset);
+		//methods.buildTable(compiler, name.getName().getName(), offset);
+		methods.setLabels(compiler, name.getName().getName());
+		tableau = new LinkedList<Definition>(); 
+		name.getClassDefinition().buildTable(compiler, tableau);
 	}
 
 
@@ -163,7 +171,7 @@ public class DeclClass extends AbstractDeclClass {
 		compiler.registersManag.saveRegisters(compiler);
 		
 		//Method code
-		RegisterOffset offSetLB = new RegisterOffset(-1, Register.LB);
+		RegisterOffset offSetLB = new RegisterOffset(-2, Register.LB);
 		compiler.addInstruction(new LOAD(offSetLB, Register.R1));
 		
 		/*****TODO revoir si il faut initialiser avant les champs propres à 0*****/
@@ -179,7 +187,16 @@ public class DeclClass extends AbstractDeclClass {
 
 		fields.initFields(compiler);
 		
+		/*****On restore le nombre de registres qu'utilise la classe*****/
+		//insert save Instructions
+		for (int i = compiler.registersManag.getMaxRegisterPointer(); i >= 2; i--) {
+			compiler.addInstruction(new PUSH(Register.getR(i)), snapShotLines);
+		}
 		//Restore registers.
+		for (int i = compiler.registersManag.getMaxRegisterPointer(); i >= 2; i--) {
+			compiler.addInstruction(new POP(Register.getR(i)));
+		}
+		
 		compiler.registersManag.restoreRegisters(compiler);
 		//RTS
 		compiler.addInstruction(new RTS());

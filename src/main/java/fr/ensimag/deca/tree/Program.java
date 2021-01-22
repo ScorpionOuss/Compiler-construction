@@ -65,7 +65,7 @@ public class Program extends AbstractProgram {
         compiler.addZeroDivision();
         compiler.addNullRefException();
         compiler.addHeapException();
-        //
+        classes.methodsGeneration(compiler);
         insertObjectCode(compiler);
     }
 

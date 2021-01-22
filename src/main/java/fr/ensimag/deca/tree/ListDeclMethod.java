@@ -37,16 +37,22 @@ public class ListDeclMethod extends TreeList<AbstractDeclMethod> {
     	}
     }
 
-	public void buildTable(DecacCompiler compiler, String className, int offset) {
-		for (AbstractDeclMethod method : getList()) {
-			method.buidTable(compiler, className, offset);
-		}
-	}
+//	public void buildTable(DecacCompiler compiler, String className, int offset) {
+//		for (AbstractDeclMethod method : getList()) {
+//			method.buidTable(compiler, className, offset);
+//		}
+//	}
 
 	public void verifyListMethodsBody(DecacCompiler compiler, ClassDefinition classDefinition) throws ContextualError {
 		for (AbstractDeclMethod declMethod: this.getList()) {
     		declMethod.verifyMethodBody(compiler, classDefinition);
     	}
+	}
+
+	public void setLabels(DecacCompiler compiler, String name) {
+	for (AbstractDeclMethod method : getList()) {
+		method.setLabel(compiler, name);
+	}
 	}
     
 }

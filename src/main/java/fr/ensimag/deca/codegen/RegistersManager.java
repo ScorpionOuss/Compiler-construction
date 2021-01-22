@@ -9,13 +9,17 @@ import fr.ensimag.ima.pseudocode.instructions.PUSH;
 
 public class RegistersManager {
 	
-	private LinkedList<Integer> listSavedPointers; 
+	private LinkedList<Integer> listSavedPointers;
+	private LinkedList<Integer> listMaxRP;
 	private int registerPointer;
+	private int maxRegisterPointer;
 	private int numberOfRegister = 15;
 
 	public RegistersManager() {
 		listSavedPointers = new LinkedList<Integer>();
+		listMaxRP = new LinkedList<Integer>();
 		registerPointer = 2;
+		maxRegisterPointer = 2;
 	}
 	
 	 /*
@@ -23,6 +27,9 @@ public class RegistersManager {
      */
     public void incrementRegisterPointer() {
    	 registerPointer++;
+   	 if (registerPointer > maxRegisterPointer) {
+   		 maxRegisterPointer = registerPointer;
+   	 }
     }
     
     /*
@@ -53,16 +60,26 @@ public class RegistersManager {
     	numberOfRegister = nb;
     }
     
-    /**
+    public int getMaxRegisterPointer() {
+		return maxRegisterPointer;
+	}
+
+	public void setMaxRegisterPointer(int maxRegisterPointer) {
+		this.maxRegisterPointer = maxRegisterPointer;
+	}
+
+	/**
      * Save registers
      * @param compiler
      */
     public void saveRegisters(DecacCompiler compiler) {
-    	for (int i = 2; i <= registerPointer; i++) {
-    		compiler.addInstruction(new PUSH(Register.getR(i)));
-    		compiler.stackManager.incrementStackCounterMax(1);
-    	}
+//    	for (int i = 2; i <= registerPointer; i++) {
+//    		compiler.addInstruction(new PUSH(Register.getR(i)));
+//    		compiler.stackManager.incrementStackCounterMax(1);
+//    	}
     	listSavedPointers.add(registerPointer);
+    	listMaxRP.add(maxRegisterPointer);
+    	maxRegisterPointer = 2;
     	registerPointer = 2;
     }
 
@@ -72,9 +89,9 @@ public class RegistersManager {
      */
 	public void restoreRegisters(DecacCompiler compiler) {
 		registerPointer = listSavedPointers.removeLast();
-		
-		for(int i = registerPointer; i >= 2; i--) {
-			compiler.addInstruction(new POP(Register.getR(i)));
-		}
+		maxRegisterPointer = listMaxRP.removeLast();		
+//		for(int i = registerPointer; i >= 2; i--) {
+//			compiler.addInstruction(new POP(Register.getR(i)));
+//		}
 	}
 }

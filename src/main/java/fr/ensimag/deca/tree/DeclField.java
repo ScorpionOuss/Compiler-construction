@@ -14,6 +14,7 @@ import fr.ensimag.deca.context.FieldDefinition;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.RegisterOffset;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
 import fr.ensimag.ima.pseudocode.instructions.STORE;
 
 /**
@@ -108,6 +109,9 @@ public class DeclField extends AbstractDeclField {
     	int registerPointer = compiler.registersManag.getRegisterPointer();
     	initialization.codeGenInitialization(compiler);
     	assert(registerPointer == compiler.registersManag.getRegisterPointer());
+    	//LOAD -2(LB), R1
+		compiler.addInstruction(new LOAD(new RegisterOffset(-2, Register.LB), Register.R1));
+
     	//STORE R , index(R1)
     	assert(name.getDefinition() instanceof FieldDefinition);
     	compiler.addInstruction(new STORE(Register.getR(compiler.registersManag.getRegisterPointer()),

@@ -120,23 +120,23 @@ public class DeclMethod extends AbstractDeclMethod {
     	}
     }
     
-	@Override
-	protected void buidTable(DecacCompiler compiler, String className, int offset) {
-		
-		assert(name.getDefinition() instanceof MethodDefinition);//defensive programming
-		//set method label
-		name.getMethodDefinition().setLabel(new Label("code." + className + "." +
-				name.getName().getName()));
-		
-		//add instructions 
-		compiler.addInstruction(new LOAD(new LabelOperand(name.getMethodDefinition().getLabel()),
-				Register.R0));
-		
-		compiler.addInstruction(new STORE(Register.R0, 
-				new RegisterOffset(offset + name.getMethodDefinition().getIndex(),
-						Register.GB)));
-	}
-	
+//	@Override
+//	protected void buidTable(DecacCompiler compiler, String className, int offset) {
+//		
+//		assert(name.getDefinition() instanceof MethodDefinition);//defensive programming
+//		//set method label
+//		name.getMethodDefinition().setLabel(new Label("code." + className + "." +
+//				name.getName().getName()));
+//		
+//		//add instructions 
+//		compiler.addInstruction(new LOAD(new LabelOperand(name.getMethodDefinition().getLabel()),
+//				Register.R0));
+//		
+//		compiler.addInstruction(new STORE(Register.R0, 
+//				new RegisterOffset(offset + name.getMethodDefinition().getIndex(),
+//						Register.GB)));
+//	}
+//	
 
 	@Override
 	protected void GenMethodeCode(DecacCompiler compiler) {
@@ -188,6 +188,14 @@ public class DeclMethod extends AbstractDeclMethod {
 			}
 		}
 		methodBody.verifyMethodBody(compiler, localEnv, classDefinition, returnType.getType());
+	}
+	
+	@Override
+	protected void setLabel(DecacCompiler compiler, String className) {
+		assert(name.getDefinition() instanceof MethodDefinition);//defensive programming
+		//set method label
+		name.getMethodDefinition().setLabel(new Label("code." + className + "." +
+				name.getName().getName()));
 	}
 	
 

@@ -6,6 +6,7 @@ public class StackManager {
 	
 	public StackManager() {
 		listStackCounters = new LinkedList<Integer>();
+		listCurrentVariable = new LinkedList<Integer>();
 		methodStackCounter = 2;//Concernant le super type Object
 		stackCounterMax = 0;
 		numberCurrentVariables = 0;

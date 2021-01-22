@@ -188,4 +188,8 @@ public class IMAProgram {
 		return lines.size();
 	}
 
+	public void addInstruction(Instruction instruction, int snapShotLines) {
+		lines.add(snapShotLines, new Line(instruction));
+	}
+
 }
