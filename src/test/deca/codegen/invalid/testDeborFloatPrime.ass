@@ -3,15 +3,21 @@
 	BOV stack_overflow_error
 ; Main program
 	ADDSP #1
-	LOAD #0x1.0p1, R2
+	LOAD #0x1.f4p9, R2
 	STORE R2, 1(GB)
 ; Beginning of main instructions:
+	BRA E_Cond1
+E_Debut1:
 	LOAD 1(GB), R2
-	LOAD #1, R3
-	FLOAT R3, R3
-	ADD R3, R2
+	MUL 1(GB), R2
+	BOV ArithFloat_Error
+	MUL 1(GB), R2
+	BOV ArithFloat_Error
+	MUL 1(GB), R2
 	BOV ArithFloat_Error
 	STORE R2, 1(GB)
+E_Cond1:
+	BRA E_Debut1
 	HALT
 stack_overflow_error:
 	WSTR "Error: Stack Overflow"

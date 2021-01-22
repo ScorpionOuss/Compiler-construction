@@ -47,15 +47,15 @@ public class IfThenElse extends AbstractInst {
     }
 
     @Override
-    protected void codeGenInst(DecacCompiler compiler) {
-    	int labelIndex = compiler.incrementIfCounter();
+    protected void codeGenInst(DecacCompiler compiler, String name) {
+    	int labelIndex = compiler.labelsManager.incrementIfCounter();
     	Label eSinon = new Label("E_Sinon." + String.valueOf(labelIndex));
     	Label eFin = new Label("E_Fin." + String.valueOf(labelIndex));
     	condition.codeCond(compiler, false, eSinon);
-    	thenBranch.codeGenListInst(compiler);
+    	thenBranch.codeGenListInst(compiler, name);
     	compiler.addInstruction(new BRA(eFin));
     	compiler.addLabel(eSinon);
-    	elseBranch.codeGenListInst(compiler);
+    	elseBranch.codeGenListInst(compiler, name);
     	compiler.addLabel(eFin);
     }
 

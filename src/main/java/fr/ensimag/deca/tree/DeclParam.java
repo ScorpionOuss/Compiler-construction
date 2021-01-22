@@ -64,6 +64,12 @@ public class DeclParam extends AbstractDeclParam{
 		name.setDefinition(new ParamDefinition(parType, name.getLocation()));
 		signature.add(parType);
 	}
+
+	@Override
+	protected ParamDefinition getNameDef() {
+		// TODO Auto-generated method stub
+		return name.getParamDefinition();
+	}
     
     
 }

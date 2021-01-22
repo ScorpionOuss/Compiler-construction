@@ -6,10 +6,15 @@ import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.ImmediateString;
 import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.instructions.BRA;
+import fr.ensimag.ima.pseudocode.instructions.ERROR;
 import fr.ensimag.ima.pseudocode.instructions.HALT;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
+import fr.ensimag.ima.pseudocode.instructions.WNL;
+import fr.ensimag.ima.pseudocode.instructions.WSTR;
 
 import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
@@ -22,18 +27,13 @@ public class Return extends AbstractInst {
     public AbstractExpr getExp() {
         return exp;
     }
+    
     public Return(AbstractExpr exp) {
         Validate.notNull(exp);
         this.exp = exp;
     }
 
-    @Override
-    protected void codeGenInst(DecacCompiler compiler) {
-    	exp.codeExp(compiler, compiler.getRegisterPointer());
-    	compiler.addInstruction(new LOAD(Register.getR(compiler.getRegisterPointer()),
-    			Register.R0));
-    	compiler.addInstruction(new HALT());
-    }
+
     
     @Override
     protected void verifyInst(DecacCompiler compiler, EnvironmentExp localEnv,
@@ -64,6 +64,14 @@ public class Return extends AbstractInst {
     protected void prettyPrintChildren(PrintStream s, String prefix) {
         exp.prettyPrint(s, prefix, false);
     }
-
+    
+    @Override
+	public void codeGenInst(DecacCompiler compiler, String name) {
+    	exp.codeGenInst(compiler);
+    	compiler.addInstruction(new LOAD(Register.getR(getRP(compiler)),
+    			Register.R0));
+    	compiler.addInstruction(new BRA(new Label(name)));
+	}
+    
 }
 

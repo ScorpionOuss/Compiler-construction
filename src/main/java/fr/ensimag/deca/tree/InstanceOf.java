@@ -49,18 +49,10 @@ public class InstanceOf extends AbstractExpr{
     	return exprType;
     }
 
-    @Override
-    public void codeExp(DecacCompiler compiler, int registerPointer) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    
 
     @Override
     public boolean adressable() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public DVal getAdresse() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -88,5 +80,15 @@ public class InstanceOf extends AbstractExpr{
     	expr.iter(f);
     	type.iter(f);
     }
+	@Override
+	public DVal getAdresse(DecacCompiler compiler) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	protected void codeGenInst(DecacCompiler compiler) {
+		// TODO Auto-generated method stub
+		
+	}
     
 }

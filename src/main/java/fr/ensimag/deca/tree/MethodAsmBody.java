@@ -6,6 +6,7 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
+
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
@@ -31,7 +32,20 @@ public class MethodAsmBody extends AbstractMethodBody{
         s.println(");");
     }
 
-    @Override
+
+	@Override
+	protected void GenbodyCodeVars(DecacCompiler compiler) {
+		throw new UnsupportedOperationException("Not supported yet.");		
+		
+	}
+
+	@Override
+	protected void GenbodyCodeInsts(DecacCompiler compiler, String name) {
+		throw new UnsupportedOperationException("Not supported yet.");		
+		
+	}
+
+	@Override
     protected void verifyMethodBody(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition classDefinition, Type returnType) throws ContextualError {
     }
 

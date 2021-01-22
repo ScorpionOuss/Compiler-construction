@@ -135,8 +135,8 @@ public abstract class AbstractExpr extends AbstractInst {
      */
     protected void codeGenPrint(DecacCompiler compiler) {
     	//load the result in R2
-    	codeExp(compiler, 2);
-    	compiler.addInstruction(new LOAD(Register.getR(2), Register.R1));
+    	codeGenInst(compiler);
+    	compiler.addInstruction(new LOAD(Register.getR(getRP(compiler)), Register.R1));
     	
     	if (getType().isInt()) {
             compiler.addInstruction(new WINT());
@@ -150,9 +150,11 @@ public abstract class AbstractExpr extends AbstractInst {
     }
 
     @Override
-    protected void codeGenInst(DecacCompiler compiler) {
-    	codeExp(compiler, compiler.getRegisterPointer());
+    protected void codeGenInst(DecacCompiler compiler, String name) {
+    	codeGenInst(compiler);
     }
+    
+    protected abstract void codeGenInst(DecacCompiler compiler);
     
 
     @Override
@@ -172,19 +174,18 @@ public abstract class AbstractExpr extends AbstractInst {
         }
     }
 
-	public abstract void codeExp(DecacCompiler compiler, int registerPointer);
-
+    
 	public abstract boolean adressable();
 
-	public abstract DVal getAdresse();
+	public abstract DVal getAdresse(DecacCompiler compiler);
 
 	public abstract void codeCond(DecacCompiler compiler, boolean bool, Label endAnd);
 
 	protected void codeGenPrintHex(DecacCompiler compiler) {
 		if(getType().isFloat()) {
 			//load the result in R2
-	    	codeExp(compiler, 2);
-	    	compiler.addInstruction(new LOAD(Register.getR(2), Register.R1));
+			codeGenInst(compiler);
+	    	compiler.addInstruction(new LOAD(Register.getR(getRP(compiler)), Register.R1));
 	    	compiler.addInstruction(new WFLOATX());
 		}
 		else {

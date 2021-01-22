@@ -2,9 +2,6 @@ package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.ima.pseudocode.Label;
-import fr.ensimag.ima.pseudocode.Register;
-import fr.ensimag.ima.pseudocode.instructions.ADD;
-import fr.ensimag.ima.pseudocode.instructions.MUL;
 
 /**
  *
@@ -23,11 +20,14 @@ public class Or extends AbstractOpBool {
     }
 
 	@Override
-	public void codeExp(DecacCompiler compiler, int registerPointer) {
-	assert(registerPointer <= compiler.numberOfRegister);
-	AbstractExpr newNot = new Not(new And(new Not(getLeftOperand()),
+	public void codeGenInst(DecacCompiler compiler){
+		int registerPointer = getRP(compiler);
+		assert(getRP(compiler) <= getMP(compiler));
+		AbstractExpr newNot = new Not(new And(new Not(getLeftOperand()),
 				new Not(getRightOperand())));
-	newNot.codeExp(compiler, registerPointer);
+		newNot.codeGenInst(compiler);
+		
+		assert registerPointer == getRP(compiler);
 	}
 	
 	public void codeCond(DecacCompiler compiler, boolean bool, Label etiquette) {
@@ -40,7 +40,7 @@ public class Or extends AbstractOpBool {
 		//〈Code(C, faux, E)〉
 		else {
 			Label endOr = new Label("endOr" + 
-					String.valueOf(compiler.incrementOrCounter()));
+					String.valueOf(compiler.labelsManager.incrementOrCounter()));
 			getLeftOperand().codeCond(compiler, !bool, endOr);
 			getRightOperand().codeCond(compiler, bool, etiquette);
 			compiler.addLabel(endOr);

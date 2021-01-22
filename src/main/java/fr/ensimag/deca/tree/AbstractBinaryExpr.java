@@ -79,22 +79,23 @@ public abstract class AbstractBinaryExpr extends AbstractExpr {
 	}
 	
 	@Override
-	public DVal getAdresse() {
+	public DVal getAdresse(DecacCompiler compiler) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	public void depassementCapacite(DecacCompiler compiler) {
+		assert(getRP(compiler) == getMP(compiler));
 		// PUSH Rmax
-		compiler.addInstruction(new PUSH(Register.getR(compiler.numberOfRegister)));
-		compiler.incrementStackCounterMax(1);
+		compiler.addInstruction(new PUSH(Register.getR(getMP(compiler))));
+		compiler.stackManager.incrementStackCounterMax(1);
 		//Execution 
-		getRightOperand().codeExp(compiler, compiler.numberOfRegister);
+		getRightOperand().codeGenInst(compiler);;
 		
 		//LOAD Rmax, R1
-		compiler.addInstruction(new LOAD(Register.getR(compiler.numberOfRegister), Register.R1));
+		compiler.addInstruction(new LOAD(Register.getR(getMP(compiler)), Register.R1));
 		
 		//POP Rmax
-		compiler.addInstruction(new POP(Register.getR(compiler.numberOfRegister)));
+		compiler.addInstruction(new POP(Register.getR(getMP(compiler))));
 	}
 }

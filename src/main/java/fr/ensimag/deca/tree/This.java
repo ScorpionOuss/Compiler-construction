@@ -9,6 +9,10 @@ import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.DVal;
 import fr.ensimag.ima.pseudocode.GPRegister;
 import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.RegisterOffset;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
+
 import java.io.PrintStream;
 
 public class This extends AbstractThis {
@@ -28,7 +32,8 @@ public class This extends AbstractThis {
 
     @Override
     protected void codeGenInst(DecacCompiler compiler){
-
+    	compiler.addInstruction(new LOAD(new RegisterOffset(-2, Register.LB),
+    			Register.getR(getRP(compiler))));
     }
 
     @Override
@@ -48,13 +53,6 @@ public class This extends AbstractThis {
 
 
 	@Override
-	public void codeExp(DecacCompiler compiler, int registerPointer) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
 	public boolean adressable() {
 		// TODO Auto-generated method stub
 		return false;
@@ -62,7 +60,7 @@ public class This extends AbstractThis {
 
 
 	@Override
-	public DVal getAdresse() {
+	public DVal getAdresse(DecacCompiler compiler) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -1,7 +1,16 @@
 package fr.ensimag.deca.context;
 
+import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.deca.tree.ListDeclMethod;
 import fr.ensimag.deca.tree.Location;
-import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.LabelOperand;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.RegisterOffset;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
+import fr.ensimag.ima.pseudocode.instructions.STORE;
+
+import java.util.LinkedList;
+
 import org.apache.commons.lang.Validate;
 
 /**
@@ -83,5 +92,28 @@ public class ClassDefinition extends TypeDefinition {
         return "class";
     }
 
-    
+	public void buildTable(DecacCompiler compiler, int offset) {
+		for (ExpDefinition def : members.environment.values()) {
+			if (def.isMethod()) {
+				compiler.addInstruction(new LOAD(new LabelOperand(def.getLabel()),
+						Register.R0));
+				
+				compiler.addInstruction(new STORE(Register.R0, 
+						new RegisterOffset(offset + def.getIndex(),
+								Register.GB)));
+			}
+		}
+		if (superClass!= null) {
+			superClass.buildTable(compiler, offset);
+		}
+	}
+
+//    public void buildTable(DecacCompiler compiler, LinkedList<Definition> tableau) {
+//    	for (ExpDefinition def : members.environment.values()) {
+//    		if (def.isMethod()) {
+////    			tableau.add(e)
+//    		}
+//    	}
+//    }
+
 }

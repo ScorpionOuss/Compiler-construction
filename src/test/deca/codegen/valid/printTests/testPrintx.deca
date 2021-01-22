@@ -5,7 +5,7 @@
 //      ok
 //      0x1p+0 1
 // Historique:
-//    cree le 01/01/2021
+//    cree le 01/01/2021{
 {
     float x = 1.0;
     int y = 1;

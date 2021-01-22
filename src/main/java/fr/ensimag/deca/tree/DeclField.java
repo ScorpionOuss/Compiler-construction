@@ -12,6 +12,10 @@ import fr.ensimag.deca.context.Definition;
 import fr.ensimag.deca.context.EnvironmentExp.DoubleDefException;
 import fr.ensimag.deca.context.FieldDefinition;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.RegisterOffset;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
+import fr.ensimag.ima.pseudocode.instructions.STORE;
 
 /**
  * @author gl16
@@ -37,6 +41,7 @@ public class DeclField extends AbstractDeclField {
         this.name = name;
         this.initialization = initialization;
     }
+    
 
     @Override
     protected void verifyDeclField(DecacCompiler compiler, ClassDefinition currentClass)
@@ -94,6 +99,26 @@ public class DeclField extends AbstractDeclField {
     String prettyPrintNode() {
         return "[visibility=" + visibility + "] " + this.getClass().getSimpleName();
     }
-    
+
+	/**
+	 * Initialization of field.
+	 */
+    @Override
+	protected void initField(DecacCompiler compiler) {
+    	//LOAD -> R
+    	int registerPointer = compiler.registersManag.getRegisterPointer();
+    	initialization.codeGenInitialization(compiler);
+    	assert(registerPointer == compiler.registersManag.getRegisterPointer());
+    	//LOAD -2(LB), R1
+		compiler.addInstruction(new LOAD(new RegisterOffset(-2, Register.LB), 
+				Register.R1));
+
+    	//STORE R , index(R1)
+    	assert(name.getDefinition() instanceof FieldDefinition);
+    	compiler.addInstruction(new 
+    			STORE(Register.getR(compiler.registersManag.getRegisterPointer()),
+    			new RegisterOffset(name.getDefinition().getIndex(),
+    					Register.R1)));
+	}
 }
 

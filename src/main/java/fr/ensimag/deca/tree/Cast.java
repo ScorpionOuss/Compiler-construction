@@ -44,10 +44,6 @@ public class Cast extends AbstractExpr{
     	return castType;
     }
 
-    @Override
-    public void codeExp(DecacCompiler compiler, int registerPointer) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
     @Override
     public boolean adressable() {
@@ -55,7 +51,7 @@ public class Cast extends AbstractExpr{
     }
 
     @Override
-    public DVal getAdresse() {
+    public DVal getAdresse(DecacCompiler compiler) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -87,6 +83,12 @@ public class Cast extends AbstractExpr{
     	type.iter(f);
     	expr.iter(f);
     }
+
+	@Override
+	protected void codeGenInst(DecacCompiler compiler) {
+		// TODO Auto-generated method stub
+		
+	}
 
 
 }

@@ -17,12 +17,14 @@ public class MethodDefinition extends ExpDefinition {
         return true;
     }
 
+    @Override
     public Label getLabel() {
         Validate.isTrue(label != null,
                 "setLabel() should have been called before");
         return label;
     }
-
+    
+    @Override
     public void setLabel(Label label) {
         this.label = label;
     }
@@ -31,10 +33,10 @@ public class MethodDefinition extends ExpDefinition {
         return index;
     }
     
-    public void setIndex(int i) {
-        index = i;
-    }
 
+    public void setIndex(int index) {
+    	this.index = index;
+    }
     private int index;
 
     @Override
@@ -72,5 +74,5 @@ public class MethodDefinition extends ExpDefinition {
     public boolean isExpression() {
         return false;
     }
-
+    
 }

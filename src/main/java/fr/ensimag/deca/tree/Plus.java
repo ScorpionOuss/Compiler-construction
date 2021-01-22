@@ -6,6 +6,7 @@ import fr.ensimag.ima.pseudocode.instructions.ADD;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
 import fr.ensimag.ima.pseudocode.instructions.POP;
 import fr.ensimag.ima.pseudocode.instructions.PUSH;
+import fr.ensimag.ima.pseudocode.instructions.SUB;
 
 /**
  * @author gl16
@@ -22,36 +23,65 @@ public class Plus extends AbstractOpArith {
         return "+";
     }
 
+    /**
+     * 
+     * @param compiler
+     */
+    private void adressableCase(DecacCompiler compiler) {
+		compiler.addInstruction(new ADD(getRightOperand().getAdresse(compiler),
+				Register.getR(getRP(compiler))));
+    }
+    
+    /**
+     * 
+     * @param compiler
+     */
+    private void nonDepassementCase(DecacCompiler compiler) {
+    	compiler.registersManag.incrementRegisterPointer();
 
-	@Override
-	public void codeExp(DecacCompiler compiler, int registerPointer) {
-		assert(registerPointer <= compiler.numberOfRegister);
+    	getRightOperand().codeGenInst(compiler);;
+		
+    	compiler.addInstruction(new ADD(Register.getR(getRP(compiler)), 
+				Register.getR(getRP(compiler)- 1)));
+		
+		compiler.registersManag.decrementRegisterPointer();
+
+    }
+    
+    /**
+     * 
+     * @param compiler
+     */
+    private void depassementCase(DecacCompiler compiler) {
+    	assert(getRP(compiler) == getMP(compiler));
+		/*Manage capacity overrun*/
+		depassementCapacite(compiler);
+
+		//Minus
+		compiler.addInstruction(new ADD(Register.R1, Register.getR(getRP(compiler))));
+    }
+    
+    @Override
+	public void codeGenInst(DecacCompiler compiler) {
+		int registerPointer = getRP(compiler);
+    	assert(getRP(compiler) <= getMP(compiler));
+		getLeftOperand().codeGenInst(compiler);
 		
 		if (getRightOperand().adressable()) {
-			getLeftOperand().codeExp(compiler, registerPointer);
-			compiler.addInstruction(new ADD(getRightOperand().getAdresse(),
-					Register.getR(registerPointer)));
+			adressableCase(compiler);
 		}
 		
 		else {
 			assert(getRightOperand().adressable() == false);
-			getLeftOperand().codeExp(compiler, registerPointer);
-			if (registerPointer < compiler.numberOfRegister) {
-				getRightOperand().codeExp(compiler, registerPointer + 1);
-				compiler.addInstruction(new ADD(Register.getR(registerPointer + 1), 
-						Register.getR(registerPointer)));
+			if (getRP(compiler) < getMP(compiler)) {
+				nonDepassementCase(compiler);
 			}
 			else {
-				assert(registerPointer == compiler.numberOfRegister);
-				/*Manage capacity overrun*/
-				depassementCapacite(compiler);
-				
-
-				//Plus
-				compiler.addInstruction(new ADD(Register.R1, Register.getR(compiler.numberOfRegister)));
+				depassementCase(compiler);
 			}
 		}
 		addArithFloatInstruction(compiler);
+		assert registerPointer == getRP(compiler);
 	}
-
+        
 }

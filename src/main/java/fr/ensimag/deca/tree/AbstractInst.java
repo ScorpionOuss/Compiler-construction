@@ -6,7 +6,6 @@ import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import fr.ensimag.ima.pseudocode.Label;
 
 /**
  * Instruction
@@ -33,7 +32,7 @@ public abstract class AbstractInst extends Tree {
      * 
      * @param compiler
      */
-    protected abstract void codeGenInst(DecacCompiler compiler);
+    protected abstract void codeGenInst(DecacCompiler compiler, String name);
 
 
     /**
@@ -43,5 +42,23 @@ public abstract class AbstractInst extends Tree {
      */
     protected void decompileInst(IndentPrintStream s) {
         decompile(s);
+    }
+    
+    /**
+     * 
+     * @param compiler
+     * @return
+     */
+    public int getRP(DecacCompiler compiler) {
+    	return compiler.registersManag.getRegisterPointer();
+    }
+    
+    /**
+     * 
+     * @param compiler
+     * @return
+     */
+    protected int getMP(DecacCompiler compiler) {
+    	return compiler.registersManag.getNumberOfRegister();
     }
 }

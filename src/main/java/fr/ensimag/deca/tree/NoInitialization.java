@@ -53,7 +53,6 @@ public class NoInitialization extends AbstractInitialization {
 
 	@Override
 	protected void codeGenInitialization(DecacCompiler compiler) {
-		// TODO Auto-generated method stub
 		
 	}
 
@@ -63,5 +62,9 @@ public class NoInitialization extends AbstractInitialization {
 		// TODO Auto-generated method stub
 		
 	}
+
+
+
+
 
 }

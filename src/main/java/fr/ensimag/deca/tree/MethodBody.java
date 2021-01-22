@@ -61,4 +61,15 @@ public class MethodBody extends AbstractMethodBody {
     }
 
     
+	@Override
+	public void GenbodyCodeVars(DecacCompiler compiler) {
+    	//Variables declaration
+    	listDeclVar.codeGenAndLinkListDeclVariable(compiler);
+	}
+    	
+	@Override
+	public void GenbodyCodeInsts(DecacCompiler compiler, String name) {	
+    	//instructions
+        listInst.codeGenListInst(compiler, name);
+	}
 }

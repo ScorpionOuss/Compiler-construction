@@ -9,13 +9,19 @@ import fr.ensimag.deca.context.Definition;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.context.FieldDefinition;
 import fr.ensimag.deca.context.MethodDefinition;
+import fr.ensimag.deca.context.ParamDefinition;
 import fr.ensimag.deca.context.ExpDefinition;
 import fr.ensimag.deca.context.VariableDefinition;
 import fr.ensimag.deca.tools.DecacInternalError;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
 import fr.ensimag.ima.pseudocode.DAddr;
+import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.RegisterOffset;
+import fr.ensimag.ima.pseudocode.instructions.BEQ;
+import fr.ensimag.ima.pseudocode.instructions.BNE;
+import fr.ensimag.ima.pseudocode.instructions.CMP;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
 
 import java.io.PrintStream;
@@ -301,22 +307,24 @@ public class Identifier extends AbstractIdentifier {
         }
     }
     
-//    public void codeCond(DecacCompiler compiler, boolean bool, Label etiquette) {
-//		assert(getType().isBoolean());
-//    	compiler.addInstruction(new LOAD(getAdresse(), Register.R0));
-//		compiler.addInstruction(new CMP(0, Register.R0));
-//    	if (bool) {
-//			compiler.addInstruction(new BNE(etiquette));
-//		}
-//    	else {
-//			compiler.addInstruction(new BEQ(etiquette));
-//    	}
-//	}
+    public void codeCond(DecacCompiler compiler, boolean bool, Label etiquette) {
+		assert(getType().isBoolean());
+    	compiler.addInstruction(new LOAD(getAdresse(compiler), Register.R0));
+		compiler.addInstruction(new CMP(0, Register.R0));
+    	if (bool) {
+			compiler.addInstruction(new BNE(etiquette));
+		}
+    	else {
+			compiler.addInstruction(new BEQ(etiquette));
+    	}
+	}
 
 	@Override
 	public
-	void codeExp(DecacCompiler compiler, int registerPointer) {
-		compiler.addInstruction(new LOAD(getAdresse(), Register.getR(registerPointer)));
+	void codeGenInst(DecacCompiler compiler) {
+		System.out.println("ident = " + getRP(compiler));
+		compiler.addInstruction(new LOAD(getAdresse(compiler),
+				Register.getR(getRP(compiler))));
 	}
 	
 	@Override
@@ -326,10 +334,28 @@ public class Identifier extends AbstractIdentifier {
 	}
 
 	@Override
-	public DAddr getAdresse() {
+	public DAddr getAdresse(DecacCompiler compiler) {
 		// TODO Auto-generated method stub
+		if (definition.isField()) {
+			compiler.addInstruction(new LOAD(new RegisterOffset(-2, Register.LB),
+					Register.getR(getRP(compiler))));
+			return new RegisterOffset(definition.getIndex(),
+					Register.getR(getRP(compiler)));
+		}
 		return definition.getOperand();
 	}
 
-	
+	@Override
+	protected ParamDefinition getParamDefinition() {
+		// TODO Auto-generated method stub
+	     try {
+	            return (ParamDefinition) definition;
+	        } catch (ClassCastException e) {
+	            throw new DecacInternalError(
+	                    "Identifier "
+	                            + getName()
+	                            + " is not a parameter identifier, you can't call getParamDefinition on it");
+	        }
+	}
+
 }
