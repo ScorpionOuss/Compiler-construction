@@ -50,10 +50,10 @@ public class EnvironmentType {
 			Signature signature = new Signature();
 			signature.add(objectDefinition.getType());
 			Type returnType = this.get(symbolTable.create("boolean")).getType();
-			MethodDefinition equalsDefinition = new MethodDefinition(returnType, Location.BUILTIN, signature, 0);
+			MethodDefinition equalsDefinition = new MethodDefinition(returnType, Location.BUILTIN, signature, 1);
 			equalsDefinition.setLabel(new Label("code.Object.equals"));
-			equalsDefinition.setIndex(1);
 			objectDefinition.getMembers().declare(symbolTable.create("equals"), equalsDefinition);
+			objectDefinition.setNumberOfMethods(1);
 			// type_class(Object) definition
 			this.declare(symbolTable.create("Object"), objectDefinition); 
 			

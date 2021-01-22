@@ -107,11 +107,6 @@ public class DeclClass extends AbstractDeclClass {
     	classDefinition.setNumberOfMethods(superClassDef.getNumberOfMethods());
     	fields.verifyListDeclField(compiler, classDefinition);
     	methods.verifyListDeclMethod(compiler, classDefinition);
-    	for (AbstractDeclMethod m: methods.getList()) {
-    		DeclMethod mm = (DeclMethod) m;
-    		MethodDefinition mmm = (MethodDefinition) classDefinition.getMembers().get(mm.getName().getName());
-    		System.out.println(mmm.getIndex());
-    	}
     }
     
     @Override

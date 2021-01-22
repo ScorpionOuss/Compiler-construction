@@ -227,8 +227,5 @@ public class DeclMethod extends AbstractDeclMethod {
 	}
 	
 
-	public AbstractIdentifier getName() {
-		return name;
-	}
     
 }
