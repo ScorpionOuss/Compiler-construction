@@ -1,0 +1,19 @@
+// Description:
+//    Programme de test d'utilisation incorrect des classes dans le main.
+//
+
+class A {
+	int x;
+	
+}
+
+class B extends A {
+	int y;
+	
+	
+}
+
+{
+	A a = new A();
+	println(a.y);
+}

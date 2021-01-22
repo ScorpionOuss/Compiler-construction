@@ -1,0 +1,13 @@
+// Description:
+//    Programme de tests de l'utilisation des champs protected.
+//
+
+class A {
+	protected int x;
+	
+	void init(){
+		x = 1;
+	}
+	
+}
+

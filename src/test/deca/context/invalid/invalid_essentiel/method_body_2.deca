@@ -1,0 +1,15 @@
+// Description:
+//    Programme de test de declaration incorrect du corps d'une méthode.
+//
+
+class A {
+	int x;
+	float y;
+	int z;
+	
+	int q(int i, float f){
+		x = i;
+		y = i + f;	
+		return y;
+	}
+}

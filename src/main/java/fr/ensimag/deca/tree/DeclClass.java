@@ -56,8 +56,11 @@ public class DeclClass extends AbstractDeclClass {
     @Override
     protected void verifyClass(DecacCompiler compiler) throws ContextualError {
     	TypeDefinition definition = compiler.getEnvironment().get(superClass.getName()); 
-    	if ((definition == null) || !definition.getType().isClass()) {
+    	if (definition == null) {
     		throw new ContextualError("The class " + superClass.getName().getName() + " is not defined", superClass.getLocation());
+    	}
+    	if (!definition.getType().isClass()) {
+    		throw new ContextualError("The type " + superClass.getName().getName() + " is not a class", superClass.getLocation());
     	}
     	ClassDefinition superClassDefinition = (ClassDefinition) definition;
     	ClassType type = new ClassType(name.getName(), name.getLocation(), superClassDefinition); 

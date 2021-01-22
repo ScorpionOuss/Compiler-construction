@@ -1,0 +1,11 @@
+// Description:
+//    Programme de test de declaration incorrect de méthode.
+//
+
+class A {
+	void m(int i, float f){}
+}
+
+class B extends A {
+	void m(int i, int j){}
+}

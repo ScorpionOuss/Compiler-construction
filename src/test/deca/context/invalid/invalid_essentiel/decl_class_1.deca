@@ -1,0 +1,7 @@
+// Description:
+//    Programme de test de declaration incorrecte de classes.
+//}
+
+class A extends B {}
+
+class B {}

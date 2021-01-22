@@ -53,7 +53,6 @@ public class ClassType extends Type {
 
     @Override
     public boolean sameType(Type otherType) {
-    	// implemented
     	if (otherType.isClass()) {
     		return this.toString().equals(otherType.toString());
     	} 
@@ -64,7 +63,6 @@ public class ClassType extends Type {
      * Return true if potentialSuperClass is a superclass of this class.
      */
     public boolean isSubClassOf(ClassType potentialSuperClass) {
-    	// implemented
     	if (potentialSuperClass == null) {
     		return false;
     	} else {
@@ -73,11 +71,9 @@ public class ClassType extends Type {
     		while (def != null && !(def.equals(potentialSuperDef))) {
     			def = def.getSuperClass();
     		}
-    		if (def.equals(potentialSuperDef)) {
-    			return true;
-    		}
+    		if (def == null) return false;
+    		else return true;
     	}
-    	return false;
     }
 
 	@Override

@@ -1,0 +1,13 @@
+// Description:
+//    Programme de tests de l'utilisation non autorisée des champs protected.
+//
+
+class A {
+	protected int x;
+}
+
+class B extends A {
+	A a = new A();
+	int y = a.x;
+}
+
