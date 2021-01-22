@@ -87,7 +87,7 @@ public abstract class AbstractOpCmp extends AbstractBinaryExpr {
     protected void codeCMP(DecacCompiler compiler) {
     	int registerPointer = getRP(compiler);
     	
-    	getLeftOperand().codeGenInst(compiler);;
+    	getLeftOperand().codeGenInst(compiler);
 
     	if (getRightOperand().adressable()) {
     		adressableCase(compiler);

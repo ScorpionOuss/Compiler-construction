@@ -153,10 +153,8 @@ public class DeclClass extends AbstractDeclClass {
 		assert classStackAddr != null;
 		compiler.addInstruction(new STORE(Register.R0, classStackAddr));
 		//add methods label
-		methods.buildTable(compiler, name.getName().getName(), offset);
-//		methods.setLabels(compiler, name.getName().getName());
-//		tableau = new LinkedList<Definition>(); 
-//		name.getClassDefinition().buildTable(compiler, tableau);
+		methods.setLabels(compiler, name.getName().getName());
+		name.getClassDefinition().buildTable(compiler, offset);
 	}
 
 
@@ -213,7 +211,7 @@ public class DeclClass extends AbstractDeclClass {
 	@Override
 	protected void classMethodsGen(DecacCompiler compiler) {
 		for (AbstractDeclMethod method : methods.getList()) {
-			method.GenMethodeCode(compiler);
+			method.GenMethodeCode(compiler, name.getName().getName());
 		}
 	}
 }

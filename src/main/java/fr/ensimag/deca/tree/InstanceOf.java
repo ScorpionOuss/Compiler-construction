@@ -67,5 +67,10 @@ public class InstanceOf extends AbstractExpr{
 		// TODO Auto-generated method stub
 		return null;
 	}
+	@Override
+	protected void codeGenInst(DecacCompiler compiler) {
+		// TODO Auto-generated method stub
+		
+	}
     
 }

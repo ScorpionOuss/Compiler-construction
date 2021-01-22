@@ -37,11 +37,10 @@ public class ListDeclParam extends TreeList<AbstractDeclParam> {
     }
 
 	public void setParametersDefinition() {
-		int compteur = 2;
+		int compteur = 3;
 		for (AbstractDeclParam param : getList()) {
 			param.getNameDef().setOperand(new RegisterOffset(-compteur, Register.LB));
 			compteur++;
 		}
 	}
-    
 }

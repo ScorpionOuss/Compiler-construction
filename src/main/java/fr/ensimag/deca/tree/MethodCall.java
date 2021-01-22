@@ -7,6 +7,7 @@ import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.*;
 import fr.ensimag.ima.pseudocode.instructions.ADDSP;
 import fr.ensimag.ima.pseudocode.instructions.BEQ;
+import fr.ensimag.ima.pseudocode.instructions.BNE;
 import fr.ensimag.ima.pseudocode.instructions.BSR;
 import fr.ensimag.ima.pseudocode.instructions.CMP;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
@@ -64,8 +65,10 @@ public class MethodCall extends AbstractExpr{
     	
     	////Empiler Objet
     	
-    	/***TODO***/
-    	
+    	obj.codeGenInst(compiler);
+    	compiler.addInstruction(new 
+    			STORE(Register.getR(getRP(compiler)),
+    					new RegisterOffset(0, Register.SP)));
     	////Empiler les paramètres effectifs
     	int compteur = 1;
     	for (AbstractExpr expr : params.getList()) {
@@ -158,8 +161,16 @@ public class MethodCall extends AbstractExpr{
 
 
 	@Override
-	public void codeCond(DecacCompiler compiler, boolean bool, Label endAnd) {
-		// TODO Auto-generated method stub
+	public void codeCond(DecacCompiler compiler, boolean bool, Label etiquette) {
+		codeGenInst(compiler);
+		compiler.addInstruction(new CMP(new ImmediateInteger(0),
+				Register.getR(getRP(compiler))));
+		if (bool) {
+			compiler.addInstruction(new BNE(etiquette));
+		}
+    	else {
+			compiler.addInstruction(new BEQ(etiquette));
+    	}
 	}
 }
 

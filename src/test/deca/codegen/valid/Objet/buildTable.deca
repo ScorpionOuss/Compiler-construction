@@ -1,11 +1,20 @@
 class A {
-    void m() {
+    int x = 1;
+    int y = 2;
+
+    int m(int i) {
+        x = i;
+        return i;
     }
     void p() {}
-    }
+}
 
 class B extends A {
     void p() {}
     void q() {}
-    }
+}
 
+{
+    A a = new A();
+    a.x = 2;
+}

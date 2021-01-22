@@ -36,7 +36,7 @@ public abstract class AbstractMethodBody extends Tree{
 
 	protected abstract void GenbodyCodeVars(DecacCompiler compiler);
 
-	protected abstract void GenbodyCodeInsts(DecacCompiler compiler);
+	protected abstract void GenbodyCodeInsts(DecacCompiler compiler, String name);
 
     
 	protected abstract void verifyMethodBody(DecacCompiler compiler, EnvironmentExp localEnv,

@@ -68,8 +68,8 @@ public class MethodBody extends AbstractMethodBody {
 	}
     	
 	@Override
-	public void GenbodyCodeInsts(DecacCompiler compiler) {	
+	public void GenbodyCodeInsts(DecacCompiler compiler, String name) {	
     	//instructions
-        listInst.codeGenListInst(compiler);
+        listInst.codeGenListInst(compiler, name);
 	}
 }

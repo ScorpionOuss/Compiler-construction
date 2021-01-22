@@ -58,6 +58,7 @@ public class Selection extends AbstractLValue {
     @Override
     protected void codeGenPrint(DecacCompiler compiler){}
     protected void codeGenPrintX(DecacCompiler compiler){}
+
     @Override
     public void decompile(IndentPrintStream s) {
         obj.decompile(s);
@@ -82,11 +83,14 @@ public class Selection extends AbstractLValue {
 		int registerPointer = getRP(compiler);
 		
 		obj.codeGenInst(compiler);
-		compiler.addInstruction(new CMP(new NullOperand(),
-				Register.getR(getRP(compiler))));
+		/*********Revoir si le load fait l'affaire ou il faut
+		 * ajouter le cmp. et dans ce cas on replace l'objet.
+		 */
+//		compiler.addInstruction(new CMP(new NullOperand(),
+//				Register.getR(getRP(compiler))));
 		compiler.addInstruction(new BEQ(new Label("dereferencement.null")));
 		assert registerPointer == getRP(compiler);
-
+//      		obj.codeGenInst(compiler);
 		return new RegisterOffset(field.getFieldDefinition().getIndex(),
 				Register.getR(getRP(compiler)));
 	}

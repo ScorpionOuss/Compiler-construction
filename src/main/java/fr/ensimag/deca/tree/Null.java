@@ -76,5 +76,11 @@ public class Null extends AbstractExpr {
 		
 	}
 
+	@Override
+	protected void codeGenInst(DecacCompiler compiler) {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 }

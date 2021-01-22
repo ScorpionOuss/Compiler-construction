@@ -17,13 +17,19 @@ import fr.ensimag.deca.context.EnvironmentExp.DoubleDefException;
 import fr.ensimag.deca.context.ExpDefinition;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.DAddr;
+import fr.ensimag.ima.pseudocode.ImmediateString;
 import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.LabelOperand;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.RegisterOffset;
+import fr.ensimag.ima.pseudocode.instructions.ERROR;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
+import fr.ensimag.ima.pseudocode.instructions.POP;
+import fr.ensimag.ima.pseudocode.instructions.PUSH;
 import fr.ensimag.ima.pseudocode.instructions.RTS;
 import fr.ensimag.ima.pseudocode.instructions.STORE;
+import fr.ensimag.ima.pseudocode.instructions.WNL;
+import fr.ensimag.ima.pseudocode.instructions.WSTR;
 
 import java.io.PrintStream;
 
@@ -141,7 +147,7 @@ public class DeclMethod extends AbstractDeclMethod {
 	
 
 	@Override
-	protected void GenMethodeCode(DecacCompiler compiler) {
+	protected void GenMethodeCode(DecacCompiler compiler, String cName) {
 		//Set Definition of parameters
 		listDeclParam.setParametersDefinition();
 		
@@ -155,16 +161,28 @@ public class DeclMethod extends AbstractDeclMethod {
 
 		//ADDSP
 		methodBody.GenbodyCodeVars(compiler);
+		int snapShotLines2 = compiler.currentLinesSize();
 		//Save Registers
 		compiler.registersManag.saveRegisters(compiler);
 		//Method code
-		methodBody.GenbodyCodeInsts(compiler);
+		String label = "end." + cName + "." + name.getName().getName();
+		methodBody.GenbodyCodeInsts(compiler, label);
 		//Errors handler
-		
-		/********À FAIRE*******/
-		
+		if (!returnType.getType().isVoid()){
+			returnError(compiler);
+		}
 		//End Label
+		compiler.addLabel(new Label(label));
 		
+		/**********************À revoir[Restauration des registres]*******************/
+		//insert save Instructions
+		for (int i = compiler.registersManag.getMaxRegisterPointer(); i >= 2; i--) {
+			compiler.addInstruction(new PUSH(Register.getR(i)), snapShotLines2);
+		}
+		//Restore registers.
+		for (int i = compiler.registersManag.getMaxRegisterPointer(); i >= 2; i--) {
+			compiler.addInstruction(new POP(Register.getR(i)));
+		}
 		//Restore registers
 		compiler.registersManag.restoreRegisters(compiler);
 
@@ -178,8 +196,14 @@ public class DeclMethod extends AbstractDeclMethod {
 		compiler.stackManager.restoreStackPointers();
 	}
 	
+	private void returnError(DecacCompiler compiler) {
+		compiler.addInstruction(new WSTR(new 
+				ImmediateString("Erreur : sortie de la methode A.getX sans return")));
+		compiler.addInstruction(new WNL());
+		compiler.addInstruction(new ERROR());
+	}
 
-
+	
 	protected void verifyMethodBody(DecacCompiler compiler, ClassDefinition classDefinition) throws ContextualError {
 		EnvironmentExp localEnv = new EnvironmentExp(null);
 		for (AbstractDeclParam param: listDeclParam.getList()) {

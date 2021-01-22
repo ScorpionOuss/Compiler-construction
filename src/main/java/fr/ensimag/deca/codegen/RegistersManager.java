@@ -37,6 +37,7 @@ public class RegistersManager {
      */
     public void decrementRegisterPointer() {
    	 registerPointer--;
+   	 assert registerPointer >= 2;
     }
     
     /*

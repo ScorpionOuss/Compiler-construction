@@ -83,6 +83,12 @@ public class TestPlusWithoutMock {
 			// TODO Auto-generated method stub
 			return null;
 		}
+
+		@Override
+		protected void codeGenInst(DecacCompiler compiler) {
+			// TODO Auto-generated method stub
+			
+		}
     }
 
     @Test

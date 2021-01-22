@@ -52,6 +52,7 @@ public class Program extends AbstractProgram {
     	/*First pass*/
     	codeGenObjectTable(compiler);
     	classes.buildClassesTable(compiler);
+    	fixLB(compiler);
     	/*Main execution*/
     	compiler.addComment("Main program");
         main.codeGenMain(compiler);
@@ -69,7 +70,11 @@ public class Program extends AbstractProgram {
         insertObjectCode(compiler);
     }
 
-    private void insertObjectCode(DecacCompiler compiler) {
+    private void fixLB(DecacCompiler compiler) {
+//    	compiler.addInstruction(new STORE(, op2));
+    }
+    
+	private void insertObjectCode(DecacCompiler compiler) {
     	compiler.addLabel(new Label("code.Object.equals"));
 	}
 	private void codeGenObjectTable(DecacCompiler compiler) {

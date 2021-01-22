@@ -18,6 +18,7 @@ import fr.ensimag.deca.tools.SymbolTable.Symbol;
 import fr.ensimag.ima.pseudocode.DAddr;
 import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.RegisterOffset;
 import fr.ensimag.ima.pseudocode.instructions.BEQ;
 import fr.ensimag.ima.pseudocode.instructions.BNE;
 import fr.ensimag.ima.pseudocode.instructions.CMP;
@@ -321,6 +322,7 @@ public class Identifier extends AbstractIdentifier {
 	@Override
 	public
 	void codeGenInst(DecacCompiler compiler) {
+		System.out.println("ident = " + getRP(compiler));
 		compiler.addInstruction(new LOAD(getAdresse(compiler),
 				Register.getR(getRP(compiler))));
 	}
@@ -334,6 +336,12 @@ public class Identifier extends AbstractIdentifier {
 	@Override
 	public DAddr getAdresse(DecacCompiler compiler) {
 		// TODO Auto-generated method stub
+		if (definition.isField()) {
+			compiler.addInstruction(new LOAD(new RegisterOffset(-2, Register.LB),
+					Register.getR(getRP(compiler))));
+			return new RegisterOffset(definition.getIndex(),
+					Register.getR(getRP(compiler)));
+		}
 		return definition.getOperand();
 	}
 

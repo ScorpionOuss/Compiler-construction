@@ -39,22 +39,22 @@ public class TestBuildTable {
       
 
         /*************/
-//        Location loc = new Location(0, 0, "op");
-//        SymbolTable table = new SymbolTable();
-//        Symbol sA = table.create("A");
-//        AbstractIdentifier idA = new Identifier(sA);
-//        ClassDefinition cD = new ClassDefinition(theClass, theClassFile)
-//        idA.setDefinition(new ClassDefinition(new ClassType(className, 
-//        		, loc
-//        		superClass), arg1));
+////        Location loc = new Location(0, 0, "op");
+////        SymbolTable table = new SymbolTable();
+////        Symbol sA = table.create("A");
+////        AbstractIdentifier idA = new Identifier(sA);
+////        ClassDefinition cD = new ClassDefinition(theClass, theClassFile)
+////        idA.setDefinition(new ClassDefinition(new ClassType(className, 
+////        		, loc
+////        		superClass), arg1));
+////        
+////        
+////        Symbol sB = table.create("B");
+////        AbstractIdentifier idA = new Identifier(sA);
+////        AbstractIdentifier idB = new Identifier(sB);
 //        
+//        //        DeclClass a = new DeclClass("A", , listDeclField, listDeclMethod)
 //        
-//        Symbol sB = table.create("B");
-//        AbstractIdentifier idA = new Identifier(sA);
-//        AbstractIdentifier idB = new Identifier(sB);
-        
-        //        DeclClass a = new DeclClass("A", , listDeclField, listDeclMethod)
-        
         return source;
     }
 }

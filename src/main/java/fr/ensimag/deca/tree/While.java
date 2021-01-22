@@ -70,13 +70,13 @@ public class While extends AbstractInst {
     }
     
     @Override
-    protected void codeGenInst(DecacCompiler compiler) {
+    protected void codeGenInst(DecacCompiler compiler, String name) {
     	String labelIndex = String.valueOf(compiler.labelsManager.incrementWhileCounter());
     	Label E_Cond = new Label("E_Cond" + labelIndex);
     	Label E_Debut = new Label("E_Debut" + labelIndex);
     	compiler.addInstruction(new BRA(E_Cond));
     	compiler.addLabel(E_Debut);
-    	body.codeGenListInst(compiler);
+    	body.codeGenListInst(compiler, name);
     	compiler.addLabel(E_Cond);
     	condition.codeCond(compiler, true, E_Debut);
     }

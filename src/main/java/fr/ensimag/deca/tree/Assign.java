@@ -4,6 +4,9 @@ import fr.ensimag.deca.context.Type;
 import fr.ensimag.ima.pseudocode.DAddr;
 import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
+import fr.ensimag.ima.pseudocode.instructions.POP;
+import fr.ensimag.ima.pseudocode.instructions.PUSH;
 import fr.ensimag.ima.pseudocode.instructions.STORE;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
@@ -48,27 +51,30 @@ public class Assign extends AbstractBinaryExpr {
     
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
-		assert getLeftOperand() instanceof Identifier;
-    	DAddr selectAddr = getLeftOperand().getAdresse(compiler);
-		assert(selectAddr != null);
-		//On suppose qu'il reste des registres
-		//compiler.registersManag.incrementRegisterPointer();
-    	getRightOperand().codeGenInst(compiler);
-    	compiler.addInstruction(new STORE(Register.getR(getRP(compiler)),
-    			selectAddr));
-        	//compiler.registersManag.decrementRegisterPointer();
-//    	else {
-//    	//Executing right operand
-//    	assert getRP(compiler) == 2;
-//    	//On peut aussi faire codeGenInst
-//    	getRightOperand().codeGenInst(compiler);
-//    	//Affectation
-//    	compiler.addInstruction(new STORE(Register.getR(2),
-//    			getLeftOperand().getAdresse(compiler)));
-//    	}
+    	selectionGen(compiler);
     }
 
 
+
+
+	private void selectionGen(DecacCompiler compiler) {
+    	DAddr selectAddr = getLeftOperand().getAdresse(compiler);
+    	assert(selectAddr != null);
+    	//On suppose qu'il reste des registres
+		if (getRP(compiler) < getMP(compiler)) {
+    	compiler.registersManag.incrementRegisterPointer();
+    	getRightOperand().codeGenInst(compiler);
+    	compiler.addInstruction(new STORE(Register.getR(getRP(compiler)),
+    			selectAddr));
+    	compiler.registersManag.decrementRegisterPointer();
+		}
+		else {
+			depassementCapacite(compiler);
+			compiler.addInstruction(new STORE(Register.R1,
+	    			selectAddr));
+		}
+	}
+	
 
 
 	public void codeCond(DecacCompiler compiler, boolean bool, Label endAnd) {

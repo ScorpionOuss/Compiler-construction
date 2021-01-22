@@ -92,28 +92,28 @@ public class ClassDefinition extends TypeDefinition {
         return "class";
     }
 
-//	public void buildTable(DecacCompiler compiler, int offset) {
-//		for (ExpDefinition def : members.environment.values()) {
-//			if (def.isMethod()) {
-//				compiler.addInstruction(new LOAD(new LabelOperand(def.getLabel()),
-//						Register.R0));
-//				
-//				compiler.addInstruction(new STORE(Register.R0, 
-//						new RegisterOffset(offset + def.getIndex(),
-//								Register.GB)));
-//			}
-//		}
-//		if (superClass!= null) {
-//			superClass.buildTable(compiler, offset);
-//		}
-//	}
+	public void buildTable(DecacCompiler compiler, int offset) {
+		for (ExpDefinition def : members.environment.values()) {
+			if (def.isMethod()) {
+				compiler.addInstruction(new LOAD(new LabelOperand(def.getLabel()),
+						Register.R0));
+				
+				compiler.addInstruction(new STORE(Register.R0, 
+						new RegisterOffset(offset + def.getIndex(),
+								Register.GB)));
+			}
+		}
+		if (superClass!= null) {
+			superClass.buildTable(compiler, offset);
+		}
+	}
 
-    public void buildTable(DecacCompiler compiler, LinkedList<Definition> tableau) {
-    	for (ExpDefinition def : members.environment.values()) {
-    		if (def.isMethod()) {
-//    			tableau.add(e)
-    		}
-    	}
-    }
+//    public void buildTable(DecacCompiler compiler, LinkedList<Definition> tableau) {
+//    	for (ExpDefinition def : members.environment.values()) {
+//    		if (def.isMethod()) {
+////    			tableau.add(e)
+//    		}
+//    	}
+//    }
 
 }
