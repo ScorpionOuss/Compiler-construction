@@ -40,7 +40,7 @@ public class Selection extends AbstractLValue {
     		ClassDefinition currentClass) throws ContextualError {
     	Type type = obj.verifyExpr(compiler, localEnv, currentClass);
     	ClassType classType = type.asClassType("selection undefined for non class types", obj.getLocation());
-    	type = field.verifySelection(compiler, localEnv, classType.getDefinition(), currentClass);
+    	type = field.verifySelection(compiler, classType.getDefinition().getMembers(), classType.getDefinition(), currentClass);
         this.setType(type);
         return type;
     }

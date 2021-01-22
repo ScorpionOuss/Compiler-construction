@@ -1,0 +1,5 @@
+// Description:
+//    Programme de test de declaration incorrecte de classes.
+//}
+
+class int {}

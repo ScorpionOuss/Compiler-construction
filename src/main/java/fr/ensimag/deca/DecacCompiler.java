@@ -190,7 +190,7 @@ public class DecacCompiler {
             LOG.info("Parsing failed");
             return true;
         }
-        //assert(prog.checkAllLocations());
+        assert(prog.checkAllLocations());
 
 
         prog.verifyProgram(this);
