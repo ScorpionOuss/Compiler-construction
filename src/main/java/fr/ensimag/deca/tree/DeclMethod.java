@@ -133,8 +133,5 @@ public class DeclMethod extends AbstractDeclMethod {
 		assert(name.getDefinition() instanceof MethodDefinition);//defensive programming
 	}
 
-	public AbstractIdentifier getName() {
-		return name;
-	}
     
 }
