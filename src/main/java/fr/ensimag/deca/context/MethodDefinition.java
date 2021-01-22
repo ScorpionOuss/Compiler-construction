@@ -32,6 +32,10 @@ public class MethodDefinition extends ExpDefinition {
     public int getIndex() {
         return index;
     }
+    
+    public void setIndex(int i) {
+        index = i;
+    }
 
     public void setIndex(int index) {
     	this.index = index;

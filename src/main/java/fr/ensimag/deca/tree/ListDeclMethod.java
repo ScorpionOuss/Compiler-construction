@@ -31,7 +31,6 @@ public class ListDeclMethod extends TreeList<AbstractDeclMethod> {
      *          corresponds to "class" attribute (null in the main bloc).
      */    
     void verifyListDeclMethod(DecacCompiler compiler, ClassDefinition currentClass) throws ContextualError {
-    	currentClass.incNumberOfMethods();
     	for (AbstractDeclMethod declMethod: this.getList()) {
     		declMethod.verifyDeclMethod(compiler, currentClass);
     	}

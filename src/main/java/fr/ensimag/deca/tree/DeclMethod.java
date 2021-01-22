@@ -100,7 +100,7 @@ public class DeclMethod extends AbstractDeclMethod {
     	Signature signature = new Signature();
     	listDeclParam.verifyListDeclParam(compiler, signature);
     	MethodDefinition methodDefinition = new MethodDefinition(type, name.getLocation(),
-    			signature, currentClass.incNumberOfMethods());
+    			signature, currentClass.getNumberOfFields() + 1);
     	
     	// the definition used for the name in this class or in a superclass (if it exists)
     	// only used if the name is not defined in this class
@@ -117,13 +117,16 @@ public class DeclMethod extends AbstractDeclMethod {
     	
     	// verifies the conditions specified when the method name is defined in the superclass
     	if (superNameDefinition != null) {
-    		if (!(superNameDefinition.asMethodDefinition("The name " + name.getName() + " is declare as a field in the superclass",
-    				name.getLocation()).getSignature().getArgs().equals(signature.getArgs()) &&
+    		MethodDefinition superNameMethodDef = superNameDefinition.asMethodDefinition("The name " + name.getName() + " is declare as a field in the superclass",
+    				name.getLocation());
+    		if (!(superNameMethodDef.getSignature().getArgs().equals(signature.getArgs()) &&
     				type.subType(superNameDefinition.getType()))){
     			throw new ContextualError("The declaration of " + name.getName() + " is not compatible with its declaration in superclass"
     					, name.getLocation());
     		}
+    		methodDefinition.setIndex(superNameMethodDef.getIndex());
     	}
+    	else currentClass.incNumberOfMethods();
     }
     
 	@Override
