@@ -9,6 +9,7 @@ import fr.ensimag.ima.pseudocode.RegisterOffset;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
 import fr.ensimag.ima.pseudocode.instructions.STORE;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import org.apache.commons.lang.Validate;
@@ -92,21 +93,34 @@ public class ClassDefinition extends TypeDefinition {
         return "class";
     }
 
-	public void buildTable(DecacCompiler compiler, int offset) {
-		for (ExpDefinition def : members.environment.values()) {
-			if (def.isMethod()) {
-				compiler.addInstruction(new LOAD(new LabelOperand(def.getLabel()),
-						Register.R0));
-				
-				compiler.addInstruction(new STORE(Register.R0, 
-						new RegisterOffset(offset + def.getIndex(),
-								Register.GB)));
+//	public void buildTable(DecacCompiler compiler, int offset) {
+//		for (ExpDefinition def : members.environment.values()) {
+//			if (def.isMethod()) {
+//				compiler.addInstruction(new LOAD(new LabelOperand(def.getLabel()),
+//						Register.R0));
+//				
+//				compiler.addInstruction(new STORE(Register.R0, 
+//						new RegisterOffset(offset + def.getIndex(),
+//								Register.GB)));
+//			}
+//		}
+//		if (superClass!= null) {
+//			superClass.buildTable(compiler, offset);
+//		}
+//	}
+    
+	public void buildTable(DecacCompiler compiler, ArrayList<MethodDefinition> tab) {
+	for (ExpDefinition def : members.environment.values()) {
+		if (def.isMethod()) {
+			if (tab.get(def.getIndex() - 1) == null) {
+				tab.set(def.getIndex() - 1, (MethodDefinition)def);
 			}
 		}
-		if (superClass!= null) {
-			superClass.buildTable(compiler, offset);
-		}
 	}
+	if (superClass!= null) {
+		superClass.buildTable(compiler, tab);
+	}
+}
 
 //    public void buildTable(DecacCompiler compiler, LinkedList<Definition> tableau) {
 //    	for (ExpDefinition def : members.environment.values()) {

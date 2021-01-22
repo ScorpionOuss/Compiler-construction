@@ -116,10 +116,6 @@ public class MethodCall extends AbstractExpr{
     }
     
 
-    @Override
-    protected void codeGenPrint(DecacCompiler compiler) {
-    	throw new UnsupportedOperationException("opération non tolérée");
-    }
 
     @Override
     public void decompile(IndentPrintStream s) {

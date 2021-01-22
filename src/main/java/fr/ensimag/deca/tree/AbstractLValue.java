@@ -16,9 +16,9 @@ import fr.ensimag.deca.context.EnvironmentExp;
  */
 public abstract class AbstractLValue extends AbstractExpr {
 	
-	public void codeCond(DecacCompiler compiler, boolean bool, Label endAnd) {
-        throw new UnsupportedOperationException("not yet implemented");
-	}
+//	public void codeCond(DecacCompiler compiler, boolean bool, Label endAnd) {
+//        throw new UnsupportedOperationException("not yet implemented");
+//	}
 	
 	@Override
 	public abstract DAddr getAdresse(DecacCompiler compiler);

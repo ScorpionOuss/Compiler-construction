@@ -46,6 +46,18 @@ public class ListDeclVar extends TreeList<AbstractDeclVar> {
      * code Generation and link vars of ListDeclVariable
      * @param compiler
      */
+    public void codeGenAndLinkListDeclVariableMain(DecacCompiler compiler) {
+    	instructionADDSP(compiler);
+    	for (AbstractDeclVar var : getList()) {
+    		//codegenVar
+    		var.codeGenAndLinkDeclVariableMain(compiler);
+    	}
+    }
+    
+    /**
+     * code Generation and link vars of ListDeclVariable
+     * @param compiler
+     */
     public void codeGenAndLinkListDeclVariable(DecacCompiler compiler) {
     	instructionADDSP(compiler);
     	for (AbstractDeclVar var : getList()) {

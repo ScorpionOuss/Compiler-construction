@@ -7,12 +7,14 @@ import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable;
 import fr.ensimag.ima.pseudocode.DAddr;
 import fr.ensimag.ima.pseudocode.GPRegister;
+import fr.ensimag.ima.pseudocode.ImmediateInteger;
 import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.LabelOperand;
 import fr.ensimag.ima.pseudocode.NullOperand;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.RegisterOffset;
 import fr.ensimag.ima.pseudocode.instructions.BEQ;
+import fr.ensimag.ima.pseudocode.instructions.BNE;
 import fr.ensimag.ima.pseudocode.instructions.CMP;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
 
@@ -55,9 +57,6 @@ public class Selection extends AbstractLValue {
     }
     
     
-    @Override
-    protected void codeGenPrint(DecacCompiler compiler){}
-    protected void codeGenPrintX(DecacCompiler compiler){}
 
     @Override
     public void decompile(IndentPrintStream s) {
@@ -100,5 +99,19 @@ public class Selection extends AbstractLValue {
 		// TODO Auto-generated method stub
 		return true;
 	}
+
+	@Override
+	public void codeCond(DecacCompiler compiler, boolean bool, Label etiquette) {
+		codeGenInst(compiler);
+		compiler.addInstruction(new CMP(new ImmediateInteger(0),
+				Register.getR(getRP(compiler))));
+		if (bool) {
+			compiler.addInstruction(new BNE(etiquette));
+		}
+    	else {
+			compiler.addInstruction(new BEQ(etiquette));
+    	}
+	}
+	
 }
 
