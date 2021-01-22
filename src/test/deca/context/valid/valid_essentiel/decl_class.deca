@@ -6,7 +6,7 @@ class A {
 }
 
 class X {
-	void m() {
+	m() {
 		A a = new A();
  		println(a.x);
 	}
@@ -19,8 +19,8 @@ class X {
 
 
 class B extends A {
-	void p() {}
-	void q() {}
+	p() {}
+	q() {}
 }
 
 

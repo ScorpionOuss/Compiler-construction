@@ -491,9 +491,11 @@ type returns[AbstractIdentifier tree]
 literal returns[AbstractExpr tree]
     : INT {
     $tree = new IntLiteral(Integer.parseInt($INT.getText()));
+    setLocation($tree, $INT);
         }
     | fd=FLOAT {
     $tree = new FloatLiteral(Float.parseFloat($fd.getText()));
+    setLocation($tree, $fd);
         }
     | STRING {
     $tree = new StringLiteral($STRING.text.substring(1, $STRING.text.length() - 1));
