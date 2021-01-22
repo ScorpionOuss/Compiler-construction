@@ -1,0 +1,14 @@
+// Description:
+//    Programme de tests de l'utilisation des champs protected.
+//
+
+class A {
+	protected int x;
+}
+
+class B extends A {
+	C c = new C();
+	int y = c.x;
+}
+
+class C extends B {}

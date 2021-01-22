@@ -1,0 +1,32 @@
+// Description:
+//    Programme de tests de l'utilisation des classes dans le main.
+//
+
+class A {
+	int x;
+	float y;
+	
+	void init(){
+		x = 1;
+	}
+	
+}
+
+class B extends A {
+	int z;
+	
+	void init(){
+		y = 1.1;
+	}
+	
+}
+
+{
+	int i = 0;
+	A a = new A();
+	B b = new B();
+	a.init();
+	b.init();
+	println(a.x);
+	println(b.y);
+}

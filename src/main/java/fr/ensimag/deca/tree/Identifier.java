@@ -209,7 +209,6 @@ public class Identifier extends AbstractIdentifier {
 	public Type verifySelection(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition className,
 			ClassDefinition currentClass) throws ContextualError {
 		ExpDefinition localExpDefinition = localEnv.get(name);
-    	ExpDefinition classExpDefinition;
 
     	// Main
     	if (currentClass == null) {
@@ -229,8 +228,6 @@ public class Identifier extends AbstractIdentifier {
 
     	// class currentClass
     	else {
-    		classExpDefinition = currentClass.getMembers().get(name);
-    		
     		if (localExpDefinition == null) {
 				throw new ContextualError("undefined identifier " + this.getName(), getLocation());
     		}

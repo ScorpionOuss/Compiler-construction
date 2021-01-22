@@ -22,7 +22,6 @@ public class IntType extends Type {
 
     @Override
     public boolean sameType(Type otherType) {
-    	// implemented
     	return otherType.isInt();
     }
 

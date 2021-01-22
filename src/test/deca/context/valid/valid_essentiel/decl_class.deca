@@ -1,9 +1,5 @@
 // Description:
 //    Programme de test de declaration de classes.
-//
-class A {
-	protected int x;
-}
 
 class X {
 	m() {
@@ -24,3 +20,6 @@ class B extends A {
 }
 
 
+class C extends B {}
+
+class D extends A {}

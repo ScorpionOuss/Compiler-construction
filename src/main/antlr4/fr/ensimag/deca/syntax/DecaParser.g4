@@ -563,7 +563,7 @@ class_extension returns[AbstractIdentifier tree]
         }
     | /* epsilon */ {
         $tree = new Identifier((new SymbolTable()).create("Object"));
-            
+        $tree.setLocation(Location.BUILTIN);
         }
     ;
 
