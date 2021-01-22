@@ -8,21 +8,21 @@
 	LEA 1(GB), R0
 	STORE R0, 3(GB)
 	LOAD code.A.p, R0
-	STORE R0, 6(GB)
+	STORE R0, 5(GB)
 	LOAD code.A.m, R0
-	STORE R0, 6(GB)
+	STORE R0, 4(GB)
 	LOAD code.Object.equals, R0
 	STORE R0, 4(GB)
 	LEA 3(GB), R0
 	STORE R0, 6(GB)
 	LOAD code.B.p, R0
-	STORE R0, 9(GB)
+	STORE R0, 8(GB)
 	LOAD code.B.q, R0
 	STORE R0, 9(GB)
 	LOAD code.A.p, R0
-	STORE R0, 9(GB)
+	STORE R0, 8(GB)
 	LOAD code.A.m, R0
-	STORE R0, 9(GB)
+	STORE R0, 7(GB)
 	LOAD code.Object.equals, R0
 	STORE R0, 7(GB)
 ; Main program
@@ -118,9 +118,9 @@ init.B:
 	BSR init.A
 	SUBSP #1
 	LOAD -2(LB), R1
-	STORE R2, 1(R1)
+	STORE R2, 3(R1)
 	LOAD -2(LB), R1
-	STORE R2, 2(R1)
+	STORE R2, 4(R1)
 	POP R2
 	RTS
 code.B.p:
