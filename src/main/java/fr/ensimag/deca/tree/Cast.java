@@ -15,21 +15,33 @@ import fr.ensimag.ima.pseudocode.DVal;
 import fr.ensimag.ima.pseudocode.Label;
 import java.io.PrintStream;
 
+import org.apache.commons.lang.Validate;
+
 /**
  *
- * @author ensimag
+ * @author gl16
  */
 public class Cast extends AbstractExpr{
+	
     private AbstractIdentifier type;
     private AbstractExpr expr;
+
     public Cast(AbstractIdentifier type, AbstractExpr expr ){
-       this.type = type;
-       this.expr = expr;
+    	Validate.notNull(type);
+    	Validate.notNull(expr);
+        this.type = type;
+        this.expr = expr;
     }
 
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass) throws ContextualError {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    	Type castType = type.verifyType(compiler);
+    	Type assignType = expr.verifyExpr(compiler, localEnv, currentClass);
+    	if (!(assignType.castCompatible(castType))) {
+    		throw new ContextualError("incompatible cast", this.getLocation());
+    	}
+    	this.setType(castType);
+    	return castType;
     }
 
     @Override
@@ -66,13 +78,14 @@ public class Cast extends AbstractExpr{
 
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
-        type.prettyPrint(s,prefix,false);
-         expr.prettyPrint(s,prefix,false);
+    	type.prettyPrint(s,prefix,false);
+        expr.prettyPrint(s,prefix,true);
     }
 
     @Override
     protected void iterChildren(TreeFunction f) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    	type.iter(f);
+    	expr.iter(f);
     }
 
 

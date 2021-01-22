@@ -85,7 +85,7 @@ public class DeclMethod extends AbstractDeclMethod {
     	Signature signature = new Signature();
     	listDeclParam.verifyListDeclParam(compiler, signature);
     	MethodDefinition methodDefinition = new MethodDefinition(type, name.getLocation(),
-    			signature, currentClass.getNumberOfFields() + 1);
+    			signature, currentClass.getNumberOfMethods() + 1);
     	
     	// the definition used for the name in this class or in a superclass (if it exists)
     	// only used if the name is not defined in this class
@@ -133,5 +133,8 @@ public class DeclMethod extends AbstractDeclMethod {
 		assert(name.getDefinition() instanceof MethodDefinition);//defensive programming
 	}
 
+	public AbstractIdentifier getName() {
+		return name;
+	}
     
 }
