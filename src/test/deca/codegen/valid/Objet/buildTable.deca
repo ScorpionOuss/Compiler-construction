@@ -10,6 +10,8 @@ class A {
 }
 
 class B extends A {
+    int z;
+    int l;
     void p() {}
     void q() {}
 }
