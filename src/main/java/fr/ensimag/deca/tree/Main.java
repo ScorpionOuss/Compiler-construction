@@ -44,10 +44,10 @@ public class Main extends AbstractMain {
     protected void codeGenMain(DecacCompiler compiler) {
     	
     	//Variables declaration
-    	declVariables.codeGenAndLinkListDeclVariable(compiler);
+    	declVariables.codeGenAndLinkListDeclVariableMain(compiler);
         compiler.addComment("Beginning of main instructions:");
         //instructions
-        insts.codeGenListInst(compiler);
+        insts.codeGenListInst(compiler, "");
     }
     
     @Override

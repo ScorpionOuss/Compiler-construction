@@ -7,6 +7,7 @@ import fr.ensimag.deca.tools.DecacInternalError;
 import fr.ensimag.deca.tools.SymbolTable;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
 import fr.ensimag.deca.tree.Location;
+import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.deca.context.EnvironmentExp.DoubleDefException;
 
 /**
@@ -49,8 +50,10 @@ public class EnvironmentType {
 			Signature signature = new Signature();
 			signature.add(objectDefinition.getType());
 			Type returnType = this.get(symbolTable.create("boolean")).getType();
-			MethodDefinition equalsDefinition = new MethodDefinition(returnType, Location.BUILTIN, signature, 0);
+			MethodDefinition equalsDefinition = new MethodDefinition(returnType, Location.BUILTIN, signature, 1);
+			equalsDefinition.setLabel(new Label("code.Object.equals"));
 			objectDefinition.getMembers().declare(symbolTable.create("equals"), equalsDefinition);
+			objectDefinition.setNumberOfMethods(1);
 			// type_class(Object) definition
 			this.declare(symbolTable.create("Object"), objectDefinition); 
 			

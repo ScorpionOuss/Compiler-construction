@@ -56,10 +56,7 @@ public class TestPlusWithoutMock {
             throw new UnsupportedOperationException("Should not be called.");
         }
         
-        @Override
-        public void codeExp(DecacCompiler compiler, int registerPointer) {
-        	
-        }
+       
 
         /**
          * Check that the object has been properly used after the test.
@@ -74,14 +71,21 @@ public class TestPlusWithoutMock {
 			return false;
 		}
 
+
 		@Override
-		public DVal getAdresse() {
+		public void codeCond(DecacCompiler compiler, boolean bool, Label endAnd) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public DVal getAdresse(DecacCompiler compiler) {
 			// TODO Auto-generated method stub
 			return null;
 		}
 
 		@Override
-		public void codeCond(DecacCompiler compiler, boolean bool, Label endAnd) {
+		protected void codeGenInst(DecacCompiler compiler) {
 			// TODO Auto-generated method stub
 			
 		}

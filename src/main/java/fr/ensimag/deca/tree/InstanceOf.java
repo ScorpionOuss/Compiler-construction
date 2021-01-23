@@ -8,6 +8,7 @@ package fr.ensimag.deca.tree;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
+import fr.ensimag.deca.context.Definition;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.tools.IndentPrintStream;
@@ -15,34 +16,43 @@ import fr.ensimag.ima.pseudocode.DVal;
 import fr.ensimag.ima.pseudocode.Label;
 import java.io.PrintStream;
 
+import org.apache.commons.lang.Validate;
+
 /**
  *
  * @author ensimag
  */
 public class InstanceOf extends AbstractExpr{
+	
     private AbstractExpr expr;
     private AbstractIdentifier type;
+
     public InstanceOf(AbstractExpr expr, AbstractIdentifier type){
+    	Validate.notNull(expr);
+    	Validate.notNull(type);
         this.expr = expr;
         this.type = type;
      }
-    @Override
-    public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass) throws ContextualError {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
     @Override
-    public void codeExp(DecacCompiler compiler, int registerPointer) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass) throws ContextualError {
+    	Type exprType = expr.verifyExpr(compiler, localEnv, currentClass);
+    	Definition otherDef = compiler.getEnvironment().get(type.getName());
+    	if (otherDef == null) throw new ContextualError("the type " + type.getName() + " does not exist",
+    			type.getLocation());
+    	Type otherType = otherDef.getType();
+    	if (!exprType.typeInstanceofOp(otherType)) {
+    		throw new ContextualError("incompatible types with instanceof operation", this.getLocation());
+    	}
+    	type.setType(otherType);
+    	type.setDefinition(otherDef);
+    	return exprType;
     }
+
+    
 
     @Override
     public boolean adressable() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public DVal getAdresse() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -53,7 +63,6 @@ public class InstanceOf extends AbstractExpr{
 
     @Override
     public void decompile(IndentPrintStream s) {
-        
          s.print("(");
          expr.decompile(s);
          type.decompile(s);
@@ -68,7 +77,18 @@ public class InstanceOf extends AbstractExpr{
 
     @Override
     protected void iterChildren(TreeFunction f) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    	expr.iter(f);
+    	type.iter(f);
     }
+	@Override
+	public DVal getAdresse(DecacCompiler compiler) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	protected void codeGenInst(DecacCompiler compiler) {
+		// TODO Auto-generated method stub
+		
+	}
     
 }

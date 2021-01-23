@@ -50,11 +50,11 @@ public class ReadInt extends AbstractReadExpr {
 
 	@Override
 	public
-	void codeExp(DecacCompiler compiler, int registerPointer) {
+	void codeGenInst(DecacCompiler compiler) {
 		compiler.addInstruction(new RINT());
 		//IO exception
 		compiler.addInstruction(new BOV(new Label("io_error")));
 		//LOAD
-		compiler.addInstruction(new LOAD(Register.R1, Register.getR(registerPointer)));
+		compiler.addInstruction(new LOAD(Register.R1, Register.getR(getRP(compiler))));
 	}
 }

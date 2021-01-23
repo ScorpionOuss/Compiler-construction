@@ -9,6 +9,7 @@
 
 // Un exemple de programme Deca
 
+
 class A {
    protected int x ;
    int getX() {

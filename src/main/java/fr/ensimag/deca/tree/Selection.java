@@ -7,7 +7,18 @@ import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable;
 import fr.ensimag.ima.pseudocode.DAddr;
 import fr.ensimag.ima.pseudocode.GPRegister;
-import org.apache.commons.lang.Validate;
+import fr.ensimag.ima.pseudocode.ImmediateInteger;
+import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.LabelOperand;
+import fr.ensimag.ima.pseudocode.NullOperand;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.RegisterOffset;
+import fr.ensimag.ima.pseudocode.instructions.BEQ;
+import fr.ensimag.ima.pseudocode.instructions.BNE;
+import fr.ensimag.ima.pseudocode.instructions.CMP;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
+
+import org.apache.commons.lang.Validate;import org.apache.log4j.helpers.Loader;
 
 import java.io.PrintStream;
 public class Selection extends AbstractLValue {
@@ -35,20 +46,25 @@ public class Selection extends AbstractLValue {
         this.setType(type);
         return type;
     }
+        
+        
     @Override
     protected void codeGenInst(DecacCompiler compiler){
+    	//Il faut revoir si on va avoir besoin d'un 2 ème registre
+    	DAddr addr = getAdresse(compiler);
+    	compiler.addInstruction(new LOAD(addr, 
+    			Register.getR(getRP(compiler))));
     }
-    public void codegenExpr(DecacCompiler compiler,GPRegister register){
-    }
-    @Override
-    protected void codeGenPrint(DecacCompiler compiler){}
-    protected void codeGenPrintX(DecacCompiler compiler){}
+    
+    
+
     @Override
     public void decompile(IndentPrintStream s) {
         obj.decompile(s);
         s.print(".");
         field.decompile(s);
     }
+    
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
         obj.prettyPrint(s, prefix, false);
@@ -60,20 +76,42 @@ public class Selection extends AbstractLValue {
         obj.iter(f);
         field.iter(f);
     }
+    
 	@Override
-	public DAddr getAdresse() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public void codeExp(DecacCompiler compiler, int registerPointer) {
-		// TODO Auto-generated method stub
+	public DAddr getAdresse(DecacCompiler compiler) {
+		int registerPointer = getRP(compiler);
 		
+		obj.codeGenInst(compiler);
+		/*********Revoir si le load fait l'affaire ou il faut
+		 * ajouter le cmp. et dans ce cas on replace l'objet.
+		 */
+//		compiler.addInstruction(new CMP(new NullOperand(),
+//				Register.getR(getRP(compiler))));
+		compiler.addInstruction(new BEQ(new Label("dereferencement.null")));
+		assert registerPointer == getRP(compiler);
+//      		obj.codeGenInst(compiler);
+		return new RegisterOffset(field.getFieldDefinition().getIndex(),
+				Register.getR(getRP(compiler)));
 	}
+	
 	@Override
 	public boolean adressable() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
+
+	@Override
+	public void codeCond(DecacCompiler compiler, boolean bool, Label etiquette) {
+		codeGenInst(compiler);
+		compiler.addInstruction(new CMP(new ImmediateInteger(0),
+				Register.getR(getRP(compiler))));
+		if (bool) {
+			compiler.addInstruction(new BNE(etiquette));
+		}
+    	else {
+			compiler.addInstruction(new BEQ(etiquette));
+    	}
+	}
+	
 }
 

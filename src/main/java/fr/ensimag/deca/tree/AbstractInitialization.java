@@ -29,6 +29,9 @@ public abstract class AbstractInitialization extends Tree {
 
 	protected abstract void codeGenInitialization(DecacCompiler compiler);
 
+	
 	protected abstract void STOREInstrution(DecacCompiler compiler, Definition definition);
+	
+
 
 }

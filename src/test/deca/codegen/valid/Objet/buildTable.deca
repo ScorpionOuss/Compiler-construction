@@ -1,0 +1,32 @@
+class A {
+    boolean x;
+    int y = 2;
+
+    boolean m(int i) {
+        int u = 1;
+        this.y = 2;
+        u = y + 2 + i;
+        println(u);
+        println("Ben oui ça marche!");
+        return x;
+    }
+    void p() {}
+}
+
+class B extends A {
+    int z;
+    int l;
+    void p() {}
+    void q() {}
+}
+
+{
+    A a = new A();
+    a.x = true;
+    if (a.x){
+        println("Et ben oui");
+    }
+    if (a.m(3)){
+    print("et ben oui encore une fois!");
+    }
+}

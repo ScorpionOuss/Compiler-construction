@@ -1,0 +1,25 @@
+// Description:
+//    champs et methodes simples
+//
+// Resultats:
+//  6
+//
+// Historique:
+//    cree le 01/01/2021
+
+// Un exemple de programme Deca
+
+class A {
+    int x = 1;
+
+    int m(int i){
+        x = x + i;
+        return x;
+    }
+
+}
+
+{
+    A a = new A();
+    print(a.m(5));
+}

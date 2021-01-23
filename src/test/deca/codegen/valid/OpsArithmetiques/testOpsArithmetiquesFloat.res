@@ -1,2 +1,2 @@
-ERROR: could not execute ima for your platform (x86_64-Darwin), sorry.
-Try recompiling ima from the sources/ directory.
+x = 4.50000e+01
+division entière: 2.25000e+01

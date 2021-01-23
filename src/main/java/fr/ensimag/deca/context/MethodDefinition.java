@@ -1,7 +1,14 @@
 package fr.ensimag.deca.context;
 
+import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.tree.Location;
 import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.LabelOperand;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.RegisterOffset;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
+import fr.ensimag.ima.pseudocode.instructions.STORE;
+
 import org.apache.commons.lang.Validate;
 
 /**
@@ -17,12 +24,14 @@ public class MethodDefinition extends ExpDefinition {
         return true;
     }
 
+    @Override
     public Label getLabel() {
         Validate.isTrue(label != null,
                 "setLabel() should have been called before");
         return label;
     }
-
+    
+    @Override
     public void setLabel(Label label) {
         this.label = label;
     }
@@ -30,7 +39,11 @@ public class MethodDefinition extends ExpDefinition {
     public int getIndex() {
         return index;
     }
+    
 
+    public void setIndex(int index) {
+    	this.index = index;
+    }
     private int index;
 
     @Override
@@ -69,4 +82,14 @@ public class MethodDefinition extends ExpDefinition {
         return false;
     }
 
+	public void codeTable(DecacCompiler compiler, int offset) {
+		// TODO Auto-generated method stub
+		compiler.addInstruction(new LOAD(new LabelOperand(getLabel()),
+		Register.R0));
+
+		compiler.addInstruction(new STORE(Register.R0, 
+		new RegisterOffset(offset + getIndex(),
+				Register.GB)));
+	}
+    
 }

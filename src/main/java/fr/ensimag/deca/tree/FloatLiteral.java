@@ -70,8 +70,8 @@ public class FloatLiteral extends AbstractExpr {
 
 	@Override
 	public
-	void codeExp(DecacCompiler compiler, int registerPointer) {
-		compiler.addInstruction(new LOAD(value, Register.getR(registerPointer)));		
+	void codeGenInst(DecacCompiler compiler) {
+		compiler.addInstruction(new LOAD(value, Register.getR(getRP(compiler))));		
 	}
 	
 	@Override
@@ -81,7 +81,7 @@ public class FloatLiteral extends AbstractExpr {
 	}
 	
 	@Override
-	public DVal getAdresse() {
+	public DVal getAdresse(DecacCompiler compiler) {
 		// TODO Auto-generated method stub
 		return new ImmediateFloat(value);
 	}

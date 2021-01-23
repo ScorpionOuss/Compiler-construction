@@ -1,0 +1,32 @@
+; start main program
+	TSTO #1
+	BOV stack_overflow_error
+; Main program
+	ADDSP #1
+	RINT
+	BOV io_error
+	LOAD R1, R2
+	STORE R2, 1(GB)
+; Beginning of main instructions:
+	WSTR "x = "
+	LOAD 1(GB), R2
+	LOAD R2, R1
+	WINT
+	HALT
+stack_overflow_error:
+	WSTR "Error: Stack Overflow"
+	WNL
+	ERROR
+io_error:
+	WSTR "Error: Input/Output error"
+	WNL
+	ERROR
+ArithFloat_Error:
+	WSTR "Error: Débordement arithmétique sur flottants"
+	WNL
+	ERROR
+ZeroDivision_Error:
+	WSTR "Error: Division entière par 0"
+	WNL
+	ERROR
+; end main program

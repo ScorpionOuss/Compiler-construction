@@ -2,6 +2,8 @@ package fr.ensimag.deca.context;
 
 import fr.ensimag.deca.tree.Location;
 import fr.ensimag.ima.pseudocode.DAddr;
+import fr.ensimag.ima.pseudocode.Label;
+
 
 /**
  * Definition of an identifier.
@@ -84,5 +86,17 @@ public abstract class Definition {
 	public abstract void setOperand(DAddr operand);
 
 	public abstract DAddr getOperand();
+
+	public int getIndex() {
+		throw new NoSuchFieldError();
+	}
+
+	public void setLabel(Label label) {
+		throw new UnsupportedOperationException("Not supposed to be used");
+	}
+	
+	public Label getLabel() {
+		throw new UnsupportedOperationException("Not supposed to be used");
+	}
 
 }

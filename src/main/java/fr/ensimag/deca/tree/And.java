@@ -22,25 +22,42 @@ public class And extends AbstractOpBool {
         return "&&";
     }
 
+    /**
+     * subFunction of codeGenInst dealing with non overload case
+     * @param compiler
+     */
+   private void normalCase(DecacCompiler compiler) {
+	   compiler.registersManag.incrementRegisterPointer();
+		getRightOperand().codeGenInst(compiler);
+		compiler.addInstruction(new MUL(Register.getR(getRP(compiler)), 
+				Register.getR(getRP(compiler) - 1)));
+		compiler.registersManag.decrementRegisterPointer();
+   }
+   
+   /**
+    * SubFunction of codeGenInst dealing with overload case
+    * @param compiler
+    */
+   private void depassementCase(DecacCompiler compiler) {
+	   assert(getRP(compiler) == getMP(compiler));
+		/*Manage capacity overrun*/
+		depassementCapacite(compiler);
+		//Plus
+		compiler.addInstruction(new MUL(Register.R1,
+				Register.getR(getRP(compiler))));
+   }
+   
 	@Override
-	public
-	void codeExp(DecacCompiler compiler, int registerPointer) {
-		assert(registerPointer <= compiler.numberOfRegister);
-		
-		getLeftOperand().codeExp(compiler, registerPointer);
-		if (registerPointer < compiler.numberOfRegister) {
-			getRightOperand().codeExp(compiler, registerPointer + 1);
-			compiler.addInstruction(new MUL(Register.getR(registerPointer + 1), 
-					Register.getR(registerPointer)));
+	protected void codeGenInst(DecacCompiler compiler) {
+		int registerPointer = getRP(compiler);
+		getLeftOperand().codeGenInst(compiler);
+		if (getRP(compiler) < getMP(compiler)) {
+			normalCase(compiler);
 		}
 		else {
-			assert(registerPointer == compiler.numberOfRegister);
-			/*Manage capacity overrun*/
-			depassementCapacite(compiler);
-			//Plus
-			compiler.addInstruction(new MUL(Register.R1,
-					Register.getR(compiler.numberOfRegister)));
+			depassementCase(compiler);
 		}
+		assert registerPointer == getRP(compiler);
 	}
 
 
@@ -54,7 +71,7 @@ public class And extends AbstractOpBool {
 		//〈Code(C,vrai,E)〉
 		else {
 			Label endAnd = new Label("endAnd." + 
-					String.valueOf(compiler.incrementAndCounter()));
+					String.valueOf(compiler.labelsManager.incrementAndCounter()));
 			getLeftOperand().codeCond(compiler, !bool, endAnd);
 			getRightOperand().codeCond(compiler, bool, etiquette);
 			compiler.addLabel(endAnd);

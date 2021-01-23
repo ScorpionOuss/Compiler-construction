@@ -1,2 +1,4 @@
-ERROR: could not execute ima for your platform (x86_64-Darwin), sorry.
-Try recompiling ima from the sources/ directory.
+ok
+1
+1.10000e+00
+ok11.10000e+00

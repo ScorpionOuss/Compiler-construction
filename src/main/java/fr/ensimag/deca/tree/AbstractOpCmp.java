@@ -44,31 +44,64 @@ public abstract class AbstractOpCmp extends AbstractBinaryExpr {
     	}
     	throw new ContextualError("The binary operation used is not defined for the operands types", this.getLocation());
     }
+    
+    /**
+     * 
+     * @param compiler
+     */
+    private void adressableCase(DecacCompiler compiler) {
+    	compiler.addInstruction(new CMP(getRightOperand().getAdresse(compiler),
+				Register.getR(getRP(compiler))));
+    }
 
-    protected void codeCMP(DecacCompiler compiler, int registerPointer) {
-		assert(registerPointer <= compiler.numberOfRegister);
+    /**
+     * 
+     * @param compiler
+     */
+    private void nonDepassementCase(DecacCompiler compiler) {
+    	compiler.registersManag.incrementRegisterPointer();
+    	getRightOperand().codeGenInst(compiler);
+    	compiler.addInstruction(new CMP(Register.getR(getRP(compiler)), 
+				Register.getR(getRP(compiler) - 1)));
+		compiler.registersManag.decrementRegisterPointer();
+    }
+    
+    /**
+     * 
+     * @param compiler
+     */
+    private void depassementCase(DecacCompiler compiler) {
+    	assert(getRP(compiler) == getMP(compiler));
+    	
+		/*Manage capacity overrun*/
+		depassementCapacite(compiler);
+		
+		compiler.addInstruction(new CMP(Register.R1, 
+				Register.getR(getRP(compiler))));
+    }
+    
+    /**
+     * 
+     * @param compiler
+     */
+    protected void codeCMP(DecacCompiler compiler) {
+    	int registerPointer = getRP(compiler);
+    	
+    	getLeftOperand().codeGenInst(compiler);
 
     	if (getRightOperand().adressable()) {
-			getLeftOperand().codeExp(compiler, registerPointer);
-			compiler.addInstruction(new CMP(getRightOperand().getAdresse(),
-					Register.getR(registerPointer)));
+    		adressableCase(compiler);
     	}
     	else {
 			assert(getRightOperand().adressable() == false);
-			getLeftOperand().codeExp(compiler, registerPointer);
-			if (registerPointer < compiler.numberOfRegister) {
-				getRightOperand().codeExp(compiler, registerPointer + 1);
-				compiler.addInstruction(new CMP(Register.getR(registerPointer + 1), 
-						Register.getR(registerPointer)));
+			if (getRP(compiler) < getMP(compiler)) {
+				nonDepassementCase(compiler);
 			}
 			else {
-				assert( registerPointer == compiler.numberOfRegister);
-				/*Manage capacity overrun*/
-				depassementCapacite(compiler);
-				
-				compiler.addInstruction(new CMP(Register.R1, 
-						Register.getR(compiler.numberOfRegister)));
+				depassementCase(compiler);
 			}
     	}
+    	
+    	assert registerPointer == getRP(compiler);
     }
 }

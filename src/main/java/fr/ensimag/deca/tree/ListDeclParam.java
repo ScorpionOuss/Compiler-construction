@@ -10,6 +10,8 @@ import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.Signature;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.RegisterOffset;
 
 /**
  * List of method parameters.
@@ -33,5 +35,12 @@ public class ListDeclParam extends TreeList<AbstractDeclParam> {
     		declParam.verifyDeclParam(compiler, signature);
     	}
     }
-    
+
+	public void setParametersDefinition() {
+		int compteur = 3;
+		for (AbstractDeclParam param : getList()) {
+			param.getNameDef().setOperand(new RegisterOffset(-compteur, Register.LB));
+			compteur++;
+		}
+	}
 }

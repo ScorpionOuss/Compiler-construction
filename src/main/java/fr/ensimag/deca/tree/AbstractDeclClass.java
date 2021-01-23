@@ -34,4 +34,8 @@ public abstract class AbstractDeclClass extends Tree {
 
 	protected abstract void buildTable(DecacCompiler compiler);
 
+	protected abstract void fieldsInitMethodsGen(DecacCompiler compiler);
+
+	protected abstract void classMethodsGen(DecacCompiler compiler);
+
 }

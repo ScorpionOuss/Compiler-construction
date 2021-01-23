@@ -22,60 +22,90 @@ public class Divide extends AbstractOpArith {
         return "/";
     }
 
-
-	@Override
-	public
-	void codeExp(DecacCompiler compiler, int registerPointer) {
-		/*Il faut absolument factoriser*/
-		assert(registerPointer <= compiler.numberOfRegister);
-		
-		addZeroDivisionInstruction(compiler, registerPointer);
-		if (getRightOperand().adressable()) {
-			getLeftOperand().codeExp(compiler, registerPointer);
-			if (getType().isInt()) {
-			compiler.addInstruction(new QUO(getRightOperand().getAdresse(),
-					Register.getR(registerPointer)));
+    /**
+     * 
+     * @param compiler
+     */
+    private void adressableCase(DecacCompiler compiler) {
+    	if (getType().isInt()) {
+			compiler.addInstruction(new QUO(getRightOperand().getAdresse(compiler),
+					Register.getR(getRP(compiler))));
 			}
 			else {
 				assert(getType().isFloat());
-				compiler.addInstruction(new DIV(getRightOperand().getAdresse(),
-						Register.getR(registerPointer)));
+				compiler.addInstruction(new DIV(getRightOperand().getAdresse(compiler),
+						Register.getR(getRP(compiler))));
 			}
+    }
+    
+    /**
+     * 
+     * 
+     * @param compiler
+     */
+    private void nonDepassementCase(DecacCompiler compiler) {
+    	
+    	compiler.registersManag.incrementRegisterPointer();
+    	getRightOperand().codeGenInst(compiler);
+		if (getType().isInt()) {
+			compiler.addInstruction(new QUO(Register.getR(getRP(compiler)),
+					Register.getR(getRP(compiler) - 1)));
+			}
+		else {
+			assert(getType().isFloat());
+			compiler.addInstruction(new DIV(Register.getR(getRP(compiler)),
+					Register.getR(getRP(compiler) - 1)));
+		}
+		compiler.registersManag.decrementRegisterPointer();
+    }
+    
+    /**
+     * 
+     * @param compiler
+     */
+    private void depassementCase(DecacCompiler compiler) {
+    	assert(getRP(compiler) == getMP(compiler));
+    	
+		/*Manage capacity overrun*/
+		depassementCapacite(compiler);
+
+		//Minus
+		if (getType().isInt()) {
+			compiler.addInstruction(new QUO(Register.R1,
+					Register.getR(getRP(compiler))));
+			}
+			else {
+				assert(getType().isFloat());
+				compiler.addInstruction(new DIV(Register.R1,
+						Register.getR(getRP(compiler))));
+			}
+    }
+    
+	@Override
+	public void codeGenInst(DecacCompiler compiler) {		
+		int registerPointer = getRP(compiler);
+		
+		addZeroDivisionInstruction(compiler);
+		
+		getLeftOperand().codeGenInst(compiler);		
+
+		if (getRightOperand().adressable()) {
+			adressableCase(compiler);
 		}
 		
 		else {
-			assert(getRightOperand().adressable() == false);
-			getLeftOperand().codeExp(compiler, registerPointer);
-			if (registerPointer < compiler.numberOfRegister) {
-				getRightOperand().codeExp(compiler, registerPointer + 1);
-				if (getType().isInt()) {
-					compiler.addInstruction(new QUO(Register.getR(registerPointer + 1),
-							Register.getR(registerPointer)));
-					}
-				else {
-					assert(getType().isFloat());
-					compiler.addInstruction(new DIV(Register.getR(registerPointer + 1),
-							Register.getR(registerPointer)));
-				}
+	    	assert(getRightOperand().adressable() == false);
+		
+			getLeftOperand().codeGenInst(compiler);
+			if (getRP(compiler) < getMP(compiler)) {
+				nonDepassementCase(compiler);
 			}
 			else {
-				assert(registerPointer == compiler.numberOfRegister);
-				/*Manage capacity overrun*/
-				depassementCapacite(compiler);
-
-				//Minus
-				if (getType().isInt()) {
-					compiler.addInstruction(new QUO(Register.R1,
-							Register.getR(registerPointer)));
-					}
-					else {
-						assert(getType().isFloat());
-						compiler.addInstruction(new DIV(Register.R1,
-								Register.getR(registerPointer)));
-					}
+				depassementCase(compiler);
+				}
 			}
-		}
 		addArithFloatInstruction(compiler);
-	}
 
+		assert registerPointer == getRP(compiler);
+	}
 }
