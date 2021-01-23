@@ -15,6 +15,7 @@ import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.LabelOperand;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.RegisterOffset;
+import fr.ensimag.ima.pseudocode.instructions.ADDSP;
 import fr.ensimag.ima.pseudocode.instructions.BSR;
 import fr.ensimag.ima.pseudocode.instructions.LEA;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
@@ -128,6 +129,7 @@ public class DeclClass extends AbstractDeclClass {
 
 	@Override
 	protected void buildTable(DecacCompiler compiler) {
+		compiler.addInstruction(new ADDSP(new ImmediateInteger(name.getClassDefinition().getNumberOfMethods())));
 		//Il faut régler le problème de dAddr..
 		int offset = compiler.stackManager.getMethodStackCounter() + 1;
 		assert(name.getDefinition() instanceof ClassDefinition);
@@ -175,54 +177,52 @@ public class DeclClass extends AbstractDeclClass {
 
 	@Override
 	protected void fieldsInitMethodsGen(DecacCompiler compiler) {
-//		//save stackCounter
-//		compiler.stackManager.saveStackPointers();
-//		//deal with labels
-//		compiler.addLabel(new Label("init." + name.getName().getName()));
-//		//pick up insertion line 
-//		int snapShotLines = compiler.currentLinesSize();
-//		//ADDSP
-//		
-//		//Save registers
-//		compiler.registersManag.saveRegisters(compiler);
-//		
-//		//Method code
-//		RegisterOffset offSetLB = new RegisterOffset(-2, Register.LB);
-//		compiler.addInstruction(new LOAD(offSetLB, Register.R1));
-//		
-//		/*****TODO revoir si il faut initialiser avant les champs propres à 0*****/
-//		////SuperClass attributes initialization
-//		compiler.addInstruction(new PUSH(Register.R1));
-//		compiler.stackManager.incrementStackCounterMax(1);
-//		compiler.addInstruction(new BSR(new LabelOperand( new 
-//				Label("init." +superClass.getName().getName()))));
-//		compiler.addInstruction(new SUBSP(new ImmediateInteger(1)));
-//		
-//		////PROPRE attributes [OK]
-//		/*****À REVOIR SI ON TRAVAILLE TOUJOURS AVEC R0 ET R1*****/
-//
-//		fields.initFields(compiler);
-//		
-//		/*****On restore le nombre de registres qu'utilise la classe*****/
-//		//insert save Instructions
-//		for (int i = compiler.registersManag.getMaxRegisterPointer(); i >= 2; i--) {
-//			compiler.addInstruction(new PUSH(Register.getR(i)), snapShotLines);
-//		}
-//		//Restore registers.
-//		for (int i = compiler.registersManag.getMaxRegisterPointer(); i >= 2; i--) {
-//			compiler.addInstruction(new POP(Register.getR(i)));
-//		}
-//		
-//		compiler.registersManag.restoreRegisters(compiler);
-//		//RTS
-//		compiler.addInstruction(new RTS());
-//		//Insert TSTO and BOV
-//		compiler.addStackVerificationBlock(snapShotLines);
-//		//Restore stackCounter
-//		compiler.stackManager.restoreStackPointers();
+		//save stackCounter
+		compiler.stackManager.saveStackPointers();
+		//deal with labels
 		compiler.addLabel(new Label("init." + name.getName().getName()));
+		//pick up insertion line 
+		int snapShotLines = compiler.currentLinesSize();
+		//ADDSP
+		
+		//Save registers
+		compiler.registersManag.saveRegisters(compiler);
+		
+		//Method code
+		RegisterOffset offSetLB = new RegisterOffset(-2, Register.LB);
+		compiler.addInstruction(new LOAD(offSetLB, Register.R1));
+		
+		/*****TODO revoir si il faut initialiser avant les champs propres à 0*****/
+		////SuperClass attributes initialization
+		compiler.addInstruction(new PUSH(Register.R1));
+		compiler.stackManager.incrementStackCounterMax(1);
+		compiler.addInstruction(new BSR(new LabelOperand( new 
+				Label("init." +superClass.getName().getName()))));
+		compiler.addInstruction(new SUBSP(new ImmediateInteger(1)));
+		
+		////PROPRE attributes [OK]
+		/*****À REVOIR SI ON TRAVAILLE TOUJOURS AVEC R0 ET R1*****/
 
+		fields.initFields(compiler);
+		
+		/*****On restore le nombre de registres qu'utilise la classe*****/
+		//insert save Instructions
+		for (int i = compiler.registersManag.getMaxRegisterPointer(); i >= 2; i--) {
+			compiler.addInstruction(new PUSH(Register.getR(i)), snapShotLines);
+		}
+		//Restore registers.
+		for (int i = compiler.registersManag.getMaxRegisterPointer(); i >= 2; i--) {
+			compiler.addInstruction(new POP(Register.getR(i)));
+		}
+		
+		compiler.registersManag.restoreRegisters(compiler);
+		//RTS
 		compiler.addInstruction(new RTS());
+		//Insert TSTO and BOV
+		compiler.addStackVerificationBlock(snapShotLines);
+		//Restore stackCounter
+		compiler.stackManager.restoreStackPointers();
+
 	}
 
 	@Override
