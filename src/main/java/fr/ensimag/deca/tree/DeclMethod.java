@@ -128,24 +128,24 @@ public class DeclMethod extends AbstractDeclMethod {
     	else currentClass.incNumberOfMethods();
     }
     
-	@Override
-	protected void buidTable(DecacCompiler compiler, String className, int offset) {
-		
-		assert(name.getDefinition() instanceof MethodDefinition);//defensive programming
-		//set method label
-		name.getMethodDefinition().setLabel(new Label("code." + className + "." +
-				name.getName().getName()));
-		
-		//add instructions 
-		compiler.addInstruction(new LOAD(new LabelOperand(name.getMethodDefinition().getLabel()),
-				Register.R0));
-		
-		compiler.addInstruction(new STORE(Register.R0, 
-				new RegisterOffset(offset + name.getMethodDefinition().getIndex(),
-						Register.GB)));
-		System.out.print(name.getMethodDefinition().getLabel());
-		System.out.println(name.getMethodDefinition().getIndex());
-	}
+//	@Override
+//	protected void buidTable(DecacCompiler compiler, String className, int offset) {
+//		
+//		assert(name.getDefinition() instanceof MethodDefinition);//defensive programming
+//		//set method label
+//		name.getMethodDefinition().setLabel(new Label("code." + className + "." +
+//				name.getName().getName()));
+//		
+//		//add instructions 
+//		compiler.addInstruction(new LOAD(new LabelOperand(name.getMethodDefinition().getLabel()),
+//				Register.R0));
+//		
+//		compiler.addInstruction(new STORE(Register.R0, 
+//				new RegisterOffset(offset + name.getMethodDefinition().getIndex(),
+//						Register.GB)));
+//		System.out.print(name.getMethodDefinition().getLabel());
+//		System.out.println(name.getMethodDefinition().getIndex());
+//	}
 	
 
 	@Override

@@ -24,7 +24,6 @@ public abstract class AbstractDeclMethod extends Tree {
             ClassDefinition currentClass)
             throws ContextualError;
 
-	protected abstract void buidTable(DecacCompiler compiler, String className, int offset);
 	protected abstract void verifyMethodBody(DecacCompiler compiler, ClassDefinition classDefinition) throws ContextualError;
 
 

@@ -322,7 +322,6 @@ public class Identifier extends AbstractIdentifier {
 	@Override
 	public
 	void codeGenInst(DecacCompiler compiler) {
-		System.out.println("ident = " + getRP(compiler));
 		compiler.addInstruction(new LOAD(getAdresse(compiler),
 				Register.getR(getRP(compiler))));
 	}

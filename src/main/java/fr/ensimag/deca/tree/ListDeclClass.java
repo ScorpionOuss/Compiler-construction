@@ -68,6 +68,7 @@ public class ListDeclClass extends TreeList<AbstractDeclClass> {
 		compiler.addInstruction(new ADDSP(new ImmediateInteger(compiler.stackManager.getMethodStackCounter() + 1)), 
 				1);
     }    
+    
     /**
      * Second Pass of [GenCode]
      * @param compiler

@@ -129,13 +129,12 @@ public class DeclClass extends AbstractDeclClass {
 
 	@Override
 	protected void buildTable(DecacCompiler compiler) {
-		compiler.addInstruction(new ADDSP(new ImmediateInteger(name.getClassDefinition().getNumberOfMethods())));
 		//Il faut régler le problème de dAddr..
 		int offset = compiler.stackManager.getMethodStackCounter() + 1;
 		assert(name.getDefinition() instanceof ClassDefinition);
 		name.getClassDefinition().setOperand(new 
 				RegisterOffset(offset, Register.GB));
-		System.out.println(offset);
+//		System.out.println(offset);
 		compiler.stackManager.incrementMethodStackCounter(name.getClassDefinition().getNumberOfMethods() + 1);
 		//add superClass methods table pointer
 		//À Revoir TODO

@@ -1,0 +1,39 @@
+// Description:
+//    champs et methodes simples
+//
+// Resultats:
+//
+// Historique:
+//    cree le 01/01/2021
+
+// Un exemple de programme Deca
+
+class Mere{
+    
+    int methMere1(){
+    return 1;
+    }
+
+    void methMere2(){
+    }
+
+    void methMere3(){
+    }
+}
+
+class Fille extends Mere{
+
+    void methFille(){
+    }
+
+    void methMere2(){
+    }
+}
+
+class Pfille extends Fille{
+    void methPfille(){
+    }
+
+    void methMere2(){
+    }
+}

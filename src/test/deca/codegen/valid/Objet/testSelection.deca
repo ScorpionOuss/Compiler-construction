@@ -1,0 +1,50 @@
+// Description:
+//    champs et methodes simples
+//
+// Resultats:
+//      b.x = 3 ?: 3
+//      a.x = 1 ?: 1
+//      Oui!
+//      Et encore oui!
+//      1
+//
+// Historique:
+//    cree le 01/01/2021
+
+// Un exemple de programme Deca
+
+class A {
+    int x = 1;
+    int y = 2;
+
+    boolean m = true;
+
+    int r(){
+        return this.x;
+        }
+}
+
+class B extends A {
+    int x = 3;
+    int z = 4;
+}
+
+{
+    B b = new B();
+    A a = new A();
+
+    println("b.x = 3 ?: ", b.x);
+
+    println("a.x = 1 ?: ", a.x);
+
+    if (a.m) {
+        println("Oui!");
+        }
+
+    if (b.m) {
+        println("Et encore oui!");
+        }
+
+    println(b.r());
+}
+

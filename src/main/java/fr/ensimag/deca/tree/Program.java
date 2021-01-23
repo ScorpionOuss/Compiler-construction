@@ -70,6 +70,10 @@ public class Program extends AbstractProgram {
     }
 
 
+    /**
+     * insertObjectCode
+     * @param compiler
+     */
 	private void insertObjectCode(DecacCompiler compiler) {
     	//code.Object.equals
 
@@ -81,6 +85,10 @@ public class Program extends AbstractProgram {
     	compiler.addLabel(new Label("init.object"));
     	compiler.addInstruction(new RTS());
 	}
+	
+	/*
+	 * insertObjectCode
+	 */
 	private void codeGenObjectTable(DecacCompiler compiler) {
     	//code.Object.equals
 		compiler.addInstruction(new LOAD(new NullOperand(), Register.R0));

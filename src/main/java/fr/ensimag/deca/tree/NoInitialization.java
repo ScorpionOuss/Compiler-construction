@@ -60,7 +60,6 @@ public class NoInitialization extends AbstractInitialization {
 	@Override
 	protected void STOREInstrution(DecacCompiler compiler, Definition definition) {
 		// TODO Auto-generated method stub
-		
 	}
 
 
