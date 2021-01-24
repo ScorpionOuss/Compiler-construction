@@ -1,0 +1,16 @@
+// Description:
+//    test de programme lexicalement correct et syntaxiquement incorrect
+//
+// Resultats:
+//    Ligne 14 : extraneous input 'class' expecting {'true', 'false', 'this', 
+//    'null', 'new', 'readInt', 'readFloat', '-', '(', '!', STRING, FLOAT, INT, IDENT}
+
+//    
+//
+// Historique:
+//    cree le 23/01/2021
+
+{
+  return class A;
+}
+ 

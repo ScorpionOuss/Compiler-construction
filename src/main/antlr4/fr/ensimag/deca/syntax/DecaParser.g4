@@ -156,7 +156,7 @@ inst returns[AbstractInst tree]
     | if_then_else {
             assert($if_then_else.tree != null);
             $tree = $if_then_else.tree;
-            setLocation($tree,$if_then_else.start);
+            setLocation($tree, $if_then_else.start);
            
 
 
@@ -194,7 +194,7 @@ if_then_else returns[IfThenElse tree]
             assert($elsif_li.tree != null);
             IfThenElse T = new IfThenElse($elsif_cond.tree, $elsif_li.tree, Li2);
             Li.add(T);
-            Li=Li2;
+            Li = Li2;
             Li2 = new ListInst();
             setLocation($tree, $el);
     }
@@ -269,8 +269,8 @@ or_expr returns[AbstractExpr tree]
     | e1=or_expr OR e2=and_expr {
             assert($e1.tree != null);
             assert($e2.tree != null);
-            $tree = new Or($e1.tree,$e2.tree);
-            setLocation($tree,$e1.start);
+            $tree = new Or($e1.tree, $e2.tree);
+            setLocation($tree, $e1.start);
        }
     ;
 
@@ -284,7 +284,7 @@ and_expr returns[AbstractExpr tree]
             assert($e1.tree != null);                         
             assert($e2.tree != null);
             $tree = new And($e1.tree, $e2.tree);
-            setLocation($tree,$e1.start);
+            setLocation($tree, $e1.start);
         }
     ;
 
@@ -351,13 +351,13 @@ sum_expr returns[AbstractExpr tree]
     : e=mult_expr {
             assert($e.tree != null);
             $tree = $e.tree;
-            setLocation($tree,$e.start);
+            setLocation($tree, $e.start);
         }
     | e1=sum_expr PLUS e2=mult_expr {
             assert($e1.tree != null);
             assert($e2.tree != null);
-            $tree = new Plus($e1.tree,$e2.tree);
-            setLocation($tree,$e1.start);
+            $tree = new Plus($e1.tree, $e2.tree);
+            setLocation($tree, $e1.start);
             
             
         }
@@ -365,7 +365,7 @@ sum_expr returns[AbstractExpr tree]
             assert($e1.tree != null);
             assert($e2.tree != null);
             $tree = new Minus($e1.tree, $e2.tree);
-            setLocation($tree,$e1.start);
+            setLocation($tree, $e1.start);
         }
     ;
 
@@ -373,25 +373,25 @@ mult_expr returns[AbstractExpr tree]
     : e=unary_expr {
             assert($e.tree != null);
             $tree = $e.tree;
-            setLocation($tree,$e.start);
+            setLocation($tree, $e.start);
         }
     | e1=mult_expr TIMES e2=unary_expr {
             assert($e1.tree != null);                                         
             assert($e2.tree != null);
-            $tree = new Multiply($e1.tree,$e2.tree);
-            setLocation($tree,$e1.start);
+            $tree = new Multiply($e1.tree, $e2.tree);
+            setLocation($tree, $e1.start);
         }
     | e1=mult_expr SLASH e2=unary_expr {
             assert($e1.tree != null);                                         
             assert($e2.tree != null);
-            $tree = new Divide($e1.tree,$e2.tree);
-            setLocation($tree,$e1.start);
+            $tree = new Divide($e1.tree, $e2.tree);
+            setLocation($tree, $e1.start);
         }
     | e1=mult_expr PERCENT e2=unary_expr {
             assert($e1.tree != null);                                                                          
             assert($e2.tree != null);
-            $tree = new Modulo($e1.tree,$e2.tree);
-            setLocation($tree,$e1.start);
+            $tree = new Modulo($e1.tree, $e2.tree);
+            setLocation($tree, $e1.start);
         }
     ;
 
@@ -411,7 +411,7 @@ unary_expr returns[AbstractExpr tree]
     | select_expr {
             assert($select_expr.tree != null);
             $tree = $select_expr.tree;
-            setLocation($tree,$select_expr.start);
+            setLocation($tree, $select_expr.start);
         }
     ;
 
@@ -419,11 +419,12 @@ select_expr returns[AbstractExpr tree]
     : e=primary_expr {
             assert($e.tree != null);
             $tree = $e.tree;
-            setLocation($tree,$e.start);
+            setLocation($tree, $e.start);
         }
     | e1=select_expr DOT i=ident {
             assert($e1.tree != null);
             assert($i.tree != null);
+            
         }
         (o=OPARENT args=list_expr CPARENT {
             // we matched "e1.i(args)"
@@ -443,7 +444,7 @@ primary_expr returns[AbstractExpr tree]
     : ident {
             assert($ident.tree != null);
             $tree = $ident.tree;
-            setLocation($tree,$ident.start);}
+            setLocation($tree, $ident.start);}
 
     | m=ident OPARENT args=list_expr CPARENT {
             assert($args.tree != null);
@@ -452,7 +453,7 @@ primary_expr returns[AbstractExpr tree]
     | OPARENT expr CPARENT {
             assert($expr.tree != null);
             $tree = $expr.tree;
-            setLocation($tree,$OPARENT);
+            setLocation($tree, $OPARENT);
         }
     | READINT OPARENT CPARENT {
             $tree = new ReadInt();
@@ -476,7 +477,7 @@ primary_expr returns[AbstractExpr tree]
     | literal {
             assert($literal.tree != null);
             $tree = $literal.tree;
-            setLocation($tree,$literal.start);
+            setLocation($tree, $literal.start);
         }
     ;
 
@@ -538,7 +539,7 @@ list_classes returns[ListDeclClass tree]
       (c1=class_decl {
         assert($c1.tree != null);
         $tree.add($c1.tree);
-        setLocation($tree,$c1.start);
+        setLocation($tree, $c1.start);
         }
       )*
     ;
@@ -559,7 +560,7 @@ class_extension returns[AbstractIdentifier tree]
     : EXTENDS ident {
         assert($ident.tree != null);
         $tree = $ident.tree;
-        setLocation($tree,$EXTENDS);
+        setLocation($tree, $EXTENDS);
         }
     | /* epsilon */ {
         $tree = new Identifier((new SymbolTable()).create("Object"));

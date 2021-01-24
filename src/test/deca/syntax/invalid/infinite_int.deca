@@ -1,0 +1,9 @@
+// Description:
+//    programme contenant un entier infini
+//   
+//
+
+
+{
+    int i = 99214748369;
+}

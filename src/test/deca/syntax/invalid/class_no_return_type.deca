@@ -1,0 +1,16 @@
+// Description:
+//    tests de programme lexicalement correct et syntaxiquement incorrect
+//       (pas de type de retour de la méthode "method")
+//
+// Resultats:
+//    Ligne 13 : no viable alternative at input 'method('
+//    
+//
+// Historique:
+//    cree le 23/01/2021
+
+class C {
+    method(int a ){
+        this.a = a;
+    }
+}

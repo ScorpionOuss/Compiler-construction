@@ -9,7 +9,7 @@
 
  class A {
 
-        asm("Ceci est un test");
+       int method(int a) asm("Ceci est un test");
     
 }
 	

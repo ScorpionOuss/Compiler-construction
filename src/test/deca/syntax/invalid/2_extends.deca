@@ -1,0 +1,16 @@
+// Description:
+//    tests de programme lexicalement correct et syntaxiquement incorrect
+//       (deux extends)
+//
+// Resultats:
+//    Ligne 13 : missing '{' at 'exetnds'
+//    
+//
+// Historique:
+//    cree le 23/01/2021
+
+
+class A extends B extends C{
+  
+}
+ 
