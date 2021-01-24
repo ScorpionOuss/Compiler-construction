@@ -3,6 +3,7 @@ package fr.ensimag.deca.tree;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.ImmediateInteger;
 import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.LabelOperand;
 import fr.ensimag.ima.pseudocode.NullOperand;
@@ -67,6 +68,7 @@ public class Program extends AbstractProgram {
         compiler.addHeapException();
         classes.methodsGeneration(compiler);
         insertObjectCode(compiler);
+        //codeInstanceOf(compiler);
     }
 
 
@@ -84,6 +86,46 @@ public class Program extends AbstractProgram {
 
     	compiler.addLabel(new Label("init.object"));
     	compiler.addInstruction(new RTS());
+	}
+	
+	/**
+	 * 
+	 * @param compiler
+	 */
+	private void codeInstanceOf(DecacCompiler compiler) {
+		Label debutIo = new Label("debut.io");
+		Label sinonIo1 = new Label("sinon.io.1");
+		Label sinonIo2 = new Label("sinon.io.2");
+		compiler.addLabel(debutIo);
+		compiler.addInstruction(new LEA(new RegisterOffset(-2, Register.LB), 
+				Register.getR(compiler.registersManag.getRegisterPointer())));
+		compiler.addInstruction(new CMP(new RegisterOffset(-3, Register.LB), 
+				Register.getR(compiler.registersManag.getRegisterPointer())));
+		compiler.addInstruction(new BNE(sinonIo1));
+		compiler.addInstruction(new LOAD(1, Register.getR(compiler.registersManag.getRegisterPointer())));
+		compiler.addInstruction(new RTS());
+		
+		compiler.addLabel(sinonIo1);
+		compiler.registersManag.incrementRegisterPointer();
+		compiler.addInstruction(new LEA(new RegisterOffset(-3, Register.getR(compiler.registersManag.getRegisterPointer())),
+				Register.getR(3)));
+		compiler.addInstruction(new CMP(new NullOperand(), Register.getR(3)));
+		compiler.addInstruction(new BNE(sinonIo2));
+		compiler.addInstruction(new LOAD(0, Register.getR(compiler.registersManag.getRegisterPointer())));
+		compiler.addInstruction(new RTS());
+		
+		compiler.addLabel(sinonIo2);
+		compiler.addInstruction(new LEA(new RegisterOffset(-3, Register.LB),
+				Register.getR(compiler.registersManag.getRegisterPointer())));
+		compiler.addInstruction(new LOAD(new RegisterOffset(-2, Register.LB),
+				Register.getR(compiler.registersManag.getRegisterPointer() - 1)));
+		compiler.addInstruction(new ADDSP(new ImmediateInteger(2)));
+		compiler.addInstruction(new PUSH(Register.getR(compiler.registersManag.getRegisterPointer())));
+		compiler.addInstruction(new PUSH(Register.getR(compiler.registersManag.getRegisterPointer() - 1)));
+		compiler.addInstruction(new BSR(debutIo));
+		compiler.addInstruction(new SUBSP(new ImmediateInteger(2)));
+		compiler.addInstruction(new ERROR());
+		
 	}
 	
 	/*

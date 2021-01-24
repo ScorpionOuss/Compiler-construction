@@ -1,13 +1,14 @@
 class A {
+
     int x = 1;
     int y = 2;
 
     void m(int i) {
-        if (x == i){
+        if (x == i) {
             print("oui");
         }
         else {
-            this.m(i+1);
+            m(i+1);
             }
     }
 }

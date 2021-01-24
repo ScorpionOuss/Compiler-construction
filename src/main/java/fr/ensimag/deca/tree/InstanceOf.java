@@ -17,9 +17,23 @@ import fr.ensimag.deca.tools.SymbolTable;
 import fr.ensimag.ima.pseudocode.DVal;
 import fr.ensimag.ima.pseudocode.ImmediateInteger;
 import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.NullOperand;
 import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.RegisterOffset;
+import fr.ensimag.ima.pseudocode.instructions.ADD;
+import fr.ensimag.ima.pseudocode.instructions.ADDSP;
+import fr.ensimag.ima.pseudocode.instructions.BNE;
 import fr.ensimag.ima.pseudocode.instructions.BRA;
+import fr.ensimag.ima.pseudocode.instructions.BSR;
+import fr.ensimag.ima.pseudocode.instructions.CMP;
+import fr.ensimag.ima.pseudocode.instructions.ERROR;
+import fr.ensimag.ima.pseudocode.instructions.LEA;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
+import fr.ensimag.ima.pseudocode.instructions.PUSH;
+import fr.ensimag.ima.pseudocode.instructions.RTS;
+import fr.ensimag.ima.pseudocode.instructions.STORE;
+import fr.ensimag.ima.pseudocode.instructions.SUB;
+import fr.ensimag.ima.pseudocode.instructions.SUBSP;
 
 import java.io.PrintStream;
 
@@ -103,18 +117,24 @@ public class InstanceOf extends AbstractExpr{
 		return null;
 	}
 	
+	
+	
 	@Override
 	protected void codeGenInst(DecacCompiler compiler) {
 		assert type.getType().isClass();
 		assert expr.getType().isClass();
-		ClassType typeClass = (ClassType) type.getType();
-		ClassType exprClass = (ClassType) expr.getType();
-		boolean iOf = exprClass.getDefinition().instanceOf(typeClass.getDefinition());
-		if (iOf) {
-			compiler.addInstruction(new LOAD(1, Register.getR(getRP(compiler))));
-		}
-		else {
-			compiler.addInstruction(new LOAD(0, Register.getR(getRP(compiler))));
+		if (getRP(compiler) < getMP(compiler)) {
+			compiler.addInstruction(new ADDSP(new ImmediateInteger(2)));
+			compiler.addInstruction(new LOAD(type.getClassDefinition().getOperand(), 
+					Register.R0));
+			compiler.addInstruction(new STORE(Register.R0, 
+					new RegisterOffset(-1, Register.SP)));
+			compiler.addInstruction(new LOAD(expr.getAdresse(compiler), 
+					Register.R0));
+			compiler.addInstruction(new STORE(Register.R0,
+					new RegisterOffset(0, Register.SP)));
+			compiler.addInstruction(new BSR(new Label("debut.io")));
+			compiler.addInstruction(new SUBSP(new ImmediateInteger(2)));
 		}
 	}
 }

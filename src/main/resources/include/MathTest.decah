@@ -18,7 +18,6 @@ float _pow(float x, int n){
   else {
     if(n>0){
         while ( n>1) {
-            //println(n);
             x = x * ex ;
             n = n - 1;
             }

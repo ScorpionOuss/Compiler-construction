@@ -449,6 +449,11 @@ primary_expr returns[AbstractExpr tree]
     | m=ident OPARENT args=list_expr CPARENT {
             assert($args.tree != null);
             assert($m.tree != null);
+            This th = new This();
+            $tree = new MethodCall(th, $m.tree, $args.tree);
+            setLocation($tree, $m.start);
+            setLocation(th, $m.start);
+
         }
     | OPARENT expr CPARENT {
             assert($expr.tree != null);
