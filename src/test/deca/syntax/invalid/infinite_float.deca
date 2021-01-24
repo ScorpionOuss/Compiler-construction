@@ -1,8 +1,10 @@
 // Description:
 //    programme contenant un float infini
 //   
-//
+// Resultats:
+//    Ligne 10 :  Infinite float error
 
+// 
 
 {
     float f = 4.1E38;

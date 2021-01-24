@@ -1,11 +1,6 @@
 // Description:
-//    Test de boolean
-//
-// Resultats:
-//    Retourne à la ligne
-//
-// Historique:
-//    cree le 01/01/2021
+//    fichier decah
+
 
 {
     println("Hello world!");
