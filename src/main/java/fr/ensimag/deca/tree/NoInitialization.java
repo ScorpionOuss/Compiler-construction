@@ -18,12 +18,17 @@ import java.io.PrintStream;
  */
 public class NoInitialization extends AbstractInitialization {
 
+	private Type type;
+	
+	public Type getType() {
+		return type;
+	}
+	
     @Override
     protected void verifyInitialization(DecacCompiler compiler, Type t,
             EnvironmentExp localEnv, ClassDefinition currentClass)
             throws ContextualError {
-    	// implemented
-    	// nothing to verify
+    	type = t;
     }
 
 

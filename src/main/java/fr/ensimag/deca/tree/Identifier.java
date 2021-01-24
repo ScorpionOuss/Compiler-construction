@@ -224,7 +224,7 @@ public class Identifier extends AbstractIdentifier {
     		if (localExpDefinition.isField()) {
     			FieldDefinition fieldDef = localExpDefinition.asFieldDefinition("", this.getLocation());
     			if (fieldDef.getVisibility().equals(Visibility.PROTECTED)) {
-    				throw new ContextualError("inaccessible protected field", getLocation());
+    				throw new ContextualError("inaccessible protected field " + this.getName(), getLocation());
     			}
     		}
     		this.setType(localExpDefinition.getType());
@@ -242,7 +242,7 @@ public class Identifier extends AbstractIdentifier {
 					FieldDefinition fieldDef = localExpDefinition.asFieldDefinition("", this.getLocation());
 					if (fieldDef.getVisibility().equals(Visibility.PROTECTED)) {
 						if (!(className.getType().subType(currentClass.getType()) && currentClass.getType().subType(fieldDef.getContainingClass().getType()))) {
-							throw new ContextualError("inaccessible protected type " + this.getName(), this.getLocation());
+							throw new ContextualError("inaccessible protected field " + this.getName(), this.getLocation());
 						}
 					}
 				}

@@ -49,7 +49,7 @@ public abstract class Type {
     }
     
     public boolean typeInstanceofOp(Type otherType) {
-    	if ((this == null || this.isClass()) && otherType.isClass()) {
+    	if ((this.isNull() || this.isClass()) && otherType.isClass()) {
     		return true;
     	}
     	return false;

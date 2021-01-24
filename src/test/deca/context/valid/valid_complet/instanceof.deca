@@ -17,4 +17,5 @@ class C extends B {}
 	c instanceof A;
 	a instanceof Object;
 	a instanceof B;
+	null instanceof A;
 }

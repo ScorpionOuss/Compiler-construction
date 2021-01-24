@@ -38,7 +38,7 @@ public class Cast extends AbstractExpr{
     	Type castType = type.verifyType(compiler);
     	Type assignType = expr.verifyExpr(compiler, localEnv, currentClass);
     	if (!(assignType.castCompatible(castType))) {
-    		throw new ContextualError("incompatible cast", this.getLocation());
+    		throw new ContextualError("cast impossible", this.getLocation());
     	}
     	this.setType(castType);
     	return castType;
