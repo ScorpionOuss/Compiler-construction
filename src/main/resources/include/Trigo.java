@@ -421,4 +421,3 @@ float MaxErreur = 0 ;
 //         MoyErreur /=Erreur;
 //         System.out.println("arcsin. Erreur  : "+Erreur+ " sur " +nb+ "tests.\n"+"Erreur moyenne en ulp : "+ MoyErreur+", Erreur max en ulp : "+ MaxErreur+"\n\n---------------------------------------------------------\n");
  }}
-
