@@ -65,7 +65,8 @@ public class ListDeclClass extends TreeList<AbstractDeclClass> {
     	for (AbstractDeclClass classe : getList()) {
     		classe.buildTable(compiler);
     	}
-		compiler.addInstruction(new ADDSP(new ImmediateInteger(compiler.stackManager.getMethodStackCounter() + 1)), 
+    	compiler.stackManager.incrementStackCounterMax(compiler.stackManager.getMethodStackCounter());
+		compiler.addInstruction(new ADDSP(new ImmediateInteger(compiler.stackManager.getMethodStackCounter())), 
 				1);
     }    
     

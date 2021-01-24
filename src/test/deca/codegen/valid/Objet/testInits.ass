@@ -1,7 +1,7 @@
 ; start main program
-	TSTO #0
+	TSTO #6
 	BOV stack_overflow_error
-	ADDSP #7
+	ADDSP #6
 	LOAD #null, R0
 	STORE R0, 1(GB)
 	LOAD code.Object.equals, R0

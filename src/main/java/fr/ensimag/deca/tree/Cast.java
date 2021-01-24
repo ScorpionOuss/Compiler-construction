@@ -13,6 +13,10 @@ import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.DVal;
 import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.instructions.FLOAT;
+import fr.ensimag.ima.pseudocode.instructions.INT;
+
 import java.io.PrintStream;
 
 import org.apache.commons.lang.Validate;
@@ -86,9 +90,21 @@ public class Cast extends AbstractExpr{
 
 	@Override
 	protected void codeGenInst(DecacCompiler compiler) {
-		// TODO Auto-generated method stub
+		int registerPointer = getRP(compiler);
+		expr.codeGenInst(compiler);
+		if (type.getType() == type.getType()) {
+			
+		}
+		else if (type.getType().isInt()) {
+			compiler.addInstruction(new INT(Register.getR(getRP(compiler)),
+					Register.getR(getRP(compiler))));
+		}
 		
+		else if(type.getType().isFloat()) {
+			compiler.addInstruction(new FLOAT(Register.getR(getRP(compiler)),
+					Register.getR(getRP(compiler))));
+		}
+		
+		assert registerPointer == getRP(compiler);
 	}
-
-
 }

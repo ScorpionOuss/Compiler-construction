@@ -129,12 +129,14 @@ public class DeclClass extends AbstractDeclClass {
 
 	@Override
 	protected void buildTable(DecacCompiler compiler) {
-		//Il faut régler le problème de dAddr..
+		//L'offset du début de la table par rapport à GB.
 		int offset = compiler.stackManager.getMethodStackCounter() + 1;
+		//On associe à la classe l'adresse de sa table dans la pile
 		assert(name.getDefinition() instanceof ClassDefinition);
 		name.getClassDefinition().setOperand(new 
 				RegisterOffset(offset, Register.GB));
 //		System.out.println(offset);
+		//increment stack methods pointer
 		compiler.stackManager.incrementMethodStackCounter(name.getClassDefinition().getNumberOfMethods() + 1);
 		//add superClass methods table pointer
 		//À Revoir TODO
@@ -156,8 +158,10 @@ public class DeclClass extends AbstractDeclClass {
 		compiler.addInstruction(new STORE(Register.R0, classStackAddr));
 		//add methods label
 		methods.setLabels(compiler, name.getName().getName());
+		//Remplissage du tableau associé à la classe
 		initialiser();
 		name.getClassDefinition().buildTable(compiler, tableau);
+		//STORE DANS LA PILE.
 		for (int compteur = 0; compteur < name.getClassDefinition().getNumberOfMethods(); compteur++) {
 			tableau.get(compteur).codeTable(compiler, offset);
 		}
@@ -209,6 +213,7 @@ public class DeclClass extends AbstractDeclClass {
 		for (int i = compiler.registersManag.getMaxRegisterPointer(); i >= 2; i--) {
 			compiler.addInstruction(new PUSH(Register.getR(i)), snapShotLines);
 		}
+		
 		//Restore registers.
 		for (int i = compiler.registersManag.getMaxRegisterPointer(); i >= 2; i--) {
 			compiler.addInstruction(new POP(Register.getR(i)));

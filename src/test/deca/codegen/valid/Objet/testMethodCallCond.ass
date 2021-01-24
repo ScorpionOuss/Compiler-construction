@@ -1,7 +1,7 @@
 ; start main program
-	TSTO #1
+	TSTO #11
 	BOV stack_overflow_error
-	ADDSP #7
+	ADDSP #6
 	LOAD #null, R0
 	STORE R0, 1(GB)
 	LOAD code.Object.equals, R0
@@ -97,7 +97,7 @@ init.A:
 	POP R2
 	RTS
 code.A.m:
-	TSTO #0
+	TSTO #1
 	BOV stack_overflow_error
 	PUSH R2
 	LOAD -2(LB), R2
@@ -126,7 +126,7 @@ end.A.m:
 	POP R2
 	RTS
 code.A.p:
-	TSTO #0
+	TSTO #1
 	BOV stack_overflow_error
 	PUSH R2
 	LOAD -2(LB), R2

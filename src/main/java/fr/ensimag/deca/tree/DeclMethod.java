@@ -180,6 +180,7 @@ public class DeclMethod extends AbstractDeclMethod {
 		//insert save Instructions
 		for (int i = compiler.registersManag.getMaxRegisterPointer(); i >= 2; i--) {
 			compiler.addInstruction(new PUSH(Register.getR(i)), snapShotLines2);
+			compiler.stackManager.incrementStackCounterMax(1);
 		}
 		//Restore registers.
 		for (int i = compiler.registersManag.getMaxRegisterPointer(); i >= 2; i--) {
@@ -225,7 +226,5 @@ public class DeclMethod extends AbstractDeclMethod {
 		name.getMethodDefinition().setLabel(new Label("code." + className + "." +
 				name.getName().getName()));
 	}
-	
 
-    
 }

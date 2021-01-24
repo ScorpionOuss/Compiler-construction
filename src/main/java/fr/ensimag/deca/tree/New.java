@@ -77,7 +77,7 @@ public class New extends AbstractExpr {
     	
     	// PUSH R
     	compiler.addInstruction(new PUSH(Register.getR(getRP(compiler))));
-    	
+    	compiler.stackManager.incrementStackCounterMax(1);
     	// BSR init.A
     	compiler.addInstruction(new BSR(new Label("init." + ident.getName().getName())));
     	

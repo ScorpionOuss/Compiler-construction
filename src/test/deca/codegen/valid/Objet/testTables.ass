@@ -1,7 +1,7 @@
 ; start main program
-	TSTO #0
+	TSTO #20
 	BOV stack_overflow_error
-	ADDSP #21
+	ADDSP #20
 	LOAD #null, R0
 	STORE R0, 1(GB)
 	LOAD code.Object.equals, R0
@@ -79,7 +79,7 @@ init.Mere:
 	POP R2
 	RTS
 code.Mere.methMere1:
-	TSTO #0
+	TSTO #1
 	BOV stack_overflow_error
 	PUSH R2
 	LOAD #1, R2
@@ -95,14 +95,14 @@ end.Mere.methMere1:
 	POP R2
 	RTS
 code.Mere.methMere2:
-	TSTO #0
+	TSTO #1
 	BOV stack_overflow_error
 	PUSH R2
 end.Mere.methMere2:
 	POP R2
 	RTS
 code.Mere.methMere3:
-	TSTO #0
+	TSTO #1
 	BOV stack_overflow_error
 	PUSH R2
 end.Mere.methMere3:
@@ -119,14 +119,14 @@ init.Fille:
 	POP R2
 	RTS
 code.Fille.methFille:
-	TSTO #0
+	TSTO #1
 	BOV stack_overflow_error
 	PUSH R2
 end.Fille.methFille:
 	POP R2
 	RTS
 code.Fille.methMere2:
-	TSTO #0
+	TSTO #1
 	BOV stack_overflow_error
 	PUSH R2
 end.Fille.methMere2:
@@ -143,14 +143,14 @@ init.Pfille:
 	POP R2
 	RTS
 code.Pfille.methPfille:
-	TSTO #0
+	TSTO #1
 	BOV stack_overflow_error
 	PUSH R2
 end.Pfille.methPfille:
 	POP R2
 	RTS
 code.Pfille.methMere2:
-	TSTO #0
+	TSTO #1
 	BOV stack_overflow_error
 	PUSH R2
 end.Pfille.methMere2:
