@@ -3,6 +3,9 @@ package fr.ensimag.deca.tree;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.ImmediateInteger;
+import fr.ensimag.ima.pseudocode.instructions.ADDSP;
+
 import org.apache.log4j.Logger;
 
 /**
@@ -62,7 +65,9 @@ public class ListDeclClass extends TreeList<AbstractDeclClass> {
     	for (AbstractDeclClass classe : getList()) {
     		classe.buildTable(compiler);
     	}
-    }
+		compiler.addInstruction(new ADDSP(new ImmediateInteger(compiler.stackManager.getMethodStackCounter() + 1)), 
+				1);
+    }    
     
     /**
      * Second Pass of [GenCode]

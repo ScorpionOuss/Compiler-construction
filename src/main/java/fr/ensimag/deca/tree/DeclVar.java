@@ -86,4 +86,18 @@ public class DeclVar extends AbstractDeclVar {
 		initialization.codeGenInitialization(compiler);
 		initialization.STOREInstrution(compiler, varName.getDefinition());
 	}
+	
+	@Override
+	protected void codeGenAndLinkDeclVariableMain(DecacCompiler compiler) {
+		//setOperand Daddr
+		assert(varName.getDefinition() instanceof VariableDefinition);//defensive programming
+		
+		varName.getDefinition().setOperand(new RegisterOffset(compiler.stackManager.recoverAndIncrement()+
+				compiler.stackManager.getMethodStackCounter(),
+				Register.GB));
+		
+		//à faire: traiter l'initialisation
+		initialization.codeGenInitialization(compiler);
+		initialization.STOREInstrution(compiler, varName.getDefinition());
+	}
 }

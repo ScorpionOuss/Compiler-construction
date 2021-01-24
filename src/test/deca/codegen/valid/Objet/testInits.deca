@@ -1,0 +1,20 @@
+// Description:
+//    champs et methodes simples
+//
+// Resultats:
+//
+// Historique:
+//    cree le 01/01/2021
+
+// Un exemple de programme Deca
+
+class A {
+    int x = 1;
+    int y = 0;
+    boolean b;
+    }
+
+class B extends A {
+    int z = 3;
+    int m;
+    }

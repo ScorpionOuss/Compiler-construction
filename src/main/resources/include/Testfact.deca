@@ -1,0 +1,8 @@
+#include "Math.decah"
+{
+Math m = new Math();
+int x = m._fact(5);
+int y = m._fact(0);
+println(x);
+println(y);
+}

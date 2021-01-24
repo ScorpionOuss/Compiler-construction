@@ -1,0 +1,9 @@
+// Description:
+//    programme contenant un float infini
+//   
+//
+
+
+{
+    float f = 4.1E38;
+}

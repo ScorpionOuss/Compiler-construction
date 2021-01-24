@@ -1,0 +1,39 @@
+// Description:
+//    champs et methodes simples
+//
+// Resultats:
+//  x = 1
+//  false
+//  i = 1
+//  i = 4Guess the offset
+// Historique:
+//    cree le 01/01/2021
+
+// Un exemple de programme Deca
+
+class A {
+    int x = 1;
+
+    int m(boolean b){
+    if (b) {
+        println("x = ", x);
+        }
+    else {
+        println("false");
+        }
+        return x;
+    }
+
+    void p(int i) {
+        println("i = ", i);
+        i = i + 3;
+        println("i = ", i, "Guess the offset");
+    }
+}
+
+{
+    A a = new A();
+    a.m(true);
+    a.m(false);
+    a.p(1);
+    }

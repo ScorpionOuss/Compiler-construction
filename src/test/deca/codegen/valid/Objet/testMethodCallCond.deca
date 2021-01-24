@@ -1,0 +1,36 @@
+// Description:
+//    champs et methodes simples
+//
+// Resultats:
+//      Oui
+//      Et oui encore!
+//
+// Historique:
+//    cree le 01/01/2021
+
+// Un exemple de programme Deca
+
+class A {
+    int x = 1;
+
+    boolean m(int i){
+        if(x == i) {
+            return true;
+        }
+        return false;
+    }
+
+    int p(){
+    return x;
+    }
+}
+
+{
+    A a = new A();
+    if (a.m(1)) {
+        println("Oui");
+    }
+    if (a.p() == 1) {
+        print("Et oui encore!");
+    }
+}

@@ -1,0 +1,10 @@
+#include "Math.decah"
+{
+Math m = new Math();
+float a = m._abs(-10);
+float b = m._abs(10);
+float c = m._abs(0);
+println(a);
+println(b);
+println(c);
+}

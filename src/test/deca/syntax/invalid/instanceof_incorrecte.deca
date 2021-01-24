@@ -1,0 +1,14 @@
+// Description:
+//    tests de programme lexicalement correct et syntaxiquement incorrect
+//       (instanceof incorrecte)
+//
+// Resultats:
+//    Ligne 13 : mismatched input 'extends' expecting IDENT
+//    
+//
+// Historique:
+//    cree le 23/01/2021
+
+{
+   boolean b = x instanceof extends;
+}

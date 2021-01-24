@@ -4,10 +4,8 @@ import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ClassType;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ContextualError;
-import fr.ensimag.deca.context.Definition;
 import fr.ensimag.deca.context.EnvironmentExp.DoubleDefException;
 
-import fr.ensimag.deca.context.FieldDefinition;
 import fr.ensimag.deca.context.MethodDefinition;
 import fr.ensimag.deca.context.TypeDefinition;
 import fr.ensimag.deca.tools.IndentPrintStream;
@@ -15,9 +13,9 @@ import fr.ensimag.ima.pseudocode.DAddr;
 import fr.ensimag.ima.pseudocode.ImmediateInteger;
 import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.LabelOperand;
-import fr.ensimag.ima.pseudocode.NullOperand;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.RegisterOffset;
+import fr.ensimag.ima.pseudocode.instructions.ADDSP;
 import fr.ensimag.ima.pseudocode.instructions.BSR;
 import fr.ensimag.ima.pseudocode.instructions.LEA;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
@@ -28,8 +26,7 @@ import fr.ensimag.ima.pseudocode.instructions.STORE;
 import fr.ensimag.ima.pseudocode.instructions.SUBSP;
 
 import java.io.PrintStream;
-import java.util.LinkedList;
-
+import java.util.ArrayList;
 import org.apache.commons.lang.Validate;
 
 /**
@@ -44,7 +41,7 @@ public class DeclClass extends AbstractDeclClass {
     private AbstractIdentifier superClass;
     private ListDeclField fields;
     private ListDeclMethod methods;
-    private LinkedList<Definition> tableau;
+    private ArrayList<MethodDefinition> tableau;
     
     public DeclClass(AbstractIdentifier name,AbstractIdentifier superClass,
             ListDeclField fields, ListDeclMethod methods){
@@ -58,8 +55,6 @@ public class DeclClass extends AbstractDeclClass {
             this.methods = methods;
     }
 
-
-    
 	
     @Override
     public void decompile(IndentPrintStream s) {
@@ -71,7 +66,6 @@ public class DeclClass extends AbstractDeclClass {
         fields.decompile(s);
         methods.decompile(s);
         s.println("}");
-        
     }
 
     @Override
@@ -97,6 +91,7 @@ public class DeclClass extends AbstractDeclClass {
 		}
     }
 
+    
     @Override
     protected void verifyClassMembers(DecacCompiler compiler)
             throws ContextualError {
@@ -139,7 +134,7 @@ public class DeclClass extends AbstractDeclClass {
 		assert(name.getDefinition() instanceof ClassDefinition);
 		name.getClassDefinition().setOperand(new 
 				RegisterOffset(offset, Register.GB));
-		System.out.println(offset);
+//		System.out.println(offset);
 		compiler.stackManager.incrementMethodStackCounter(name.getClassDefinition().getNumberOfMethods() + 1);
 		//add superClass methods table pointer
 		//À Revoir TODO
@@ -161,8 +156,22 @@ public class DeclClass extends AbstractDeclClass {
 		compiler.addInstruction(new STORE(Register.R0, classStackAddr));
 		//add methods label
 		methods.setLabels(compiler, name.getName().getName());
-		name.getClassDefinition().buildTable(compiler, offset);
+		initialiser();
+		name.getClassDefinition().buildTable(compiler, tableau);
+		for (int compteur = 0; compteur < name.getClassDefinition().getNumberOfMethods(); compteur++) {
+			tableau.get(compteur).codeTable(compiler, offset);
+		}
 	}
+
+
+	private void initialiser() {
+		tableau = new ArrayList<MethodDefinition>();
+		for (int i = 0; i < name.getClassDefinition().getNumberOfMethods(); i++) {
+			tableau.add(null);
+		}
+	}
+
+
 
 
 	@Override
@@ -212,8 +221,8 @@ public class DeclClass extends AbstractDeclClass {
 		compiler.addStackVerificationBlock(snapShotLines);
 		//Restore stackCounter
 		compiler.stackManager.restoreStackPointers();
-	}
 
+	}
 
 	@Override
 	protected void classMethodsGen(DecacCompiler compiler) {
@@ -221,4 +230,5 @@ public class DeclClass extends AbstractDeclClass {
 			method.GenMethodeCode(compiler, name.getName().getName());
 		}
 	}
+
 }
