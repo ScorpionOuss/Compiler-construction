@@ -1,6 +1,6 @@
 #include "Math.decah"
 {
 Math m = new Math();
-float x = m._pow(3,2);
+float x = m._min(7,3);
 println(x);
 }

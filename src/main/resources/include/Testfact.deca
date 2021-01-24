@@ -1,6 +1,8 @@
 #include "Math.decah"
 {
 Math m = new Math();
-float x = m._pow(3,2);
+int x = m._fact(5);
+int y = m._fact(0);
 println(x);
+println(y);
 }
