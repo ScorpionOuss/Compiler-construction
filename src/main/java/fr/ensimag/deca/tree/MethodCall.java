@@ -47,8 +47,7 @@ public class MethodCall extends AbstractExpr{
     	}
     	List<AbstractExpr> listParam = params.getList();
     	for (int i = 0; i < params.size(); i++) {
-    		AbstractExpr param = listParam.get(i);
-    		param = param.verifyRValue(compiler, localEnv, currentClass, signature.paramNumber(i));
+    		params.set(i, listParam.get(i).verifyRValue(compiler, localEnv, currentClass, signature.paramNumber(i)));
     	}
     	this.setType(type);
     	return type;
