@@ -7,6 +7,12 @@ import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.Definition;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.ImmediateFloat;
+import fr.ensimag.ima.pseudocode.ImmediateInteger;
+import fr.ensimag.ima.pseudocode.NullOperand;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
+
 import java.io.PrintStream;
 
 /**
@@ -58,17 +64,24 @@ public class NoInitialization extends AbstractInitialization {
 
 	@Override
 	protected void codeGenInitialization(DecacCompiler compiler) {
+		if (type.getName().getName() == "int") {
+			compiler.addInstruction(new LOAD(0, Register.getR(
+					compiler.registersManag.getRegisterPointer())));
+		}
 		
+		else if(type.getName().getName() == "float") {
+			compiler.addInstruction(new LOAD(new ImmediateFloat(0),
+					Register.getR(compiler.registersManag.getRegisterPointer())));
+		}
+		
+		else if (type.getName().getName() == "boolean") {
+			compiler.addInstruction(new LOAD(new ImmediateInteger(0),
+					Register.getR(compiler.registersManag.getRegisterPointer())));
+		}
+		
+		else {
+			compiler.addInstruction(new LOAD(new NullOperand(), 
+					Register.getR(compiler.registersManag.getRegisterPointer())));
+		}
 	}
-
-
-	@Override
-	protected void STOREInstrution(DecacCompiler compiler, Definition definition) {
-		// TODO Auto-generated method stub
-	}
-
-
-
-
-
 }

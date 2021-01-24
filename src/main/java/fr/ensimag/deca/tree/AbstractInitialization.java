@@ -1,6 +1,8 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.context.Type;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.instructions.STORE;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
@@ -30,7 +32,10 @@ public abstract class AbstractInitialization extends Tree {
 	protected abstract void codeGenInitialization(DecacCompiler compiler);
 
 	
-	protected abstract void STOREInstrution(DecacCompiler compiler, Definition definition);
+	protected void STOREInstrution(DecacCompiler compiler, Definition definition) {
+		compiler.addInstruction(new STORE(Register.getR(compiler.registersManag.getRegisterPointer()),
+				definition.getOperand()));
+	}
 	
 
 

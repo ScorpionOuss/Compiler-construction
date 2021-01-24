@@ -1,12 +1,12 @@
 class Math{
-      protected float pi = 3.1415926536f;
-      protected float PiS2 = 1.5707963267949f;
-      protected float posInf = Float.POSITIVE_INFINITY;
-      protected float negInf = Float.NEGATIVE_INFINITY;
-      protected float MAXVALUE = 3.4028234663852886E38f;
-      protected float MINVALUE = 1.4E-45f;
-      protected float NaN = 0.0f/0.0f;
-      protected float FPREC = 0.000001f;
+      //protected float pi = 3.1415926536f;
+      //protected float PiS2 = 1.5707963267949f;
+      //protected float posInf = Float.POSITIVE_INFINITY;
+      //protected float negInf = Float.NEGATIVE_INFINITY;
+      //protected float MAXVALUE = 3.4028234663852886E38f;
+      //protected float MINVALUE = 1.4E-45f;
+      //protected float NaN = 0.0f/0.0f;
+      //protected float FPREC = 0.000001f;
 
 
 
