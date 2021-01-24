@@ -11,6 +11,6 @@
 {
     int x = 1;
     float y = 1.0;
-    println( (float) x);
-    println( (int y)  + x);
+    println((int) (y));
+    println((float) (x));
 }

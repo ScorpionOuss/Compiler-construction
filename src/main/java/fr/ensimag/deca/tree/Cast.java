@@ -72,8 +72,6 @@ public class Cast extends AbstractExpr{
        expr.decompile(s);
        s.println(")");
        
-       
-       
     }
 
     @Override
@@ -92,9 +90,12 @@ public class Cast extends AbstractExpr{
 	protected void codeGenInst(DecacCompiler compiler) {
 		int registerPointer = getRP(compiler);
 		expr.codeGenInst(compiler);
-		if (type.getType() == type.getType()) {
-			
-		}
+
+
+		if (type.getType().getName() == expr.getType().getName()) {
+			System.out.println(type.getType().getName().getName());
+		}		
+		
 		else if (type.getType().isInt()) {
 			compiler.addInstruction(new INT(Register.getR(getRP(compiler)),
 					Register.getR(getRP(compiler))));
