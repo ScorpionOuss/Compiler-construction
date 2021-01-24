@@ -13,6 +13,7 @@ import fr.ensimag.deca.context.Definition;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.deca.tools.SymbolTable;
 import fr.ensimag.ima.pseudocode.DVal;
 import fr.ensimag.ima.pseudocode.ImmediateInteger;
 import fr.ensimag.ima.pseudocode.Label;
@@ -52,7 +53,9 @@ public class InstanceOf extends AbstractExpr{
     	}
     	type.setType(otherType);
     	type.setDefinition(otherDef);
-    	return exprType;
+    	Type booleanType = compiler.getEnvironment().get(new SymbolTable().create("boolean")).getType();
+    	this.setType(booleanType);
+    	return booleanType;
     }
 
     

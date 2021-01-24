@@ -1,0 +1,11 @@
+// Description:
+//    Test de true
+//
+// Resultats:
+//    
+//
+
+
+{
+    print(true);
+}

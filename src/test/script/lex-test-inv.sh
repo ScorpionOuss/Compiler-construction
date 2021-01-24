@@ -1,7 +1,10 @@
 #!/bin/sh
-for i in src/test/deca/syntax/invalid/provided/*.deca
+echo "Tests lexicaux invalides"
+for i in src/test/deca/syntax/invalid/*.deca
     do
         echo "$i"
+        cat $i
+        echo "***********Résultat***********"
         src/test/script/launchers/test_lex "$i"
     echo "---------------------------------------------------------------------------------------"
     done

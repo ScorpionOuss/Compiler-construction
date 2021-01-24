@@ -1,0 +1,12 @@
+// Description:
+//    Déclaration de classe héritant d'une autre
+//
+// Resultats:
+//    Rien
+//
+
+
+ class A extends B {
+	
+}
+	

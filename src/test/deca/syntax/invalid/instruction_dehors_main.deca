@@ -1,0 +1,16 @@
+// Description:
+//    tests de programme lexicalement correct et syntaxiquement incorrect
+//
+// Resultats:
+//    Ligne 16 : mismatched input 'boolean' expecting {'printlnx', 'println', 'printx', 
+//    'print', 'if', 'true', 'false', 'this', 'null', 'new', 'readInt', 'readFloat', 'while', 
+//     'return', '-', ';', '(', '}', '!', STRING, FLOAT, INT, IDENT}
+//    
+//
+// Historique:
+//    cree le 23/01/2021
+
+{
+  
+}
+ boolean b = true;

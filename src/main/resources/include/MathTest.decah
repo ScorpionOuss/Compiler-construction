@@ -9,7 +9,7 @@ class Math{
       //protected float FPREC = 0.000001f;
 float _pow(float x, int n){
   float ex = x;
-  if (x == 0.0) {
+  if (x == 0) {
         return 0;
         }
   if (n == 0){

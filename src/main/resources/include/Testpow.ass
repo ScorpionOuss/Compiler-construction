@@ -85,7 +85,9 @@ code.Math._pow:
 	PUSH R2
 	PUSH R3
 	LOAD -3(LB), R2
-	CMP #0x0.0p0, R2
+	LOAD #0, R3
+	FLOAT R3, R3
+	CMP R3, R2
 	BNE E_Sinon.1
 	LOAD #0, R2
 	FLOAT R2, R2

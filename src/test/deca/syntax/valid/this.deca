@@ -1,0 +1,10 @@
+// Description:
+//    Test de this
+//
+// Resultats:
+//    Rien
+//
+
+{ 
+    this.x = 3;
+}

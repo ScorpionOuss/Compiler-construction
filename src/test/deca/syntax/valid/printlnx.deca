@@ -1,0 +1,11 @@
+// Description:
+//    Test de printlnx
+//
+// Resultats:
+//    Retourne à la ligne
+//
+
+
+{
+    printlnx();
+}

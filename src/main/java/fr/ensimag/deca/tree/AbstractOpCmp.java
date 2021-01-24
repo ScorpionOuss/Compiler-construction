@@ -26,22 +26,38 @@ public abstract class AbstractOpCmp extends AbstractBinaryExpr {
     	Type leftType = this.getLeftOperand().verifyExpr(compiler, localEnv, currentClass);
     	Type rightType = this.getRightOperand().verifyExpr(compiler, localEnv, currentClass);
     	SymbolTable symbolTable = new SymbolTable();
-    	Type type;
-    	if ((leftType.isInt() || leftType.isFloat()) && (rightType.isInt() || rightType.isFloat())) {
-    		type = compiler.getEnvironment().get(symbolTable.create("boolean")).getType();
-    		this.setType(type);
-			return type; 
+    	Type type = compiler.getEnvironment().get(symbolTable.create("boolean")).getType();;
+    	this.setType(type);
+    	
+    	if (leftType.isInt()) {
+    		if (rightType.isInt()) {
+    			return type;
+    		}
+    		if (rightType.isFloat()) {
+    			this.setLeftOperand(new ConvFloat(this.getLeftOperand()));
+				this.getLeftOperand().setType(rightType);
+    			return type;
+    		}
     	}
+    	if (leftType.isFloat()) {
+    		if (rightType.isInt()) {
+    			this.setRightOperand(new ConvFloat(this.getRightOperand()));
+				this.getRightOperand().setType(leftType);
+    			return type;
+    		}
+    		if (rightType.isFloat()) {
+    			return type;
+    		}
+    	}
+    	
     	if (leftType.isClassOrNull() && rightType.isClassOrNull()) {
-    		type = compiler.getEnvironment().get(symbolTable.create("boolean")).getType();
-    		this.setType(type);
-			return type; 
+    		return type;
     	}
+
     	if (leftType.isBoolean() && rightType.isBoolean()) {
-    		type = compiler.getEnvironment().get(symbolTable.create("boolean")).getType();
-    		this.setType(type);
-			return type; 
+    		return type;
     	}
+
     	throw new ContextualError("The binary operation used is not defined for the operands types", this.getLocation());
     }
     

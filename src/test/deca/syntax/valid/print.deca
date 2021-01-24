@@ -1,0 +1,11 @@
+// Description:
+//    Test de print
+//
+// Resultats:
+//    Retourne à la ligne
+//
+
+
+{
+    print("");
+}

@@ -1,0 +1,10 @@
+// Description:
+//    test de non égalité entre deux variables
+//
+// Resultats:
+//    Rien
+//
+
+{ 
+    x != y;
+}

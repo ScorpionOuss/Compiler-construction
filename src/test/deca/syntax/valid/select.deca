@@ -1,0 +1,11 @@
+// Description:
+//    Test de la règle MethodCall
+//
+// Resultats:
+//    
+
+
+{
+    print(a.attribut);
+    println(this.attr(true));
+}

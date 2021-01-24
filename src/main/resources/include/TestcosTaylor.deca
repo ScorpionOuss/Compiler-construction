@@ -1,0 +1,9 @@
+#include "Math.decah"
+{
+Math m = new Math();
+float tab[] = {0.44423878f ,3.5731058f ,4.565837f ,-1.8463271f ,0.05882353f ,14.067447f ,-7.719477f};
+for (int i=0 ;i<=6 ;i++){
+  float x = m._cosTaylor(tab[i]);
+  println(x);
+}
+}

@@ -1,0 +1,16 @@
+// Description:
+//    Déclaration de classe avec attribut et méthode
+//
+// Resultats:
+//    Rien
+//
+
+
+ class A {
+        
+	protected int x ;
+	int multiply(int y){
+            return x*y;
+        }
+}
+	

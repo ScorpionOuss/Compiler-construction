@@ -1,0 +1,11 @@
+// Description:
+//    Test de printlnx
+//
+// Resultats:
+//    retourne true
+//
+
+
+{
+    return true;
+}

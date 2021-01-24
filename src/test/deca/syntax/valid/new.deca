@@ -1,0 +1,11 @@
+// Description:
+//    Test de new
+//
+// Resultats:
+//    Rien
+//
+
+
+{   
+   A a = new A();
+}

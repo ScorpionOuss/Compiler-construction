@@ -1,0 +1,12 @@
+// Description:
+//    Test de boucle while
+//
+// Resultats:
+//    Rien
+//
+
+
+
+{   
+    while(true){;}
+}

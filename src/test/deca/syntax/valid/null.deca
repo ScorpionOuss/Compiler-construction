@@ -1,0 +1,10 @@
+// Description:
+//    Test de null
+//
+// Resultats:
+//    null
+//
+
+{
+    print(null);
+}

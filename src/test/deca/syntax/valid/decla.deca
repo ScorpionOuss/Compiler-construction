@@ -1,0 +1,10 @@
+// Description:
+//    Déclaration et affectation d'un string
+//
+// Resultats:
+//    Rien
+
+
+{
+    string x = "hello";
+}

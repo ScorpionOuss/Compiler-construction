@@ -77,7 +77,16 @@ fragment STRING_CAR: ~('"' | '\\' | '\n');
 STRING: '"' (STRING_CAR | '\\"' | '\\\\')* '"';
 MULTI_LINE_STRING: '"' (STRING_CAR | '\n' | '\\"' | '\\\\')* '"';
 
-FLOAT: (FLOATDEC | FLOATHEX);
+FLOAT: (FLOATDEC | FLOATHEX){
+
+    String s = getText();
+    float f = Float.parseFloat(s);
+
+        if (Float.isInfinite(f)) {
+        throw new InfiniteFloatException(s, this, this.getInputStream());
+    }
+
+    };
 INT: '0' | (POSITIVE_DIGIT DIGIT*);
 IDENT: (LETTER | '$' | '_') (LETTER | DIGIT | '$' | '_')*;
 COMMENT: ('//' .*? '\n' | '/*' .*? '*/' ) -> skip;

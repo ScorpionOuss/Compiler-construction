@@ -1,0 +1,13 @@
+// Description:
+//    Test de division
+//
+// Resultats:
+//    Rien
+//
+
+
+{   
+    int x = 12;
+    int y = 5;
+    int z = x%y;
+}

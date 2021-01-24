@@ -1,0 +1,11 @@
+// Description:
+//    Déclaration de plusieurs variables
+//
+// Resultats:
+//    Rien
+//
+
+
+{
+    int x,y,z=1;
+}

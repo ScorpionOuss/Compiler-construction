@@ -1,0 +1,11 @@
+// Description:
+//    Test de instanceof
+//
+// Resultats:
+//    Rien
+//
+
+
+{ 
+   boolean b = x instanceof Integer;
+}

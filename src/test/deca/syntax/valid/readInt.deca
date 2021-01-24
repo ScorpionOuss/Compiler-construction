@@ -1,0 +1,11 @@
+// Description:
+//    Test de readInt 
+//
+// Resultats:
+//    Rien
+//
+
+
+{   
+    int x = readInt();
+}

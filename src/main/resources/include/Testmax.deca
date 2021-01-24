@@ -1,0 +1,6 @@
+#include "Math.decah"
+{
+Math m = new Math();
+float x = m._max(7,3);
+println(x);
+}
