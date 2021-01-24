@@ -4,8 +4,6 @@
 // Resultats:
 //    Rien
 //
-// Historique:
-//    cree le 01/01/2021
 
 { 
     this.x = 3;

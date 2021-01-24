@@ -1,6 +1,9 @@
 // Description:
 //   println icomplet: sans parenthèse
-
+//
+// Resultats:
+//    Ligne 9 : missing ')' at ';'
+// 
 
 {
         println(;

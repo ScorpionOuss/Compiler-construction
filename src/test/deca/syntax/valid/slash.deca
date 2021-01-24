@@ -1,11 +1,10 @@
 // Description:
-//    Test de modulo
+//    Test de division
 //
 // Resultats:
 //    Rien
 //
-// Historique:
-//    cree le 01/01/2021
+
 
 {   
     int x = 12;

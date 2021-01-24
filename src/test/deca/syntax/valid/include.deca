@@ -4,9 +4,7 @@
 // Resultats:
 //    Retourne à la ligne
 //
-// Historique:
-//    cree le 01/01/2021
 
 
-       #include "hello.decah"
+#include "hello.decah"
        
