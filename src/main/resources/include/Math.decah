@@ -87,32 +87,33 @@ float _Modulo2Pi(float a, float b) {
         float factor;
         int k = 0;
         while (k<=100) {
-            k++;
+            k = k + 1;
             factor = -factor * x * x / (2*i * (2*i+1));
             sum = sum + factor;
             i = i + 1;
         }
         return sum ;
     }
-    float _cos(float x)
-    {   
-    x = _Modulo2Pi(x, 2*pi);
-    if (0<=x && x<3*pi/4){
+float _cos(float x)
+    {
+    float y1 = 6.2831855;
+    x = _Modulo2Pi(x, y1);
+    if (0.0<=x && x<(2.3561945)){
     return _cosTaylor(x);
-    } 
-    else{ 
-    if (3*pi/4<=x && x<7*pi/4){
-    return sin(PiS2 - x);
+    }
+    else{
+    if (2.3561945<=x && x<5.4977875){
+    return _sin(PiS2 - x);
     }
     else {
-    return _cosTaylor(2*pi - x);
+    return _cosTaylor(6.2831855 - x);
     }
     }
 }
 
 //float atanHermite(float f){
 //float res;
-//res = 1.1097301E-6*55 -3.1647858E-5*54 + 53*4.3415572E-4f -52*-0.0038123499f +0.024052639f*51 -0.11600586f*50 +0.44423878f*49 -1.3847452f*48 + 3.5731058f*47 -7.719477f*46 +14.067447f*45 -21.717817f*44 + 28.45957f*43 - 
+//res = 1.1097301E-6*55 -3.1647858E-5*54 + 53*4.3415572E-4f -52*-0.0038123499f +0.024052639f*51 -0.11600586f*50 +0.44423878f*49 -1.3847452f*48 + 3.5731058f*47 -7.719477f*46 +14.067447f*45 -21.717817f*44 + 28.45957f*43 -
 
 
 //}
