@@ -1,7 +1,16 @@
 #include "Math.decah"
 {
+float MINVALUE = 1.4E-45f;
 Math m = new Math();
-float x = m._ulp(0.825f);
+float x = m._ulp(0.0);
+float y = m._ulp(MINVALUE);
+float z = m._ulp(2.3);
+float t = m._ulp(1001.0);
+float n = m._ulp(-1001.0);
 println(x);
+println(y);
+println(z);
+println(t);
+println(n);
 }
 

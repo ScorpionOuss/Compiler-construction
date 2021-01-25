@@ -1,6 +1,6 @@
 #include "Math.decah"
-{
-Math m = new Math();
-float x = m._pow(3.0,2);
-println(x);
-}
+//{
+//Math m = new Math();
+//float x = m._pow(3.0,2);
+//println(x);
+//}

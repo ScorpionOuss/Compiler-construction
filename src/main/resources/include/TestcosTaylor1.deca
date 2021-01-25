@@ -1,0 +1,7 @@
+#include "Math.decah"
+{
+Math m = new Math();
+float x = m._cosTaylor(0.123);
+println(x);
+}
+
