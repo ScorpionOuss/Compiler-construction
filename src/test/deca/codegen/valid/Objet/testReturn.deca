@@ -1,0 +1,46 @@
+// Description:
+//    tests division flottante sur 0; débordement lors d'opération arithmétique sur flottants.
+//
+// Resultats:
+//
+//  Oui!
+//  a.x =? i 1
+//  a.x = (int) 1.00000e+00
+//
+//
+// Historique:
+//    cree le 20/01/2021
+
+class A {
+    int x = 1;
+
+    int m(int i){
+        if(x == i) {
+            return x;
+        }
+        else {
+            return 0;
+        }
+
+    }
+
+    float p() {
+        return (float) (x);
+    }
+
+    A d() {
+        return this;
+    }
+}
+
+{
+    int i = 1;
+    A a = new A();
+    A b;
+    b = a.d();
+    if (b == a) {
+        println("Oui!");
+    }
+    println(" a.x =? i ", a.m(i));
+    println(" a.x = (int) ", a.p());
+}

@@ -1,0 +1,18 @@
+class A {
+    int x = 1;
+    int y = 2;
+
+    boolean instanceOf(int i){
+        if( x == i){
+            return true;
+        }
+        else{
+            if (y == 4){
+                return false;
+            }
+            else {
+                return this.instanceOf(y);
+            }
+        }
+}
+}

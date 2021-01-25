@@ -7,6 +7,7 @@ package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
+import fr.ensimag.deca.context.ClassType;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.Definition;
 import fr.ensimag.deca.context.EnvironmentExp;
@@ -14,7 +15,26 @@ import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable;
 import fr.ensimag.ima.pseudocode.DVal;
+import fr.ensimag.ima.pseudocode.ImmediateInteger;
 import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.NullOperand;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.RegisterOffset;
+import fr.ensimag.ima.pseudocode.instructions.ADD;
+import fr.ensimag.ima.pseudocode.instructions.ADDSP;
+import fr.ensimag.ima.pseudocode.instructions.BNE;
+import fr.ensimag.ima.pseudocode.instructions.BRA;
+import fr.ensimag.ima.pseudocode.instructions.BSR;
+import fr.ensimag.ima.pseudocode.instructions.CMP;
+import fr.ensimag.ima.pseudocode.instructions.ERROR;
+import fr.ensimag.ima.pseudocode.instructions.LEA;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
+import fr.ensimag.ima.pseudocode.instructions.PUSH;
+import fr.ensimag.ima.pseudocode.instructions.RTS;
+import fr.ensimag.ima.pseudocode.instructions.STORE;
+import fr.ensimag.ima.pseudocode.instructions.SUB;
+import fr.ensimag.ima.pseudocode.instructions.SUBSP;
+
 import java.io.PrintStream;
 
 import org.apache.commons.lang.Validate;
@@ -56,12 +76,19 @@ public class InstanceOf extends AbstractExpr{
 
     @Override
     public boolean adressable() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    	return false;
     }
 
     @Override
-    public void codeCond(DecacCompiler compiler, boolean bool, Label endAnd) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void codeCond(DecacCompiler compiler, boolean bool, Label etiquette) {
+		assert type.getType().isClass();
+		assert expr.getType().isClass();
+		ClassType typeClass = (ClassType) type.getType();
+		ClassType exprClass = (ClassType) expr.getType();
+		boolean iOf = exprClass.getDefinition().instanceOf(typeClass.getDefinition());
+		if (bool == iOf) {
+			compiler.addInstruction(new BRA(etiquette));
+		}
     }
 
     @Override
@@ -83,15 +110,31 @@ public class InstanceOf extends AbstractExpr{
     	expr.iter(f);
     	type.iter(f);
     }
+    
 	@Override
 	public DVal getAdresse(DecacCompiler compiler) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	
+	
 	@Override
 	protected void codeGenInst(DecacCompiler compiler) {
-		// TODO Auto-generated method stub
-		
+		assert type.getType().isClass();
+		assert expr.getType().isClass();
+		if (getRP(compiler) < getMP(compiler)) {
+			compiler.addInstruction(new ADDSP(new ImmediateInteger(2)));
+			compiler.addInstruction(new LOAD(type.getClassDefinition().getOperand(), 
+					Register.R0));
+			compiler.addInstruction(new STORE(Register.R0, 
+					new RegisterOffset(-1, Register.SP)));
+			compiler.addInstruction(new LOAD(expr.getAdresse(compiler), 
+					Register.R0));
+			compiler.addInstruction(new STORE(Register.R0,
+					new RegisterOffset(0, Register.SP)));
+			compiler.addInstruction(new BSR(new Label("debut.io")));
+			compiler.addInstruction(new SUBSP(new ImmediateInteger(2)));
+		}
 	}
-    
 }

@@ -10,11 +10,11 @@
 	STORE R0, 3(GB)
 	LOAD code.Object.equals, R0
 	STORE R0, 4(GB)
-	LOAD code.Math._pow, R0
-	STORE R0, 5(GB)
 	LOAD code.Math._ulp, R0
-	STORE R0, 6(GB)
+	STORE R0, 5(GB)
 	LOAD code.Math._cosTaylor, R0
+	STORE R0, 6(GB)
+	LOAD code.Math._pow, R0
 	STORE R0, 7(GB)
 ; Main program
 	ADDSP #3
@@ -36,7 +36,7 @@
 	LOAD 0(SP), R2
 	BEQ dereferencement.null
 	LOAD 0(R2), R2
-	BSR 4(R2)
+	BSR 3(R2)
 	LOAD R0, R2
 	SUBSP #2
 	STORE R2, 10(GB)
@@ -92,102 +92,6 @@ init.Math:
 	STORE R2, 4(R1)
 	POP R2
 	RTS
-code.Math._pow:
-	TSTO #1
-	BOV stack_overflow_error
-	ADDSP #1
-	LOAD -3(LB), R2
-	STORE R2, 1(LB)
-	PUSH R2
-	PUSH R3
-	LOAD -3(LB), R2
-	LOAD #0, R3
-	FLOAT R3, R3
-	CMP R3, R2
-	BNE E_Sinon.1
-	LOAD #0, R2
-	FLOAT R2, R2
-	LOAD R2, R0
-	BRA end.Math._pow
-	LOAD #0, R2
-	FLOAT R2, R2
-	LOAD R2, R0
-	BRA end.Math._pow
-	BRA E_Fin.1
-E_Sinon.1:
-E_Fin.1:
-	LOAD -4(LB), R2
-	CMP #0, R2
-	BNE E_Sinon.2
-	LOAD #1, R2
-	FLOAT R2, R2
-	LOAD R2, R0
-	BRA end.Math._pow
-	LOAD #1, R2
-	FLOAT R2, R2
-	LOAD R2, R0
-	BRA end.Math._pow
-	BRA E_Fin.2
-E_Sinon.2:
-	LOAD -4(LB), R2
-	CMP #0, R2
-	BLE E_Sinon.3
-	BRA E_Cond1
-E_Debut1:
-	LOAD -3(LB), R3
-	MUL 1(LB), R3
-	BOV ArithFloat_Error
-	STORE R3, -3(LB)
-	LOAD -4(LB), R3
-	SUB #1, R3
-	STORE R3, -4(LB)
-E_Cond1:
-	LOAD -4(LB), R2
-	CMP #1, R2
-	BGT E_Debut1
-	LOAD -3(LB), R2
-	LOAD R2, R0
-	BRA end.Math._pow
-	LOAD -3(LB), R2
-	LOAD R2, R0
-	BRA end.Math._pow
-	BRA E_Fin.3
-E_Sinon.3:
-	ADDSP #3
-	LOAD -2(LB), R3
-	STORE R3, 0(SP)
-	LOAD 1(LB), R3
-	STORE R3, -1(SP)
-	OPP -4(LB), R3
-	STORE R3, -2(SP)
-	LOAD 0(SP), R3
-	BEQ dereferencement.null
-	LOAD 0(R3), R3
-	BSR 2(R3)
-	LOAD R0, R3
-	SUBSP #3
-	STORE R3, -3(LB)
-	LOAD #1, R2
-	FLOAT R2, R2
-	DIV -3(LB), R2
-	BOV ArithFloat_Error
-	LOAD R2, R0
-	BRA end.Math._pow
-	LOAD #1, R2
-	FLOAT R2, R2
-	DIV -3(LB), R2
-	BOV ArithFloat_Error
-	LOAD R2, R0
-	BRA end.Math._pow
-E_Fin.3:
-E_Fin.2:
-	WSTR "Erreur : sortie de la methode A.getX sans return"
-	WNL
-	ERROR
-end.Math._pow:
-	POP R3
-	POP R2
-	RTS
 code.Math._ulp:
 	TSTO #3
 	BOV stack_overflow_error
@@ -203,13 +107,13 @@ code.Math._ulp:
 	PUSH R4
 	LOAD -3(LB), R2
 	CMP #0x0.0p0, R2
-	BGT E_Sinon.4
+	BGT E_Sinon.1
 	OPP -3(LB), R3
 	BOV ArithFloat_Error
 	STORE R3, -3(LB)
-	BRA E_Fin.4
-E_Sinon.4:
-E_Fin.4:
+	BRA E_Fin.1
+E_Sinon.1:
+E_Fin.1:
 	LOAD -3(LB), R2
 	CMP #0x0.0p0, R2
 	BEQ endOr1
@@ -217,7 +121,7 @@ E_Fin.4:
 	OPP #0x0.0p0, R3
 	BOV ArithFloat_Error
 	CMP R3, R2
-	BNE E_Sinon.5
+	BNE E_Sinon.2
 endOr1:
 	LOAD 3(LB), R2
 	LOAD R2, R0
@@ -225,14 +129,14 @@ endOr1:
 	LOAD 3(LB), R2
 	LOAD R2, R0
 	BRA end.Math._ulp
-	BRA E_Fin.5
-E_Sinon.5:
+	BRA E_Fin.2
+E_Sinon.2:
 	LOAD -3(LB), R2
 	CMP 2(LB), R2
 	BEQ endOr2
 	LOAD -3(LB), R2
 	CMP 3(LB), R2
-	BNE E_Sinon.6
+	BNE E_Sinon.3
 endOr2:
 	ADDSP #3
 	LOAD -2(LB), R2
@@ -245,7 +149,7 @@ endOr2:
 	LOAD 0(SP), R2
 	BEQ dereferencement.null
 	LOAD 0(R2), R2
-	BSR 2(R2)
+	BSR 4(R2)
 	LOAD R0, R2
 	SUBSP #3
 	LOAD R2, R0
@@ -261,21 +165,21 @@ endOr2:
 	LOAD 0(SP), R2
 	BEQ dereferencement.null
 	LOAD 0(R2), R2
-	BSR 2(R2)
+	BSR 4(R2)
 	LOAD R0, R2
 	SUBSP #3
 	LOAD R2, R0
 	BRA end.Math._ulp
-	BRA E_Fin.6
-E_Sinon.6:
+	BRA E_Fin.3
+E_Sinon.3:
 	LOAD -3(LB), R2
 	CMP #0x1.0p0, R2
-	BLE E_Sinon.7
+	BLE E_Sinon.4
 	LOAD 1(LB), R3
 	SUB #1, R3
 	STORE R3, 1(LB)
-	BRA E_Cond2
-E_Debut2:
+	BRA E_Cond1
+E_Debut1:
 	LOAD -3(LB), R3
 	LOAD -3(LB), R3
 	LOAD #2, R4
@@ -286,10 +190,10 @@ E_Debut2:
 	LOAD 1(LB), R3
 	ADD #1, R3
 	STORE R3, 1(LB)
-E_Cond2:
+E_Cond1:
 	LOAD -3(LB), R2
 	CMP #0x1.0p0, R2
-	BGE E_Debut2
+	BGE E_Debut1
 	ADDSP #3
 	LOAD -2(LB), R2
 	STORE R2, 0(SP)
@@ -302,7 +206,7 @@ E_Cond2:
 	LOAD 0(SP), R2
 	BEQ dereferencement.null
 	LOAD 0(R2), R2
-	BSR 2(R2)
+	BSR 4(R2)
 	LOAD R0, R2
 	SUBSP #3
 	LOAD R2, R0
@@ -319,15 +223,15 @@ E_Cond2:
 	LOAD 0(SP), R2
 	BEQ dereferencement.null
 	LOAD 0(R2), R2
-	BSR 2(R2)
+	BSR 4(R2)
 	LOAD R0, R2
 	SUBSP #3
 	LOAD R2, R0
 	BRA end.Math._ulp
-	BRA E_Fin.7
-E_Sinon.7:
-	BRA E_Cond3
-E_Debut3:
+	BRA E_Fin.4
+E_Sinon.4:
+	BRA E_Cond2
+E_Debut2:
 	LOAD -3(LB), R3
 	MUL #0x1.0p1, R3
 	BOV ArithFloat_Error
@@ -335,10 +239,10 @@ E_Debut3:
 	LOAD 1(LB), R3
 	SUB #1, R3
 	STORE R3, 1(LB)
-E_Cond3:
+E_Cond2:
 	LOAD -3(LB), R2
 	CMP #0x1.0p0, R2
-	BLT E_Debut3
+	BLT E_Debut2
 	ADDSP #3
 	LOAD -2(LB), R2
 	STORE R2, 0(SP)
@@ -351,7 +255,7 @@ E_Cond3:
 	LOAD 0(SP), R2
 	BEQ dereferencement.null
 	LOAD 0(R2), R2
-	BSR 2(R2)
+	BSR 4(R2)
 	LOAD R0, R2
 	SUBSP #3
 	LOAD R2, R0
@@ -368,14 +272,14 @@ E_Cond3:
 	LOAD 0(SP), R2
 	BEQ dereferencement.null
 	LOAD 0(R2), R2
-	BSR 2(R2)
+	BSR 4(R2)
 	LOAD R0, R2
 	SUBSP #3
 	LOAD R2, R0
 	BRA end.Math._ulp
-E_Fin.7:
-E_Fin.6:
-E_Fin.5:
+E_Fin.4:
+E_Fin.3:
+E_Fin.2:
 	WSTR "Erreur : sortie de la methode A.getX sans return"
 	WNL
 	ERROR
@@ -417,8 +321,8 @@ code.Math._cosTaylor:
 	LOAD R2, R1
 	WFLOAT
 	WNL
-	BRA E_Cond4
-E_Debut4:
+	BRA E_Cond3
+E_Debut3:
 	LOAD 5(LB), R3
 	ADD #1, R3
 	STORE R3, 5(LB)
@@ -448,7 +352,7 @@ E_Debut4:
 	LOAD 0(SP), R4
 	BEQ dereferencement.null
 	LOAD 0(R4), R4
-	BSR 2(R4)
+	BSR 4(R4)
 	LOAD R0, R4
 	SUBSP #3
 	MUL R4, R3
@@ -459,10 +363,10 @@ E_Debut4:
 	LOAD 2(LB), R3
 	ADD #2, R3
 	STORE R3, 2(LB)
-E_Cond4:
+E_Cond3:
 	LOAD 5(LB), R2
 	CMP #1, R2
-	BLT E_Debut4
+	BLT E_Debut3
 	LOAD #1, R2
 	FLOAT R2, R2
 	LOAD R2, R0
@@ -476,6 +380,102 @@ E_Cond4:
 	ERROR
 end.Math._cosTaylor:
 	POP R4
+	POP R3
+	POP R2
+	RTS
+code.Math._pow:
+	TSTO #1
+	BOV stack_overflow_error
+	ADDSP #1
+	LOAD -3(LB), R2
+	STORE R2, 1(LB)
+	PUSH R2
+	PUSH R3
+	LOAD -3(LB), R2
+	LOAD #0, R3
+	FLOAT R3, R3
+	CMP R3, R2
+	BNE E_Sinon.5
+	LOAD #0, R2
+	FLOAT R2, R2
+	LOAD R2, R0
+	BRA end.Math._pow
+	LOAD #0, R2
+	FLOAT R2, R2
+	LOAD R2, R0
+	BRA end.Math._pow
+	BRA E_Fin.5
+E_Sinon.5:
+E_Fin.5:
+	LOAD -4(LB), R2
+	CMP #0, R2
+	BNE E_Sinon.6
+	LOAD #1, R2
+	FLOAT R2, R2
+	LOAD R2, R0
+	BRA end.Math._pow
+	LOAD #1, R2
+	FLOAT R2, R2
+	LOAD R2, R0
+	BRA end.Math._pow
+	BRA E_Fin.6
+E_Sinon.6:
+	LOAD -4(LB), R2
+	CMP #0, R2
+	BLE E_Sinon.7
+	BRA E_Cond4
+E_Debut4:
+	LOAD -3(LB), R3
+	MUL 1(LB), R3
+	BOV ArithFloat_Error
+	STORE R3, -3(LB)
+	LOAD -4(LB), R3
+	SUB #1, R3
+	STORE R3, -4(LB)
+E_Cond4:
+	LOAD -4(LB), R2
+	CMP #1, R2
+	BGT E_Debut4
+	LOAD -3(LB), R2
+	LOAD R2, R0
+	BRA end.Math._pow
+	LOAD -3(LB), R2
+	LOAD R2, R0
+	BRA end.Math._pow
+	BRA E_Fin.7
+E_Sinon.7:
+	ADDSP #3
+	LOAD -2(LB), R3
+	STORE R3, 0(SP)
+	LOAD 1(LB), R3
+	STORE R3, -1(SP)
+	OPP -4(LB), R3
+	STORE R3, -2(SP)
+	LOAD 0(SP), R3
+	BEQ dereferencement.null
+	LOAD 0(R3), R3
+	BSR 4(R3)
+	LOAD R0, R3
+	SUBSP #3
+	STORE R3, -3(LB)
+	LOAD #1, R2
+	FLOAT R2, R2
+	DIV -3(LB), R2
+	BOV ArithFloat_Error
+	LOAD R2, R0
+	BRA end.Math._pow
+	LOAD #1, R2
+	FLOAT R2, R2
+	DIV -3(LB), R2
+	BOV ArithFloat_Error
+	LOAD R2, R0
+	BRA end.Math._pow
+E_Fin.7:
+E_Fin.6:
+	WSTR "Erreur : sortie de la methode A.getX sans return"
+	WNL
+	ERROR
+end.Math._pow:
 	POP R3
 	POP R2
 	RTS

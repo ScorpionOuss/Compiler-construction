@@ -60,7 +60,7 @@ public class MethodCall extends AbstractExpr{
     	ImmediateInteger numPar = new ImmediateInteger(params.size() + 1);
     	//ADDSP
     	compiler.addInstruction(new ADDSP(numPar));
-    	
+    	compiler.stackManager.incrementStackCounterMax(params.size() + 1);
     	//Empilement des paramètres
     	
     	////Empiler Objet

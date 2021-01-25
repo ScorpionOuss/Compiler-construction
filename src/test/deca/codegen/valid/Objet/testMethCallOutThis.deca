@@ -1,0 +1,31 @@
+// Description:
+//    tests division flottante sur 0; débordement lors d'opération arithmétique sur flottants.
+//
+// Resultats:
+//
+//  Oui
+//  Et i = 1
+//
+//
+// Historique:
+//    cree le 20/01/2021
+
+class A {
+    int x = 1;
+
+    void m(int i) {
+        println("Oui");
+        if (x == i){
+            p();
+        }
+    }
+
+    void p() {
+        println("Et i = ", x);
+    }
+}
+
+{
+    A a = new A();
+    a.m(1);
+}
