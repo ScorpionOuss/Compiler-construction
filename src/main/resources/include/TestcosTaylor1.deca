@@ -1,7 +1,7 @@
 #include "Math.decah"
 {
 Math m = new Math();
-float x = m._cosTaylor(0.123);
+float f = 0.0001;
+float x = m._cosTaylor(f);
 println(x);
 }
-

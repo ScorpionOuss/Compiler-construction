@@ -1,5 +1,5 @@
 ; start main program
-	TSTO #2
+	TSTO #3
 	BOV stack_overflow_error
 	ADDSP #8
 	LOAD #null, R0
@@ -17,7 +17,7 @@
 	LOAD code.Math._cosTaylor, R0
 	STORE R0, 7(GB)
 ; Main program
-	ADDSP #2
+	ADDSP #3
 	NEW #5, R2
 	BOV tas_plein
 	LEA 3(GB), R0
@@ -26,10 +26,12 @@
 	BSR init.Math
 	POP R2
 	STORE R2, 8(GB)
+	LOAD #0x1.a36e2ep-14, R2
+	STORE R2, 9(GB)
 	ADDSP #2
 	LOAD 8(GB), R2
 	STORE R2, 0(SP)
-	LOAD #0x1.f7cedap-4, R2
+	LOAD 9(GB), R2
 	STORE R2, -1(SP)
 	LOAD 0(SP), R2
 	BEQ dereferencement.null
@@ -37,9 +39,9 @@
 	BSR 4(R2)
 	LOAD R0, R2
 	SUBSP #2
-	STORE R2, 9(GB)
+	STORE R2, 10(GB)
 ; Beginning of main instructions:
-	LOAD 9(GB), R2
+	LOAD 10(GB), R2
 	LOAD R2, R1
 	WFLOAT
 	WNL
@@ -383,42 +385,98 @@ end.Math._ulp:
 	POP R2
 	RTS
 code.Math._cosTaylor:
-	TSTO #7
+	TSTO #5
 	BOV stack_overflow_error
-	ADDSP #7
-	LOAD #0x1.0p0, R2
-	STORE R2, 1(LB)
-	LOAD #0x1.99999ap-4, R2
-	STORE R2, 2(LB)
-	LOAD #0x1.0p0, R2
-	STORE R2, 3(LB)
-	LOAD #2, R2
-	STORE R2, 4(LB)
-	OPP R2, R2
-	BOV ArithFloat_Error
-	OPP R2, R2
-	BOV ArithFloat_Error
-	LOAD 4(LB), R3
-	FLOAT R3, R3
-	DIV R3, R2
-	BOV ArithFloat_Error
-	STORE R2, 5(LB)
+	ADDSP #5
 	LOAD #1, R2
 	FLOAT R2, R2
-	STORE R2, 6(LB)
+	STORE R2, 1(LB)
+	LOAD #2, R2
+	STORE R2, 2(LB)
+	LOAD 2(LB), R2
+	FLOAT R2, R2
+	STORE R2, 3(LB)
+	OPP R2, R2
+	BOV ArithFloat_Error
+	DIV 3(LB), R2
+	BOV ArithFloat_Error
+	STORE R2, 4(LB)
 	LOAD #0, R2
-	STORE R2, 7(LB)
+	STORE R2, 5(LB)
 	PUSH R2
+	PUSH R3
+	PUSH R4
+	LOAD 4(LB), R2
+	LOAD R2, R1
+	WFLOAT
+	WNL
+	OPP R2, R2
+	BOV ArithFloat_Error
+	DIV #0x1.0p1, R2
+	BOV ArithFloat_Error
+	LOAD R2, R1
+	WFLOAT
+	WNL
+	BRA E_Cond4
+E_Debut4:
+	LOAD 5(LB), R3
+	ADD #1, R3
+	STORE R3, 5(LB)
+	LOAD 1(LB), R3
+	ADD 4(LB), R3
+	BOV ArithFloat_Error
+	STORE R3, 1(LB)
+	LOAD 2(LB), R3
+	ADD #1, R3
+	LOAD 2(LB), R4
+	ADD #2, R4
+	MUL R4, R3
+	FLOAT R3, R3
+	STORE R3, 3(LB)
+	LOAD 4(LB), R3
+	OPP #1, R4
+	FLOAT R4, R4
+	MUL R4, R3
+	BOV ArithFloat_Error
+	ADDSP #3
+	LOAD -2(LB), R4
+	STORE R4, 0(SP)
+	LOAD -3(LB), R4
+	STORE R4, -1(SP)
+	LOAD #2, R4
+	STORE R4, -2(SP)
+	LOAD 0(SP), R4
+	BEQ dereferencement.null
+	LOAD 0(R4), R4
+	BSR 2(R4)
+	LOAD R0, R4
+	SUBSP #3
+	MUL R4, R3
+	BOV ArithFloat_Error
+	DIV 3(LB), R3
+	BOV ArithFloat_Error
+	STORE R3, 4(LB)
+	LOAD 2(LB), R3
+	ADD #2, R3
+	STORE R3, 2(LB)
+E_Cond4:
 	LOAD 5(LB), R2
+	CMP #1, R2
+	BLT E_Debut4
+	LOAD #1, R2
+	FLOAT R2, R2
 	LOAD R2, R0
 	BRA end.Math._cosTaylor
-	LOAD 5(LB), R2
+	LOAD #1, R2
+	FLOAT R2, R2
 	LOAD R2, R0
 	BRA end.Math._cosTaylor
 	WSTR "Erreur : sortie de la methode A.getX sans return"
 	WNL
 	ERROR
 end.Math._cosTaylor:
+	POP R4
+	POP R3
 	POP R2
 	RTS
 code.Object.equals:

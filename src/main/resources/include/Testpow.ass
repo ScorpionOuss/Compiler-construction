@@ -1,7 +1,7 @@
 ; start main program
-	TSTO #0
+	TSTO #2
 	BOV stack_overflow_error
-	ADDSP #7
+	ADDSP #8
 	LOAD #null, R0
 	STORE R0, 1(GB)
 	LOAD code.Object.equals, R0
@@ -14,7 +14,37 @@
 	STORE R0, 5(GB)
 	LOAD code.Math._ulp, R0
 	STORE R0, 6(GB)
+	LOAD code.Math._cosTaylor, R0
+	STORE R0, 7(GB)
 ; Main program
+	ADDSP #2
+	NEW #5, R2
+	BOV tas_plein
+	LEA 3(GB), R0
+	STORE R0, 0(R2)
+	PUSH R2
+	BSR init.Math
+	POP R2
+	STORE R2, 8(GB)
+	ADDSP #3
+	LOAD 8(GB), R2
+	STORE R2, 0(SP)
+	LOAD #0x1.a36e2ep-14, R2
+	STORE R2, -1(SP)
+	LOAD #2, R2
+	STORE R2, -2(SP)
+	LOAD 0(SP), R2
+	BEQ dereferencement.null
+	LOAD 0(R2), R2
+	BSR 2(R2)
+	LOAD R0, R2
+	SUBSP #3
+	STORE R2, 9(GB)
+; Beginning of main instructions:
+	LOAD 9(GB), R2
+	LOAD R2, R1
+	WFLOAT
+	WNL
 	HALT
 stack_overflow_error:
 	WSTR "Error: Stack Overflow"
@@ -352,6 +382,59 @@ E_Fin.5:
 end.Math._ulp:
 	POP R4
 	POP R3
+	POP R2
+	RTS
+code.Math._cosTaylor:
+	TSTO #6
+	BOV stack_overflow_error
+	ADDSP #6
+	LOAD #1, R2
+	FLOAT R2, R2
+	STORE R2, 1(LB)
+	LOAD #0x1.99999ap-4, R2
+	STORE R2, 2(LB)
+	LOAD #1, R2
+	FLOAT R2, R2
+	STORE R2, 3(LB)
+	LOAD #2, R2
+	STORE R2, 4(LB)
+	LOAD 4(LB), R2
+	FLOAT R2, R2
+	STORE R2, 5(LB)
+	OPP R2, R2
+	BOV ArithFloat_Error
+	DIV 5(LB), R2
+	BOV ArithFloat_Error
+	STORE R2, 6(LB)
+	PUSH R2
+	ADDSP #3
+	LOAD -2(LB), R2
+	STORE R2, 0(SP)
+	LOAD -3(LB), R2
+	STORE R2, -1(SP)
+	LOAD #2, R2
+	STORE R2, -2(SP)
+	LOAD 0(SP), R2
+	BEQ dereferencement.null
+	LOAD 0(R2), R2
+	BSR 2(R2)
+	LOAD R0, R2
+	SUBSP #3
+	LOAD R2, R1
+	WFLOAT
+	WNL
+	LOAD #0, R2
+	FLOAT R2, R2
+	LOAD R2, R0
+	BRA end.Math._cosTaylor
+	LOAD #0, R2
+	FLOAT R2, R2
+	LOAD R2, R0
+	BRA end.Math._cosTaylor
+	WSTR "Erreur : sortie de la methode A.getX sans return"
+	WNL
+	ERROR
+end.Math._cosTaylor:
 	POP R2
 	RTS
 code.Object.equals:

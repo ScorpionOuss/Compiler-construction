@@ -59,4 +59,23 @@ float _pow(float x, int n){
 
 
 }
+
+
+float _cosTaylor(float f){
+    float res = 1;
+    int i = 2;
+    float j = i;
+    float x = -_pow(f,2)/j;
+    int k = 0;
+    println(x);
+    println(-_pow(0.0001,2)/2.0);
+    while(k<1){
+    k=k + 1;
+    res = res + x;
+    j=((i+1)*(i+2));
+    x=x*-1*_pow(f,2)/j;
+    i = i + 2;
+    }
+    return 1;
+}
 }
