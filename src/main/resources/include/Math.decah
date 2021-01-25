@@ -33,19 +33,19 @@ protected float PiS2 = 1.5707963267949f;
         }
     }
       }
-
-
 }
+
 
 
 float _cosTaylor(float f){
     float res = 1;
     int i = 2;
     float j = i;
-    float x = -_pow(f,2)/j;
     int k = 0;
+    float x = _pow(f,2);
+    x=x/j;
     println(x);
-    println(-_pow(0.0001,2)/2.0);
+    println(_pow(0.0001,2)/2.0);
     while(k<1){
     k=k + 1;
     res = res + x;
@@ -77,4 +77,10 @@ float _pow(float x, int n){
   }
   }
 }
+//float atanHermite(float f){
+//float res;
+//res = 1.1097301E-6*55 -3.1647858E-5*54 + 53*4.3415572E-4f -52*-0.0038123499f +0.024052639f*51 -0.11600586f*50 +0.44423878f*49 -1.3847452f*48 + 3.5731058f*47 -7.719477f*46 +14.067447f*45 -21.717817f*44 + 28.45957f*43 - 
+
+
+//}
 }
