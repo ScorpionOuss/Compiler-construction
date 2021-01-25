@@ -80,8 +80,24 @@ public class Program extends AbstractProgram {
 	private void insertObjectCode(DecacCompiler compiler) {
     	//code.Object.equals
 
+		Label endSuccess = new Label("end.Success.objet");
 		compiler.addLabel(new Label("code.Object.equals"));
-    	compiler.addInstruction(new RTS());
+		compiler.addInstruction(new LOAD(new RegisterOffset(-2, 
+				Register.LB),
+				Register.getR(compiler.registersManag.getRegisterPointer())));
+		compiler.addInstruction(new LOAD(new RegisterOffset(-3, 
+				Register.LB), 
+				Register.R0));
+		compiler.addInstruction(new CMP(Register.R0,
+				Register.getR(compiler.registersManag.getRegisterPointer())));
+		compiler.addInstruction(new BEQ(endSuccess));
+		compiler.addInstruction(new LOAD(0, 
+				Register.R0));
+		compiler.addInstruction(new RTS());
+		compiler.addLabel(endSuccess);
+		compiler.addInstruction(new LOAD(1, 
+				Register.R0));
+		compiler.addInstruction(new RTS());
     	
     	//init.object
 

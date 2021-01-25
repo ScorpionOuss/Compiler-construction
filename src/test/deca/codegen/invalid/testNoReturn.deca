@@ -1,0 +1,22 @@
+// Description:
+//    tests No return.
+//
+// Resultats:
+//
+//  Erreur : sortie de la methode A.getX sans return
+//
+// Historique:
+//    cree le 20/01/2021
+
+class A {
+    int x;
+
+    int m(int i){
+        x = x + i;
+        }
+}
+
+{
+    A a = new A();
+    a.m(1);
+}

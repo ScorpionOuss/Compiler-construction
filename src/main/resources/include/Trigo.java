@@ -511,4 +511,3 @@ System.out.println("fin du test de ulp. Erreur rencontré : "+ Error+" sur " +nb
 
 
 }}
-

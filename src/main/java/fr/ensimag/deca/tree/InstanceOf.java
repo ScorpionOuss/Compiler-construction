@@ -22,6 +22,7 @@ import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.RegisterOffset;
 import fr.ensimag.ima.pseudocode.instructions.ADD;
 import fr.ensimag.ima.pseudocode.instructions.ADDSP;
+import fr.ensimag.ima.pseudocode.instructions.BEQ;
 import fr.ensimag.ima.pseudocode.instructions.BNE;
 import fr.ensimag.ima.pseudocode.instructions.BRA;
 import fr.ensimag.ima.pseudocode.instructions.BSR;
@@ -85,9 +86,16 @@ public class InstanceOf extends AbstractExpr{
 		assert expr.getType().isClass();
 		ClassType typeClass = (ClassType) type.getType();
 		ClassType exprClass = (ClassType) expr.getType();
-		boolean iOf = exprClass.getDefinition().instanceOf(typeClass.getDefinition());
-		if (bool == iOf) {
-			compiler.addInstruction(new BRA(etiquette));
+		codeGenInst(compiler);
+		if (bool) {
+			compiler.addInstruction(new CMP(new ImmediateInteger(0),
+					Register.getR(getRP(compiler))));
+			compiler.addInstruction(new BNE(etiquette));
+		}
+		else {
+			compiler.addInstruction(new CMP(new ImmediateInteger(0),
+					Register.getR(getRP(compiler))));
+			compiler.addInstruction(new BEQ(etiquette));
 		}
     }
 

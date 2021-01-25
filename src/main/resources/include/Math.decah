@@ -7,10 +7,10 @@ protected float PiS2 = 1.5707963267949f;
     int ex = 0;
     float MAXVALUE = 3.4028234663852886E38f;
     float MINVALUE = 1.4E-45f;
-	if(x<=0.0){
+	if(x<=0){
 		x = -x;
 	}
-    if (x == 0.0 || x == -0.0){
+    if (x == 0 || x == -0){
 				 return MINVALUE;}
     else {
     if (x == MAXVALUE|| x == MINVALUE) {
@@ -55,7 +55,6 @@ float _cosTaylor(float f){
     float j =i;
     int k = 0;
     float x = -_pow(f,2)/j;
-    println(x);
     while(k<1){
     k=k + 1;
     res = res + x;
@@ -126,24 +125,33 @@ float _sin(float x){
 
 
 
-float _sinTaylor(float x) {
-    int i = 1;
-    float sum;
-    float factor;
-    if (x == 0) {
-        return 0;
+ float _sin(float x) {
+        int i = 1;
+        float sum;
+        float factor;
+        int k = 0;
+        while (k<=100) {
+            k = k + 1;
+            factor = -factor * x * x / (2*i * (2*i+1));
+            sum = sum + factor;
+            i = i + 1;
+        }
+        return sum ;
     }
-    factor = x;
-    sum = x;
-    int k =0;
-    while (k<=100) {
-      k = k+1;
-        factor = -factor * x * x / (2*i * (2*i+1));
-        sum = sum + factor;
-        i = i + 1;
+float _cos(float x)
+    {
+    float y1 = 6.2831855;
+    x = _Modulo2Pi(x, y1);
+    if (0<=x && x<(2.3561945)){
+    return _cosTaylor(x);
     }
-    return sum;
-}
+    else{
+    if (2.3561945<=x && x<5.4977875){
+    return _sin(PiS2 - x);
+    }
+    else {
+    return _cosTaylor(6.2831855 - x);
+    }}}
 
 
 
@@ -151,7 +159,8 @@ float _sinTaylor(float x) {
 
 
 
-float atanHermite(float x){
+
+float atanHermite(float f){
 float ret;
 ret =1.1097301E-6*_pow(f,55)
 -3.1647858E-5*_pow(f,54)
@@ -192,7 +201,7 @@ ret =1.1097301E-6*_pow(f,55)
 +0.11111111*_pow(f,9)
 -0.14285715*_pow(f,7)
 +0.2*_pow(f,5)
--0.33333334*_pow(f,3)
+-0.33333334*_pow(f,3);
 return ret;
 }
 
@@ -200,9 +209,9 @@ return ret;
 
 float _atan(float x){
 int s = 1;
-if (x<0){ signe = -1; }
+if (x<0.00000001){ s = -1; }
 if (x>1.1875){ return s*(PiS2-atanHermite(1/x)); }
-else{ if (x>0.6875f){ return (((float)signe)*((float) (atanHermite((x -1)/(1+x)) + 0.7853982))); }else { return signe*atanHermite(x); }
+else{ if (x>0.6875f){ return ((s)*( (atanHermite((x -1)/(1+x)) + 0.7853982))); }else { return s*atanHermite(x); }
 }}
 
 

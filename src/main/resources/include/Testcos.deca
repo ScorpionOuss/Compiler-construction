@@ -1,0 +1,7 @@
+#include "Math.decah"
+{
+Math m = new Math();
+float f = 0.123;
+float x = m._cos(f);
+println(x);
+}

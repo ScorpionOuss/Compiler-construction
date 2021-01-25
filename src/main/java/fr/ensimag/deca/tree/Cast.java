@@ -55,17 +55,17 @@ public class Cast extends AbstractExpr{
 
     @Override
     public boolean adressable() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    	return true;
     }
 
     @Override
     public DVal getAdresse(DecacCompiler compiler) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    	return expr.getAdresse(compiler);
     }
 
     @Override
     public void codeCond(DecacCompiler compiler, boolean bool, Label endAnd) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported"); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override

@@ -1,7 +1,7 @@
 ; start main program
-	TSTO #3
+	TSTO #13
 	BOV stack_overflow_error
-	ADDSP #8
+	ADDSP #7
 	LOAD #null, R0
 	STORE R0, 1(GB)
 	LOAD code.Object.equals, R0
@@ -26,7 +26,7 @@
 	BSR init.Math
 	POP R2
 	STORE R2, 8(GB)
-	LOAD #0x1.a36e2ep-14, R2
+	LOAD #0x1.f7cedap-4, R2
 	STORE R2, 9(GB)
 	ADDSP #2
 	LOAD 8(GB), R2
@@ -93,7 +93,7 @@ init.Math:
 	POP R2
 	RTS
 code.Math._ulp:
-	TSTO #3
+	TSTO #30
 	BOV stack_overflow_error
 	ADDSP #3
 	LOAD #0, R2
@@ -103,14 +103,16 @@ code.Math._ulp:
 	LOAD #0x0.000002p-126, R2
 	STORE R2, 3(LB)
 	PUSH R2
-	PUSH R3
-	PUSH R4
 	LOAD -3(LB), R2
 	CMP #0x0.0p0, R2
 	BGT E_Sinon.1
-	OPP -3(LB), R3
+	PUSH R2
+	OPP -3(LB), R2
 	BOV ArithFloat_Error
-	STORE R3, -3(LB)
+	LOAD R2, R1
+	POP R2
+	STORE R1, -3(LB)
+	LOAD -3(LB), R1
 	BRA E_Fin.1
 E_Sinon.1:
 E_Fin.1:
@@ -118,9 +120,12 @@ E_Fin.1:
 	CMP #0x0.0p0, R2
 	BEQ endOr1
 	LOAD -3(LB), R2
-	OPP #0x0.0p0, R3
+	PUSH R2
+	OPP #0x0.0p0, R2
 	BOV ArithFloat_Error
-	CMP R3, R2
+	LOAD R2, R1
+	POP R2
+	CMP R1, R2
 	BNE E_Sinon.2
 endOr1:
 	LOAD 3(LB), R2
@@ -175,21 +180,36 @@ E_Sinon.3:
 	LOAD -3(LB), R2
 	CMP #0x1.0p0, R2
 	BLE E_Sinon.4
-	LOAD 1(LB), R3
-	SUB #1, R3
-	STORE R3, 1(LB)
+	PUSH R2
+	LOAD 1(LB), R2
+	SUB #1, R2
+	LOAD R2, R1
+	POP R2
+	STORE R1, 1(LB)
+	LOAD 1(LB), R1
 	BRA E_Cond1
 E_Debut1:
-	LOAD -3(LB), R3
-	LOAD -3(LB), R3
-	LOAD #2, R4
-	FLOAT R4, R4
-	DIV R4, R3
+	PUSH R2
+	LOAD -3(LB), R2
+	LOAD -3(LB), R2
+	PUSH R2
+	LOAD #2, R2
+	FLOAT R2, R2
+	LOAD R2, R1
+	POP R2
+	DIV R1, R2
 	BOV ArithFloat_Error
-	STORE R3, -3(LB)
-	LOAD 1(LB), R3
-	ADD #1, R3
-	STORE R3, 1(LB)
+	LOAD R2, R1
+	POP R2
+	STORE R1, -3(LB)
+	LOAD -3(LB), R1
+	PUSH R2
+	LOAD 1(LB), R2
+	ADD #1, R2
+	LOAD R2, R1
+	POP R2
+	STORE R1, 1(LB)
+	LOAD 1(LB), R1
 E_Cond1:
 	LOAD -3(LB), R2
 	CMP #0x1.0p0, R2
@@ -232,13 +252,21 @@ E_Cond1:
 E_Sinon.4:
 	BRA E_Cond2
 E_Debut2:
-	LOAD -3(LB), R3
-	MUL #0x1.0p1, R3
+	PUSH R2
+	LOAD -3(LB), R2
+	MUL #0x1.0p1, R2
 	BOV ArithFloat_Error
-	STORE R3, -3(LB)
-	LOAD 1(LB), R3
-	SUB #1, R3
-	STORE R3, 1(LB)
+	LOAD R2, R1
+	POP R2
+	STORE R1, -3(LB)
+	LOAD -3(LB), R1
+	PUSH R2
+	LOAD 1(LB), R2
+	SUB #1, R2
+	LOAD R2, R1
+	POP R2
+	STORE R1, 1(LB)
+	LOAD 1(LB), R1
 E_Cond2:
 	LOAD -3(LB), R2
 	CMP #0x1.0p0, R2
@@ -284,12 +312,10 @@ E_Fin.2:
 	WNL
 	ERROR
 end.Math._ulp:
-	POP R4
-	POP R3
 	POP R2
 	RTS
 code.Math._cosTaylor:
-	TSTO #5
+	TSTO #19
 	BOV stack_overflow_error
 	ADDSP #5
 	LOAD #1, R2
@@ -302,51 +328,90 @@ code.Math._cosTaylor:
 	STORE R2, 3(LB)
 	LOAD #0, R2
 	STORE R2, 4(LB)
+	ADDSP #3
+	LOAD -2(LB), R2
+	STORE R2, 0(SP)
+	LOAD -3(LB), R2
+	STORE R2, -1(SP)
+	LOAD #2, R2
+	STORE R2, -2(SP)
+	LOAD 0(SP), R2
+	BEQ dereferencement.null
+	LOAD 0(R2), R2
+	BSR 4(R2)
+	LOAD R0, R2
+	SUBSP #3
 	OPP R2, R2
 	BOV ArithFloat_Error
 	DIV 3(LB), R2
 	BOV ArithFloat_Error
 	STORE R2, 5(LB)
 	PUSH R2
-	PUSH R3
-	PUSH R4
-	LOAD 5(LB), R2
-	LOAD R2, R1
-	WFLOAT
-	WNL
 	BRA E_Cond3
 E_Debut3:
-	LOAD 4(LB), R3
-	ADD #1, R3
-	STORE R3, 4(LB)
-	LOAD 1(LB), R3
-	ADD 5(LB), R3
+	PUSH R2
+	LOAD 4(LB), R2
+	ADD #1, R2
+	LOAD R2, R1
+	POP R2
+	STORE R1, 4(LB)
+	LOAD 4(LB), R1
+	PUSH R2
+	LOAD 1(LB), R2
+	ADD 5(LB), R2
 	BOV ArithFloat_Error
-	STORE R3, 1(LB)
-	STORE R3, 3(LB)
-	OPP 5(LB), R3
+	LOAD R2, R1
+	POP R2
+	STORE R1, 1(LB)
+	LOAD 1(LB), R1
+	PUSH R2
+	LOAD 2(LB), R2
+	ADD #1, R2
+	PUSH R2
+	LOAD 2(LB), R2
+	ADD #2, R2
+	LOAD R2, R1
+	POP R2
+	MUL R1, R2
+	FLOAT R2, R2
+	LOAD R2, R1
+	POP R2
+	STORE R1, 3(LB)
+	LOAD 3(LB), R1
+	PUSH R2
+	OPP 5(LB), R2
 	BOV ArithFloat_Error
+	PUSH R2
 	ADDSP #3
-	LOAD -2(LB), R4
-	STORE R4, 0(SP)
-	LOAD -3(LB), R4
-	STORE R4, -1(SP)
-	LOAD #2, R4
-	STORE R4, -2(SP)
-	LOAD 0(SP), R4
+	LOAD -2(LB), R2
+	STORE R2, 0(SP)
+	LOAD -3(LB), R2
+	STORE R2, -1(SP)
+	LOAD #2, R2
+	STORE R2, -2(SP)
+	LOAD 0(SP), R2
 	BEQ dereferencement.null
-	LOAD 0(R4), R4
-	BSR 4(R4)
-	LOAD R0, R4
+	LOAD 0(R2), R2
+	BSR 4(R2)
+	LOAD R0, R2
 	SUBSP #3
-	MUL R4, R3
+	LOAD R2, R1
+	POP R2
+	MUL R1, R2
 	BOV ArithFloat_Error
-	DIV 3(LB), R3
+	DIV 3(LB), R2
 	BOV ArithFloat_Error
-	STORE R3, 5(LB)
-	LOAD 2(LB), R3
-	ADD #2, R3
-	STORE R3, 2(LB)
+	LOAD R2, R1
+	POP R2
+	STORE R1, 5(LB)
+	LOAD 5(LB), R1
+	PUSH R2
+	LOAD 2(LB), R2
+	ADD #2, R2
+	LOAD R2, R1
+	POP R2
+	STORE R1, 2(LB)
+	LOAD 2(LB), R1
 E_Cond3:
 	LOAD 4(LB), R2
 	CMP #1, R2
@@ -361,22 +426,22 @@ E_Cond3:
 	WNL
 	ERROR
 end.Math._cosTaylor:
-	POP R4
-	POP R3
 	POP R2
 	RTS
 code.Math._pow:
-	TSTO #1
+	TSTO #9
 	BOV stack_overflow_error
 	ADDSP #1
 	LOAD -3(LB), R2
 	STORE R2, 1(LB)
 	PUSH R2
-	PUSH R3
 	LOAD -3(LB), R2
-	LOAD #0, R3
-	FLOAT R3, R3
-	CMP R3, R2
+	PUSH R2
+	LOAD #0, R2
+	FLOAT R2, R2
+	LOAD R2, R1
+	POP R2
+	CMP R1, R2
 	BNE E_Sinon.5
 	LOAD #0, R2
 	FLOAT R2, R2
@@ -407,13 +472,21 @@ E_Sinon.6:
 	BLE E_Sinon.7
 	BRA E_Cond4
 E_Debut4:
-	LOAD -3(LB), R3
-	MUL 1(LB), R3
+	PUSH R2
+	LOAD -3(LB), R2
+	MUL 1(LB), R2
 	BOV ArithFloat_Error
-	STORE R3, -3(LB)
-	LOAD -4(LB), R3
-	SUB #1, R3
-	STORE R3, -4(LB)
+	LOAD R2, R1
+	POP R2
+	STORE R1, -3(LB)
+	LOAD -3(LB), R1
+	PUSH R2
+	LOAD -4(LB), R2
+	SUB #1, R2
+	LOAD R2, R1
+	POP R2
+	STORE R1, -4(LB)
+	LOAD -4(LB), R1
 E_Cond4:
 	LOAD -4(LB), R2
 	CMP #1, R2
@@ -426,20 +499,24 @@ E_Cond4:
 	BRA end.Math._pow
 	BRA E_Fin.7
 E_Sinon.7:
+	PUSH R2
 	ADDSP #3
-	LOAD -2(LB), R3
-	STORE R3, 0(SP)
-	LOAD 1(LB), R3
-	STORE R3, -1(SP)
-	OPP -4(LB), R3
-	STORE R3, -2(SP)
-	LOAD 0(SP), R3
+	LOAD -2(LB), R2
+	STORE R2, 0(SP)
+	LOAD 1(LB), R2
+	STORE R2, -1(SP)
+	OPP -4(LB), R2
+	STORE R2, -2(SP)
+	LOAD 0(SP), R2
 	BEQ dereferencement.null
-	LOAD 0(R3), R3
-	BSR 4(R3)
-	LOAD R0, R3
+	LOAD 0(R2), R2
+	BSR 4(R2)
+	LOAD R0, R2
 	SUBSP #3
-	STORE R3, -3(LB)
+	LOAD R2, R1
+	POP R2
+	STORE R1, -3(LB)
+	LOAD -3(LB), R1
 	LOAD #1, R2
 	FLOAT R2, R2
 	DIV -3(LB), R2
@@ -458,11 +535,34 @@ E_Fin.6:
 	WNL
 	ERROR
 end.Math._pow:
-	POP R3
 	POP R2
 	RTS
 code.Object.equals:
 	RTS
 init.object:
 	RTS
+debut.io:
+	LOAD -3(LB), R2
+	LOAD -2(LB), R0
+	LOAD 0(R0), R0
+	CMP R0, R2
+	BNE sinon.io.1
+	LOAD #1, R2
+	RTS
+sinon.io.1:
+	LOAD 0(R0), R1
+	CMP #null, R1
+	BNE sinon.io.2
+	LOAD #0, R2
+	RTS
+sinon.io.2:
+	LOAD -3(LB), R2
+	LEA 0(R0), R0
+	ADDSP #2
+	STORE R0, 0(SP)
+	STORE R2, -1(SP)
+	BSR debut.io
+	SUBSP #2
+	RTS
+	ERROR
 ; end main program
