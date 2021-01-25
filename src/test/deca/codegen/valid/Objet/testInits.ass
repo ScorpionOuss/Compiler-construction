@@ -1,0 +1,145 @@
+; start main program
+	TSTO #8
+	BOV stack_overflow_error
+	ADDSP #6
+	LOAD #null, R0
+	STORE R0, 1(GB)
+	LOAD code.Object.equals, R0
+	STORE R0, 2(GB)
+	LEA 1(GB), R0
+	STORE R0, 3(GB)
+	LOAD code.Object.equals, R0
+	STORE R0, 4(GB)
+	LEA 3(GB), R0
+	STORE R0, 5(GB)
+	LOAD code.Object.equals, R0
+	STORE R0, 6(GB)
+; Main program
+	ADDSP #1
+	NEW #7, R2
+	BOV tas_plein
+	LEA 5(GB), R0
+	STORE R0, 0(R2)
+	PUSH R2
+	BSR init.B
+	POP R2
+	STORE R2, 7(GB)
+; Beginning of main instructions:
+	LOAD 7(GB), R2
+	BEQ dereferencement.null
+	LOAD 1(R2), R2
+	LOAD R2, R1
+	WINT
+	LOAD 7(GB), R2
+	BEQ dereferencement.null
+	LOAD 2(R2), R2
+	LOAD R2, R1
+	WINT
+	LOAD 7(GB), R2
+	BEQ dereferencement.null
+	LOAD 4(R2), R2
+	LOAD R2, R1
+	WINT
+	LOAD 7(GB), R2
+	BEQ dereferencement.null
+	LOAD 5(R2), R2
+	LOAD R2, R1
+	WINT
+	LOAD 7(GB), R2
+	BEQ dereferencement.null
+	LOAD 6(R2), R2
+	LOAD R2, R1
+	WFLOAT
+	WNL
+	HALT
+stack_overflow_error:
+	WSTR "Error: Stack Overflow"
+	WNL
+	ERROR
+io_error:
+	WSTR "Error: Input/Output error"
+	WNL
+	ERROR
+ArithFloat_Error:
+	WSTR "Error: Débordement arithmétique sur flottants"
+	WNL
+	ERROR
+ZeroDivision_Error:
+	WSTR "Error: Division entière par 0"
+	WNL
+	ERROR
+dereferencement.null:
+	WSTR "Erreur : dereferencement de null"
+	WNL
+	ERROR
+tas_plein:
+	WSTR "Erreur : heap_over_flow"
+	WNL
+	ERROR
+init.A:
+	TSTO #1
+	BOV stack_overflow_error
+	PUSH R2
+	LOAD -2(LB), R1
+	PUSH R1
+	BSR init.Object
+	SUBSP #1
+	LOAD #1, R2
+	LOAD -2(LB), R1
+	STORE R2, 1(R1)
+	LOAD #0, R2
+	LOAD -2(LB), R1
+	STORE R2, 2(R1)
+	LOAD #0, R2
+	LOAD -2(LB), R1
+	STORE R2, 3(R1)
+	POP R2
+	RTS
+init.B:
+	TSTO #1
+	BOV stack_overflow_error
+	PUSH R2
+	LOAD -2(LB), R1
+	PUSH R1
+	BSR init.A
+	SUBSP #1
+	LOAD #3, R2
+	LOAD -2(LB), R1
+	STORE R2, 4(R1)
+	LOAD #0, R2
+	LOAD -2(LB), R1
+	STORE R2, 5(R1)
+	LOAD #0x0.0p0, R2
+	LOAD -2(LB), R1
+	STORE R2, 6(R1)
+	POP R2
+	RTS
+code.Object.equals:
+	RTS
+init.object:
+	RTS
+debut.io:
+	LOAD -3(LB), R2
+	LOAD -2(LB), R0
+	LOAD 0(R0), R0
+	CMP R0, R2
+	BNE sinon.io.1
+	LOAD #1, R2
+	RTS
+sinon.io.1:
+	LOAD 0(R0), R1
+	CMP #null, R1
+	BNE sinon.io.2
+	LOAD #0, R2
+	RTS
+sinon.io.2:
+	LOAD -3(LB), R2
+	LEA 0(R0), R0
+	ADDSP #2
+	STORE R0, 0(SP)
+	STORE R2, -1(SP)
+	BSR debut.io
+	SUBSP #2
+	RTS
+	ERROR
+; end main program

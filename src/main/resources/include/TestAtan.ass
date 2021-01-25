@@ -1,0 +1,1721 @@
+; start main program
+	TSTO #18
+	BOV stack_overflow_error
+	ADDSP #12
+	LOAD #null, R0
+	STORE R0, 1(GB)
+	LOAD code.Object.equals, R0
+	STORE R0, 2(GB)
+	LEA 1(GB), R0
+	STORE R0, 3(GB)
+	LOAD code.Object.equals, R0
+	STORE R0, 4(GB)
+	LOAD code.Math._ulp, R0
+	STORE R0, 5(GB)
+	LOAD code.Math._cosTaylor, R0
+	STORE R0, 6(GB)
+	LOAD code.Math._pow, R0
+	STORE R0, 7(GB)
+	LOAD code.Math._Modulo2Pi, R0
+	STORE R0, 8(GB)
+	LOAD code.Math._sin, R0
+	STORE R0, 9(GB)
+	LOAD code.Math._cos, R0
+	STORE R0, 10(GB)
+	LOAD code.Math.atanHermite, R0
+	STORE R0, 11(GB)
+	LOAD code.Math._atan, R0
+	STORE R0, 12(GB)
+; Main program
+	ADDSP #3
+	NEW #5, R2
+	BOV tas_plein
+	LEA 3(GB), R0
+	STORE R0, 0(R2)
+	PUSH R2
+	BSR init.Math
+	POP R2
+	STORE R2, 13(GB)
+	LOAD #0x1.99999ap-4, R2
+	STORE R2, 14(GB)
+	ADDSP #2
+	LOAD 13(GB), R2
+	STORE R2, 0(SP)
+	LOAD 14(GB), R2
+	STORE R2, -1(SP)
+	LOAD 0(SP), R2
+	BEQ dereferencement.null
+	LOAD 0(R2), R2
+	BSR 8(R2)
+	LOAD R0, R2
+	SUBSP #2
+	STORE R2, 15(GB)
+; Beginning of main instructions:
+	LOAD 15(GB), R2
+	LOAD R2, R1
+	WFLOAT
+	WNL
+	LOAD #0x1.91eb86p0, R2
+	SUB 15(GB), R2
+	BOV ArithFloat_Error
+	LOAD R2, R1
+	WFLOAT
+	WNL
+	HALT
+stack_overflow_error:
+	WSTR "Error: Stack Overflow"
+	WNL
+	ERROR
+io_error:
+	WSTR "Error: Input/Output error"
+	WNL
+	ERROR
+ArithFloat_Error:
+	WSTR "Error: Débordement arithmétique sur flottants"
+	WNL
+	ERROR
+ZeroDivision_Error:
+	WSTR "Error: Division entière par 0"
+	WNL
+	ERROR
+dereferencement.null:
+	WSTR "Erreur : dereferencement de null"
+	WNL
+	ERROR
+tas_plein:
+	WSTR "Erreur : heap_over_flow"
+	WNL
+	ERROR
+init.Math:
+	TSTO #1
+	BOV stack_overflow_error
+	PUSH R2
+	LOAD -2(LB), R1
+	PUSH R1
+	BSR init.Object
+	SUBSP #1
+	LOAD #0x0.000002p-126, R2
+	LOAD -2(LB), R1
+	STORE R2, 1(R1)
+	LOAD #0x1.fffffep127, R2
+	LOAD -2(LB), R1
+	STORE R2, 2(R1)
+	LOAD #0x1.921fb6p1, R2
+	LOAD -2(LB), R1
+	STORE R2, 3(R1)
+	LOAD #0x1.921fb6p0, R2
+	LOAD -2(LB), R1
+	STORE R2, 4(R1)
+	POP R2
+	RTS
+code.Math._ulp:
+	TSTO #24
+	BOV stack_overflow_error
+	ADDSP #3
+	LOAD #0, R2
+	STORE R2, 1(LB)
+	LOAD #0x1.fffffep127, R2
+	STORE R2, 2(LB)
+	LOAD #0x0.000002p-126, R2
+	STORE R2, 3(LB)
+	PUSH R2
+	PUSH R3
+	PUSH R4
+	LOAD -3(LB), R2
+	CMP #0, R2
+	BGT E_Sinon.1
+	OPP -3(LB), R3
+	BOV ArithFloat_Error
+	STORE R3, -3(LB)
+	LOAD -3(LB), R2
+	BRA E_Fin.1
+E_Sinon.1:
+E_Fin.1:
+	LOAD -3(LB), R2
+	LOAD #0, R3
+	FLOAT R3, R3
+	CMP R3, R2
+	BEQ endOr1
+	LOAD -3(LB), R2
+	OPP #0, R3
+	FLOAT R3, R3
+	CMP R3, R2
+	BNE E_Sinon.2
+endOr1:
+	LOAD 3(LB), R2
+	LOAD R2, R0
+	BRA end.Math._ulp
+	LOAD 3(LB), R2
+	LOAD R2, R0
+	BRA end.Math._ulp
+	BRA E_Fin.2
+E_Sinon.2:
+	LOAD -3(LB), R2
+	CMP 2(LB), R2
+	BEQ endOr2
+	LOAD -3(LB), R2
+	CMP 3(LB), R2
+	BNE E_Sinon.3
+endOr2:
+	ADDSP #3
+	LOAD -2(LB), R2
+	STORE R2, 0(SP)
+	LOAD #2, R2
+	FLOAT R2, R2
+	STORE R2, -1(SP)
+	LOAD #104, R2
+	STORE R2, -2(SP)
+	LOAD 0(SP), R2
+	BEQ dereferencement.null
+	LOAD 0(R2), R2
+	BSR 4(R2)
+	LOAD R0, R2
+	SUBSP #3
+	LOAD R2, R0
+	BRA end.Math._ulp
+	ADDSP #3
+	LOAD -2(LB), R2
+	STORE R2, 0(SP)
+	LOAD #2, R2
+	FLOAT R2, R2
+	STORE R2, -1(SP)
+	LOAD #104, R2
+	STORE R2, -2(SP)
+	LOAD 0(SP), R2
+	BEQ dereferencement.null
+	LOAD 0(R2), R2
+	BSR 4(R2)
+	LOAD R0, R2
+	SUBSP #3
+	LOAD R2, R0
+	BRA end.Math._ulp
+	BRA E_Fin.3
+E_Sinon.3:
+	LOAD -3(LB), R2
+	CMP #0x1.0p0, R2
+	BLE E_Sinon.4
+	LOAD 1(LB), R3
+	SUB #1, R3
+	STORE R3, 1(LB)
+	LOAD 1(LB), R2
+	BRA E_Cond1
+E_Debut1:
+	LOAD -3(LB), R3
+	LOAD -3(LB), R3
+	LOAD #2, R4
+	FLOAT R4, R4
+	DIV R4, R3
+	BOV ArithFloat_Error
+	STORE R3, -3(LB)
+	LOAD -3(LB), R2
+	LOAD 1(LB), R3
+	ADD #1, R3
+	STORE R3, 1(LB)
+	LOAD 1(LB), R2
+E_Cond1:
+	LOAD -3(LB), R2
+	CMP #0x1.0p0, R2
+	BGE E_Debut1
+	ADDSP #3
+	LOAD -2(LB), R2
+	STORE R2, 0(SP)
+	LOAD #2, R2
+	FLOAT R2, R2
+	STORE R2, -1(SP)
+	LOAD 1(LB), R2
+	SUB #23, R2
+	STORE R2, -2(SP)
+	LOAD 0(SP), R2
+	BEQ dereferencement.null
+	LOAD 0(R2), R2
+	BSR 4(R2)
+	LOAD R0, R2
+	SUBSP #3
+	LOAD R2, R0
+	BRA end.Math._ulp
+	ADDSP #3
+	LOAD -2(LB), R2
+	STORE R2, 0(SP)
+	LOAD #2, R2
+	FLOAT R2, R2
+	STORE R2, -1(SP)
+	LOAD 1(LB), R2
+	SUB #23, R2
+	STORE R2, -2(SP)
+	LOAD 0(SP), R2
+	BEQ dereferencement.null
+	LOAD 0(R2), R2
+	BSR 4(R2)
+	LOAD R0, R2
+	SUBSP #3
+	LOAD R2, R0
+	BRA end.Math._ulp
+	BRA E_Fin.4
+E_Sinon.4:
+	BRA E_Cond2
+E_Debut2:
+	LOAD -3(LB), R3
+	MUL #0x1.0p1, R3
+	BOV ArithFloat_Error
+	STORE R3, -3(LB)
+	LOAD -3(LB), R2
+	LOAD 1(LB), R3
+	SUB #1, R3
+	STORE R3, 1(LB)
+	LOAD 1(LB), R2
+E_Cond2:
+	LOAD -3(LB), R2
+	CMP #0x1.0p0, R2
+	BLT E_Debut2
+	ADDSP #3
+	LOAD -2(LB), R2
+	STORE R2, 0(SP)
+	LOAD #2, R2
+	FLOAT R2, R2
+	STORE R2, -1(SP)
+	LOAD 1(LB), R2
+	SUB #23, R2
+	STORE R2, -2(SP)
+	LOAD 0(SP), R2
+	BEQ dereferencement.null
+	LOAD 0(R2), R2
+	BSR 4(R2)
+	LOAD R0, R2
+	SUBSP #3
+	LOAD R2, R0
+	BRA end.Math._ulp
+	ADDSP #3
+	LOAD -2(LB), R2
+	STORE R2, 0(SP)
+	LOAD #2, R2
+	FLOAT R2, R2
+	STORE R2, -1(SP)
+	LOAD 1(LB), R2
+	SUB #23, R2
+	STORE R2, -2(SP)
+	LOAD 0(SP), R2
+	BEQ dereferencement.null
+	LOAD 0(R2), R2
+	BSR 4(R2)
+	LOAD R0, R2
+	SUBSP #3
+	LOAD R2, R0
+	BRA end.Math._ulp
+E_Fin.4:
+E_Fin.3:
+E_Fin.2:
+	WSTR "Erreur : sortie de la methode A.getX sans return"
+	WNL
+	ERROR
+end.Math._ulp:
+	POP R4
+	POP R3
+	POP R2
+	RTS
+code.Math._cosTaylor:
+	TSTO #14
+	BOV stack_overflow_error
+	ADDSP #5
+	LOAD #1, R2
+	FLOAT R2, R2
+	STORE R2, 1(LB)
+	LOAD #2, R2
+	STORE R2, 2(LB)
+	LOAD 2(LB), R2
+	FLOAT R2, R2
+	STORE R2, 3(LB)
+	LOAD #0, R2
+	STORE R2, 4(LB)
+	ADDSP #3
+	LOAD -2(LB), R2
+	STORE R2, 0(SP)
+	LOAD -3(LB), R2
+	STORE R2, -1(SP)
+	LOAD #2, R2
+	STORE R2, -2(SP)
+	LOAD 0(SP), R2
+	BEQ dereferencement.null
+	LOAD 0(R2), R2
+	BSR 4(R2)
+	LOAD R0, R2
+	SUBSP #3
+	OPP R2, R2
+	BOV ArithFloat_Error
+	DIV 3(LB), R2
+	BOV ArithFloat_Error
+	STORE R2, 5(LB)
+	PUSH R2
+	PUSH R3
+	PUSH R4
+	BRA E_Cond3
+E_Debut3:
+	LOAD 4(LB), R3
+	ADD #1, R3
+	STORE R3, 4(LB)
+	LOAD 4(LB), R2
+	LOAD 1(LB), R3
+	ADD 5(LB), R3
+	BOV ArithFloat_Error
+	STORE R3, 1(LB)
+	LOAD 1(LB), R2
+	LOAD 2(LB), R3
+	ADD #1, R3
+	LOAD 2(LB), R4
+	ADD #2, R4
+	MUL R4, R3
+	FLOAT R3, R3
+	STORE R3, 3(LB)
+	LOAD 3(LB), R2
+	OPP 5(LB), R3
+	BOV ArithFloat_Error
+	ADDSP #3
+	LOAD -2(LB), R4
+	STORE R4, 0(SP)
+	LOAD -3(LB), R4
+	STORE R4, -1(SP)
+	LOAD #2, R4
+	STORE R4, -2(SP)
+	LOAD 0(SP), R4
+	BEQ dereferencement.null
+	LOAD 0(R4), R4
+	BSR 4(R4)
+	LOAD R0, R4
+	SUBSP #3
+	MUL R4, R3
+	BOV ArithFloat_Error
+	DIV 3(LB), R3
+	BOV ArithFloat_Error
+	STORE R3, 5(LB)
+	LOAD 5(LB), R2
+	LOAD 2(LB), R3
+	ADD #2, R3
+	STORE R3, 2(LB)
+	LOAD 2(LB), R2
+E_Cond3:
+	LOAD 4(LB), R2
+	CMP #1, R2
+	BLT E_Debut3
+	LOAD 1(LB), R2
+	LOAD R2, R0
+	BRA end.Math._cosTaylor
+	LOAD 1(LB), R2
+	LOAD R2, R0
+	BRA end.Math._cosTaylor
+	WSTR "Erreur : sortie de la methode A.getX sans return"
+	WNL
+	ERROR
+end.Math._cosTaylor:
+	POP R4
+	POP R3
+	POP R2
+	RTS
+code.Math._pow:
+	TSTO #6
+	BOV stack_overflow_error
+	ADDSP #1
+	LOAD -3(LB), R2
+	STORE R2, 1(LB)
+	PUSH R2
+	PUSH R3
+	LOAD -3(LB), R2
+	LOAD #0, R3
+	FLOAT R3, R3
+	CMP R3, R2
+	BNE E_Sinon.5
+	LOAD #0, R2
+	FLOAT R2, R2
+	LOAD R2, R0
+	BRA end.Math._pow
+	LOAD #0, R2
+	FLOAT R2, R2
+	LOAD R2, R0
+	BRA end.Math._pow
+	BRA E_Fin.5
+E_Sinon.5:
+E_Fin.5:
+	LOAD -4(LB), R2
+	CMP #0, R2
+	BNE E_Sinon.6
+	LOAD #1, R2
+	FLOAT R2, R2
+	LOAD R2, R0
+	BRA end.Math._pow
+	LOAD #1, R2
+	FLOAT R2, R2
+	LOAD R2, R0
+	BRA end.Math._pow
+	BRA E_Fin.6
+E_Sinon.6:
+	LOAD -4(LB), R2
+	CMP #0, R2
+	BLE E_Sinon.7
+	BRA E_Cond4
+E_Debut4:
+	LOAD -3(LB), R3
+	MUL 1(LB), R3
+	BOV ArithFloat_Error
+	STORE R3, -3(LB)
+	LOAD -3(LB), R2
+	LOAD -4(LB), R3
+	SUB #1, R3
+	STORE R3, -4(LB)
+	LOAD -4(LB), R2
+E_Cond4:
+	LOAD -4(LB), R2
+	CMP #1, R2
+	BGT E_Debut4
+	LOAD -3(LB), R2
+	LOAD R2, R0
+	BRA end.Math._pow
+	LOAD -3(LB), R2
+	LOAD R2, R0
+	BRA end.Math._pow
+	BRA E_Fin.7
+E_Sinon.7:
+	ADDSP #3
+	LOAD -2(LB), R3
+	STORE R3, 0(SP)
+	LOAD 1(LB), R3
+	STORE R3, -1(SP)
+	OPP -4(LB), R3
+	STORE R3, -2(SP)
+	LOAD 0(SP), R3
+	BEQ dereferencement.null
+	LOAD 0(R3), R3
+	BSR 4(R3)
+	LOAD R0, R3
+	SUBSP #3
+	STORE R3, -3(LB)
+	LOAD -3(LB), R2
+	LOAD #1, R2
+	FLOAT R2, R2
+	DIV -3(LB), R2
+	BOV ArithFloat_Error
+	LOAD R2, R0
+	BRA end.Math._pow
+	LOAD #1, R2
+	FLOAT R2, R2
+	DIV -3(LB), R2
+	BOV ArithFloat_Error
+	LOAD R2, R0
+	BRA end.Math._pow
+E_Fin.7:
+E_Fin.6:
+	WSTR "Erreur : sortie de la methode A.getX sans return"
+	WNL
+	ERROR
+end.Math._pow:
+	POP R3
+	POP R2
+	RTS
+code.Math._Modulo2Pi:
+	TSTO #3
+	BOV stack_overflow_error
+	PUSH R2
+	PUSH R3
+	PUSH R4
+	LOAD -3(LB), R2
+	LOAD -4(LB), R3
+	LOAD -3(LB), R4
+	DIV -4(LB), R4
+	BOV ArithFloat_Error
+	INT R4, R4
+	FLOAT R4, R4
+	MUL R4, R3
+	BOV ArithFloat_Error
+	SUB R3, R2
+	BOV ArithFloat_Error
+	LOAD R2, R0
+	BRA end.Math._Modulo2Pi
+	LOAD -3(LB), R2
+	LOAD -4(LB), R3
+	LOAD -3(LB), R4
+	DIV -4(LB), R4
+	BOV ArithFloat_Error
+	INT R4, R4
+	FLOAT R4, R4
+	MUL R4, R3
+	BOV ArithFloat_Error
+	SUB R3, R2
+	BOV ArithFloat_Error
+	LOAD R2, R0
+	BRA end.Math._Modulo2Pi
+	WSTR "Erreur : sortie de la methode A.getX sans return"
+	WNL
+	ERROR
+end.Math._Modulo2Pi:
+	POP R4
+	POP R3
+	POP R2
+	RTS
+code.Math._sin:
+	TSTO #8
+	BOV stack_overflow_error
+	ADDSP #4
+	LOAD #1, R2
+	STORE R2, 1(LB)
+	LOAD #0x0.0p0, R2
+	STORE R2, 2(LB)
+	LOAD #0x0.0p0, R2
+	STORE R2, 3(LB)
+	LOAD #0, R2
+	STORE R2, 4(LB)
+	PUSH R2
+	PUSH R3
+	PUSH R4
+	PUSH R5
+	BRA E_Cond5
+E_Debut5:
+	LOAD 4(LB), R3
+	ADD #1, R3
+	STORE R3, 4(LB)
+	LOAD 4(LB), R2
+	OPP 3(LB), R3
+	BOV ArithFloat_Error
+	MUL -3(LB), R3
+	BOV ArithFloat_Error
+	MUL -3(LB), R3
+	BOV ArithFloat_Error
+	OPP 3(LB), R3
+	BOV ArithFloat_Error
+	MUL -3(LB), R3
+	BOV ArithFloat_Error
+	MUL -3(LB), R3
+	BOV ArithFloat_Error
+	LOAD #2, R4
+	MUL 1(LB), R4
+	LOAD #2, R5
+	MUL 1(LB), R5
+	ADD #1, R5
+	MUL R5, R4
+	FLOAT R4, R4
+	DIV R4, R3
+	BOV ArithFloat_Error
+	STORE R3, 3(LB)
+	LOAD 3(LB), R2
+	LOAD 2(LB), R3
+	ADD 3(LB), R3
+	BOV ArithFloat_Error
+	STORE R3, 2(LB)
+	LOAD 2(LB), R2
+	LOAD 1(LB), R3
+	ADD #1, R3
+	STORE R3, 1(LB)
+	LOAD 1(LB), R2
+E_Cond5:
+	LOAD 4(LB), R2
+	CMP #100, R2
+	BLE E_Debut5
+	LOAD 2(LB), R2
+	LOAD R2, R0
+	BRA end.Math._sin
+	LOAD 2(LB), R2
+	LOAD R2, R0
+	BRA end.Math._sin
+	WSTR "Erreur : sortie de la methode A.getX sans return"
+	WNL
+	ERROR
+end.Math._sin:
+	POP R5
+	POP R4
+	POP R3
+	POP R2
+	RTS
+code.Math._cos:
+	TSTO #18
+	BOV stack_overflow_error
+	ADDSP #1
+	LOAD #0x1.921fb6p2, R2
+	STORE R2, 1(LB)
+	PUSH R2
+	PUSH R3
+	ADDSP #3
+	LOAD -2(LB), R3
+	STORE R3, 0(SP)
+	LOAD -3(LB), R3
+	STORE R3, -1(SP)
+	LOAD 1(LB), R3
+	STORE R3, -2(SP)
+	LOAD 0(SP), R3
+	BEQ dereferencement.null
+	LOAD 0(R3), R3
+	BSR 5(R3)
+	LOAD R0, R3
+	SUBSP #3
+	STORE R3, -3(LB)
+	LOAD -3(LB), R2
+	LOAD #0, R2
+	CMP -3(LB), R2
+	BGT E_Sinon.8
+	LOAD -3(LB), R2
+	CMP #0x1.2d97c8p1, R2
+	BGE E_Sinon.8
+	ADDSP #2
+	LOAD -2(LB), R2
+	STORE R2, 0(SP)
+	LOAD -3(LB), R2
+	STORE R2, -1(SP)
+	LOAD 0(SP), R2
+	BEQ dereferencement.null
+	LOAD 0(R2), R2
+	BSR 3(R2)
+	LOAD R0, R2
+	SUBSP #2
+	LOAD R2, R0
+	BRA end.Math._cos
+	ADDSP #2
+	LOAD -2(LB), R2
+	STORE R2, 0(SP)
+	LOAD -3(LB), R2
+	STORE R2, -1(SP)
+	LOAD 0(SP), R2
+	BEQ dereferencement.null
+	LOAD 0(R2), R2
+	BSR 3(R2)
+	LOAD R0, R2
+	SUBSP #2
+	LOAD R2, R0
+	BRA end.Math._cos
+	BRA E_Fin.8
+E_Sinon.8:
+	LOAD #0x1.2d97c8p1, R2
+	CMP -3(LB), R2
+	BGT E_Sinon.9
+	LOAD -3(LB), R2
+	CMP #0x1.5fdbcp2, R2
+	BGE E_Sinon.9
+	ADDSP #2
+	LOAD -2(LB), R2
+	STORE R2, 0(SP)
+	LOAD -2(LB), R2
+	LOAD 4(R2), R2
+	SUB -3(LB), R2
+	BOV ArithFloat_Error
+	STORE R2, -1(SP)
+	LOAD 0(SP), R2
+	BEQ dereferencement.null
+	LOAD 0(R2), R2
+	BSR 6(R2)
+	LOAD R0, R2
+	SUBSP #2
+	LOAD R2, R0
+	BRA end.Math._cos
+	ADDSP #2
+	LOAD -2(LB), R2
+	STORE R2, 0(SP)
+	LOAD -2(LB), R2
+	LOAD 4(R2), R2
+	SUB -3(LB), R2
+	BOV ArithFloat_Error
+	STORE R2, -1(SP)
+	LOAD 0(SP), R2
+	BEQ dereferencement.null
+	LOAD 0(R2), R2
+	BSR 6(R2)
+	LOAD R0, R2
+	SUBSP #2
+	LOAD R2, R0
+	BRA end.Math._cos
+	BRA E_Fin.9
+E_Sinon.9:
+	ADDSP #2
+	LOAD -2(LB), R2
+	STORE R2, 0(SP)
+	LOAD #0x1.921fb6p2, R2
+	SUB -3(LB), R2
+	BOV ArithFloat_Error
+	STORE R2, -1(SP)
+	LOAD 0(SP), R2
+	BEQ dereferencement.null
+	LOAD 0(R2), R2
+	BSR 3(R2)
+	LOAD R0, R2
+	SUBSP #2
+	LOAD R2, R0
+	BRA end.Math._cos
+	ADDSP #2
+	LOAD -2(LB), R2
+	STORE R2, 0(SP)
+	LOAD #0x1.921fb6p2, R2
+	SUB -3(LB), R2
+	BOV ArithFloat_Error
+	STORE R2, -1(SP)
+	LOAD 0(SP), R2
+	BEQ dereferencement.null
+	LOAD 0(R2), R2
+	BSR 3(R2)
+	LOAD R0, R2
+	SUBSP #2
+	LOAD R2, R0
+	BRA end.Math._cos
+E_Fin.9:
+E_Fin.8:
+	WSTR "Erreur : sortie de la methode A.getX sans return"
+	WNL
+	ERROR
+end.Math._cos:
+	POP R3
+	POP R2
+	RTS
+code.Math.atanHermite:
+	TSTO #125
+	BOV stack_overflow_error
+	ADDSP #1
+	LOAD #0x0.0p0, R2
+	STORE R2, 1(LB)
+	PUSH R2
+	PUSH R3
+	PUSH R4
+	PUSH R5
+	LOAD #0x1.29e412p-20, R3
+	ADDSP #3
+	LOAD -2(LB), R4
+	STORE R4, 0(SP)
+	LOAD -3(LB), R4
+	STORE R4, -1(SP)
+	LOAD #55, R4
+	STORE R4, -2(SP)
+	LOAD 0(SP), R4
+	BEQ dereferencement.null
+	LOAD 0(R4), R4
+	BSR 4(R4)
+	LOAD R0, R4
+	SUBSP #3
+	MUL R4, R3
+	BOV ArithFloat_Error
+	LOAD #0x1.097b42p-15, R4
+	ADDSP #3
+	LOAD -2(LB), R5
+	STORE R5, 0(SP)
+	LOAD -3(LB), R5
+	STORE R5, -1(SP)
+	LOAD #54, R5
+	STORE R5, -2(SP)
+	LOAD 0(SP), R5
+	BEQ dereferencement.null
+	LOAD 0(R5), R5
+	BSR 4(R5)
+	LOAD R0, R5
+	SUBSP #3
+	MUL R5, R4
+	BOV ArithFloat_Error
+	SUB R4, R3
+	BOV ArithFloat_Error
+	LOAD #0x1.c73ecap-12, R4
+	ADDSP #3
+	LOAD -2(LB), R5
+	STORE R5, 0(SP)
+	LOAD -3(LB), R5
+	STORE R5, -1(SP)
+	LOAD #53, R5
+	STORE R5, -2(SP)
+	LOAD 0(SP), R5
+	BEQ dereferencement.null
+	LOAD 0(R5), R5
+	BSR 4(R5)
+	LOAD R0, R5
+	SUBSP #3
+	MUL R5, R4
+	BOV ArithFloat_Error
+	ADD R4, R3
+	BOV ArithFloat_Error
+	LOAD #0x1.f3b13cp-9, R4
+	ADDSP #3
+	LOAD -2(LB), R5
+	STORE R5, 0(SP)
+	LOAD -3(LB), R5
+	STORE R5, -1(SP)
+	LOAD #52, R5
+	STORE R5, -2(SP)
+	LOAD 0(SP), R5
+	BEQ dereferencement.null
+	LOAD 0(R5), R5
+	BSR 4(R5)
+	LOAD R0, R5
+	SUBSP #3
+	MUL R5, R4
+	BOV ArithFloat_Error
+	SUB R4, R3
+	BOV ArithFloat_Error
+	LOAD #0x1.8a1414p-6, R4
+	ADDSP #3
+	LOAD -2(LB), R5
+	STORE R5, 0(SP)
+	LOAD -3(LB), R5
+	STORE R5, -1(SP)
+	LOAD #51, R5
+	STORE R5, -2(SP)
+	LOAD 0(SP), R5
+	BEQ dereferencement.null
+	LOAD 0(R5), R5
+	BSR 4(R5)
+	LOAD R0, R5
+	SUBSP #3
+	MUL R5, R4
+	BOV ArithFloat_Error
+	ADD R4, R3
+	BOV ArithFloat_Error
+	LOAD #0x1.db28f6p-4, R4
+	ADDSP #3
+	LOAD -2(LB), R5
+	STORE R5, 0(SP)
+	LOAD -3(LB), R5
+	STORE R5, -1(SP)
+	LOAD #50, R5
+	STORE R5, -2(SP)
+	LOAD 0(SP), R5
+	BEQ dereferencement.null
+	LOAD 0(R5), R5
+	BSR 4(R5)
+	LOAD R0, R5
+	SUBSP #3
+	MUL R5, R4
+	BOV ArithFloat_Error
+	SUB R4, R3
+	BOV ArithFloat_Error
+	LOAD #0x1.c6e688p-2, R4
+	ADDSP #3
+	LOAD -2(LB), R5
+	STORE R5, 0(SP)
+	LOAD -3(LB), R5
+	STORE R5, -1(SP)
+	LOAD #49, R5
+	STORE R5, -2(SP)
+	LOAD 0(SP), R5
+	BEQ dereferencement.null
+	LOAD 0(R5), R5
+	BSR 4(R5)
+	LOAD R0, R5
+	SUBSP #3
+	MUL R5, R4
+	BOV ArithFloat_Error
+	ADD R4, R3
+	BOV ArithFloat_Error
+	LOAD #0x1.627eaap0, R4
+	ADDSP #3
+	LOAD -2(LB), R5
+	STORE R5, 0(SP)
+	LOAD -3(LB), R5
+	STORE R5, -1(SP)
+	LOAD #48, R5
+	STORE R5, -2(SP)
+	LOAD 0(SP), R5
+	BEQ dereferencement.null
+	LOAD 0(R5), R5
+	BSR 4(R5)
+	LOAD R0, R5
+	SUBSP #3
+	MUL R5, R4
+	BOV ArithFloat_Error
+	SUB R4, R3
+	BOV ArithFloat_Error
+	LOAD #0x1.c95b88p1, R4
+	ADDSP #3
+	LOAD -2(LB), R5
+	STORE R5, 0(SP)
+	LOAD -3(LB), R5
+	STORE R5, -1(SP)
+	LOAD #47, R5
+	STORE R5, -2(SP)
+	LOAD 0(SP), R5
+	BEQ dereferencement.null
+	LOAD 0(R5), R5
+	BSR 4(R5)
+	LOAD R0, R5
+	SUBSP #3
+	MUL R5, R4
+	BOV ArithFloat_Error
+	ADD R4, R3
+	BOV ArithFloat_Error
+	LOAD #0x1.ee0beap2, R4
+	ADDSP #3
+	LOAD -2(LB), R5
+	STORE R5, 0(SP)
+	LOAD -3(LB), R5
+	STORE R5, -1(SP)
+	LOAD #46, R5
+	STORE R5, -2(SP)
+	LOAD 0(SP), R5
+	BEQ dereferencement.null
+	LOAD 0(R5), R5
+	BSR 4(R5)
+	LOAD R0, R5
+	SUBSP #3
+	MUL R5, R4
+	BOV ArithFloat_Error
+	SUB R4, R3
+	BOV ArithFloat_Error
+	LOAD #0x1.c22886p3, R4
+	ADDSP #3
+	LOAD -2(LB), R5
+	STORE R5, 0(SP)
+	LOAD -3(LB), R5
+	STORE R5, -1(SP)
+	LOAD #45, R5
+	STORE R5, -2(SP)
+	LOAD 0(SP), R5
+	BEQ dereferencement.null
+	LOAD 0(R5), R5
+	BSR 4(R5)
+	LOAD R0, R5
+	SUBSP #3
+	MUL R5, R4
+	BOV ArithFloat_Error
+	ADD R4, R3
+	BOV ArithFloat_Error
+	LOAD #0x1.5b7c2ep4, R4
+	ADDSP #3
+	LOAD -2(LB), R5
+	STORE R5, 0(SP)
+	LOAD -3(LB), R5
+	STORE R5, -1(SP)
+	LOAD #44, R5
+	STORE R5, -2(SP)
+	LOAD 0(SP), R5
+	BEQ dereferencement.null
+	LOAD 0(R5), R5
+	BSR 4(R5)
+	LOAD R0, R5
+	SUBSP #3
+	MUL R5, R4
+	BOV ArithFloat_Error
+	SUB R4, R3
+	BOV ArithFloat_Error
+	LOAD #0x1.c75a66p4, R4
+	ADDSP #3
+	LOAD -2(LB), R5
+	STORE R5, 0(SP)
+	LOAD -3(LB), R5
+	STORE R5, -1(SP)
+	LOAD #43, R5
+	STORE R5, -2(SP)
+	LOAD 0(SP), R5
+	BEQ dereferencement.null
+	LOAD 0(R5), R5
+	BSR 4(R5)
+	LOAD R0, R5
+	SUBSP #3
+	MUL R5, R4
+	BOV ArithFloat_Error
+	ADD R4, R3
+	BOV ArithFloat_Error
+	LOAD #0x1.fa8ddp4, R4
+	ADDSP #3
+	LOAD -2(LB), R5
+	STORE R5, 0(SP)
+	LOAD -3(LB), R5
+	STORE R5, -1(SP)
+	LOAD #42, R5
+	STORE R5, -2(SP)
+	LOAD 0(SP), R5
+	BEQ dereferencement.null
+	LOAD 0(R5), R5
+	BSR 4(R5)
+	LOAD R0, R5
+	SUBSP #3
+	MUL R5, R4
+	BOV ArithFloat_Error
+	SUB R4, R3
+	BOV ArithFloat_Error
+	LOAD #0x1.ddf4a8p4, R4
+	ADDSP #3
+	LOAD -2(LB), R5
+	STORE R5, 0(SP)
+	LOAD -3(LB), R5
+	STORE R5, -1(SP)
+	LOAD #41, R5
+	STORE R5, -2(SP)
+	LOAD 0(SP), R5
+	BEQ dereferencement.null
+	LOAD 0(R5), R5
+	BSR 4(R5)
+	LOAD R0, R5
+	SUBSP #3
+	MUL R5, R4
+	BOV ArithFloat_Error
+	ADD R4, R3
+	BOV ArithFloat_Error
+	LOAD #0x1.7e3bccp4, R4
+	ADDSP #3
+	LOAD -2(LB), R5
+	STORE R5, 0(SP)
+	LOAD -3(LB), R5
+	STORE R5, -1(SP)
+	LOAD #40, R5
+	STORE R5, -2(SP)
+	LOAD 0(SP), R5
+	BEQ dereferencement.null
+	LOAD 0(R5), R5
+	BSR 4(R5)
+	LOAD R0, R5
+	SUBSP #3
+	MUL R5, R4
+	BOV ArithFloat_Error
+	SUB R4, R3
+	BOV ArithFloat_Error
+	LOAD #0x1.034be4p4, R4
+	ADDSP #3
+	LOAD -2(LB), R5
+	STORE R5, 0(SP)
+	LOAD -3(LB), R5
+	STORE R5, -1(SP)
+	LOAD #39, R5
+	STORE R5, -2(SP)
+	LOAD 0(SP), R5
+	BEQ dereferencement.null
+	LOAD 0(R5), R5
+	BSR 4(R5)
+	LOAD R0, R5
+	SUBSP #3
+	MUL R5, R4
+	BOV ArithFloat_Error
+	ADD R4, R3
+	BOV ArithFloat_Error
+	LOAD #0x1.2b0736p3, R4
+	ADDSP #3
+	LOAD -2(LB), R5
+	STORE R5, 0(SP)
+	LOAD -3(LB), R5
+	STORE R5, -1(SP)
+	LOAD #38, R5
+	STORE R5, -2(SP)
+	LOAD 0(SP), R5
+	BEQ dereferencement.null
+	LOAD 0(R5), R5
+	BSR 4(R5)
+	LOAD R0, R5
+	SUBSP #3
+	MUL R5, R4
+	BOV ArithFloat_Error
+	SUB R4, R3
+	BOV ArithFloat_Error
+	LOAD #0x1.2436acp2, R4
+	ADDSP #3
+	LOAD -2(LB), R5
+	STORE R5, 0(SP)
+	LOAD -3(LB), R5
+	STORE R5, -1(SP)
+	LOAD #37, R5
+	STORE R5, -2(SP)
+	LOAD 0(SP), R5
+	BEQ dereferencement.null
+	LOAD 0(R5), R5
+	BSR 4(R5)
+	LOAD R0, R5
+	SUBSP #3
+	MUL R5, R4
+	BOV ArithFloat_Error
+	ADD R4, R3
+	BOV ArithFloat_Error
+	LOAD #0x1.d8a8e4p0, R4
+	ADDSP #3
+	LOAD -2(LB), R5
+	STORE R5, 0(SP)
+	LOAD -3(LB), R5
+	STORE R5, -1(SP)
+	LOAD #36, R5
+	STORE R5, -2(SP)
+	LOAD 0(SP), R5
+	BEQ dereferencement.null
+	LOAD 0(R5), R5
+	BSR 4(R5)
+	LOAD R0, R5
+	SUBSP #3
+	MUL R5, R4
+	BOV ArithFloat_Error
+	SUB R4, R3
+	BOV ArithFloat_Error
+	LOAD #0x1.2fcd42p-1, R4
+	ADDSP #3
+	LOAD -2(LB), R5
+	STORE R5, 0(SP)
+	LOAD -3(LB), R5
+	STORE R5, -1(SP)
+	LOAD #35, R5
+	STORE R5, -2(SP)
+	LOAD 0(SP), R5
+	BEQ dereferencement.null
+	LOAD 0(R5), R5
+	BSR 4(R5)
+	LOAD R0, R5
+	SUBSP #3
+	MUL R5, R4
+	BOV ArithFloat_Error
+	ADD R4, R3
+	BOV ArithFloat_Error
+	LOAD #0x1.5d61e2p-3, R4
+	ADDSP #3
+	LOAD -2(LB), R5
+	STORE R5, 0(SP)
+	LOAD -3(LB), R5
+	STORE R5, -1(SP)
+	LOAD #34, R5
+	STORE R5, -2(SP)
+	LOAD 0(SP), R5
+	BEQ dereferencement.null
+	LOAD 0(R5), R5
+	BSR 4(R5)
+	LOAD R0, R5
+	SUBSP #3
+	MUL R5, R4
+	BOV ArithFloat_Error
+	SUB R4, R3
+	BOV ArithFloat_Error
+	LOAD #0x1.1460f8p-4, R4
+	ADDSP #3
+	LOAD -2(LB), R5
+	STORE R5, 0(SP)
+	LOAD -3(LB), R5
+	STORE R5, -1(SP)
+	LOAD #33, R5
+	STORE R5, -2(SP)
+	LOAD 0(SP), R5
+	BEQ dereferencement.null
+	LOAD 0(R5), R5
+	BSR 4(R5)
+	LOAD R0, R5
+	SUBSP #3
+	MUL R5, R4
+	BOV ArithFloat_Error
+	ADD R4, R3
+	BOV ArithFloat_Error
+	LOAD #0x1.96p-8, R4
+	ADDSP #3
+	LOAD -2(LB), R5
+	STORE R5, 0(SP)
+	LOAD -3(LB), R5
+	STORE R5, -1(SP)
+	LOAD #32, R5
+	STORE R5, -2(SP)
+	LOAD 0(SP), R5
+	BEQ dereferencement.null
+	LOAD 0(R5), R5
+	BSR 4(R5)
+	LOAD R0, R5
+	SUBSP #3
+	MUL R5, R4
+	BOV ArithFloat_Error
+	SUB R4, R3
+	BOV ArithFloat_Error
+	LOAD #0x1.022d6cp-5, R4
+	ADDSP #3
+	LOAD -2(LB), R5
+	STORE R5, 0(SP)
+	LOAD -3(LB), R5
+	STORE R5, -1(SP)
+	LOAD #31, R5
+	STORE R5, -2(SP)
+	LOAD 0(SP), R5
+	BEQ dereferencement.null
+	LOAD 0(R5), R5
+	BSR 4(R5)
+	LOAD R0, R5
+	SUBSP #3
+	MUL R5, R4
+	BOV ArithFloat_Error
+	SUB R4, R3
+	BOV ArithFloat_Error
+	LOAD #0x1.dddddep-15, R4
+	ADDSP #3
+	LOAD -2(LB), R5
+	STORE R5, 0(SP)
+	LOAD -3(LB), R5
+	STORE R5, -1(SP)
+	LOAD #30, R5
+	STORE R5, -2(SP)
+	LOAD 0(SP), R5
+	BEQ dereferencement.null
+	LOAD 0(R5), R5
+	BSR 4(R5)
+	LOAD R0, R5
+	SUBSP #3
+	MUL R5, R4
+	BOV ArithFloat_Error
+	SUB R4, R3
+	BOV ArithFloat_Error
+	LOAD #0x1.1a8p-5, R4
+	ADDSP #3
+	LOAD -2(LB), R5
+	STORE R5, 0(SP)
+	LOAD -3(LB), R5
+	STORE R5, -1(SP)
+	LOAD #29, R5
+	STORE R5, -2(SP)
+	LOAD 0(SP), R5
+	BEQ dereferencement.null
+	LOAD 0(R5), R5
+	BSR 4(R5)
+	LOAD R0, R5
+	SUBSP #3
+	MUL R5, R4
+	BOV ArithFloat_Error
+	ADD R4, R3
+	BOV ArithFloat_Error
+	LOAD #0x1.2f684cp-5, R4
+	ADDSP #3
+	LOAD -2(LB), R5
+	STORE R5, 0(SP)
+	LOAD -3(LB), R5
+	STORE R5, -1(SP)
+	LOAD #27, R5
+	STORE R5, -2(SP)
+	LOAD 0(SP), R5
+	BEQ dereferencement.null
+	LOAD 0(R5), R5
+	BSR 4(R5)
+	LOAD R0, R5
+	SUBSP #3
+	MUL R5, R4
+	BOV ArithFloat_Error
+	SUB R4, R3
+	BOV ArithFloat_Error
+	LOAD #0x1.47ae14p-5, R4
+	ADDSP #3
+	LOAD -2(LB), R5
+	STORE R5, 0(SP)
+	LOAD -3(LB), R5
+	STORE R5, -1(SP)
+	LOAD #25, R5
+	STORE R5, -2(SP)
+	LOAD 0(SP), R5
+	BEQ dereferencement.null
+	LOAD 0(R5), R5
+	BSR 4(R5)
+	LOAD R0, R5
+	SUBSP #3
+	MUL R5, R4
+	BOV ArithFloat_Error
+	ADD R4, R3
+	BOV ArithFloat_Error
+	LOAD #0x1.642c86p-5, R4
+	ADDSP #3
+	LOAD -2(LB), R5
+	STORE R5, 0(SP)
+	LOAD -3(LB), R5
+	STORE R5, -1(SP)
+	LOAD #23, R5
+	STORE R5, -2(SP)
+	LOAD 0(SP), R5
+	BEQ dereferencement.null
+	LOAD 0(R5), R5
+	BSR 4(R5)
+	LOAD R0, R5
+	SUBSP #3
+	MUL R5, R4
+	BOV ArithFloat_Error
+	SUB R4, R3
+	BOV ArithFloat_Error
+	LOAD #0x1.861862p-5, R4
+	ADDSP #3
+	LOAD -2(LB), R5
+	STORE R5, 0(SP)
+	LOAD -3(LB), R5
+	STORE R5, -1(SP)
+	LOAD #21, R5
+	STORE R5, -2(SP)
+	LOAD 0(SP), R5
+	BEQ dereferencement.null
+	LOAD 0(R5), R5
+	BSR 4(R5)
+	LOAD R0, R5
+	SUBSP #3
+	MUL R5, R4
+	BOV ArithFloat_Error
+	ADD R4, R3
+	BOV ArithFloat_Error
+	LOAD #0x1.af286cp-5, R4
+	ADDSP #3
+	LOAD -2(LB), R5
+	STORE R5, 0(SP)
+	LOAD -3(LB), R5
+	STORE R5, -1(SP)
+	LOAD #12, R5
+	STORE R5, -2(SP)
+	LOAD 0(SP), R5
+	BEQ dereferencement.null
+	LOAD 0(R5), R5
+	BSR 4(R5)
+	LOAD R0, R5
+	SUBSP #3
+	MUL R5, R4
+	BOV ArithFloat_Error
+	SUB R4, R3
+	BOV ArithFloat_Error
+	LOAD #0x1.e1e1e2p-5, R4
+	ADDSP #3
+	LOAD -2(LB), R5
+	STORE R5, 0(SP)
+	LOAD -3(LB), R5
+	STORE R5, -1(SP)
+	LOAD #17, R5
+	STORE R5, -2(SP)
+	LOAD 0(SP), R5
+	BEQ dereferencement.null
+	LOAD 0(R5), R5
+	BSR 4(R5)
+	LOAD R0, R5
+	SUBSP #3
+	MUL R5, R4
+	BOV ArithFloat_Error
+	ADD R4, R3
+	BOV ArithFloat_Error
+	LOAD #0x1.111112p-4, R4
+	ADDSP #3
+	LOAD -2(LB), R5
+	STORE R5, 0(SP)
+	LOAD -3(LB), R5
+	STORE R5, -1(SP)
+	LOAD #15, R5
+	STORE R5, -2(SP)
+	LOAD 0(SP), R5
+	BEQ dereferencement.null
+	LOAD 0(R5), R5
+	BSR 4(R5)
+	LOAD R0, R5
+	SUBSP #3
+	MUL R5, R4
+	BOV ArithFloat_Error
+	SUB R4, R3
+	BOV ArithFloat_Error
+	LOAD #0x1.3b13b2p-4, R4
+	ADDSP #3
+	LOAD -2(LB), R5
+	STORE R5, 0(SP)
+	LOAD -3(LB), R5
+	STORE R5, -1(SP)
+	LOAD #13, R5
+	STORE R5, -2(SP)
+	LOAD 0(SP), R5
+	BEQ dereferencement.null
+	LOAD 0(R5), R5
+	BSR 4(R5)
+	LOAD R0, R5
+	SUBSP #3
+	MUL R5, R4
+	BOV ArithFloat_Error
+	ADD R4, R3
+	BOV ArithFloat_Error
+	LOAD #0x1.745d18p-4, R4
+	ADDSP #3
+	LOAD -2(LB), R5
+	STORE R5, 0(SP)
+	LOAD -3(LB), R5
+	STORE R5, -1(SP)
+	LOAD #11, R5
+	STORE R5, -2(SP)
+	LOAD 0(SP), R5
+	BEQ dereferencement.null
+	LOAD 0(R5), R5
+	BSR 4(R5)
+	LOAD R0, R5
+	SUBSP #3
+	MUL R5, R4
+	BOV ArithFloat_Error
+	SUB R4, R3
+	BOV ArithFloat_Error
+	LOAD #0x1.c71c72p-4, R4
+	ADDSP #3
+	LOAD -2(LB), R5
+	STORE R5, 0(SP)
+	LOAD -3(LB), R5
+	STORE R5, -1(SP)
+	LOAD #9, R5
+	STORE R5, -2(SP)
+	LOAD 0(SP), R5
+	BEQ dereferencement.null
+	LOAD 0(R5), R5
+	BSR 4(R5)
+	LOAD R0, R5
+	SUBSP #3
+	MUL R5, R4
+	BOV ArithFloat_Error
+	ADD R4, R3
+	BOV ArithFloat_Error
+	LOAD #0x1.24924ap-3, R4
+	ADDSP #3
+	LOAD -2(LB), R5
+	STORE R5, 0(SP)
+	LOAD -3(LB), R5
+	STORE R5, -1(SP)
+	LOAD #7, R5
+	STORE R5, -2(SP)
+	LOAD 0(SP), R5
+	BEQ dereferencement.null
+	LOAD 0(R5), R5
+	BSR 4(R5)
+	LOAD R0, R5
+	SUBSP #3
+	MUL R5, R4
+	BOV ArithFloat_Error
+	SUB R4, R3
+	BOV ArithFloat_Error
+	LOAD #0x1.99999ap-3, R4
+	ADDSP #3
+	LOAD -2(LB), R5
+	STORE R5, 0(SP)
+	LOAD -3(LB), R5
+	STORE R5, -1(SP)
+	LOAD #5, R5
+	STORE R5, -2(SP)
+	LOAD 0(SP), R5
+	BEQ dereferencement.null
+	LOAD 0(R5), R5
+	BSR 4(R5)
+	LOAD R0, R5
+	SUBSP #3
+	MUL R5, R4
+	BOV ArithFloat_Error
+	ADD R4, R3
+	BOV ArithFloat_Error
+	LOAD #0x1.555556p-2, R4
+	ADDSP #3
+	LOAD -2(LB), R5
+	STORE R5, 0(SP)
+	LOAD -3(LB), R5
+	STORE R5, -1(SP)
+	LOAD #3, R5
+	STORE R5, -2(SP)
+	LOAD 0(SP), R5
+	BEQ dereferencement.null
+	LOAD 0(R5), R5
+	BSR 4(R5)
+	LOAD R0, R5
+	SUBSP #3
+	MUL R5, R4
+	BOV ArithFloat_Error
+	SUB R4, R3
+	BOV ArithFloat_Error
+	STORE R3, 1(LB)
+	LOAD 1(LB), R2
+	LOAD 1(LB), R2
+	LOAD R2, R0
+	BRA end.Math.atanHermite
+	LOAD 1(LB), R2
+	LOAD R2, R0
+	BRA end.Math.atanHermite
+	WSTR "Erreur : sortie de la methode A.getX sans return"
+	WNL
+	ERROR
+end.Math.atanHermite:
+	POP R5
+	POP R4
+	POP R3
+	POP R2
+	RTS
+code.Math._atan:
+	TSTO #16
+	BOV stack_overflow_error
+	ADDSP #1
+	LOAD #1, R2
+	STORE R2, 1(LB)
+	PUSH R2
+	PUSH R3
+	PUSH R4
+	LOAD -3(LB), R2
+	CMP #0x1.5798eep-27, R2
+	BGE E_Sinon.10
+	OPP #1, R3
+	STORE R3, 1(LB)
+	LOAD 1(LB), R2
+	BRA E_Fin.10
+E_Sinon.10:
+E_Fin.10:
+	LOAD -3(LB), R2
+	CMP #0x1.3p0, R2
+	BLE E_Sinon.11
+	LOAD 1(LB), R2
+	FLOAT R2, R2
+	LOAD -2(LB), R3
+	LOAD 4(R3), R3
+	ADDSP #2
+	LOAD -2(LB), R4
+	STORE R4, 0(SP)
+	LOAD #1, R4
+	FLOAT R4, R4
+	DIV -3(LB), R4
+	BOV ArithFloat_Error
+	STORE R4, -1(SP)
+	LOAD 0(SP), R4
+	BEQ dereferencement.null
+	LOAD 0(R4), R4
+	BSR 8(R4)
+	LOAD R0, R4
+	SUBSP #2
+	SUB R4, R3
+	BOV ArithFloat_Error
+	MUL R3, R2
+	BOV ArithFloat_Error
+	LOAD R2, R0
+	BRA end.Math._atan
+	LOAD 1(LB), R2
+	FLOAT R2, R2
+	LOAD -2(LB), R3
+	LOAD 4(R3), R3
+	ADDSP #2
+	LOAD -2(LB), R4
+	STORE R4, 0(SP)
+	LOAD #1, R4
+	FLOAT R4, R4
+	DIV -3(LB), R4
+	BOV ArithFloat_Error
+	STORE R4, -1(SP)
+	LOAD 0(SP), R4
+	BEQ dereferencement.null
+	LOAD 0(R4), R4
+	BSR 8(R4)
+	LOAD R0, R4
+	SUBSP #2
+	SUB R4, R3
+	BOV ArithFloat_Error
+	MUL R3, R2
+	BOV ArithFloat_Error
+	LOAD R2, R0
+	BRA end.Math._atan
+	BRA E_Fin.11
+E_Sinon.11:
+	LOAD -3(LB), R2
+	CMP #0x1.6p-1, R2
+	BLE E_Sinon.12
+	LOAD 1(LB), R2
+	FLOAT R2, R2
+	ADDSP #2
+	LOAD -2(LB), R3
+	STORE R3, 0(SP)
+	LOAD -3(LB), R3
+	LOAD #1, R4
+	FLOAT R4, R4
+	SUB R4, R3
+	BOV ArithFloat_Error
+	LOAD -3(LB), R3
+	LOAD #1, R4
+	FLOAT R4, R4
+	SUB R4, R3
+	BOV ArithFloat_Error
+	LOAD #1, R4
+	FLOAT R4, R4
+	ADD -3(LB), R4
+	BOV ArithFloat_Error
+	DIV R4, R3
+	BOV ArithFloat_Error
+	STORE R3, -1(SP)
+	LOAD 0(SP), R3
+	BEQ dereferencement.null
+	LOAD 0(R3), R3
+	BSR 8(R3)
+	LOAD R0, R3
+	SUBSP #2
+	ADD #0x1.921fb6p-1, R3
+	BOV ArithFloat_Error
+	MUL R3, R2
+	BOV ArithFloat_Error
+	LOAD R2, R0
+	BRA end.Math._atan
+	LOAD 1(LB), R2
+	FLOAT R2, R2
+	ADDSP #2
+	LOAD -2(LB), R3
+	STORE R3, 0(SP)
+	LOAD -3(LB), R3
+	LOAD #1, R4
+	FLOAT R4, R4
+	SUB R4, R3
+	BOV ArithFloat_Error
+	LOAD -3(LB), R3
+	LOAD #1, R4
+	FLOAT R4, R4
+	SUB R4, R3
+	BOV ArithFloat_Error
+	LOAD #1, R4
+	FLOAT R4, R4
+	ADD -3(LB), R4
+	BOV ArithFloat_Error
+	DIV R4, R3
+	BOV ArithFloat_Error
+	STORE R3, -1(SP)
+	LOAD 0(SP), R3
+	BEQ dereferencement.null
+	LOAD 0(R3), R3
+	BSR 8(R3)
+	LOAD R0, R3
+	SUBSP #2
+	ADD #0x1.921fb6p-1, R3
+	BOV ArithFloat_Error
+	MUL R3, R2
+	BOV ArithFloat_Error
+	LOAD R2, R0
+	BRA end.Math._atan
+	BRA E_Fin.12
+E_Sinon.12:
+	LOAD 1(LB), R2
+	FLOAT R2, R2
+	ADDSP #2
+	LOAD -2(LB), R3
+	STORE R3, 0(SP)
+	LOAD -3(LB), R3
+	STORE R3, -1(SP)
+	LOAD 0(SP), R3
+	BEQ dereferencement.null
+	LOAD 0(R3), R3
+	BSR 8(R3)
+	LOAD R0, R3
+	SUBSP #2
+	MUL R3, R2
+	BOV ArithFloat_Error
+	LOAD R2, R0
+	BRA end.Math._atan
+	LOAD 1(LB), R2
+	FLOAT R2, R2
+	ADDSP #2
+	LOAD -2(LB), R3
+	STORE R3, 0(SP)
+	LOAD -3(LB), R3
+	STORE R3, -1(SP)
+	LOAD 0(SP), R3
+	BEQ dereferencement.null
+	LOAD 0(R3), R3
+	BSR 8(R3)
+	LOAD R0, R3
+	SUBSP #2
+	MUL R3, R2
+	BOV ArithFloat_Error
+	LOAD R2, R0
+	BRA end.Math._atan
+E_Fin.12:
+E_Fin.11:
+	WSTR "Erreur : sortie de la methode A.getX sans return"
+	WNL
+	ERROR
+end.Math._atan:
+	POP R4
+	POP R3
+	POP R2
+	RTS
+code.Object.equals:
+	RTS
+init.object:
+	RTS
+debut.io:
+	LOAD -3(LB), R2
+	LOAD -2(LB), R0
+	LOAD 0(R0), R0
+	CMP R0, R2
+	BNE sinon.io.1
+	LOAD #1, R2
+	RTS
+sinon.io.1:
+	LOAD 0(R0), R1
+	CMP #null, R1
+	BNE sinon.io.2
+	LOAD #0, R2
+	RTS
+sinon.io.2:
+	LOAD -3(LB), R2
+	LEA 0(R0), R0
+	ADDSP #2
+	STORE R0, 0(SP)
+	STORE R2, -1(SP)
+	BSR debut.io
+	SUBSP #2
+	RTS
+	ERROR
+; end main program

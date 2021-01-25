@@ -1,0 +1,8 @@
+#include "Math.decah"
+{
+Math m = new Math();
+float f = 0.1;
+float x = m.atanHermite(f);
+println(x);
+println(1.57 - x);
+}

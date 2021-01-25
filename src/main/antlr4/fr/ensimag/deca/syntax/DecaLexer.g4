@@ -81,10 +81,17 @@ FLOAT: (FLOATDEC | FLOATHEX){
 
     String s = getText();
     float f = Float.parseFloat(s);
-
+        
         if (Float.isInfinite(f)) {
-        throw new InfiniteFloatException(s, this, this.getInputStream());
-    }
+             throw new InfiniteFloatException(s, this, this.getInputStream());
+        }
+        if (Float.isNaN(f)){
+             throw new NaNFLoatException(s, this, this.getInputStream());
+        }
+        if (Float.compare(f,0.0f)==0){
+            throw new NullRoundingException(s, this, this.getInputStream());
+        }
+        
 
     };
 INT: '0' | (POSITIVE_DIGIT DIGIT*);

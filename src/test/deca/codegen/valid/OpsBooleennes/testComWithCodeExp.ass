@@ -1,0 +1,229 @@
+; start main program
+	TSTO #11
+	BOV stack_overflow_error
+	ADDSP #2
+	LOAD #null, R0
+	STORE R0, 1(GB)
+	LOAD code.Object.equals, R0
+	STORE R0, 2(GB)
+; Main program
+	ADDSP #9
+	LOAD #13, R2
+	CMP #7, R2
+	SGT R2
+	LOAD #15, R3
+	CMP #3, R3
+	SGE R3
+	MUL R3, R2
+	STORE R2, 3(GB)
+	LOAD #13, R2
+	CMP #7, R2
+	SLT R2
+	LOAD #15, R3
+	CMP #3, R3
+	SGT R3
+	MUL R3, R2
+	STORE R2, 4(GB)
+	LOAD #13, R2
+	CMP #7, R2
+	SLT R2
+	LOAD #15, R3
+	CMP #3, R3
+	SLE R3
+	MUL R3, R2
+	STORE R2, 5(GB)
+	LOAD #13, R2
+	CMP #7, R2
+	SGT R2
+	CMP #0, R2
+	SEQ R2
+	LOAD #15, R3
+	CMP #3, R3
+	SGE R3
+	CMP #0, R3
+	SEQ R3
+	MUL R3, R2
+	CMP #0, R2
+	SEQ R2
+	STORE R2, 6(GB)
+	LOAD #13, R2
+	CMP #7, R2
+	SLT R2
+	CMP #0, R2
+	SEQ R2
+	LOAD #15, R3
+	CMP #3, R3
+	SGE R3
+	CMP #0, R3
+	SEQ R3
+	MUL R3, R2
+	CMP #0, R2
+	SEQ R2
+	STORE R2, 7(GB)
+	LOAD #13, R2
+	CMP #7, R2
+	SLT R2
+	LOAD #15, R3
+	CMP #3, R3
+	SLE R3
+	MUL R3, R2
+	STORE R2, 8(GB)
+	LOAD #13, R2
+	CMP #2, R2
+	SNE R2
+	STORE R2, 9(GB)
+	LOAD #13, R2
+	CMP #13, R2
+	SEQ R2
+	STORE R2, 10(GB)
+	LOAD #13, R2
+	CMP #7, R2
+	SGT R2
+	CMP #0, R2
+	SEQ R2
+	STORE R2, 11(GB)
+; Beginning of main instructions:
+	LOAD 3(GB), R0
+	CMP #0, R0
+	BEQ E_Sinon.1
+	WSTR "1/oui"
+	WNL
+	BRA E_Fin.1
+E_Sinon.1:
+	WSTR "1-non"
+	WNL
+E_Fin.1:
+	LOAD 4(GB), R0
+	CMP #0, R0
+	BNE E_Sinon.2
+	WSTR "2-oui"
+	WNL
+	BRA E_Fin.2
+E_Sinon.2:
+	WSTR "2-non"
+	WNL
+E_Fin.2:
+	LOAD 5(GB), R0
+	CMP #0, R0
+	BNE E_Sinon.3
+	WSTR "3-oui"
+	WNL
+	BRA E_Fin.3
+E_Sinon.3:
+	WSTR "3-non"
+	WNL
+E_Fin.3:
+	LOAD 6(GB), R0
+	CMP #0, R0
+	BEQ E_Sinon.4
+	WSTR "4-oui"
+	WNL
+	BRA E_Fin.4
+E_Sinon.4:
+	WSTR "4-non"
+	WNL
+E_Fin.4:
+	LOAD 7(GB), R0
+	CMP #0, R0
+	BEQ E_Sinon.5
+	WSTR "5-oui"
+	WNL
+	BRA E_Fin.5
+E_Sinon.5:
+	WSTR "5-non"
+	WNL
+E_Fin.5:
+	LOAD 8(GB), R0
+	CMP #0, R0
+	BNE E_Sinon.6
+	WSTR "6-oui"
+	WNL
+	BRA E_Fin.6
+E_Sinon.6:
+	WSTR "6-non"
+	WNL
+E_Fin.6:
+	LOAD 9(GB), R0
+	CMP #0, R0
+	BEQ E_Sinon.7
+	WSTR "7-oui"
+	WNL
+	BRA E_Fin.7
+E_Sinon.7:
+	WSTR "7-non"
+	WNL
+E_Fin.7:
+	LOAD 10(GB), R0
+	CMP #0, R0
+	BEQ E_Sinon.8
+	WSTR "8-oui"
+	WNL
+	BRA E_Fin.8
+E_Sinon.8:
+	WSTR "8-non"
+	WNL
+E_Fin.8:
+	LOAD 11(GB), R0
+	CMP #0, R0
+	BNE E_Sinon.9
+	WSTR "9-oui"
+	WNL
+	BRA E_Fin.9
+E_Sinon.9:
+	WSTR "9-non"
+	WNL
+E_Fin.9:
+	HALT
+stack_overflow_error:
+	WSTR "Error: Stack Overflow"
+	WNL
+	ERROR
+io_error:
+	WSTR "Error: Input/Output error"
+	WNL
+	ERROR
+ArithFloat_Error:
+	WSTR "Error: Débordement arithmétique sur flottants"
+	WNL
+	ERROR
+ZeroDivision_Error:
+	WSTR "Error: Division entière par 0"
+	WNL
+	ERROR
+dereferencement.null:
+	WSTR "Erreur : dereferencement de null"
+	WNL
+	ERROR
+tas_plein:
+	WSTR "Erreur : heap_over_flow"
+	WNL
+	ERROR
+code.Object.equals:
+	RTS
+init.object:
+	RTS
+debut.io:
+	LOAD -3(LB), R2
+	LOAD -2(LB), R0
+	LOAD 0(R0), R0
+	CMP R0, R2
+	BNE sinon.io.1
+	LOAD #1, R2
+	RTS
+sinon.io.1:
+	LOAD 0(R0), R1
+	CMP #null, R1
+	BNE sinon.io.2
+	LOAD #0, R2
+	RTS
+sinon.io.2:
+	LOAD -3(LB), R2
+	LEA 0(R0), R0
+	ADDSP #2
+	STORE R0, 0(SP)
+	STORE R2, -1(SP)
+	BSR debut.io
+	SUBSP #2
+	RTS
+	ERROR
+; end main program
