@@ -1,0 +1,19 @@
+// Description:
+//  Test InstanceOf
+//
+// Resultats:
+//
+//  OK!
+// Historique:
+//    cree le 20/01/2021
+
+class A {
+}
+
+{
+    A a = new A();
+    boolean b = a.equals(a);
+    if (b){
+        print("OK!");
+    }
+}
