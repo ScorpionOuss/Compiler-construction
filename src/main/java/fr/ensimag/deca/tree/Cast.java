@@ -12,10 +12,14 @@ import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.DVal;
+import fr.ensimag.ima.pseudocode.ImmediateString;
 import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.instructions.ERROR;
 import fr.ensimag.ima.pseudocode.instructions.FLOAT;
 import fr.ensimag.ima.pseudocode.instructions.INT;
+import fr.ensimag.ima.pseudocode.instructions.WNL;
+import fr.ensimag.ima.pseudocode.instructions.WSTR;
 
 import java.io.PrintStream;
 
@@ -93,7 +97,7 @@ public class Cast extends AbstractExpr{
 
 
 		if (type.getType().getName() == expr.getType().getName()) {
-			System.out.println(type.getType().getName().getName());
+//			System.out.println(type.getType().getName().getName());
 		}		
 		
 		else if (type.getType().isInt()) {
@@ -105,7 +109,18 @@ public class Cast extends AbstractExpr{
 			compiler.addInstruction(new FLOAT(Register.getR(getRP(compiler)),
 					Register.getR(getRP(compiler))));
 		}
-		
+		else {
+			InstanceOf iof = new InstanceOf(expr, type);
+			int castCounter = compiler.labelsManager.incrementCastCounter();
+			Label endSucces = new Label("end.Succes" + castCounter);
+			iof.codeCond(compiler, true, endSucces);
+			compiler.addInstruction(new WSTR(new ImmediateString(
+					"Erreur; le cast n'est pas possible")));
+			compiler.addInstruction(new WNL());
+			compiler.addInstruction(new ERROR());
+			compiler.addLabel(endSucces);
+			expr.codeGenInst(compiler);
+		}
 		assert registerPointer == getRP(compiler);
 	}
 }

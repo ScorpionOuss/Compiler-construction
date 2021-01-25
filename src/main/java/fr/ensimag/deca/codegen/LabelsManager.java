@@ -7,11 +7,13 @@ public class LabelsManager {
 		ifCounter = 0;
 		andCounter = 0;
 		orCounter = 0;
+		castCounter = 0;
 	}
 	private int whileCounter;
 	private int ifCounter;
 	private int andCounter;
 	private int orCounter;
+	private int castCounter;
 	 
 	/**
 	  * increment and return WhileCounter
@@ -48,5 +50,14 @@ public class LabelsManager {
     public int incrementOrCounter() {
    	 orCounter++;
    	 return orCounter;
+    }
+    
+    /**
+     * incrementCastCounter
+     * @return castCounter
+     */
+    public int incrementCastCounter() {
+    	castCounter++;
+    	return castCounter;
     }
 }
