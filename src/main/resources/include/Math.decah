@@ -35,6 +35,18 @@ protected float PiS2 = 1.5707963267949f;
       }
 }
 
+float _cos(float x){
+  x = _fmod(x,2*pi);
+  if((0<=x && x<=1.652f)) {
+    return _cosTaylor(x);
+  }
+  else if(1.652<=x && x<4.5){
+    return  _sinTaylor(pi/2-x);
+  }
+  else {
+    return  -_cosTaylor(pi-x);
+  }
+}
 
 
 float _cosTaylor(float f){
@@ -53,6 +65,9 @@ float _cosTaylor(float f){
     }
     return res;
     }
+
+
+
 
 float _pow(float x, int n){
   float ex = x;
@@ -77,41 +92,66 @@ float _pow(float x, int n){
 }
 
 
-float _Modulo2Pi(float a, float b) {
+
+
+float _fmod(float a, float b) {
         return a - b * (int)(a/b);
     }
 
 
- float _sin(float x) {
-        int i = 1;
-        float sum;
-        float factor;
-        int k = 0;
-        while (k<=100) {
-            k++;
-            factor = -factor * x * x / (2*i * (2*i+1));
-            sum = sum + factor;
-            i = i + 1;
-        }
-        return sum ;
-    }
-    float _cos(float x)
-    {   
-    x = _Modulo2Pi(x, 2*pi);
-    if (0<=x && x<3*pi/4){
-    return _cosTaylor(x);
-    } 
-    else{ 
-    if (3*pi/4<=x && x<7*pi/4){
-    return sin(PiS2 - x);
-    }
-    else {
-    return _cosTaylor(2*pi - x);
-    }
-    }
+float _sin(float x){
+  x = _fmod(x,2*pi);
+  if((0<=x && x<0.7853981633974483f)) {
+    return _sinTaylor(x);
+  }
+  else if(0.7853981633974483f<=x && x<PiS2){
+    return  _cos(PiS2-x);
+  }
+  else if(PiS2<=x && x<2.356194490192345f){
+    return  -_cos(PiS2+x);
+  }
+  else if(2.356194490192345f<=x && x<pi){
+    return  _sinTaylor(pi-x);
+  }
+  else if(pi<=x && x<3.9269908169872414f){
+    return  _cos(x-pi/2);
+  }
+  else if(3.9269908169872414f<=x && x<5.497787143782138f){
+    return  -_sinTaylor(x-pi);
+  }
+  else {
+    return  -_cos(x+PiS2);
+  }
 }
 
-float atanHermite(float f){
+
+
+float _sinTaylor(float x) {
+    int i = 1;
+    float sum;
+    float factor;
+    if (x == 0) {
+        return 0;
+    }
+    factor = x;
+    sum = x;
+    int k =0;
+    while (k<=100) {
+      k = k+1;
+        factor = -factor * x * x / (2*i * (2*i+1));
+        sum = sum + factor;
+        i = i + 1;
+    }
+    return sum;
+}
+
+
+
+
+
+
+
+float atanHermite(float x){
 float ret;
 ret =1.1097301E-6*_pow(f,55)
 -3.1647858E-5*_pow(f,54)
@@ -156,6 +196,8 @@ ret =1.1097301E-6*_pow(f,55)
 return ret;
 }
 
+
+
 float _atan(float x){
 int s = 1;
 if (x<0){ signe = -1; }
@@ -164,5 +206,54 @@ else{ if (x>0.6875f){ return (((float)signe)*((float) (atanHermite((x -1)/(1+x))
 }}
 
 
+
+float asinTaylor(float x){
+float res = x;
+float prov = x;
+int k = 1;
+while (k < 1000000){
+prov = prov * x * x * k / ((k+1)*(2*k+1));
+res +=prov;
+k=k+1;
+}
+return res;
+}
+
+
+float asinse(float x){
+int n=35;
+int N=n-1;
+boolean bool= true;
+float res=fact(n-1)/(_pow(2,n-1)*fact((n-1)/2)*fact((n-1)/2)*(n));
+while ( N>=0){
+     if (bool==true){
+        res=res*x;
+        bool=false;
+        }
+    else {
+    res=res*x+fact(N-1)/(_pow(2,N-1)*fact((N-1)/2)*fact((N-1)/2)*(N));
+    bool=true;
+    }
+    N=N-1;
+    }
+    return res;
+}
+
+
+public  float _asin(float x){
+  if(_abs(x)>1){
+    println("ArgumentError");
+    return 0;
+  }
+  if(_abs(x)<=0.72){
+    return asinTaylor(x);
+  }
+  else if(x>0.72){
+    return pi/2-asinTaylor((float)_sqrt(1-_pow(x,2)));
+  }
+  else{
+    return asinTaylor((float)_sqrt(1-_pow(x,2)))-pi/2;
+  }
+}
 
 }
