@@ -74,6 +74,42 @@ float _pow(float x, int n){
     }
   }
 }
+
+
+float _Modulo2Pi(float a, float b) {
+        return a - b * (int)(a/b);
+    }
+
+
+ float _sin(float x) {
+        int i = 1;
+        float sum;
+        float factor;
+        int k = 0;
+        while (k<=100) {
+            k++;
+            factor = -factor * x * x / (2*i * (2*i+1));
+            sum = sum + factor;
+            i = i + 1;
+        }
+        return sum ;
+    }
+    float _cos(float x)
+    {   
+    x = _Modulo2Pi(x, 2*pi);
+    if (0<=x && x<3*pi/4){
+    return _cosTaylor(x);
+    } 
+    else{ 
+    if (3*pi/4<=x && x<7*pi/4){
+    return sin(PiS2 - x);
+    }
+    else {
+    return _cosTaylor(2*pi - x);
+    }
+    }
+}
+
 //float atanHermite(float f){
 //float res;
 //res = 1.1097301E-6*55 -3.1647858E-5*54 + 53*4.3415572E-4f -52*-0.0038123499f +0.024052639f*51 -0.11600586f*50 +0.44423878f*49 -1.3847452f*48 + 3.5731058f*47 -7.719477f*46 +14.067447f*45 -21.717817f*44 + 28.45957f*43 - 
