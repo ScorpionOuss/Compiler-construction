@@ -43,7 +43,7 @@ public class UnaryMinus extends AbstractUnaryExpr {
 					Register.getR(getRP(compiler))));
 		}
 		else {
-			/*On verra plus tard */
+			getOperand().codeGenInst(compiler);
 			compiler.addInstruction(new OPP(Register.getR(getRP(compiler)),
 					Register.getR(getRP(compiler))));
 		}
