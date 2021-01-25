@@ -75,8 +75,9 @@ float _Modulo2Pi(float x ,float y){
 float _cos(float x){
   x = _Modulo2Pi(x, 2*pi);
   if ((0<=x && x<pi) ||(x<=0 && x>=-pi/4)) {return _cosTaylor(x);}
-  else if (pi<=x && x<3*pi/2){ return 0;}
+  else{ if (pi<=x && x<3*pi/2){ return 0;}
   else {return 0;}
+  }
 }
 
 float asin1(float x){

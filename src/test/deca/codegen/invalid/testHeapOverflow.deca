@@ -1,0 +1,20 @@
+// Description:
+//    tests division flottante sur 0; débordement lors d'opération arithmétique sur flottants.
+//
+// Resultats:
+//
+//
+// Historique:
+//    cree le 20/01/2021
+
+class A {
+    void m(){
+        new A();
+        m();
+    }
+}
+
+{
+    A a = new A();
+    a.m();
+}

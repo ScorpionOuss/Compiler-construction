@@ -43,7 +43,6 @@ float _cosTaylor(float f){
     float j =i;
     int k = 0;
     float x = -_pow(f,2)/j;
-    println(x);
     while(k<1){
     k=k + 1;
     res = res + x;

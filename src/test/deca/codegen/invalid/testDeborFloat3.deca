@@ -1,0 +1,16 @@
+// Description:
+//    débordement lors d'opération arithmétique sur flottants.
+//
+// Resultats:
+//
+//  Error: Débordement arithmétique sur flottants
+//
+// Historique:
+//    cree le 20/01/2021
+
+{
+    float x = 1000.0;
+    while (true) {
+        x = x + x;
+    }
+}
