@@ -1,0 +1,13 @@
+// Description:
+//  Test print assign
+//
+// Resultats:
+//  2
+//
+// Historique:
+//    cree le 20/01/2021
+
+{
+    int x = 1;
+    print(x = 2);
+}
