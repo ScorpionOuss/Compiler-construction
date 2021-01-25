@@ -1,0 +1,25 @@
+// Description:
+//  Test Cast
+//
+// Resultats:
+//
+// Historique:
+//    cree le 20/01/2021
+
+class A {
+    int x = 1;
+
+}
+
+class B extends A{
+}
+
+class C {
+
+}
+
+{
+    A a = new B();
+    B b = (B) (a);
+
+}
