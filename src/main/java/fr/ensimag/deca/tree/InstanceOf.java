@@ -123,18 +123,18 @@ public class InstanceOf extends AbstractExpr{
 	protected void codeGenInst(DecacCompiler compiler) {
 		assert type.getType().isClass();
 		assert expr.getType().isClass();
-		if (getRP(compiler) < getMP(compiler)) {
 			compiler.addInstruction(new ADDSP(new ImmediateInteger(2)));
+			//class -3(LB)
 			compiler.addInstruction(new LOAD(type.getClassDefinition().getOperand(), 
 					Register.R0));
 			compiler.addInstruction(new STORE(Register.R0, 
 					new RegisterOffset(-1, Register.SP)));
+			//expr -2(LB)
 			compiler.addInstruction(new LOAD(expr.getAdresse(compiler), 
 					Register.R0));
 			compiler.addInstruction(new STORE(Register.R0,
 					new RegisterOffset(0, Register.SP)));
 			compiler.addInstruction(new BSR(new Label("debut.io")));
 			compiler.addInstruction(new SUBSP(new ImmediateInteger(2)));
-		}
 	}
 }

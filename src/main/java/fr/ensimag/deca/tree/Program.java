@@ -68,7 +68,7 @@ public class Program extends AbstractProgram {
         compiler.addHeapException();
         classes.methodsGeneration(compiler);
         insertObjectCode(compiler);
-        //codeInstanceOf(compiler);
+        codeInstanceOf(compiler);
     }
 
 
@@ -96,10 +96,14 @@ public class Program extends AbstractProgram {
 		Label debutIo = new Label("debut.io");
 		Label sinonIo1 = new Label("sinon.io.1");
 		Label sinonIo2 = new Label("sinon.io.2");
+		//-2(LB) contient l'objet
+		// -3(LB) contient la classe
 		compiler.addLabel(debutIo);
-		compiler.addInstruction(new LEA(new RegisterOffset(-2, Register.LB), 
+		compiler.addInstruction(new LOAD(new RegisterOffset(-2, Register.LB), 
 				Register.getR(compiler.registersManag.getRegisterPointer())));
-		compiler.addInstruction(new CMP(new RegisterOffset(-3, Register.LB), 
+		compiler.addInstruction(new LEA(new RegisterOffset(-3, Register.LB),
+				Register.R0));
+		compiler.addInstruction(new CMP(Register.R0, 
 				Register.getR(compiler.registersManag.getRegisterPointer())));
 		compiler.addInstruction(new BNE(sinonIo1));
 		compiler.addInstruction(new LOAD(1, Register.getR(compiler.registersManag.getRegisterPointer())));
