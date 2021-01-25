@@ -125,7 +125,7 @@ public class InstanceOf extends AbstractExpr{
 		assert expr.getType().isClass();
 			compiler.addInstruction(new ADDSP(new ImmediateInteger(2)));
 			//class -3(LB)
-			compiler.addInstruction(new LOAD(type.getClassDefinition().getOperand(), 
+			compiler.addInstruction(new LEA(type.getClassDefinition().getOperand(), 
 					Register.R0));
 			compiler.addInstruction(new STORE(Register.R0, 
 					new RegisterOffset(-1, Register.SP)));
