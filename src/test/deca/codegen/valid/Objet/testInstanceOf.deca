@@ -1,4 +1,13 @@
-
+// Description:
+//  Test InstanceOf
+//
+// Resultats:
+//      Oui!
+//      Oui!
+//      Non!
+//
+// Historique:
+//    cree le 20/01/2021
 class A {
     int x = 1;
 
@@ -7,10 +16,32 @@ class A {
 class B extends A{
 }
 
+class C {
+
+}
 {
-    A a = new A();
-    boolean b = a instanceof A;
+    A obj1 = new A();
+    B obj2 = new B();
+    C obj3 = new C();
+    boolean b = obj1 instanceof A;
+    boolean c = obj2 instanceof B;
+    boolean d = obj2 instanceof A;
+    boolean z = obj3 instanceof A;
     if (b) {
         println("Oui!");
     }
+
+   if (c){
+    if (d) {
+        println("Oui!");
+        }
+   }
+
+   if (!z){
+        println("Non!");
+   }
+   else {
+        println("Oui!");
+    }
+
 }

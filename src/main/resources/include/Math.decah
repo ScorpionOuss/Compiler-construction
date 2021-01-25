@@ -66,13 +66,13 @@ float _pow(float x, int n){
   while ( n>1) {
   x = x*ex ;
   n = n - 1;
-  }
+    }
   return x ;
   }
   else{
   x = _pow(ex, -n) ;
   return 1/x ;
-  }
+    }
   }
 }
 //float atanHermite(float f){

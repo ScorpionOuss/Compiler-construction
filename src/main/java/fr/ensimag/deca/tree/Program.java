@@ -4,6 +4,7 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.ImmediateInteger;
+import fr.ensimag.ima.pseudocode.ImmediateString;
 import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.LabelOperand;
 import fr.ensimag.ima.pseudocode.NullOperand;
@@ -99,10 +100,12 @@ public class Program extends AbstractProgram {
 		//-2(LB) contient l'objet
 		// -3(LB) contient la classe
 		compiler.addLabel(debutIo);
-		compiler.addInstruction(new LOAD(new RegisterOffset(-2, Register.LB), 
+		compiler.addInstruction(new LOAD(new RegisterOffset(-3, Register.LB), 
 				Register.getR(compiler.registersManag.getRegisterPointer())));
-		compiler.addInstruction(new LEA(new RegisterOffset(-3, Register.LB),
+		compiler.addInstruction(new LOAD(new RegisterOffset(-2, Register.LB),
 				Register.R0));
+		compiler.addInstruction(new LOAD(new RegisterOffset(0, 
+				Register.R0), Register.R0));
 		compiler.addInstruction(new CMP(Register.R0, 
 				Register.getR(compiler.registersManag.getRegisterPointer())));
 		compiler.addInstruction(new BNE(sinonIo1));
@@ -110,24 +113,34 @@ public class Program extends AbstractProgram {
 		compiler.addInstruction(new RTS());
 		
 		compiler.addLabel(sinonIo1);
-		compiler.registersManag.incrementRegisterPointer();
-		compiler.addInstruction(new LEA(new RegisterOffset(-3, Register.getR(compiler.registersManag.getRegisterPointer())),
-				Register.getR(3)));
-		compiler.addInstruction(new CMP(new NullOperand(), Register.getR(3)));
+		
+		compiler.addInstruction(new LOAD(new RegisterOffset(0, Register.R0), 
+				Register.R1));
+		compiler.addInstruction(new CMP(new NullOperand(), Register.R1));
 		compiler.addInstruction(new BNE(sinonIo2));
+		//compiler.addInstruction(new WSTR(new ImmediateString("beeeeq sinon1")));
+		//compiler.addInstruction(new WNL());
 		compiler.addInstruction(new LOAD(0, Register.getR(compiler.registersManag.getRegisterPointer())));
 		compiler.addInstruction(new RTS());
 		
 		compiler.addLabel(sinonIo2);
-		compiler.addInstruction(new LEA(new RegisterOffset(-3, Register.LB),
+		//compiler.addInstruction(new WSTR(new ImmediateString("bnnnnq sinon1")));
+		//compiler.addInstruction(new WNL());
+		compiler.addInstruction(new LOAD(new RegisterOffset(-3, Register.LB),
 				Register.getR(compiler.registersManag.getRegisterPointer())));
-		compiler.addInstruction(new LOAD(new RegisterOffset(-2, Register.LB),
-				Register.getR(compiler.registersManag.getRegisterPointer() - 1)));
+		compiler.addInstruction(new LEA(new RegisterOffset(0, Register.R0), 
+				Register.R0));
 		compiler.addInstruction(new ADDSP(new ImmediateInteger(2)));
-		compiler.addInstruction(new PUSH(Register.getR(compiler.registersManag.getRegisterPointer())));
-		compiler.addInstruction(new PUSH(Register.getR(compiler.registersManag.getRegisterPointer() - 1)));
+		//class -3(LB)
+		compiler.addInstruction(new STORE(Register.R0, 
+				new RegisterOffset(0, Register.SP)));
+		//expr -2(LB)
+		compiler.addInstruction(new STORE(Register.getR(compiler.registersManag.getRegisterPointer()),
+				new RegisterOffset(-1, Register.SP)));
+
 		compiler.addInstruction(new BSR(debutIo));
 		compiler.addInstruction(new SUBSP(new ImmediateInteger(2)));
+		compiler.addInstruction(new RTS());;
 		compiler.addInstruction(new ERROR());
 		
 	}

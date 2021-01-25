@@ -49,5 +49,4 @@ public class UnaryMinus extends AbstractUnaryExpr {
 		}
 		addArithFloatInstruction(compiler);
 	}
-
 }
