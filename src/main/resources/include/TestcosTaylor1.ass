@@ -1,7 +1,7 @@
 ; start main program
-	TSTO #13
+	TSTO #3
 	BOV stack_overflow_error
-	ADDSP #7
+	ADDSP #8
 	LOAD #null, R0
 	STORE R0, 1(GB)
 	LOAD code.Object.equals, R0
@@ -93,7 +93,7 @@ init.Math:
 	POP R2
 	RTS
 code.Math._ulp:
-	TSTO #30
+	TSTO #3
 	BOV stack_overflow_error
 	ADDSP #3
 	LOAD #0, R2
@@ -103,16 +103,14 @@ code.Math._ulp:
 	LOAD #0x0.000002p-126, R2
 	STORE R2, 3(LB)
 	PUSH R2
+	PUSH R3
+	PUSH R4
 	LOAD -3(LB), R2
 	CMP #0x0.0p0, R2
 	BGT E_Sinon.1
-	PUSH R2
-	OPP -3(LB), R2
+	OPP -3(LB), R3
 	BOV ArithFloat_Error
-	LOAD R2, R1
-	POP R2
-	STORE R1, -3(LB)
-	LOAD -3(LB), R1
+	STORE R3, -3(LB)
 	BRA E_Fin.1
 E_Sinon.1:
 E_Fin.1:
@@ -120,12 +118,9 @@ E_Fin.1:
 	CMP #0x0.0p0, R2
 	BEQ endOr1
 	LOAD -3(LB), R2
-	PUSH R2
-	OPP #0x0.0p0, R2
+	OPP #0x0.0p0, R3
 	BOV ArithFloat_Error
-	LOAD R2, R1
-	POP R2
-	CMP R1, R2
+	CMP R3, R2
 	BNE E_Sinon.2
 endOr1:
 	LOAD 3(LB), R2
@@ -180,36 +175,21 @@ E_Sinon.3:
 	LOAD -3(LB), R2
 	CMP #0x1.0p0, R2
 	BLE E_Sinon.4
-	PUSH R2
-	LOAD 1(LB), R2
-	SUB #1, R2
-	LOAD R2, R1
-	POP R2
-	STORE R1, 1(LB)
-	LOAD 1(LB), R1
+	LOAD 1(LB), R3
+	SUB #1, R3
+	STORE R3, 1(LB)
 	BRA E_Cond1
 E_Debut1:
-	PUSH R2
-	LOAD -3(LB), R2
-	LOAD -3(LB), R2
-	PUSH R2
-	LOAD #2, R2
-	FLOAT R2, R2
-	LOAD R2, R1
-	POP R2
-	DIV R1, R2
+	LOAD -3(LB), R3
+	LOAD -3(LB), R3
+	LOAD #2, R4
+	FLOAT R4, R4
+	DIV R4, R3
 	BOV ArithFloat_Error
-	LOAD R2, R1
-	POP R2
-	STORE R1, -3(LB)
-	LOAD -3(LB), R1
-	PUSH R2
-	LOAD 1(LB), R2
-	ADD #1, R2
-	LOAD R2, R1
-	POP R2
-	STORE R1, 1(LB)
-	LOAD 1(LB), R1
+	STORE R3, -3(LB)
+	LOAD 1(LB), R3
+	ADD #1, R3
+	STORE R3, 1(LB)
 E_Cond1:
 	LOAD -3(LB), R2
 	CMP #0x1.0p0, R2
@@ -252,21 +232,13 @@ E_Cond1:
 E_Sinon.4:
 	BRA E_Cond2
 E_Debut2:
-	PUSH R2
-	LOAD -3(LB), R2
-	MUL #0x1.0p1, R2
+	LOAD -3(LB), R3
+	MUL #0x1.0p1, R3
 	BOV ArithFloat_Error
-	LOAD R2, R1
-	POP R2
-	STORE R1, -3(LB)
-	LOAD -3(LB), R1
-	PUSH R2
-	LOAD 1(LB), R2
-	SUB #1, R2
-	LOAD R2, R1
-	POP R2
-	STORE R1, 1(LB)
-	LOAD 1(LB), R1
+	STORE R3, -3(LB)
+	LOAD 1(LB), R3
+	SUB #1, R3
+	STORE R3, 1(LB)
 E_Cond2:
 	LOAD -3(LB), R2
 	CMP #0x1.0p0, R2
@@ -312,10 +284,12 @@ E_Fin.2:
 	WNL
 	ERROR
 end.Math._ulp:
+	POP R4
+	POP R3
 	POP R2
 	RTS
 code.Math._cosTaylor:
-	TSTO #23
+	TSTO #5
 	BOV stack_overflow_error
 	ADDSP #5
 	LOAD #1, R2
@@ -326,154 +300,83 @@ code.Math._cosTaylor:
 	LOAD 2(LB), R2
 	FLOAT R2, R2
 	STORE R2, 3(LB)
-	ADDSP #3
-	LOAD -2(LB), R2
-	STORE R2, 0(SP)
-	LOAD -3(LB), R2
-	STORE R2, -1(SP)
-	LOAD #2, R2
-	STORE R2, -2(SP)
-	LOAD 0(SP), R2
-	BEQ dereferencement.null
-	LOAD 0(R2), R2
-	BSR 4(R2)
-	LOAD R0, R2
-	SUBSP #3
+	LOAD #0, R2
+	STORE R2, 4(LB)
 	OPP R2, R2
 	BOV ArithFloat_Error
 	DIV 3(LB), R2
 	BOV ArithFloat_Error
-	STORE R2, 4(LB)
-	LOAD #0, R2
 	STORE R2, 5(LB)
 	PUSH R2
-	LOAD 4(LB), R2
-	LOAD R2, R1
-	WFLOAT
-	WNL
-	ADDSP #3
-	LOAD -2(LB), R2
-	STORE R2, 0(SP)
-	LOAD #0x1.a36e2ep-14, R2
-	STORE R2, -1(SP)
-	LOAD #2, R2
-	STORE R2, -2(SP)
-	LOAD 0(SP), R2
-	BEQ dereferencement.null
-	LOAD 0(R2), R2
-	BSR 4(R2)
-	LOAD R0, R2
-	SUBSP #3
-	OPP R2, R2
-	BOV ArithFloat_Error
-	DIV #0x1.0p1, R2
-	BOV ArithFloat_Error
+	PUSH R3
+	PUSH R4
+	LOAD 5(LB), R2
 	LOAD R2, R1
 	WFLOAT
 	WNL
 	BRA E_Cond3
 E_Debut3:
-	PUSH R2
-	LOAD 5(LB), R2
-	ADD #1, R2
-	LOAD R2, R1
-	POP R2
-	STORE R1, 5(LB)
-	LOAD 5(LB), R1
-	PUSH R2
-	LOAD 1(LB), R2
-	ADD 4(LB), R2
+	LOAD 4(LB), R3
+	ADD #1, R3
+	STORE R3, 4(LB)
+	LOAD 1(LB), R3
+	ADD 5(LB), R3
 	BOV ArithFloat_Error
-	LOAD R2, R1
-	POP R2
-	STORE R1, 1(LB)
-	LOAD 1(LB), R1
-	PUSH R2
-	LOAD 2(LB), R2
-	ADD #1, R2
-	PUSH R2
-	LOAD 2(LB), R2
-	ADD #2, R2
-	LOAD R2, R1
-	POP R2
-	MUL R1, R2
-	FLOAT R2, R2
-	LOAD R2, R1
-	POP R2
-	STORE R1, 3(LB)
-	LOAD 3(LB), R1
-	PUSH R2
-	LOAD 4(LB), R2
-	PUSH R2
-	OPP #1, R2
-	FLOAT R2, R2
-	LOAD R2, R1
-	POP R2
-	MUL R1, R2
+	STORE R3, 1(LB)
+	STORE R3, 3(LB)
+	OPP 5(LB), R3
 	BOV ArithFloat_Error
-	PUSH R2
 	ADDSP #3
-	LOAD -2(LB), R2
-	STORE R2, 0(SP)
-	LOAD -3(LB), R2
-	STORE R2, -1(SP)
-	LOAD #2, R2
-	STORE R2, -2(SP)
-	LOAD 0(SP), R2
+	LOAD -2(LB), R4
+	STORE R4, 0(SP)
+	LOAD -3(LB), R4
+	STORE R4, -1(SP)
+	LOAD #2, R4
+	STORE R4, -2(SP)
+	LOAD 0(SP), R4
 	BEQ dereferencement.null
-	LOAD 0(R2), R2
-	BSR 4(R2)
-	LOAD R0, R2
+	LOAD 0(R4), R4
+	BSR 4(R4)
+	LOAD R0, R4
 	SUBSP #3
-	LOAD R2, R1
-	POP R2
-	MUL R1, R2
+	MUL R4, R3
 	BOV ArithFloat_Error
-	DIV 3(LB), R2
+	DIV 3(LB), R3
 	BOV ArithFloat_Error
-	LOAD R2, R1
-	POP R2
-	STORE R1, 4(LB)
-	LOAD 4(LB), R1
-	PUSH R2
-	LOAD 2(LB), R2
-	ADD #2, R2
-	LOAD R2, R1
-	POP R2
-	STORE R1, 2(LB)
-	LOAD 2(LB), R1
+	STORE R3, 5(LB)
+	LOAD 2(LB), R3
+	ADD #2, R3
+	STORE R3, 2(LB)
 E_Cond3:
-	LOAD 5(LB), R2
+	LOAD 4(LB), R2
 	CMP #1, R2
 	BLT E_Debut3
-	LOAD #1, R2
-	FLOAT R2, R2
+	LOAD 1(LB), R2
 	LOAD R2, R0
 	BRA end.Math._cosTaylor
-	LOAD #1, R2
-	FLOAT R2, R2
+	LOAD 1(LB), R2
 	LOAD R2, R0
 	BRA end.Math._cosTaylor
 	WSTR "Erreur : sortie de la methode A.getX sans return"
 	WNL
 	ERROR
 end.Math._cosTaylor:
+	POP R4
+	POP R3
 	POP R2
 	RTS
 code.Math._pow:
-	TSTO #9
+	TSTO #1
 	BOV stack_overflow_error
 	ADDSP #1
 	LOAD -3(LB), R2
 	STORE R2, 1(LB)
 	PUSH R2
+	PUSH R3
 	LOAD -3(LB), R2
-	PUSH R2
-	LOAD #0, R2
-	FLOAT R2, R2
-	LOAD R2, R1
-	POP R2
-	CMP R1, R2
+	LOAD #0, R3
+	FLOAT R3, R3
+	CMP R3, R2
 	BNE E_Sinon.5
 	LOAD #0, R2
 	FLOAT R2, R2
@@ -504,21 +407,13 @@ E_Sinon.6:
 	BLE E_Sinon.7
 	BRA E_Cond4
 E_Debut4:
-	PUSH R2
-	LOAD -3(LB), R2
-	MUL 1(LB), R2
+	LOAD -3(LB), R3
+	MUL 1(LB), R3
 	BOV ArithFloat_Error
-	LOAD R2, R1
-	POP R2
-	STORE R1, -3(LB)
-	LOAD -3(LB), R1
-	PUSH R2
-	LOAD -4(LB), R2
-	SUB #1, R2
-	LOAD R2, R1
-	POP R2
-	STORE R1, -4(LB)
-	LOAD -4(LB), R1
+	STORE R3, -3(LB)
+	LOAD -4(LB), R3
+	SUB #1, R3
+	STORE R3, -4(LB)
 E_Cond4:
 	LOAD -4(LB), R2
 	CMP #1, R2
@@ -531,24 +426,20 @@ E_Cond4:
 	BRA end.Math._pow
 	BRA E_Fin.7
 E_Sinon.7:
-	PUSH R2
 	ADDSP #3
-	LOAD -2(LB), R2
-	STORE R2, 0(SP)
-	LOAD 1(LB), R2
-	STORE R2, -1(SP)
-	OPP -4(LB), R2
-	STORE R2, -2(SP)
-	LOAD 0(SP), R2
+	LOAD -2(LB), R3
+	STORE R3, 0(SP)
+	LOAD 1(LB), R3
+	STORE R3, -1(SP)
+	OPP -4(LB), R3
+	STORE R3, -2(SP)
+	LOAD 0(SP), R3
 	BEQ dereferencement.null
-	LOAD 0(R2), R2
-	BSR 4(R2)
-	LOAD R0, R2
+	LOAD 0(R3), R3
+	BSR 4(R3)
+	LOAD R0, R3
 	SUBSP #3
-	LOAD R2, R1
-	POP R2
-	STORE R1, -3(LB)
-	LOAD -3(LB), R1
+	STORE R3, -3(LB)
 	LOAD #1, R2
 	FLOAT R2, R2
 	DIV -3(LB), R2
@@ -567,32 +458,11 @@ E_Fin.6:
 	WNL
 	ERROR
 end.Math._pow:
+	POP R3
 	POP R2
 	RTS
 code.Object.equals:
 	RTS
 init.object:
 	RTS
-debut.io:
-	LOAD -2(LB), R2
-	LEA -3(LB), R0
-	CMP R0, R2
-	BNE sinon.io.1
-	LOAD #1, R2
-	RTS
-sinon.io.1:
-	LEA -3(R3), R3
-	CMP #null, R3
-	BNE sinon.io.2
-	LOAD #0, R3
-	RTS
-sinon.io.2:
-	LEA -3(LB), R3
-	LOAD -2(LB), R2
-	ADDSP #2
-	PUSH R3
-	PUSH R2
-	BSR debut.io
-	SUBSP #2
-	ERROR
 ; end main program
