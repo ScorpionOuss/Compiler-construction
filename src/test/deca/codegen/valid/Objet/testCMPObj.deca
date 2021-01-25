@@ -1,0 +1,41 @@
+// Description:
+//    tests division flottante sur 0; débordement lors d'opération arithmétique sur flottants.
+//
+// Resultats:
+//
+//  Oui!
+//  Oui!
+//  Oui!
+//  Oui!
+//
+// Historique:
+//    cree le 20/01/2021
+
+class A {
+    int x = 1;
+    void m(A obj){
+        if (this == obj){
+        println("Oui!");
+        }
+    }
+
+}
+
+{
+    A obj1 = new A();
+    A obj2 = obj1;
+    A obj3;
+    A obj4 = new A();
+    obj1.m(obj2);
+    if (obj1 == obj2) {
+        println("Oui!");
+    }
+    if (obj3 == null){
+        println("Oui!");
+    }
+    if (obj4 != null){
+        if (obj4 != obj1) {
+            println("Oui!");
+        }
+    }
+}

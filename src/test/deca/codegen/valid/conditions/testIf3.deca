@@ -2,12 +2,18 @@
 //    tests division flottante sur 0; débordement lors d'opération arithmétique sur flottants.
 //
 // Resultats:
-//      0 1
-// 
+//  Non
+//
 // Historique:
 //    cree le 01/01/2021
+
 {
-    int x = 0;
-    int y = 1;
-    println(x % y, " ", 3%2);
+    float y = 2.2;
+
+    if ( y > 2) {
+        println("Oui");
+    }
+    else {
+        println("Non");
+    }
 }

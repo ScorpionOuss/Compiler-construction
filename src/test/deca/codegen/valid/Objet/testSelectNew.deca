@@ -2,12 +2,20 @@
 //    tests division flottante sur 0; débordement lors d'opération arithmétique sur flottants.
 //
 // Resultats:
-//      0 1
-// 
+//
+//      10
+//
+//
 // Historique:
-//    cree le 01/01/2021
+//    cree le 20/01/2021
+
+class A {
+    int x = 1;
+    int m() {
+    return x;
+    }
+}
+
 {
-    int x = 0;
-    int y = 1;
-    println(x % y, " ", 3%2);
+println( 10* (new A()).m());
 }

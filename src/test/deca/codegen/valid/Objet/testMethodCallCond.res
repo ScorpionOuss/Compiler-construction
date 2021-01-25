@@ -1,2 +1,0 @@
-Oui
-Et oui encore!

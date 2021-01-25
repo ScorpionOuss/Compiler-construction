@@ -38,10 +38,10 @@
         println("4-non");
     }
     if (13 < 7 && 15 >= 3) {
-        println("5-oui");
+        println("5-non");
     }
     else {
-        println("5-non");
+        println("5-oui");
     }
     if (13 < 7 && 15 <= 3) {
         println("6-non");

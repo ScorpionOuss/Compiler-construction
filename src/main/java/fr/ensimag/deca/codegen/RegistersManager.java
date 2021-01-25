@@ -13,7 +13,7 @@ public class RegistersManager {
 	private LinkedList<Integer> listMaxRP;
 	private int registerPointer;
 	private int maxRegisterPointer;
-	private int numberOfRegister = 15;
+	private int numberOfRegister = 2;
 
 	public RegistersManager() {
 		listSavedPointers = new LinkedList<Integer>();
