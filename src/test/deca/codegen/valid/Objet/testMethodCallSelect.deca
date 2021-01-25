@@ -1,0 +1,25 @@
+// Description:
+//    tests division flottante sur 0; débordement lors d'opération arithmétique sur flottants.
+//
+// Resultats:
+//      y = 1.00000e+00et z = 1
+//
+//
+// Historique:
+//    cree le 01/01/2021
+
+class A {
+    boolean x = true;
+    float y = 1.0;
+    int z = 1;
+
+
+}
+
+{
+    A a = new A();
+    if (a.x){
+        print("y = ", a.y, "et z = ", a.z);
+    }
+}
+

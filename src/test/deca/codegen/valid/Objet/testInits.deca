@@ -2,6 +2,7 @@
 //    champs et methodes simples
 //
 // Resultats:
+//  10300.00000e+00
 //
 // Historique:
 //    cree le 01/01/2021
@@ -17,4 +18,10 @@ class A {
 class B extends A {
     int z = 3;
     int m;
+    float n;
+    }
+
+{
+    B a = new B();
+    println(a.x, a.y, a.z, a.m, a.n);
     }

@@ -47,7 +47,7 @@ public class MethodCall extends AbstractExpr{
     	}
     	List<AbstractExpr> listParam = params.getList();
     	for (int i = 0; i < params.size(); i++) {
-    		listParam.get(i).verifyRValue(compiler, localEnv, currentClass, signature.paramNumber(i));
+    		params.set(i, listParam.get(i).verifyRValue(compiler, localEnv, currentClass, signature.paramNumber(i)));
     	}
     	this.setType(type);
     	return type;
@@ -60,7 +60,7 @@ public class MethodCall extends AbstractExpr{
     	ImmediateInteger numPar = new ImmediateInteger(params.size() + 1);
     	//ADDSP
     	compiler.addInstruction(new ADDSP(numPar));
-    	
+    	compiler.stackManager.incrementStackCounterMax(params.size() + 1);
     	//Empilement des paramètres
     	
     	////Empiler Objet

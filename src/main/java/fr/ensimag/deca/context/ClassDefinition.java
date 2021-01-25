@@ -122,6 +122,20 @@ public class ClassDefinition extends TypeDefinition {
 	}
 }
 
+	public boolean instanceOf(ClassDefinition definition) {
+		if (getOperand() == definition.getOperand()) {
+			return true;
+		}
+		else {
+			if (superClass == null) {
+				return false;
+			}
+			else {
+				return instanceOf(superClass);
+			}
+		}
+	}
+
 //    public void buildTable(DecacCompiler compiler, LinkedList<Definition> tableau) {
 //    	for (ExpDefinition def : members.environment.values()) {
 //    		if (def.isMethod()) {

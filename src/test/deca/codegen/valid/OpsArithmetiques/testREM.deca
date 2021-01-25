@@ -1,5 +1,13 @@
+// Description:
+//    tests division flottante sur 0; débordement lors d'opération arithmétique sur flottants.
+//
+// Resultats:
+//      0 1
+// 
+// Historique:
+//    cree le 01/01/2021
 {
     int x = 0;
     int y = 1;
-    x % y;
+    println(x % y, " ", 3%2);
 }

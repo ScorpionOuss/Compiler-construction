@@ -15,13 +15,15 @@ class A {
     int x = 1;
 
     int m(boolean b){
-    if (b) {
-        println("x = ", x);
-        }
-    else {
-        println("false");
-        }
-        return x;
+        int y = 2;
+        boolean v = true;
+        if (b && v) {
+            println("x = ", x);
+            }
+        else {
+            println("false");
+            }
+            return x;
     }
 
     void p(int i) {

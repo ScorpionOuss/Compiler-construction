@@ -6,6 +6,9 @@ import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.DVal;
 import fr.ensimag.ima.pseudocode.ImmediateString;
 import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.NullOperand;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
 import fr.ensimag.ima.pseudocode.instructions.WSTR;
 import org.apache.commons.lang.Validate;
 import fr.ensimag.deca.context.Type;
@@ -30,7 +33,9 @@ public class Null extends AbstractExpr {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass)  throws ContextualError {
-        return new NullType(new SymbolTable().create("null"));
+    	Type type = new NullType(new SymbolTable().create("null"));
+    	this.setType(type);
+        return type;
     }
 
     @Override
@@ -78,8 +83,7 @@ public class Null extends AbstractExpr {
 
 	@Override
 	protected void codeGenInst(DecacCompiler compiler) {
-		// TODO Auto-generated method stub
-		
+		compiler.addInstruction(new LOAD(new NullOperand(), Register.getR(getRP(compiler))));
 	}
 
 

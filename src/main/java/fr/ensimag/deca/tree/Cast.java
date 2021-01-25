@@ -12,7 +12,15 @@ import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.DVal;
+import fr.ensimag.ima.pseudocode.ImmediateString;
 import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.instructions.ERROR;
+import fr.ensimag.ima.pseudocode.instructions.FLOAT;
+import fr.ensimag.ima.pseudocode.instructions.INT;
+import fr.ensimag.ima.pseudocode.instructions.WNL;
+import fr.ensimag.ima.pseudocode.instructions.WSTR;
+
 import java.io.PrintStream;
 
 import org.apache.commons.lang.Validate;
@@ -68,8 +76,6 @@ public class Cast extends AbstractExpr{
        expr.decompile(s);
        s.println(")");
        
-       
-       
     }
 
     @Override
@@ -86,9 +92,35 @@ public class Cast extends AbstractExpr{
 
 	@Override
 	protected void codeGenInst(DecacCompiler compiler) {
-		// TODO Auto-generated method stub
+		int registerPointer = getRP(compiler);
+		expr.codeGenInst(compiler);
+
+
+		if (type.getType().getName() == expr.getType().getName()) {
+//			System.out.println(type.getType().getName().getName());
+		}		
 		
+		else if (type.getType().isInt()) {
+			compiler.addInstruction(new INT(Register.getR(getRP(compiler)),
+					Register.getR(getRP(compiler))));
+		}
+		
+		else if(type.getType().isFloat()) {
+			compiler.addInstruction(new FLOAT(Register.getR(getRP(compiler)),
+					Register.getR(getRP(compiler))));
+		}
+		else {
+			InstanceOf iof = new InstanceOf(expr, type);
+			int castCounter = compiler.labelsManager.incrementCastCounter();
+			Label endSucces = new Label("end.Succes" + castCounter);
+			iof.codeCond(compiler, true, endSucces);
+			compiler.addInstruction(new WSTR(new ImmediateString(
+					"Erreur; le cast n'est pas possible")));
+			compiler.addInstruction(new WNL());
+			compiler.addInstruction(new ERROR());
+			compiler.addLabel(endSucces);
+			expr.codeGenInst(compiler);
+		}
+		assert registerPointer == getRP(compiler);
 	}
-
-
 }

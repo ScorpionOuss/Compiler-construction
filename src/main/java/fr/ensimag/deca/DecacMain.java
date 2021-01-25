@@ -73,8 +73,7 @@ public class DecacMain {
            
         }
           if (options.getRegisters()){
-            System.out.println("Nombre de registres"+options.getNbRegistres());
-            
+        	  
            
         }
         if (!options.hasOptions() && options.getSourceFiles().isEmpty()) {
@@ -96,7 +95,9 @@ public class DecacMain {
                 Callable<Boolean> callable = ()->{
                  
                     DecacCompiler c = new DecacCompiler(options, source);
-                    
+                    if (options.getRegisters()) {
+                    	c.registersManag.setNumberOfRegister(options.getNbRegistres());
+                    }
                     c.compile();
                     return c.compile();
                 
@@ -116,6 +117,9 @@ public class DecacMain {
             
             for (File source : options.getSourceFiles()) {
                 DecacCompiler compiler = new DecacCompiler(options, source);
+                if (options.getRegisters()) {
+                	compiler.registersManag.setNumberOfRegister(options.getNbRegistres());
+                }
                 if (compiler.compile()) {
                     error = true;
                 }

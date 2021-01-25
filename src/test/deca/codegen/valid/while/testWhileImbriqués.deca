@@ -1,0 +1,19 @@
+// Description:
+//    tests division flottante sur 0; débordement lors d'opération arithmétique sur flottants.
+//
+// Resultats:
+//  0123456789101112
+//
+// Historique:
+//    cree le 01/01/2021
+
+{
+    int x, y;
+    while (x <= 10) {
+        while(y <= 12){
+        print(x);
+        x = x + 1;
+        y = y + 1;
+        }
+    }
+}

@@ -51,7 +51,6 @@ public class ListDeclMethod extends TreeList<AbstractDeclMethod> {
 	public void setLabels(DecacCompiler compiler, String name) {
 	for (AbstractDeclMethod method : getList()) {
 		method.setLabel(compiler, name);
+		}
 	}
-	}
-    
 }

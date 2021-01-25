@@ -1,0 +1,31 @@
+// Description:
+//    tests division flottante sur 0; débordement lors d'opération arithmétique sur flottants.
+//
+// Resultats:
+//  Oui
+//  Oui
+//  Oui
+//  Oui
+//
+// Historique:
+//    cree le 01/01/2021
+
+{
+    int x;
+    float y;
+    boolean n;
+
+    if(x == 0) {
+        println("Oui");
+        }
+    if (y == 0) {
+        println("Oui");
+        }
+
+    if (y == 0.0) {
+        println("Oui");
+        }
+    if (!n) {
+        println("Oui");
+    }
+}

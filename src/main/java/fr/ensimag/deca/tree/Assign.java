@@ -66,12 +66,14 @@ public class Assign extends AbstractBinaryExpr {
     	getRightOperand().codeGenInst(compiler);
     	compiler.addInstruction(new STORE(Register.getR(getRP(compiler)),
     			selectAddr));
+		compiler.addInstruction(new LOAD(selectAddr, Register.getR(getRP(compiler) - 1)));
     	compiler.registersManag.decrementRegisterPointer();
 		}
 		else {
 			depassementCapacite(compiler);
 			compiler.addInstruction(new STORE(Register.R1,
 	    			selectAddr));
+			compiler.addInstruction(new LOAD(selectAddr, Register.getR(getRP(compiler) - 1)));
 		}
 	}
 	

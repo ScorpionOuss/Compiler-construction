@@ -1,0 +1,27 @@
+// Description:
+//    tests division flottante sur 0; débordement lors d'opération arithmétique sur flottants.
+//
+// Resultats:
+//      oui, null
+//      0
+//      0
+// Historique:
+//    cree le 01/01/2021
+
+class A {
+    int x;
+    int y;
+}
+
+{
+    boolean b;
+    A n;
+    A a = new A();
+    if (n == null){
+        println("oui, null");
+    }
+    println(a.x);
+    if (!b){
+        println(a.y);
+    }
+}

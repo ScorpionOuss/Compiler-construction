@@ -55,13 +55,7 @@ public class CompilerOptions {
    
   
     public void parseArgs(String[] args) throws CLIException {
-        // A FAIRE : parcourir args pour positionner les options correctement.
-        
-    	/*
-    	 * On ne traite que les noms des fichiers de tests;
-    	 * Pas d'option pour l'instant.
-    	 */
-    	
+
     	for (int i = 0; i<args.length; i++) {
                 String argument = args[i];
                 if (argument.equals("-p")){
@@ -78,16 +72,14 @@ public class CompilerOptions {
                     verification = true;
                 }
                     else if(argument.equals("-r")){
-                      
-                        for (int j = 4; j < 17; j++) {
-                            if (args[i+1].equals(new Integer(j).toString())){
-                                nbRegisters = j;
-                                registers = true; 
-                                break; 
-                            }
-                    }
-                        
-                  
+                    	registers = true;
+                    	nbRegisters = Integer.parseInt(args[i+1]);
+                    	try {
+                    	assert nbRegisters >= 2;
+                    	assert nbRegisters <= 15;}
+                    	catch (AssertionError e) {
+                    		System.err.println("Nombre de registres non compris entre 2 et 15!");
+						}
                 }  
                     
                 else{
