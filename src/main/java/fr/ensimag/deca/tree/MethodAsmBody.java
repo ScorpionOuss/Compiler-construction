@@ -41,8 +41,6 @@ public class MethodAsmBody extends AbstractMethodBody{
 
 	@Override
 	protected void GenbodyCodeInsts(DecacCompiler compiler, String name) {
-		throw new UnsupportedOperationException("Not supported yet.");		
-		
 	}
 
 	@Override
