@@ -1,5 +1,5 @@
 ; start main program
-	TSTO #4
+	TSTO #3
 	BOV stack_overflow_error
 	ADDSP #2
 	LOAD #null, R0
@@ -7,49 +7,18 @@
 	LOAD code.Object.equals, R0
 	STORE R0, 2(GB)
 ; Main program
-	ADDSP #2
+	ADDSP #1
 	LOAD #1, R2
-	FLOAT R2, R2
 	STORE R2, 3(GB)
-	LOAD #0x1.0p1, R2
-	STORE R2, 4(GB)
 ; Beginning of main instructions:
-	LOAD 4(GB), R2
-	LOAD #2, R3
-	FLOAT R3, R3
-	CMP R3, R2
-	BNE E_Sinon.1
-	WSTR "Oui! On teste la division: y/2 = "
-	LOAD 4(GB), R2
-	LOAD 4(GB), R2
-	LOAD #2, R3
-	FLOAT R3, R3
-	DIV R3, R2
-	BOV ArithFloat_Error
-	LOAD R2, R1
-	WFLOAT
-	WNL
-	BRA E_Fin.1
-E_Sinon.1:
-	WSTR "Mais 2 == 2.0!"
-	WNL
-E_Fin.1:
-	LOAD 4(GB), R2
-	CMP #0x1.99999ap0, R2
-	BLT E_Sinon.2
-	WSTR "Oui!"
-	WNL
-	BRA E_Fin.2
-E_Sinon.2:
-E_Fin.2:
+	LOAD #0, R3
+	CMP #0, R3
+	BEQ ZeroDivision_Error
+	LOAD 3(GB), R3
+	QUO #0, R3
+	STORE R3, 3(GB)
 	LOAD 3(GB), R2
-	CMP #0x1.666666p1, R2
-	BGT E_Sinon.3
-	WSTR "Oui!"
-	WNL
-	BRA E_Fin.3
-E_Sinon.3:
-E_Fin.3:
+	WSTR "Ah non! il faut lever une excpetion."
 	HALT
 stack_overflow_error:
 	WSTR "Error: Stack Overflow"

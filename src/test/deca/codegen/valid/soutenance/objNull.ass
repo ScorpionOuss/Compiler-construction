@@ -1,55 +1,28 @@
 ; start main program
-	TSTO #4
+	TSTO #5
 	BOV stack_overflow_error
-	ADDSP #2
+	ADDSP #4
 	LOAD #null, R0
 	STORE R0, 1(GB)
 	LOAD code.Object.equals, R0
 	STORE R0, 2(GB)
+	LEA 1(GB), R0
+	STORE R0, 3(GB)
+	LOAD code.Object.equals, R0
+	STORE R0, 4(GB)
 ; Main program
-	ADDSP #2
-	LOAD #1, R2
-	FLOAT R2, R2
-	STORE R2, 3(GB)
-	LOAD #0x1.0p1, R2
-	STORE R2, 4(GB)
+	ADDSP #1
+	LOAD #null, R2
+	STORE R2, 5(GB)
 ; Beginning of main instructions:
-	LOAD 4(GB), R2
-	LOAD #2, R3
-	FLOAT R3, R3
-	CMP R3, R2
-	BNE E_Sinon.1
-	WSTR "Oui! On teste la division: y/2 = "
-	LOAD 4(GB), R2
-	LOAD 4(GB), R2
-	LOAD #2, R3
-	FLOAT R3, R3
-	DIV R3, R2
-	BOV ArithFloat_Error
+	LOAD 5(GB), R2
+	BEQ dereferencement.null
+	LOAD 1(R2), R2
+	LOAD 5(GB), R2
+	BEQ dereferencement.null
+	LOAD 1(R2), R2
 	LOAD R2, R1
-	WFLOAT
-	WNL
-	BRA E_Fin.1
-E_Sinon.1:
-	WSTR "Mais 2 == 2.0!"
-	WNL
-E_Fin.1:
-	LOAD 4(GB), R2
-	CMP #0x1.99999ap0, R2
-	BLT E_Sinon.2
-	WSTR "Oui!"
-	WNL
-	BRA E_Fin.2
-E_Sinon.2:
-E_Fin.2:
-	LOAD 3(GB), R2
-	CMP #0x1.666666p1, R2
-	BGT E_Sinon.3
-	WSTR "Oui!"
-	WNL
-	BRA E_Fin.3
-E_Sinon.3:
-E_Fin.3:
+	WINT
 	HALT
 stack_overflow_error:
 	WSTR "Error: Stack Overflow"
@@ -75,6 +48,19 @@ tas_plein:
 	WSTR "Erreur : heap_over_flow"
 	WNL
 	ERROR
+init.A:
+	TSTO #1
+	BOV stack_overflow_error
+	PUSH R2
+	LOAD -2(LB), R1
+	PUSH R1
+	BSR init.Object
+	SUBSP #1
+	LOAD #1, R2
+	LOAD -2(LB), R1
+	STORE R2, 1(R1)
+	POP R2
+	RTS
 code.Object.equals:
 	LOAD -2(LB), R2
 	LOAD -3(LB), R0

@@ -27,7 +27,7 @@
     println("tests opérations arithmétiques sur flottants"); 
     z = ((z + 7) - z/3) * 5;
     println("z = ", z);
-    print("division entière: ", z/2.0);
+    println("division entière: ", z/2.0);
 
 
     //Test conversion implicite
