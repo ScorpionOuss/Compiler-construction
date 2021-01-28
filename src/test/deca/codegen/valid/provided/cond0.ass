@@ -44,6 +44,14 @@ tas_plein:
 	WNL
 	ERROR
 code.Object.equals:
+	LOAD -2(LB), R2
+	LOAD -3(LB), R0
+	CMP R0, R2
+	BEQ end.Success.objet
+	LOAD #0, R0
+	RTS
+end.Success.objet:
+	LOAD #1, R0
 	RTS
 init.object:
 	RTS

@@ -1,0 +1,19 @@
+// Description:
+//    tests opérations booléennes
+
+{
+
+    boolean m = (13 > 7) || (15 >= 3);
+
+    println("Évaluation de l'expression avec codeCond");
+    if (13 > 7 && 15 >= 3) {
+        println("Oui");
+    }
+
+    println("Évaluation de l'expression avec codeGenInst");
+    if (m){
+        println("Oui");
+    }
+
+}
+

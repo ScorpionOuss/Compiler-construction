@@ -1,0 +1,23 @@
+// Description:
+//    tests print
+//
+// Instructions évaluées:
+//     * Print et Printx :
+//          INT - FLOAT - STR
+//     * Déclaration des variables
+//
+// Resultats:
+//    1 et 0.00000e+00
+//    3
+// Historique:
+//    cree le 14/01/2021
+
+{
+    int x;
+    float y;
+    x = 1;
+    y = 1.0;
+    println(x, " et ",  y);
+    printlnx(x, " et ",  y);
+    print( x = 3);
+}

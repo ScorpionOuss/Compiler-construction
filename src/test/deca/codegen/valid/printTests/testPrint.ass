@@ -1,5 +1,5 @@
 ; start main program
-	TSTO #3
+	TSTO #4
 	BOV stack_overflow_error
 	ADDSP #2
 	LOAD #null, R0
@@ -7,20 +7,31 @@
 	LOAD code.Object.equals, R0
 	STORE R0, 2(GB)
 ; Main program
-	ADDSP #1
-	LOAD #0x1.19999ap1, R2
+	ADDSP #2
+	LOAD #0, R2
 	STORE R2, 3(GB)
+	LOAD #0x0.0p0, R2
+	STORE R2, 4(GB)
 ; Beginning of main instructions:
+	LOAD #1, R3
+	STORE R3, 3(GB)
 	LOAD 3(GB), R2
-	CMP #2, R2
-	BLE E_Sinon.1
-	WSTR "Oui"
+	LOAD #0x1.0p0, R3
+	STORE R3, 4(GB)
+	LOAD 4(GB), R2
+	LOAD 3(GB), R2
+	LOAD R2, R1
+	WINT
+	WSTR " et "
+	LOAD 4(GB), R2
+	LOAD R2, R1
+	WFLOAT
 	WNL
-	BRA E_Fin.1
-E_Sinon.1:
-	WSTR "Non"
-	WNL
-E_Fin.1:
+	LOAD #3, R3
+	STORE R3, 3(GB)
+	LOAD 3(GB), R2
+	LOAD R2, R1
+	WINT
 	HALT
 stack_overflow_error:
 	WSTR "Error: Stack Overflow"
@@ -47,6 +58,14 @@ tas_plein:
 	WNL
 	ERROR
 code.Object.equals:
+	LOAD -2(LB), R2
+	LOAD -3(LB), R0
+	CMP R0, R2
+	BEQ end.Success.objet
+	LOAD #0, R0
+	RTS
+end.Success.objet:
+	LOAD #1, R0
 	RTS
 init.object:
 	RTS

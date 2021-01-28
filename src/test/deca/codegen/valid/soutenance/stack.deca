@@ -1,0 +1,23 @@
+// Description:
+//  stack OverFlow
+// Resultats:
+//
+//  Error: Stack Overflow
+//
+// Historique:
+//    cree le 20/01/2021
+
+class A {
+    int x = 1;
+
+    void m(int i){
+        int j;
+        j = x;
+        m(i + 1);
+    }
+}
+
+{
+    A a = new A();
+    a.m(1);
+}

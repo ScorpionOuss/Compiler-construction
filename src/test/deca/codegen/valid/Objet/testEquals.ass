@@ -80,11 +80,9 @@ code.Object.equals:
 	LOAD -3(LB), R0
 	CMP R0, R2
 	BEQ end.Success.objet
-	WSTR "BNE  "
 	LOAD #0, R0
 	RTS
 end.Success.objet:
-	WSTR "BEq  "
 	LOAD #1, R0
 	RTS
 init.object:

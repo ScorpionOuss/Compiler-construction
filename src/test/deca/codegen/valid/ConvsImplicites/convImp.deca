@@ -3,7 +3,7 @@
 //
 // Resultats:
 //
-//  Oui!
+//  Oui! On teste la divisio: y/2 = 1.00000e+00
 //  Oui!
 //  Oui!
 //
@@ -15,7 +15,7 @@
     float y = 2.0;
 
     if (y == 2){
-        println("Oui!");
+        println("Oui! On teste la division: y/2 = ", y/2);
     }
     else {
         println("Mais 2 == 2.0!");

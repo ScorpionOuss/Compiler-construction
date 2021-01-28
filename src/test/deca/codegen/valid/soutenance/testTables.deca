@@ -1,0 +1,54 @@
+// Description:
+//    champs et methodes simples
+//
+// Resultats:
+//  Je suis la petite fille
+//  Oui!
+//  1
+//
+// Historique:
+//    cree le 19/01/2021
+
+// Un exemple de programme Deca
+
+class Mere{
+
+    int methMere1(){
+    return 1;
+    }
+
+    void methMere2(){
+        println("Je suis la mère");
+    }
+
+    void methMere3(){
+    }
+}
+
+class Fille extends Mere{
+
+    void methFille(){
+        println("Oui!");
+    }
+
+    void methMere2(){
+        println("Je suis la fille");
+    }
+}
+
+class Pfille extends Fille{
+    void methPfille(){
+    }
+
+    void methMere2(){
+        println("Je suis la petite fille");
+    }
+}
+
+{
+    Pfille pf = new Pfille();
+    pf.methMere2();
+    pf.methFille();
+    print(pf.methMere1());
+
+}
