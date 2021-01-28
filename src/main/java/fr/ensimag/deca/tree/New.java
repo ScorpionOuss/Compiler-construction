@@ -68,23 +68,27 @@ public class New extends AbstractExpr {
     	
     	//LEA adA , R0
     	DAddr tableAddr = ident.getClassDefinition().getOperand();
-    	assert(tableAddr != null);
-    	compiler.addInstruction(new LEA(tableAddr, Register.R0));
+    	System.out.println(ident.getName().getName());
+    	if (ident.getName().getName() != "Object") {
+    		assert(tableAddr != null);
+    		compiler.addInstruction(new LEA(tableAddr, Register.R0));
     	
-    	//STORE R0, 0(R)
-    	compiler.addInstruction(new STORE(Register.R0,
-    			new RegisterOffset(0, Register.getR(getRP(compiler)))));
-    	
-    	// PUSH R
-    	compiler.addInstruction(new PUSH(Register.getR(getRP(compiler))));
-    	compiler.stackManager.incrementStackCounterMax(1);
-    	// BSR init.A
-    	compiler.addInstruction(new BSR(new Label("init." + ident.getName().getName())));
-    	
-    	// POP R
-    	compiler.addInstruction(new POP(Register.getR(getRP(compiler))));
-    
-    	assert registerPointer == getRP(compiler);
+	    	//STORE R0, 0(R)
+	    	compiler.addInstruction(new STORE(Register.R0,
+	    			new RegisterOffset(0, Register.getR(getRP(compiler)))));
+	    	
+	    	// PUSH R
+	    	compiler.addInstruction(new PUSH(Register.getR(getRP(compiler))));
+	    	compiler.stackManager.incrementStackCounterMax(1);
+	    	
+	    	// BSR init.A
+	    	compiler.addInstruction(new BSR(new Label("init." + ident.getName().getName())));
+	    	
+	    	// POP R
+	    	compiler.addInstruction(new POP(Register.getR(getRP(compiler))));
+	    
+	    	assert registerPointer == getRP(compiler);
+	    	}
     }
     	
     @Override

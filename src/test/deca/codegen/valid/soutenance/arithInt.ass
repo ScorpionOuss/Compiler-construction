@@ -84,6 +84,7 @@
 	BOV ArithFloat_Error
 	LOAD R2, R1
 	WFLOAT
+	WNL
 	WSTR "Test conversion implicite"
 	WNL
 	LOAD 6(GB), R2
